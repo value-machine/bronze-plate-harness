@@ -1,7 +1,5 @@
-import LoginIcon from "@mui/icons-material/Login";
-
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
+import { LogIn } from "lucide-react";
+import { DropdownMenuItem } from "@/components/common/DropdownMenu";
 
 interface SignInMenuItemsProps {
   onSignInWithGoogle: () => void;
@@ -11,18 +9,14 @@ interface SignInMenuItemsProps {
 export const SignInMenuItems = ({ onSignInWithGoogle, onGoToLogin }: SignInMenuItemsProps) => {
   return (
     <>
-      <MenuItem key="sign-in-google" onClick={onSignInWithGoogle}>
-        <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
-          <LoginIcon fontSize="small" />
-        </Box>
+      <DropdownMenuItem onSelect={onSignInWithGoogle}>
+        <LogIn />
         Sign In with Google
-      </MenuItem>
-      <MenuItem key="go-to-login" onClick={onGoToLogin}>
-        <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
-          <LoginIcon fontSize="small" />
-        </Box>
+      </DropdownMenuItem>
+      <DropdownMenuItem onSelect={onGoToLogin}>
+        <LogIn />
         Sign in with email
-      </MenuItem>
+      </DropdownMenuItem>
     </>
   );
 };

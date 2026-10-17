@@ -15,7 +15,7 @@
 |-------|------|------|--------|
 | 1 | Foundation: Tailwind v4 + shadcn tokens + `cn()` + deps, coexisting with MUI | Contract tooling gate; `pnpm build`; app renders unchanged | Done |
 | 2 | Kit primitives + auth surfaces (all `Button`/`Input` consumers) | Contract tooling gate; `SignInPanel` test green; login/home/reset render | Done |
-| 3 | App shell + ProfileMenu (App, MainLayout, Topbar, PageLoadingState, QueryErrorBoundary, DevTasksFab, ProfileMenu/*) | Contract tooling gate; `ProfileMenu` test green; menu opens in browser | Pending |
+| 3 | App shell + ProfileMenu (App, MainLayout, Topbar, PageLoadingState, QueryErrorBoundary, DevTasksFab, ProfileMenu/*) | Contract tooling gate; `ProfileMenu` test green; menu opens in browser | Done |
 | 4 | Tasks page + tasks feature components | Contract tooling gate; `/tasks` add / edit / reorder / status / archive / restore work | Pending |
 | 5 | Remove MUI: theme files, providers, deps, vitest inline config, docs | `grep -r "@mui\|@emotion" src tests` empty; contract tooling gate; `pnpm build` | Pending |
 
@@ -129,6 +129,8 @@
 - Plan review and plan validate were run inline by the planning agent (single-agent lenses: naming, rebel, scale/modularity, industry precedent, delivery, tests; validate rules: architecture, file-placement, code-style, agent-behavior). Advisory, not promoted: (rebel) consider Base UI instead of Radix — D4 stands; (scale) add a `stack-port-radix` cruiser rule — D19 follow-up.
 
 - Phase 2: `MainLayout` ported here (not Phase 3) because it consumed the converted `appViewLayout` constants. MUI `ToggleButtonGroup` replaced by a `SegmentedControl` (buttons with `aria-pressed`) instead of Radix `ToggleGroup`, whose single mode renders `role="radio"`; keeps the same semantics MUI had. Button text is sentence case (MUI uppercased by default).
+
+- Phase 3: Radix `DropdownMenu` passes the existing `ProfileMenu` tests with no jsdom shims. Toolbar height uses Tailwind `h-toolbar` / `pt-toolbar` from the `--spacing-toolbar` token.
 
 ## Decisions made
 

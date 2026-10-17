@@ -1,7 +1,4 @@
-import VerifiedIcon from "@mui/icons-material/Verified";
-
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { BadgeCheck } from "lucide-react";
 
 interface ProfileNameProps {
   displayName: string;
@@ -10,25 +7,11 @@ interface ProfileNameProps {
 
 export const ProfileName = ({ displayName, isVerified }: ProfileNameProps) => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-      <Typography
-        variant="subtitle2"
-        sx={{
-          fontWeight: (theme) => theme.typography.fontWeightBold,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {displayName}
-      </Typography>
+    <div className="flex items-center gap-1">
+      <span className="truncate text-sm font-bold">{displayName}</span>
       {isVerified && (
-        <VerifiedIcon
-          fontSize="small"
-          color="primary"
-          sx={{ fontSize: (theme) => theme.typography.body2.fontSize, flexShrink: 0 }}
-        />
+        <BadgeCheck aria-label="Verified" className="size-3.5 shrink-0 text-primary" />
       )}
-    </Box>
+    </div>
   );
 };

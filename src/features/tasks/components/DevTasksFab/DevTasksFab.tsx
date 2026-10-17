@@ -1,5 +1,5 @@
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import Fab from "@mui/material/Fab";
+import { Button } from "@/components/common/Button";
 
 /**
  * Dev-only floating entry to /tasks (import.meta.env.DEV).
@@ -12,20 +12,13 @@ export const DevTasksFab = () => {
   }
 
   return (
-    <Fab
-      component={RouterLink}
-      to="/tasks"
-      variant="extended"
-      color="secondary"
+    <Button
+      asChild
+      variant="secondary"
+      className="fixed right-6 bottom-6 z-40 shadow-lg"
       aria-label="Open dev task backlog"
-      sx={{
-        position: "fixed",
-        right: 24,
-        bottom: 24,
-        zIndex: (theme) => theme.zIndex.modal - 1,
-      }}
     >
-      Tasks
-    </Fab>
+      <RouterLink to="/tasks">Tasks</RouterLink>
+    </Button>
   );
 };
