@@ -14,7 +14,7 @@ Systematically analyze code for optimization opportunities across four levels: D
 
 **Key Insight:** Fixing at the wrong level wastes effort. A complex function might need a design change (Level 1), not refactoring (Level 4). Always assess all levels before acting.
 
-**SSOT:** `.eslintrc.json` (lines 65-70) is the single source of truth for complexity thresholds.
+**SSOT:** `eslint.config.js` (complexity rules) is the single source of truth for complexity thresholds.
 
 ## Workflow Overview
 
@@ -82,7 +82,7 @@ When NOT to refactor (accept complexity instead):
 
 ### Complexity Metrics
 
-**SSOT:** `.eslintrc.json` (lines 65-70)
+**SSOT:** `eslint.config.js` (complexity rules)
 
 | Metric | Threshold | ESLint Rule |
 |--------|-----------|-------------|

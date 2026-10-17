@@ -13,7 +13,6 @@ A production-ready harness (boilerplate + agent harness) for building React appl
 - 🧪 **Vitest** - Fast unit testing framework
 - 🏗️ **Strict Architecture** - Enforced folder structure and import rules
 - 🔒 **Authentication** - Complete auth flow (login, signup, logout) - requires Supabase
-- 📊 **Airtable Integration** - Connect to Airtable as a data source (optional)
 
 ## Tech stack (pinned in `package.json`)
 
@@ -41,7 +40,6 @@ A production-ready harness (boilerplate + agent harness) for building React appl
 - **Graphviz** (optional) - Required only for generating architecture graph visualizations
   - Install: `choco install graphviz` (Windows with Chocolatey) or [download installer](https://graphviz.org/download/)
   - Only needed if you want to run `pnpm arch:graph` to visualize the architecture
-- **Airtable Account** (optional) - [Sign up here](https://airtable.com) if you want to use Airtable as a data source
 
 ### Configure Line Endings
 
@@ -207,10 +205,6 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 
 Legacy note: `VITE_SUPABASE_ANON_KEY` is still accepted for backward compatibility.
 
-#### Airtable (optional) 📊
-
-Add `VITE_AIRTABLE_API_KEY`, `VITE_AIRTABLE_BASE_ID`, and `VITE_AIRTABLE_TABLE_ID` to `.env`. See `.agents/skills/api-integrate/SKILL.md` (Airtable worked example) for schema inspection.
-
 #### Theme customization (optional) 🎨
 
 Customize `src/shared/theme/` or use [MUI Theme Creator](https://bareynol.github.io/mui-theme-creator/) as a starting point.
@@ -255,7 +249,6 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ### Features
 
 - ✅ **Authentication**: Supabase authentication (when configured)
-- ✅ **Airtable Integration**: Connect to Airtable as a data source (when configured)
 - ✅ **Theme Customization**: Customize the MUI theme
 - ✅ **Frontend Development**: All UI components and features work independently
 

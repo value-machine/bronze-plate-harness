@@ -74,7 +74,6 @@
       "Edit(./.gitignore)",
       "Edit(./.gitattributes)",
       "Edit(./projectStructure.config.cjs)",
-      "Edit(./.eslintrc.json)",
       "Edit(./eslint.config.js)",
       "Edit(./eslint.ignores.js)",
       "Edit(./.dependency-cruiser.cjs)",

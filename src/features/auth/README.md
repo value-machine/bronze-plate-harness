@@ -15,7 +15,7 @@ User authentication and session management via Supabase.
 
 | Layer | Path | Purpose |
 |-------|------|---------|
-| Hooks | `hooks/` | `useAuth`, `useAuthSession`, `useAuthRedirect`, `useAuthCallbackHandler`, `useUserProfileQuery`, `useUpdateUserProfile` |
+| Hooks | `hooks/` | `useAuth`, `useAuthSession`, `useAuthRedirect`, `useAuthCallbackHandler`, `useUserProfileQuery` |
 | Services | `services/` | `authService`, `authCallbackService`, `authErrorMessages`, `authValidation`, `userProfileService`, `authHandlerUtils` |
 | Components | `components/` | `SignInPanel`, `EmailAuthForm` |
 | Types | `types/` | `User`, `UserProfile`, `AuthContextValue`, credentials types |
@@ -39,7 +39,7 @@ Returns:
 
 - **Form-blocking errors:** inline MUI `Alert` (sign-in panel, email form).
 - **OAuth/callback errors:** `setAuthError` on auth context; shown on Home via single Alert.
-- **Profile mutations:** TanStack `useUpdateUserProfile` merges server response via `setQueryData` (no happy-path invalidation).
+- **Profile mutations:** none shipped; follow `documentation/DOC_TANSTACK_QUERY.md` § Example mutation (merge server response via `setQueryData`, no happy-path invalidation).
 
 ### Routes
 

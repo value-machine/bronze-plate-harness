@@ -276,16 +276,6 @@ module.exports = {
       },
       to: { path: "node_modules/@supabase/" },
     },
-    {
-      name: "stack-port-airtable",
-      severity: "error",
-      comment:
-        "Airtable is a stack secret. New imports must go through src/shared/services/airtableService.ts.",
-      from: {
-        pathNot: "(^src/shared/services/airtableService\\.ts$)|(\\.test\\.[jt]sx?$)",
-      },
-      to: { path: "node_modules/airtable" },
-    },
 
     // === EXTERNAL DEPENDENCY RULES ===
     {

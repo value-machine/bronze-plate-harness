@@ -18,11 +18,6 @@ const STACK_SLOTS = [
     id: "Supabase",
     test: (spec, resolved) => matchesHay(spec, resolved, /@supabase\//),
   },
-  {
-    id: "Airtable",
-    test: (spec, resolved) =>
-      spec === "airtable" || /node_modules\/airtable(?:\/|$)/.test(resolved),
-  },
 ];
 
 /**

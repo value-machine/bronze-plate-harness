@@ -15,13 +15,8 @@
     "status": "to-do"
   },
   {
-    "title": "Configure Airtable (optional)",
-    "description": "Optional — skip or archive this task if unused. Add VITE_AIRTABLE_API_KEY, VITE_AIRTABLE_BASE_ID, and VITE_AIRTABLE_TABLE_ID to .env. Use .agents/skills/api-integrate/SKILL.md (Airtable worked example) for schema then sample rows.",
-    "status": "to-do"
-  },
-  {
     "title": "Configure Theme",
-    "description": "Customize MUI theme via src/shared/theme/ (themeLoader.ts and related tokens). Match brand colors, typography, and dark/light mode defaults. Verify changes in the running dev app.",
+    "description": "Customize MUI theme via src/shared/theme/defaultTheme.ts (palette, typography, component overrides). Match brand colors, typography, and dark/light mode defaults. Verify changes in the running dev app.",
     "status": "to-do"
   }
 ]

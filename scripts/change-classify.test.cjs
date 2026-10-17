@@ -163,7 +163,7 @@ describe('change-classify', () => {
     });
 
     test('should force full mode for shared kernel changes', () => {
-      assert.deepEqual(classifyTestRun(['src/shared/utils/dateFormatters.ts']), {
+      assert.deepEqual(classifyTestRun(['src/shared/utils/redirectUtils.ts']), {
         mode: 'full',
         reason: 'src/shared kernel',
       });

@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import * as authService from "./authService";
+import { isSupabaseConfigured } from "@/shared/services/supabaseService";
 
 const mockSupabase = {
   auth: {
@@ -101,6 +102,31 @@ describe("authService", () => {
       const result = await authService.logout();
 
       expect(result.error).toBeNull();
+    });
+  });
+
+  describe("when Supabase is not configured", () => {
+    beforeEach(() => {
+      vi.mocked(isSupabaseConfigured).mockReturnValue(false);
+    });
+
+    afterEach(() => {
+      vi.mocked(isSupabaseConfigured).mockReturnValue(true);
+    });
+
+    it("should return a configuration error without calling Supabase", async () => {
+      const result = await authService.login({ email: "a@b.c", password: "x" });
+
+      expect(result.user).toBeNull();
+      expect(result.error?.message).toMatch(/configured/i);
+      expect(mockSupabase.auth.signInWithPassword).not.toHaveBeenCalled();
+    });
+
+    it("should no-op logout without an error", async () => {
+      const result = await authService.logout();
+
+      expect(result.error).toBeNull();
+      expect(mockSupabase.auth.signOut).not.toHaveBeenCalled();
     });
   });
 });
