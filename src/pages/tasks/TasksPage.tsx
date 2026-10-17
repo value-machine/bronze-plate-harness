@@ -1,75 +1,37 @@
 import { Link as RouterLink } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { TasksBacklogPanel } from "@/features/tasks/components/TasksBacklogPanel";
-
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import ArrowBack from "@mui/icons-material/ArrowBack";
+import { Alert } from "@/components/common/Alert";
+import { Button } from "@/components/common/Button";
 
 export const TasksPage = () => {
   const isDev = import.meta.env.DEV;
 
   return (
-    <Box
-      sx={{
-        minHeight: "100dvh",
-        display: "flex",
-        flexDirection: "column",
-        bgcolor: "background.default",
-      }}
-    >
-      <Container
-        maxWidth="lg"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          minHeight: 0,
-          py: { xs: 2, sm: 3 },
-          px: { xs: 2, sm: 3 },
-        }}
-      >
-        <Box sx={{ mb: 2.5, flexShrink: 0 }}>
-          <Button component={RouterLink} to="/" startIcon={<ArrowBack />}>
-            Back to app
+    <div className="flex min-h-dvh flex-col bg-background">
+      <div className="mx-auto flex min-h-0 w-full max-w-[1200px] flex-1 flex-col px-4 py-4 sm:px-6 sm:py-6">
+        <div className="mb-5 shrink-0">
+          <Button asChild variant="ghost" size="sm">
+            <RouterLink to="/">
+              <ArrowLeft />
+              Back to app
+            </RouterLink>
           </Button>
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{ fontWeight: 700, letterSpacing: "-0.02em", mt: 2 }}
-          >
-            Dev task backlog
-          </Typography>
-        </Box>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Dev task backlog</h1>
+        </div>
 
         {!isDev ? (
-          <Alert severity="info">
+          <Alert variant="info">
             Dev-only — task management is not available in production builds. The backlog files live
             in the repo at <code>src/config/app-tasks.json</code> and{" "}
             <code>src/config/app-tasks-archive.json</code> for local development and coding agents.
           </Alert>
         ) : (
-          <Paper
-            elevation={0}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flex: 1,
-              minHeight: { xs: "60dvh", sm: 0 },
-              border: 1,
-              borderColor: "divider",
-              borderRadius: 2,
-              overflow: "hidden",
-              bgcolor: "background.paper",
-            }}
-          >
+          <div className="flex min-h-[60dvh] flex-1 flex-col overflow-hidden rounded-lg border bg-card sm:min-h-0">
             <TasksBacklogPanel />
-          </Paper>
+          </div>
         )}
-      </Container>
-    </Box>
+      </div>
+    </div>
   );
 };

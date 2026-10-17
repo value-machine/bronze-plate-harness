@@ -25,12 +25,12 @@ In-repo development backlog for coding agents and local UI.
 
 **UI entry:** `DevTasksFab` (floating pill `Button` link) on all routes in dev; route `/tasks` with minimal chrome (card rows, toolbar autosave chip, no column headers).
 
-**Bundle:** Task UI components import MUI and icons via direct path imports (not barrel files) to keep the lazy `/tasks` chunk lean in dev and production.
+**Bundle:** Task UI components import kit components from `src/components/common/` and icons from `lucide-react` (named, tree-shaken imports) to keep the lazy `/tasks` chunk lean in dev and production.
 
 ## User feedback policy
 
-- **Mutation/async errors:** single MUI `Snackbar` via `TasksFeedback` (tasks pattern is SSOT for non-form mutations).
-- **Initial load failures:** same snackbar path via `reloadForView` try/catch.
+- **Mutation/async errors:** single fixed top `Alert` via `TasksFeedback` (tasks pattern is SSOT for non-form mutations).
+- **Initial load failures:** same feedback path via `reloadForView` try/catch.
 
 ## Testing
 
@@ -39,7 +39,7 @@ Colocated `*.test.ts` under `services/`; shared wrappers in `tests/test-utils.ts
 ## Dependencies
 
 - `vite-plugin-dev-tasks.ts` (project root)
-- MUI 9, dnd-kit (reorder)
+- shadcn/ui kit (`src/components/common/`), lucide-react, dnd-kit (reorder)
 - Agent skills: `.agents/skills/start/SKILL.md`, `router`, `finish` for task sync
 
 ## Onboarding

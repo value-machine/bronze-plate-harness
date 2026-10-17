@@ -16,7 +16,7 @@
 | 1 | Foundation: Tailwind v4 + shadcn tokens + `cn()` + deps, coexisting with MUI | Contract tooling gate; `pnpm build`; app renders unchanged | Done |
 | 2 | Kit primitives + auth surfaces (all `Button`/`Input` consumers) | Contract tooling gate; `SignInPanel` test green; login/home/reset render | Done |
 | 3 | App shell + ProfileMenu (App, MainLayout, Topbar, PageLoadingState, QueryErrorBoundary, DevTasksFab, ProfileMenu/*) | Contract tooling gate; `ProfileMenu` test green; menu opens in browser | Done |
-| 4 | Tasks page + tasks feature components | Contract tooling gate; `/tasks` add / edit / reorder / status / archive / restore work | Pending |
+| 4 | Tasks page + tasks feature components | Contract tooling gate; `/tasks` add / edit / reorder / status / archive / restore work | Done |
 | 5 | Remove MUI: theme files, providers, deps, vitest inline config, docs | `grep -r "@mui\|@emotion" src tests` empty; contract tooling gate; `pnpm build` | Pending |
 
 ## Conflict & compliance
@@ -131,6 +131,12 @@
 - Phase 2: `MainLayout` ported here (not Phase 3) because it consumed the converted `appViewLayout` constants. MUI `ToggleButtonGroup` replaced by a `SegmentedControl` (buttons with `aria-pressed`) instead of Radix `ToggleGroup`, whose single mode renders `role="radio"`; keeps the same semantics MUI had. Button text is sentence case (MUI uppercased by default).
 
 - Phase 3: Radix `DropdownMenu` passes the existing `ProfileMenu` tests with no jsdom shims. Toolbar height uses Tailwind `h-toolbar` / `pt-toolbar` from the `--spacing-toolbar` token.
+
+- Phase 4: Tailwind v4's automatic source scan picked up `src/config/app-tasks*.json`, which the `/tasks` dev API rewrites on every save, so every save fully reloaded the page in dev and cut off in-flight requests (e.g. Done → archive). Fixed with `@source not "./config"` in `src/index.css`; A/B verified on fresh dev servers. The pre-MUI build did not reload.
+- Phase 4: Archive "Restore" select is now always unselected (`value=""`), so picking "As to-do" works on the first try. Before this, the MUI select held `to-do` as its value and ignored re-picking it.
+- Phase 4 browser gate (Playwright, dev server): add, status change, description autosave, Done → archive, restore, delete and drag reorder all pass with no console errors.
+
+- Phase 4: Pre-commit blocked on a pre-existing hook bug. `scripts/test-staged.cjs` returned vitest's exit 1 ("No test files found") before checking its own fallback to the full suite. Swapped the order and added a regression test in `scripts/test-staged.test.cjs`; `pnpm test:classify` passes 99/99.
 
 ## Decisions made
 

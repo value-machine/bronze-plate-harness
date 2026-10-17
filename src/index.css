@@ -8,6 +8,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/*
+ * Runtime-written dev data (the /tasks page rewrites src/config/app-tasks*.json).
+ * Scanning it for class names makes every save trigger a full page reload in dev.
+ */
+@source not "./config";
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
