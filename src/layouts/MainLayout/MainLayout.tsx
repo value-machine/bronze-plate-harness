@@ -1,24 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { appViewportSx } from "@/shared/theme/appViewLayout";
-
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import { appViewportClassName } from "@/shared/theme/appViewLayout";
 
 export const MainLayout = () => {
   return (
-    <Box sx={appViewportSx}>
-      <Container
-        component="main"
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
-          overflow: "hidden",
-        }}
-      >
+    <div className={appViewportClassName}>
+      <main className="mx-auto flex min-h-0 w-full max-w-[1200px] flex-1 flex-col overflow-hidden px-4 sm:px-6">
         <Outlet />
-      </Container>
-    </Box>
+      </main>
+    </div>
   );
 };

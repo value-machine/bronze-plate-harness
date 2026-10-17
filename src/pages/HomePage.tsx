@@ -1,13 +1,11 @@
+import { Alert } from "@/components/common/Alert";
 import { Button } from "@/components/common/Button";
 import { useAuthContext } from "@/shared/context/AuthContext";
 import { SignInPanel } from "@/features/auth/components/SignInPanel";
 import { useAuthCallbackHandler } from "@/features/auth/hooks/useAuthCallbackHandler";
 import { PageLoadingState } from "@/components/common/PageLoadingState";
-import { appScrollContentSx, formContentMaxWidth } from "@/shared/theme/appViewLayout";
-
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import Typography from "@mui/material/Typography";
+import { appScrollContentClassName, formContentWidthClassName } from "@/shared/theme/appViewLayout";
+import { cn } from "@/shared/utils/cn";
 
 export const HomePage = () => {
   const { user, loading, error, clearAuthError } = useAuthContext();
@@ -20,18 +18,13 @@ export const HomePage = () => {
   const showInlineLogin = !user;
 
   return (
-    <Box sx={{ ...appScrollContentSx, textAlign: "center" }}>
+    <div className={cn(appScrollContentClassName, "text-center")}>
       {error && (
         <Alert
-          severity="error"
-          sx={{
-            maxWidth: formContentMaxWidth,
-            width: "100%",
-            mb: { xs: 1, sm: 1.5 },
-            textAlign: "left",
-          }}
+          variant="destructive"
+          className={cn(formContentWidthClassName, "mb-2 sm:mb-3")}
           action={
-            <Button size="small" onClick={clearAuthError}>
+            <Button variant="ghost" size="sm" className="-my-1.5 h-8" onClick={clearAuthError}>
               Dismiss
             </Button>
           }
@@ -41,14 +34,12 @@ export const HomePage = () => {
       )}
 
       {user ? (
-        <Box sx={{ display: "flex", flex: 1, alignItems: "center", justifyContent: "center" }}>
-          <Typography variant="body1" component="p">
-            Welcome back, {user.email}!
-          </Typography>
-        </Box>
+        <div className="flex flex-1 items-center justify-center">
+          <p>Welcome back, {user.email}!</p>
+        </div>
       ) : showInlineLogin ? (
         <SignInPanel />
       ) : null}
-    </Box>
+    </div>
   );
 };

@@ -113,3 +113,55 @@
     @apply rounded-sm px-1 text-sm;
   }
 }
+
+/* Brand button surfaces (used by Button variants). */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(
+    45deg,
+    var(--primary-gradient-start) 0%,
+    var(--primary) 30%,
+    var(--primary-gradient-start) 60%,
+    var(--primary) 90%,
+    var(--primary-gradient-start) 100%
+  );
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  box-shadow: 0 3px 5px 2px rgb(0 0 0 / 0.4);
+  transition: background-position 0.6s ease;
+  &:hover {
+    background-position: 100% 50%;
+  }
+  &:active {
+    box-shadow: 0 2px 4px 1px rgb(0 0 0 / 0.5);
+  }
+}
+
+@utility bg-foreground-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.6s ease;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      transparent 45%,
+      var(--foreground) 75%,
+      var(--foreground) 100%
+    );
+    background-size: 250% 250%;
+    background-position: 0% 50%;
+    transition: background-position 0.6s ease;
+  }
+  &:hover {
+    color: var(--background);
+  }
+  &:hover::before {
+    background-position: 100% 50%;
+  }
+}

@@ -5,9 +5,7 @@ import { SignInPanel } from "@/features/auth/components/SignInPanel";
 import { useAuthRedirect } from "@/features/auth/hooks/useAuthRedirect";
 import { PageLoadingState } from "@/components/common/PageLoadingState";
 import { storeRedirectPath } from "@/shared/utils/redirectUtils";
-import { appScrollContentSx, appViewportSx } from "@/shared/theme/appViewLayout";
-
-import Box from "@mui/material/Box";
+import { appScrollContentClassName, appViewportClassName } from "@/shared/theme/appViewLayout";
 
 export const LoginPage = () => {
   const { user, loading } = useAuthContext();
@@ -37,10 +35,10 @@ export const LoginPage = () => {
   }
 
   return (
-    <Box sx={appViewportSx}>
-      <Box sx={appScrollContentSx}>
+    <div className={appViewportClassName}>
+      <div className={appScrollContentClassName}>
         <SignInPanel />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
