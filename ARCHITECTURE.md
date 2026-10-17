@@ -331,7 +331,7 @@ The project uses ESLint rules to enforce architecture and code quality:
 - **Styling**: Colors, radius and fonts are CSS variables in `src/index.css` (shadcn/ui convention), exposed as Tailwind utilities (`bg-primary`, `text-muted-foreground`, …). Components use those utilities, never raw hex/RGB values.
   - UI kit components (shadcn/ui on Radix) live in `src/components/common/<Name>/`; `radix-ui` is imported only there.
   - Merge class names with `cn()` from `src/shared/utils/cn.ts`.
-  - The legacy `sx`-prop hardcoded-style lint rule in `eslint.config.js` no longer matches anything (MUI removed); replacing it is a pending protected-file change.
+  - **Hardcoded color detection** (`eslint.config.js`, warn): flags Tailwind arbitrary colors in class strings (`bg-[#…]`, `text-[rgb(…)]`) and raw colors in `style` props.
 
 These rules are defined in `eslint.config.js` using GTS's flat config format.
 

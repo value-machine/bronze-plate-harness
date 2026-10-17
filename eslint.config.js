@@ -96,55 +96,30 @@ export default defineConfig([
       ],
     },
   },
-  // Detect hardcoded styling values in sx prop - restrict string literals for styling properties
+  // Detect hardcoded colors. Colors are design tokens in src/index.css, used via
+  // Tailwind utilities (bg-primary, text-muted-foreground, ...).
   {
     files: ['src/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-syntax': [
         'warn',
-        // Catch string literals for styling properties (excludes theme references)
+        // Tailwind arbitrary color values in class strings, e.g. "bg-[#ff0000]", "text-[rgb(0,0,0)]"
+        {
+          selector: 'Literal[value=/\\[(#[0-9A-Fa-f]{3,8}|rgba?\\(|hsla?\\(|oklch\\()/]',
+          message: 'Avoid hardcoded colors. Use a design token utility (see src/index.css).',
+        },
         {
           selector:
-            "JSXAttribute[name.name='sx'] Property[key.name=/^(fontSize|fontWeight|fontFamily|color|bgcolor|backgroundColor|borderColor)$/] Literal[value=/^(?!(primary|secondary|text|background|error|warning|success|info|palette|theme)\\.).+$/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
+            'TemplateElement[value.raw=/\\[(#[0-9A-Fa-f]{3,8}|rgba?\\(|hsla?\\(|oklch\\()/]',
+          message: 'Avoid hardcoded colors. Use a design token utility (see src/index.css).',
         },
-        // Also catch nested properties (e.g., "& .MuiInputBase-input": { fontSize: ... })
+        // Raw colors in inline style props
         {
           selector:
-            "JSXAttribute[name.name='sx'] Property Property[key.name=/^(fontSize|fontWeight|fontFamily|color|bgcolor|backgroundColor|borderColor)$/] Literal[value=/^(?!(primary|secondary|text|background|error|warning|success|info|palette|theme)\\.).+$/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
-        },
-        // Catch hex colors anywhere in sx prop
-        {
-          selector:
-            "JSXAttribute[name.name='sx'] Literal[value=/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
-        },
-        // Catch RGB/RGBA colors anywhere in sx prop
-        {
-          selector: "JSXAttribute[name.name='sx'] Literal[value=/^rgba?\\(/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
-        },
-        // Catch numeric literals for styling properties
-        {
-          selector:
-            "JSXAttribute[name.name='sx'] Property[key.name=/^(fontSize|fontWeight|height|width)$/] Literal[raw=/^[0-9]+$/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
-        },
-        // Catch numeric literals in nested properties
-        {
-          selector:
-            "JSXAttribute[name.name='sx'] Property Property[key.name=/^(fontSize|fontWeight|height|width)$/] Literal[raw=/^[0-9]+$/]",
-          message: 'Avoid hardcoded styling. Refer to the Theme file for styling.',
+            "JSXAttribute[name.name='style'] Literal[value=/^(#[0-9A-Fa-f]{3,8}|rgba?\\(|hsla?\\(|oklch\\()/]",
+          message: 'Avoid hardcoded colors. Use a design token utility (see src/index.css).',
         },
       ],
-    },
-  },
-  // Disable hardcoded styling rules for theme files - they are where styling SHOULD be defined
-  {
-    files: ['src/**/theme/**', 'src/**/*theme*.ts', 'src/**/*theme*.tsx'],
-    rules: {
-      'no-restricted-syntax': 'off',
     },
   },
 ]);
