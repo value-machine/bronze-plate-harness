@@ -34,10 +34,8 @@ src/
 │   ├── services/        # Shared services (Supabase client, Airtable client)
 │   ├── types/           # Shared types
 │   ├── utils/           # Shared utility functions (redirectUtils, queryKeys, etc.)
-│   └── theme/           # MUI theme configuration
-│       ├── defaultTheme.ts    # Default theme (preserved)
-│       ├── themeLoader.ts      # Theme loading and persistence
-│       └── theme.ts            # Theme export (uses loader)
+│   └── theme/           # Shared layout class names (appViewLayout.ts)
+├── index.css            # Design tokens (shadcn/ui CSS variables) + Tailwind v4 setup
 ```
 
 ## Server State Management (TanStack Query)
@@ -191,7 +189,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth"; // Common component imp
 
 This project uses three complementary tools for code quality and formatting: **GTS**, **ESLint**, and **Prettier**. Understanding their roles and how they work together is crucial for maintaining code consistency.
 
-**Toolchain versions** (SSOT: `package.json`): Vite 8, TypeScript 6, ESLint 10, Vitest 4, MUI 9. Ignore patterns live in `eslint.config.js` via `eslint.ignores.js` (ESLint 10 no longer reads `.eslintignore`).
+**Toolchain versions** (SSOT: `package.json`): Vite 8, TypeScript 6, ESLint 10, Vitest 4, Tailwind CSS 4 + shadcn/ui (Radix, lucide-react). Ignore patterns live in `eslint.config.js` via `eslint.ignores.js` (ESLint 10 no longer reads `.eslintignore`).
 
 ### Complexity Management
 
@@ -330,15 +328,10 @@ The project uses ESLint rules to enforce architecture and code quality:
 
 ### Code Quality Rules
 
-- **Hardcoded Styling Detection**: Detects hardcoded styling values in `sx` props
-  - Catches hardcoded `fontSize`, `fontWeight`, `fontFamily`, `color`, `bgcolor`, `backgroundColor`, `borderColor` values
-  - Detects hex colors (`#...`) and RGB/RGBA colors
-  - Detects numeric literals for `fontSize`, `fontWeight`, `height`, `width` properties
-  - Works at both root and nested property levels
-  - Excludes theme files (they are where styling SHOULD be defined)
-  - Encourages use of theme constants from `src/shared/theme/defaultTheme.ts`
-  - Components should use direct theme access: `theme.typography.body2.fontSize`, `theme.spacing(5)`, etc.
-  - Follows MUI best practices: use built-in typography variants (`body2`, `caption`) and theme spacing system
+- **Styling**: Colors, radius and fonts are CSS variables in `src/index.css` (shadcn/ui convention), exposed as Tailwind utilities (`bg-primary`, `text-muted-foreground`, …). Components use those utilities, never raw hex/RGB values.
+  - UI kit components (shadcn/ui on Radix) live in `src/components/common/<Name>/`; `radix-ui` is imported only there.
+  - Merge class names with `cn()` from `src/shared/utils/cn.ts`.
+  - The legacy `sx`-prop hardcoded-style lint rule in `eslint.config.js` no longer matches anything (MUI removed); replacing it is a pending protected-file change.
 
 These rules are defined in `eslint.config.js` using GTS's flat config format.
 

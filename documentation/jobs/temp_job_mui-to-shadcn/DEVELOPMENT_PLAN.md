@@ -17,7 +17,7 @@
 | 2 | Kit primitives + auth surfaces (all `Button`/`Input` consumers) | Contract tooling gate; `SignInPanel` test green; login/home/reset render | Done |
 | 3 | App shell + ProfileMenu (App, MainLayout, Topbar, PageLoadingState, QueryErrorBoundary, DevTasksFab, ProfileMenu/*) | Contract tooling gate; `ProfileMenu` test green; menu opens in browser | Done |
 | 4 | Tasks page + tasks feature components | Contract tooling gate; `/tasks` add / edit / reorder / status / archive / restore work | Done |
-| 5 | Remove MUI: theme files, providers, deps, vitest inline config, docs | `grep -r "@mui\|@emotion" src tests` empty; contract tooling gate; `pnpm build` | Pending |
+| 5 | Remove MUI: theme files, providers, deps, vitest inline config, docs | `grep -r "@mui\|@emotion" src tests` empty; contract tooling gate; `pnpm build` | Done |
 
 ## Conflict & compliance
 
@@ -137,6 +137,15 @@
 - Phase 4 browser gate (Playwright, dev server): add, status change, description autosave, Done → archive, restore, delete and drag reorder all pass with no console errors.
 
 - Phase 4: Pre-commit blocked on a pre-existing hook bug. `scripts/test-staged.cjs` returned vitest's exit 1 ("No test files found") before checking its own fallback to the full suite. Swapped the order and added a regression test in `scripts/test-staged.test.cjs`; `pnpm test:classify` passes 99/99.
+
+- Phase 5: `@mui/material`, `@mui/icons-material`, `@emotion/react`, `@emotion/styled` removed; no MUI/Emotion import left in `src/`, `tests/` or the Vite/Vitest configs. Main bundle went from 711 kB to 616 kB (gzip 213 kB to 183 kB). Vitest MUI `server.deps` config was removed and all 72 tests still pass.
+- **Follow-ups that need explicit user approval (protected files, D19), not done here:**
+  - `.dependency-cruiser.cjs`: replace `stack-port-mui` with `stack-port-radix` (from `^src/(features|pages|layouts)/` to `node_modules/radix-ui`), then regenerate `.dependency-cruiser-baseline.json` (its 64 MUI entries are now dead).
+  - `eslint.config.js`: the `sx`-prop hard-coded-style rules match nothing now; replace them with a rule against raw hex/rgb in `className` (or drop them).
+  - `.cursor/rules/code-style/RULE.mdc` (styling scope section, `MuiButton` override example) and `.cursor/rules/testing/RULE.mdc` ("MUI components") still describe MUI.
+  - `.agents/skills/**` still mention MUI: `review` (component rubric section B), `react-perf-vite` (`bundle-barrel-imports`), `debug/patterns.md` (Vitest + MUI entry), `modularity-review`, `router`, `prime`, `plan` (gate examples), `improve`.
+  - Optional: whitelist `components.json` in `projectStructure.config.cjs` to enable the shadcn CLI (D6).
+- Not protected, left as-is: `scripts/modularity-report-lib.cjs` keeps its MUI stack slot (it now reports 0 files; test fixtures use MUI imports by design). `.claude/settings.json` still allows WebFetch for `mui.com`.
 
 ## Decisions made
 
