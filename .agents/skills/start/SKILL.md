@@ -164,7 +164,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 
 **Airtable (task #4, optional):** Add `VITE_AIRTABLE_*` to `.env` or archive/skip with note.
 
-**Theme (task #5):** Customize `src/shared/theme/` or skip if defaults suffice.
+**Theme (task #5):** Customize the design tokens in `src/index.css` or skip if defaults suffice.
 
 Update `app-tasks.json` as each step completes.
 

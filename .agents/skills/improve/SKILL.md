@@ -87,7 +87,7 @@ Do **not** list lenses to the user. Internally scan the target (code + UX flow +
 | Duplication | Same pattern in multiple features | Remove repeated work |
 | Workaround / exception | “Just this one”, parallel path, special flag | Fix a one-off exception |
 | Ship readiness | Recent changes, plan done, pre-merge | Safety check before ship |
-| Component polish | Single UI piece, a11y/MUI quality | Score this screen’s quality |
+| Component polish | Single UI piece, a11y/kit quality | Score this screen’s quality |
 
 Score lightly (user surprise, agent/hire tax, compound cost, switch cost). Keep at most **three** findings. Drop weak ones.
 

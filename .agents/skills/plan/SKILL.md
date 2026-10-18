@@ -214,7 +214,7 @@ During planning, work through (using the rules reference above):
 
 Each phase must have a gate.
 
-### Frontend (this stack: Vite + React + MUI)
+### Frontend (this stack: Vite + React + Tailwind/shadcn-ui)
 
 - Browser: expected UI present; primary flows work; loading/error states; responsive behavior where relevant.
 
