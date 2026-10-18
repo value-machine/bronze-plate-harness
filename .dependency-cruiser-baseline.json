@@ -1,50 +1,5 @@
 [
   {
-    "type": "dependency",
-    "from": "src/features/auth/hooks/useAuthSession.ts",
-    "to": "node_modules/.pnpm/@supabase+supabase-js@2.106.2/node_modules/@supabase/supabase-js/dist/index.mjs",
-    "unresolvedTo": "@supabase/supabase-js",
-    "dependencyTypes": [
-      "npm",
-      "type-only",
-      "import"
-    ],
-    "rule": {
-      "severity": "error",
-      "name": "stack-port-supabase"
-    }
-  },
-  {
-    "type": "dependency",
-    "from": "src/features/auth/services/authErrorMessages.ts",
-    "to": "node_modules/.pnpm/@supabase+supabase-js@2.106.2/node_modules/@supabase/supabase-js/dist/index.mjs",
-    "unresolvedTo": "@supabase/supabase-js",
-    "dependencyTypes": [
-      "npm",
-      "type-only",
-      "import"
-    ],
-    "rule": {
-      "severity": "error",
-      "name": "stack-port-supabase"
-    }
-  },
-  {
-    "type": "dependency",
-    "from": "src/shared/utils/userUtils.ts",
-    "to": "node_modules/.pnpm/@supabase+supabase-js@2.106.2/node_modules/@supabase/supabase-js/dist/index.mjs",
-    "unresolvedTo": "@supabase/supabase-js",
-    "dependencyTypes": [
-      "npm",
-      "type-only",
-      "import"
-    ],
-    "rule": {
-      "severity": "error",
-      "name": "stack-port-supabase"
-    }
-  },
-  {
     "type": "module",
     "from": "src/shared/utils/dateFormatters.ts",
     "to": "src/shared/utils/dateFormatters.ts",

@@ -25,9 +25,7 @@
         "src/pages/ResetPasswordPage.tsx"
       ],
       "outboundFeatures": [],
-      "outboundStack": [
-        "Supabase"
-      ]
+      "outboundStack": []
     },
     {
       "key": "tasks",
@@ -63,13 +61,10 @@
     },
     {
       "id": "Supabase",
-      "fileCount": 4,
-      "busywork": "medium",
+      "fileCount": 1,
+      "busywork": "low",
       "files": [
-        "src/features/auth/hooks/useAuthSession.ts",
-        "src/features/auth/services/authErrorMessages.ts",
-        "src/shared/services/supabaseService.ts",
-        "src/shared/utils/userUtils.ts"
+        "src/shared/services/supabaseService.ts"
       ]
     },
     {
