@@ -13,7 +13,11 @@ const TEST_FILE = /\.test\.[jt]sx?$/;
 const WIRING_PREFIXES = ["src/pages/", "src/layouts/", "src/routes/"];
 
 const STACK_SLOTS = [
-  {id: "MUI", test: (spec, resolved) => matchesHay(spec, resolved, /@mui\//)},
+  {
+    id: "Radix",
+    test: (spec, resolved) =>
+      spec === "radix-ui" || /node_modules\/radix-ui(?:\/|$)/.test(resolved),
+  },
   {
     id: "Supabase",
     test: (spec, resolved) => matchesHay(spec, resolved, /@supabase\//),
