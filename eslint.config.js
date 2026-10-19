@@ -86,7 +86,7 @@ export default defineConfig([
   },
   // Prevent common components from importing features
   {
-    files: ['src/common/**'],
+    files: ['src/components/common/**'],
     rules: {
       'no-restricted-imports': [
         'error',

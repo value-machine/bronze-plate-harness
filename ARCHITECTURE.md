@@ -12,9 +12,7 @@ src/
 ├── components/          # App-level components
 │   └── common/          # Reusable UI components (pure components)
 │       ├── Button/
-│       ├── Input/
-│       ├── ProfileMenu/   # Cross-layout shell; uses auth profile hooks
-│       └── Topbar/
+│       └── Input/        # (kit primitives only; no feature imports, enforced by ESLint)
 ├── config/              # Configuration files (app-tasks JSON, legal URLs)
 ├── features/            # Feature modules (business logic)
 │   ├── auth/
@@ -23,8 +21,10 @@ src/
 │   │   ├── services/    # Pure functions, API calls
 │   │   └── types/       # TypeScript types for feature
 │   └── tasks/           # Dev-only task backlog (/tasks)
-├── layouts/             # Layout components
-│   └── MainLayout/      # Main layout component
+├── layouts/             # App shell: wires features into page chrome
+│   ├── MainLayout/      # Main layout component
+│   ├── ProfileMenu/     # Account menu; uses auth profile hooks
+│   └── Topbar/          # Top bar hosting ProfileMenu
 ├── pages/               # Route-level page components
 ├── shared/              # Shared across features
 │   ├── context/         # React contexts (AuthContext, QueryProvider)

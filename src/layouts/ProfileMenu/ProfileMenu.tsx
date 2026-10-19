@@ -3,8 +3,8 @@ import { useAuthContext } from "@/shared/context/AuthContext";
 import { useAuthBackendConfigured } from "@/shared/hooks/useAuthBackendConfigured";
 import { useUserProfileQuery } from "@/features/auth/hooks/useUserProfileQuery";
 import { DropdownMenu, DropdownMenuContent } from "@/components/common/DropdownMenu";
-import { ProfileMenuContent } from "./ProfileMenu/ProfileMenuContent";
-import { ProfileMenuTrigger } from "./ProfileMenu/ProfileMenuTrigger";
+import { ProfileMenuContent } from "./ProfileMenuContent";
+import { ProfileMenuTrigger } from "./ProfileMenuTrigger";
 import { useAccountMenuActions } from "@/shared/hooks/useAccountMenuActions";
 
 /**
