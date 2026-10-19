@@ -26,11 +26,11 @@ Run this block **before** version/changelog edits and **before** any `git add` /
 
 ### Onboarding task sync (when applicable)
 
-When this session completed onboarding work (Supabase env, hosting, vision doc, optional Airtable/theme):
+When this session completed onboarding work (Supabase env, hosting, vision doc, optional theme):
 
 1. Re-read `src/config/app-tasks.json` and check actual state (env vars, `DOC_APP_VISION.md` status).
 2. Archive tasks that are truly done (same archive flow as above) — e.g. Supabase task after `VITE_SUPABASE_*` is set and verified.
-3. For declined optional tasks (Airtable), archive with a skip note in the description or leave as `to-do` per user intent.
+3. For declined optional tasks (e.g. Theme), archive with a skip note in the description or leave as `to-do` per user intent.
 4. Do not add task-board UI complexity — file edits only; disk-wins if the user edited tasks in `/tasks` during the session.
 
 ## Concurrent work / other agent threads (same branch, same checkout)

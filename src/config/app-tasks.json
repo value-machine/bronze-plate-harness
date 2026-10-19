@@ -15,11 +15,6 @@
     "status": "to-do"
   },
   {
-    "title": "Configure Airtable (optional)",
-    "description": "Optional — skip or archive this task if unused. Add VITE_AIRTABLE_API_KEY, VITE_AIRTABLE_BASE_ID, and VITE_AIRTABLE_TABLE_ID to .env. Use .agents/skills/api-integrate/SKILL.md (Airtable worked example) for schema then sample rows.",
-    "status": "to-do"
-  },
-  {
     "title": "Configure Theme",
     "description": "Customize the design tokens (CSS variables) in src/index.css: brand colors, radius, and font. Kit components in src/components/common/ read them via Tailwind utilities. Verify changes in the running dev app.",
     "status": "to-do"

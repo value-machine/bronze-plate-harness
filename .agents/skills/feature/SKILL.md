@@ -205,7 +205,7 @@ Identify **subjective** choices requiring user input.
 
 ### 3.1 Architecture Planning
 - [ ] **Feature decomposition self-check (mandatory, no user stop):** Enumerate domain concepts. If >1 cohesive concept, or projected size exceeds `featureBudgets.config.cjs`, split into multiple features before file creation. See `.cursor/rules/architecture/RULE.mdc` § Feature granularity.
-- [ ] After the feature folder name is locked: [`.agents/skills/modularity-review/SKILL.md`](../modularity-review/SKILL.md) runs after **implement** creates the folder (`pnpm arch:check` + `pnpm modularity:report`). New features must not import `radix-ui` / `@supabase` / `airtable` (use nominated ports).
+- [ ] After the feature folder name is locked: [`.agents/skills/modularity-review/SKILL.md`](../modularity-review/SKILL.md) runs after **implement** creates the folder (`pnpm arch:check` + `pnpm modularity:report`). New features must not import `radix-ui` / `@supabase` (use nominated ports).
 - [ ] Determine feature structure (feature-based vs shared) - `architecture/RULE.mdc`
 - [ ] Choose layer placement (components/hooks/services/utils) - `architecture/RULE.mdc`
 - [ ] Understand import direction (downward only) - `architecture/RULE.mdc`
@@ -326,7 +326,7 @@ Verify the PLAN complies before implementation:
 - [ ] Planned file placements comply with `projectStructure.config.cjs`
 - [ ] Planned layer boundaries respect `architecture/RULE.mdc`
 - [ ] No planned circular dependencies
-- [ ] Planned complexity within thresholds (SSOT: `.eslintrc.json` lines 65-70)
+- [ ] Planned complexity within thresholds (SSOT: `eslint.config.js` (complexity rules))
 - [ ] No unresolved ambiguity remains
 - [ ] Any standards or best-practice divergence is documented with explicit user confirmation
 

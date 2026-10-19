@@ -4,7 +4,7 @@ description: >-
   Research an external API, vendor, or backend before writing integration code: check for a
   matching MCP server first, then fall back to docs/REST/scripts. Two phases — schema/contract
   first, sample/wire shape second — same discipline as the retired airtable-inspect skill,
-  generalized to any vendor. Worked examples: Supabase (MCP path), Airtable (no-MCP path).
+  generalized to any vendor. Worked example: Supabase (MCP path).
   Triggers: new API integration, unfamiliar vendor, MCP tool discovery, schema drift, wire shape,
   contract-first, POC before code.
 ---
@@ -87,7 +87,6 @@ See **actual shapes**: pagination envelope, error format, nested/linked structur
 Vendor-specific commands and exact paths live in `references/`, not inline here, so this file stays a thin dispatcher as more vendors are added:
 
 - [`references/vendor-supabase.md`](references/vendor-supabase.md) — MCP path (schema/docs tools available)
-- [`references/vendor-airtable.md`](references/vendor-airtable.md) — no-MCP path (REST scripts)
 
 Add a new vendor by adding a new `references/vendor-<slug>.md` file — do not grow this file inline (this repo's `references/` folder only allows flat `*.md` files, no subdirectories — see `projectStructure.config.cjs`).
 
@@ -98,4 +97,4 @@ Add a new vendor by adding a new `references/vendor-<slug>.md` file — do not g
 - [`.agents/skills/plan/SKILL.md`](../plan/SKILL.md) § Optional: Foundation validation — POC gate after this skill's research is done
 - [`.agents/skills/router/SKILL.md`](../router/SKILL.md) § External API research vs stack plugin skills
 - [`.cursor/rules/api-integration/RULE.mdc`](../../../.cursor/rules/api-integration/RULE.mdc) — globs-scoped principles this skill implements (`alwaysApply: false`)
-- `README.md` — env vars for currently configured vendors (Supabase, Airtable)
+- `README.md` — env vars for currently configured vendors (Supabase)

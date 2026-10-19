@@ -8,9 +8,6 @@ export const TASK_STATUS_LABEL: Record<AppTask["status"], string> = {
   done: "Done",
 };
 
-/** Widest status label in the active-task select (drives column + min-width). */
-export const TASK_STATUS_LONGEST_LABEL = "Active" as const satisfies string;
-
 /**
  * Width of the compact status Select trigger.
  * Fits the longest label ("Active") without truncation at 16px root.

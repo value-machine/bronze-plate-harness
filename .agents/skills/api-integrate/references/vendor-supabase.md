@@ -20,7 +20,7 @@ Typical Supabase MCP tools relevant to schema/contract research (exact names dep
 
 ## Phase 2 — Sample/wire shape commands (MCP)
 
-- `execute_sql` (read-only queries) for a real row-shape sample — same discipline as Airtable's sample phase: narrow scope, redact PII, don't paste full production rows into chat.
+- `execute_sql` (read-only queries) for a real row-shape sample — same discipline as the Phase 2 sample step: narrow scope, redact PII, don't paste full production rows into chat.
 - `get_logs` / `get_advisors` when debugging an existing integration rather than researching a brand-new one.
 
 ## No-MCP fallback

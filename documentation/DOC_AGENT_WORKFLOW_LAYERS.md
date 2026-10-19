@@ -136,7 +136,6 @@ No separate `documentation/DOC_*` procedure for this workflow — invocable step
 |---------|------|
 | Procedure (MCP fallback tree, phases) | `.agents/skills/api-integrate/SKILL.md` |
 | Worked example — Supabase (MCP path) | `.agents/skills/api-integrate/references/vendor-supabase.md` |
-| Worked example — Airtable (no-MCP path) | `.agents/skills/api-integrate/references/vendor-airtable.md` |
 | Globs-scoped principles | `.cursor/rules/api-integration/RULE.mdc` (`alwaysApply: false`) |
 
 **Callers:** `plan` § Optional: Foundation validation, `router`, `api-integrate`. Do not duplicate the MCP fallback tree or worked examples elsewhere — link these paths. (`security`, `database`, and `cloud-functions` rules cross-link here via Related Rules.)

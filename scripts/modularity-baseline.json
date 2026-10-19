@@ -66,14 +66,6 @@
       "files": [
         "src/shared/services/supabaseService.ts"
       ]
-    },
-    {
-      "id": "Airtable",
-      "fileCount": 1,
-      "busywork": "low",
-      "files": [
-        "src/shared/services/airtableService.ts"
-      ]
     }
   ]
 }
