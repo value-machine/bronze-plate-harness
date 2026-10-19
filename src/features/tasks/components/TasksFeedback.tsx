@@ -1,7 +1,5 @@
 import type { SaveFeedback } from "@/features/tasks/types/appTask.types";
-
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
+import { Alert, type AlertProps } from "@/components/common/Alert";
 
 const FEEDBACK_LABEL: Record<Exclude<SaveFeedback, "idle">, string> = {
   saving: "Saving…",
@@ -23,7 +21,8 @@ export const TasksFeedback = ({ feedback, errorMessage, onDismiss }: TasksFeedba
     return null;
   }
 
-  const severity = feedback === "error" ? "error" : feedback === "saving" ? "info" : "success";
+  const variant: AlertProps["variant"] =
+    feedback === "error" ? "destructive" : feedback === "saving" ? "info" : "success";
   const message =
     feedback === "error" && errorMessage
       ? errorMessage
@@ -36,19 +35,14 @@ export const TasksFeedback = ({ feedback, errorMessage, onDismiss }: TasksFeedba
   }
 
   return (
-    <Snackbar
-      open
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      sx={{ top: { xs: 16, sm: 24 }, pointerEvents: "none" }}
-    >
+    <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:top-6">
       <Alert
-        severity={severity}
-        variant="filled"
+        variant={variant}
         onClose={onDismiss}
-        sx={{ pointerEvents: "auto", maxWidth: 480, width: "calc(100vw - 32px)" }}
+        className="pointer-events-auto max-w-[480px] bg-popover shadow-lg"
       >
         {message}
       </Alert>
-    </Snackbar>
+    </div>
   );
 };

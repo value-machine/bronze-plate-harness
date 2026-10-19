@@ -1,7 +1,5 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import { QueryProvider } from "@/shared/context/QueryProvider";
 import { AuthProvider } from "@/shared/context/AuthContext";
 import { Topbar } from "@/components/common/Topbar";
@@ -24,18 +22,13 @@ const AuthCallbackPage = lazy(() =>
 );
 
 function AppContent() {
-  const theme = useTheme();
   const location = useLocation();
   const isTasksRoute = location.pathname === "/tasks";
 
   return (
     <>
       {!isTasksRoute && <Topbar />}
-      <Box
-        sx={{
-          pt: isTasksRoute ? 0 : `${theme.mixins.toolbar.minHeight}px`,
-        }}
-      >
+      <div className={isTasksRoute ? undefined : "pt-toolbar"}>
         <QueryErrorBoundary>
           <Suspense fallback={<PageLoadingState />}>
             <Routes>
@@ -50,7 +43,7 @@ function AppContent() {
             </Routes>
           </Suspense>
         </QueryErrorBoundary>
-      </Box>
+      </div>
       <DevTasksFab />
       <QueryDevtoolsGate />
     </>

@@ -1,9 +1,7 @@
 import type { ReactNode } from "react";
 import { Component } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Alert from "@mui/material/Alert";
+import { Alert } from "@/components/common/Alert";
+import { Button } from "@/components/common/Button";
 
 interface QueryErrorBoundaryProps {
   children: ReactNode;
@@ -54,24 +52,12 @@ export class QueryErrorBoundary extends Component<
         return this.props.fallback;
       }
       return (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: 200,
-            p: 4,
-            gap: 2,
-          }}
-        >
-          <Alert severity="error" sx={{ maxWidth: 400 }}>
-            <Typography variant="body1">Something went wrong. Please try again.</Typography>
+        <div className="flex min-h-[200px] flex-col items-center justify-center gap-4 p-8">
+          <Alert variant="destructive" className="max-w-[400px]">
+            Something went wrong. Please try again.
           </Alert>
-          <Button variant="contained" onClick={this.handleRetry}>
-            Retry
-          </Button>
-        </Box>
+          <Button onClick={this.handleRetry}>Retry</Button>
+        </div>
       );
     }
     return this.props.children;

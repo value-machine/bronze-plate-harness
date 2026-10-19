@@ -1,7 +1,7 @@
 ---
 name: react-perf-vite
 description: >-
-  Stack-native React performance patterns for this Vite SPA (React 19, MUI, TanStack Query,
+  Stack-native React performance patterns for this Vite SPA (React 19, Tailwind + shadcn/ui, TanStack Query,
   Cloudflare Workers). Use when optimizing bundles, waterfalls, re-renders, or client fetch
   behavior — not for repo-wide refactors (optimize2) or Lighthouse audits (web-perf).
 ---
@@ -22,7 +22,7 @@ On-demand performance playbook for **this repo's stack**. Rules live in `rules/`
 |-------------|------|
 | `optimize2` | Hotspot refactor across design → approach → efficiency → complexity; Rule of Three |
 | `web-perf` | Browser-measured CWVs, traces, network (DevTools MCP) |
-| `review` | Component quality rubric (props, MUI, a11y) |
+| `review` | Component quality rubric (props, kit consistency, a11y) |
 | SWR / Next.js patterns | This repo uses TanStack Query + Vite — not applicable |
 
 **Do not** add a compiled `AGENTS.md` in this folder — it would bloat every agent turn.

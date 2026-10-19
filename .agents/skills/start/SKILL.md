@@ -160,7 +160,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 
 **App vision (task #3):** Collaborate on `DOC_APP_VISION.md`; set status to **`ACTIVE`**.
 
-**Theme (task #4):** Customize `src/shared/theme/` or skip if defaults suffice.
+**Theme (task #4):** Customize the design tokens in `src/index.css` or skip if defaults suffice.
 
 Update `app-tasks.json` as each step completes.
 

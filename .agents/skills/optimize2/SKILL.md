@@ -486,7 +486,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
 4. Run type check: Ensure TypeScript compiles
 5. Run architecture checks (if extracting code):
    - Folder structure: `pnpm validate:structure`
-   - Import boundaries: `pnpm lint:arch`
+   - Import boundaries: `pnpm arch:check`
 6. Re-analyze complexity: Verify metrics improved (if refactoring)
 7. Manual verification: Quick smoke test of affected features
 
@@ -577,7 +577,7 @@ When extracting code, place in correct layer:
 - [ ] No upward imports
 - [ ] Folder structure whitelist respected
 - [ ] Folder structure validated (`pnpm validate:structure`)
-- [ ] ESLint architecture rules pass (`pnpm lint:arch`)
+- [ ] Architecture rules pass (`pnpm arch:check`)
 
 ---
 

@@ -1,7 +1,6 @@
 import type { ActiveTaskStatus, AppTask } from "@/features/tasks/types/appTask.types";
 import { ArchiveTaskRow } from "./ArchiveTaskRow";
 import { TasksListEmptyState } from "./TasksListEmptyState";
-import Stack from "@mui/material/Stack";
 
 interface ArchiveTaskListProps {
   tasks: AppTask[];
@@ -14,7 +13,7 @@ export const ArchiveTaskList = ({ tasks, onRestore }: ArchiveTaskListProps) => {
   }
 
   return (
-    <Stack spacing={1.5}>
+    <div className="flex flex-col gap-3">
       {tasks.map((task, displayIndex) => (
         <ArchiveTaskRow
           key={`${task.title}-${displayIndex}`}
@@ -23,6 +22,6 @@ export const ArchiveTaskList = ({ tasks, onRestore }: ArchiveTaskListProps) => {
           onRestore={onRestore}
         />
       ))}
-    </Stack>
+    </div>
   );
 };

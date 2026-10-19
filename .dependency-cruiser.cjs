@@ -11,7 +11,7 @@ module.exports = {
     },
 
     // === LAYER VIOLATION RULES ===
-    // Aligned with ESLint boundaries/element-types rules
+    // Aligned with the no-restricted-imports layer blocks in eslint.config.js
 
     // Pages cannot be imported by components or routes (downward-only)
     {
@@ -259,12 +259,12 @@ module.exports = {
     // New vendor imports outside nominated adapters fail. Existing edges are
     // grandfathered in .dependency-cruiser-baseline.json (`pnpm arch:baseline`).
     {
-      name: "stack-port-mui",
+      name: "stack-port-radix",
       severity: "error",
       comment:
-        "MUI is a stack secret. New imports from features/pages/layouts must go through src/components/common or src/shared/theme.",
-      from: { path: "^src/(features|pages|layouts)/" },
-      to: { path: "node_modules/@mui/" },
+        "Radix is a stack secret. Only the UI kit in src/components/common may import radix-ui; everything else uses the kit components.",
+      from: { pathNot: "^src/components/common/" },
+      to: { path: "node_modules/radix-ui" },
     },
     {
       name: "stack-port-supabase",
@@ -303,9 +303,10 @@ module.exports = {
     },
     exclude: {
       path: [
-        "dist",
-        "build",
-        "coverage",
+        // Anchored: unanchored "dist" also matched node_modules/**/dist/* and hid vendor edges.
+        "^dist/",
+        "^build/",
+        "^coverage/",
         "\\.test\\.[jt]sx?$",
         "\\.spec\\.[jt]sx?$",
         "__tests__",

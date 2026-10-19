@@ -1,29 +1,31 @@
 import { useState } from "react";
+import { Alert } from "@/components/common/Alert";
 import { Button } from "@/components/common/Button";
-import { Input } from "@/components/common/Input";
+import { FormField } from "@/components/common/FormField";
+import {
+  SegmentedControl,
+  type SegmentedControlOption,
+} from "@/components/common/SegmentedControl";
 import { useAuthContext } from "@/shared/context/AuthContext";
 import { useAuthRedirect } from "@/features/auth/hooks/useAuthRedirect";
 import { PASSWORD_RESET_SENT_MESSAGE } from "@/features/auth/types/authMessages";
 import { useEmailAuthValidation } from "@/features/auth/hooks/useEmailAuthValidation";
 import type { LoginCredentials, SignUpCredentials } from "@/features/auth/types/auth.types";
-import { formInlineAlertSx, formStackSpacing } from "@/shared/theme/appViewLayout";
-
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import Link from "@mui/material/Link";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { formInlineAlertClassName, formStackSpacing } from "@/shared/theme/appViewLayout";
+import { cn } from "@/shared/utils/cn";
 
 type EmailAuthMode = "sign-in" | "sign-up" | "forgot-password";
+
+const MODE_OPTIONS: SegmentedControlOption<EmailAuthMode>[] = [
+  { value: "sign-in", label: "Sign in" },
+  { value: "sign-up", label: "Sign up" },
+];
+
+const textLinkClassName = "text-xs text-primary hover:underline";
 
 interface EmailAuthFormProps {
   authDisabled?: boolean;
 }
-
-const compactFieldSx = {
-  "& .MuiInputBase-root": { fontSize: { xs: "0.875rem", sm: "1rem" } },
-};
 
 export const EmailAuthForm = ({ authDisabled = false }: EmailAuthFormProps) => {
   const { login, signUp, requestPasswordReset, loading, clearAuthError } = useAuthContext();
@@ -38,8 +40,7 @@ export const EmailAuthForm = ({ authDisabled = false }: EmailAuthFormProps) => {
   const isForgotMode = mode === "forgot-password";
   const displayError = validationError;
 
-  const handleModeChange = (_: React.MouseEvent<HTMLElement>, newMode: EmailAuthMode | null) => {
-    if (!newMode) return;
+  const handleModeChange = (newMode: EmailAuthMode) => {
     setMode(newMode);
     setValidationError(null);
     setSuccessMessage(null);
@@ -109,96 +110,79 @@ export const EmailAuthForm = ({ authDisabled = false }: EmailAuthFormProps) => {
   })();
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+    <form onSubmit={handleSubmit} className="w-full">
       {!isForgotMode && (
-        <ToggleButtonGroup
+        <SegmentedControl
+          options={MODE_OPTIONS}
           value={mode}
-          exclusive
-          onChange={handleModeChange}
-          fullWidth
-          size="small"
-          sx={{ mb: formStackSpacing.section }}
-        >
-          <ToggleButton value="sign-in">Sign in</ToggleButton>
-          <ToggleButton value="sign-up">Sign up</ToggleButton>
-        </ToggleButtonGroup>
+          onValueChange={handleModeChange}
+          className={formStackSpacing.sectionBelow}
+        />
       )}
 
       {displayError && (
-        <Alert severity="error" sx={formInlineAlertSx}>
+        <Alert variant="destructive" className={formInlineAlertClassName}>
           {displayError}
         </Alert>
       )}
 
       {successMessage && (
-        <Alert severity="success" sx={formInlineAlertSx}>
+        <Alert variant="success" className={formInlineAlertClassName}>
           {successMessage}
         </Alert>
       )}
 
-      <Input
+      <FormField
         label="Email"
         type="email"
         value={email}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+        onChange={(event) => setEmail(event.target.value)}
         required
-        fullWidth
-        size="small"
-        margin="dense"
         autoComplete="email"
-        sx={compactFieldSx}
+        containerClassName="mt-2"
       />
 
       {!isForgotMode && (
-        <Input
+        <FormField
           label="Password"
           type="password"
           value={password}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
           required
-          fullWidth
-          size="small"
-          margin="dense"
           autoComplete={mode === "sign-up" ? "new-password" : "current-password"}
-          sx={compactFieldSx}
+          containerClassName="mt-3"
         />
       )}
 
       {mode === "sign-in" && (
-        <Box sx={{ textAlign: "right", mt: 0.5 }}>
-          <Link component="button" type="button" variant="caption" onClick={handleForgotPassword}>
+        <div className="mt-1 text-right">
+          <button type="button" onClick={handleForgotPassword} className={textLinkClassName}>
             Forgot password?
-          </Link>
-        </Box>
+          </button>
+        </div>
       )}
 
       {isForgotMode && (
-        <Box sx={{ mt: 0.5 }}>
-          <Link component="button" type="button" variant="caption" onClick={handleBackToSignIn}>
+        <div className="mt-1">
+          <button type="button" onClick={handleBackToSignIn} className={textLinkClassName}>
             Back to sign in
-          </Link>
-        </Box>
+          </button>
+        </div>
       )}
 
       <Button
         type="submit"
-        variant="contained"
-        fullWidth
+        className={cn("w-full", formStackSpacing.sectionAbove)}
         disabled={loading || authDisabled}
-        sx={{ mt: formStackSpacing.section }}
       >
         {submitLabel}
       </Button>
 
       {mode === "sign-up" && (
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ mt: 1, display: "block", lineHeight: 1.35 }}
-        >
+        <p className="mt-2 text-xs leading-snug text-muted-foreground">
           By creating an account you agree to our terms of service.
-        </Typography>
+        </p>
       )}
-    </Box>
+    </form>
   );
 };

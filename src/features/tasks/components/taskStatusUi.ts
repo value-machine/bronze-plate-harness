@@ -9,13 +9,14 @@ export const TASK_STATUS_LABEL: Record<AppTask["status"], string> = {
 };
 
 /**
- * Min width for the small outlined status Select.
- * Fits "Active" without ellipsis (`.MuiSelect-select` scrollWidth ≈ 95px at 16px root).
+ * Width of the compact status Select trigger.
+ * Fits the longest label ("Active") without truncation at 16px root.
  */
 export const TASK_STATUS_SELECT_MIN_WIDTH = "6rem";
 
-export const TASK_STATUS_COLOR: Record<AppTask["status"], string> = {
-  "to-do": "text.secondary",
-  "in-progress": "warning.main",
-  done: "success.main",
+/** Text color class per status (tokens from `src/index.css`). */
+export const TASK_STATUS_TEXT_CLASS: Record<AppTask["status"], string> = {
+  "to-do": "text-muted-foreground",
+  "in-progress": "text-warning",
+  done: "text-success",
 };

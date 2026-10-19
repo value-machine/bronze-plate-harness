@@ -101,7 +101,7 @@ See [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`.agents/sk
 
 ```markdown
 - [Phase 2] Removed legacy helper; orphan import in X.ts — clean up in a follow-up
-- [Phase 3] Bar animation: MUI Transitions unsuitable for layout; used CSS transition instead
+- [Phase 3] Bar animation: Radix Collapsible unsuitable for layout; used CSS transition instead
 ```
 
 ---
@@ -127,7 +127,7 @@ See [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`.agents/sk
 ```markdown
 | Decision | Context | Outcome | User asked? |
 |----------|---------|---------|-------------|
-| Bar animation: CSS not MUI | MUI Transitions unsuitable for layout | CSS transition 300ms | Yes |
+| Bar animation: CSS not Collapsible | Radix Collapsible unsuitable for layout | CSS transition 300ms | Yes |
 | Chips: hover state | No precedent | Match existing chip pattern | No |
 ```
 

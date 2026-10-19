@@ -1,14 +1,14 @@
 ---
 name: review
 description: >-
-  Scores a TypeScript + MUI component against a structured quality rubric (0–5 per item).
+  Scores a TypeScript + shadcn/ui (Tailwind) component against a structured quality rubric (0–5 per item).
   Use when reviewing a specific component for UX, architecture, and maintainability. Not
   repo-rule audits (validate) or development-plan critique (review-dev-plan).
 ---
 
 # review
 
-Fill in this rubric to review a component in your TypeScript + MUI full-stack app.
+Fill in this rubric to review a component in your TypeScript + shadcn/ui (Tailwind + Radix) full-stack app.
 
 ## Scoring Guide
 
@@ -30,7 +30,7 @@ At the end, sum the points and compute a percentage.
 ## Section A – API & Props (max 25)
 
 **A1. Prop naming and intent (0–5)**
-- Names are clear, specific, and follow common React/MUI conventions (value, onChange, open, variant, etc.)
+- Names are clear, specific, and follow common React/shadcn conventions (value, onValueChange, open, variant, size, asChild, etc.)
 - No confusing abbreviations or "magic" props
 
 **A2. Required vs optional & defaults (0–5)**
@@ -44,8 +44,8 @@ At the end, sum the points and compute a percentage.
 - No unnecessary `any` or overly broad types
 
 **A4. Composability and flexibility (0–5)**
-- Supports standard MUI patterns: className, sx, style, and ...rest when appropriate
-- Designed to compose with other MUI components (e.g., can be placed into Grid, Stack, Box easily)
+- Supports standard shadcn patterns: `className` (merged with `cn()`), `asChild` where it renders a link/trigger, and `...rest` when appropriate
+- Designed to compose with other kit components and plain Tailwind layout (flex/grid wrappers)
 
 **A5. API surface size & simplicity (0–5)**
 - No unnecessary props
@@ -54,17 +54,17 @@ At the end, sum the points and compute a percentage.
 
 ---
 
-## Section B – UI/UX & MUI Consistency (max 25)
+## Section B – UI/UX & Kit Consistency (max 25)
 
 **B1. Visual consistency with theme (0–5)**
-- Uses theme-based values via sx, theme, or styled
+- Uses design tokens via Tailwind utilities (`bg-primary`, `text-muted-foreground`, `rounded-lg`) from `src/index.css`
 - Colors, typography, spacing, and radius match the design system
-- No hard-coded arbitrary styles where theme tokens exist
+- No hard-coded arbitrary values (`bg-[#…]`) where tokens exist
 
 **B2. Layout & responsiveness (0–5)**
 - Works well on desktop; layout doesn't break on common desktop widths
 - Degrades reasonably on mobile/tablet (no overflow, unusable controls)
-- Uses MUI responsive APIs (sx with breakpoints, Grid, Stack) where appropriate
+- Uses Tailwind responsive prefixes (`sm:`, `md:`) and flex/grid layout where appropriate
 
 **B3. Interactive states & feedback (0–5)**
 - Clear visual feedback for hover, active, disabled, error, loading, success
@@ -76,9 +76,9 @@ At the end, sum the points and compute a percentage.
 - Labels, helper texts, and tooltips are clear and concise
 - Empty states are handled (not just a blank area)
 
-**B5. Use of MUI components & patterns (0–5)**
-- Prefers MUI primitives and patterns over custom ad-hoc HTML + CSS
-- Uses appropriate MUI components (Button, TextField, Dialog, Table, DataGrid, etc.) instead of reinventing them
+**B5. Use of kit components & patterns (0–5)**
+- Prefers kit components in `src/components/common/` (Button, Input, Select, Modal, DropdownMenu, …) over ad-hoc HTML + CSS
+- Adds a missing primitive to the kit (shadcn source on Radix) instead of reinventing it inside a feature
 
 ---
 
@@ -86,7 +86,7 @@ At the end, sum the points and compute a percentage.
 
 **C1. Semantic structure (0–5)**
 - Uses correct underlying elements (buttons are `<button>`, headings use `<h*>`, lists use `<ul>`/`<li>`, etc.)
-- Custom components preserve semantics (e.g., `component="button"` when using Box or Typography interactively)
+- Custom components preserve semantics (e.g., a clickable element is a `<button>` or uses `asChild` on a real link, not a `<div onClick>`)
 
 **C2. Keyboard navigation (0–5)**
 - All interactive elements are reachable with Tab / Shift+Tab
@@ -232,7 +232,7 @@ Use this per component:
 | Section | Score | Max |
 |---------|-------|-----|
 | A – API & Props | /25 | 25 |
-| B – UI/UX & MUI Consistency | /25 | 25 |
+| B – UI/UX & Kit Consistency | /25 | 25 |
 | C – Accessibility | /20 | 20 |
 | D – Performance | /15 | 15 |
 | E – State & Backend Integration | /20 | 20 |

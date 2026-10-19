@@ -1,39 +1,24 @@
 import { Link } from "react-router-dom";
 import { ProfileMenu } from "@/components/common/ProfileMenu";
 
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-
 /**
  * Topbar component that is always visible.
  * This component is designed to be reusable across all apps.
  */
 export const Topbar = () => {
   return (
-    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Box
-            component={Link}
-            to="/"
-            sx={{
-              color: "primary.main",
-              textDecoration: "none",
-              "&:hover": {
-                textDecoration: "none",
-              },
-            }}
-          >
+    <header className="fixed inset-x-0 top-0 z-40 bg-card text-foreground shadow-md">
+      <div className="flex h-toolbar items-center px-4 sm:px-6">
+        <div className="flex-1 text-xl font-bold">
+          <Link to="/" className="text-primary no-underline">
             plate-harness
-          </Box>
-        </Typography>
+          </Link>
+        </div>
 
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <div className="flex items-center gap-2">
           <ProfileMenu />
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </div>
+      </div>
+    </header>
   );
 };

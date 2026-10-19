@@ -1,12 +1,12 @@
 # plate-harness
 
-A production-ready harness (boilerplate + agent harness) for building React applications with TypeScript, Vite, Material-UI, and Supabase. It enforces strict architectural rules and includes authentication as an example feature.
+A production-ready harness (boilerplate + agent harness) for building React applications with TypeScript, Vite, Tailwind CSS + shadcn/ui, and Supabase. It enforces strict architectural rules and includes authentication as an example feature.
 
 ## Features
 
 - ⚡️ **Vite** - Fast build tool and dev server
 - ⚛️ **React 19** - Latest React with TypeScript
-- 🎨 **Material-UI (MUI)** - Comprehensive UI component library
+- 🎨 **shadcn/ui** - Tailwind CSS v4 + Radix components owned in-repo (`src/components/common/`)
 - 🗄️ **Supabase** - Backend-as-a-Service for authentication and database (optional)
 - 🧭 **React Router** - Client-side routing
 - 📏 **ESLint + GTS + Prettier** - Code quality and style enforcement (see [ARCHITECTURE.md](./ARCHITECTURE.md#code-quality-tools))
@@ -18,7 +18,7 @@ A production-ready harness (boilerplate + agent harness) for building React appl
 
 | Area | Version |
 |------|---------|
-| Runtime / UI | React 19, MUI 9, React Router 7 |
+| Runtime / UI | React 19, Tailwind CSS 4 + shadcn/ui (Radix, lucide-react), React Router 7 |
 | Build | Vite 8, TypeScript 6 |
 | Data | TanStack Query 5, Supabase JS 2 |
 | Quality | ESLint 10, Vitest 4, Prettier 3, dependency-cruiser 17 |
@@ -207,7 +207,7 @@ Legacy note: `VITE_SUPABASE_ANON_KEY` is still accepted for backward compatibili
 
 #### Theme customization (optional) 🎨
 
-Customize `src/shared/theme/` or use [MUI Theme Creator](https://bareynol.github.io/mui-theme-creator/) as a starting point.
+Edit the design tokens (CSS variables) in `src/index.css`. Components in `src/components/common/` read them through Tailwind utilities, so changing a token restyles the app.
 
 #### App vision
 
@@ -249,7 +249,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ### Features
 
 - ✅ **Authentication**: Supabase authentication (when configured)
-- ✅ **Theme Customization**: Customize the MUI theme
+- ✅ **Theme Customization**: Customize design tokens in `src/index.css`
 - ✅ **Frontend Development**: All UI components and features work independently
 
 ### Configuring Supabase Later

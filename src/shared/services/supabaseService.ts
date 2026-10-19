@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-/** Vendor types re-exported so the rest of the app imports Supabase only through this port. */
+/** Supabase types for the rest of the app (this file is the only @supabase import site). */
 export type { AuthError, User as SupabaseUser } from "@supabase/supabase-js";
 export type SupabaseAuth = SupabaseClient["auth"];
 
