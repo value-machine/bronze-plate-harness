@@ -28,7 +28,7 @@ A production-ready harness (boilerplate + agent harness) for building React appl
 
 ### Required
 
-- **Node.js** 20.x or higher - [Download here](https://nodejs.org/)
+- **Node.js** 22.x or higher - [Download here](https://nodejs.org/)
 - **pnpm** 9.15.4 or higher (recommended) or npm/yarn
   - Install globally: `npm install -g pnpm`
 - **Git** - Required for cloning the repository and git hooks
