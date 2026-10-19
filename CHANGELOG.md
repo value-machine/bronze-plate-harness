@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0] - 2026-10-19
+
+### Added
+
+- **shadcn/ui kit** (Tailwind CSS v4 + Radix + lucide-react) in `src/components/common/<Name>/`: Alert, Avatar, Badge, Button, Card, DropdownMenu, FormField, Input, Label, Modal, SegmentedControl, Select, Separator, Spinner, Tabs, Textarea, Tooltip. Design tokens (brand colors, radius, Montserrat) are CSS variables in `src/index.css`; `cn()` in `src/shared/utils/cn.ts`.
+- **`stack-port-radix`** dependency-cruiser rule: only `src/components/common` may import `radix-ui`.
+- **Hardcoded-color lint rule:** warns on Tailwind arbitrary colors in class strings (`bg-[#…]`) and raw colors in `style` props.
+
+### Changed
+
+- **Git workflow mode is now `model-c`** (`src/config/git-workflow.json`): per-task branch → squash PR → `main`; release-please owns versions.
+- All screens (auth, home, reset password, app shell, ProfileMenu, dev task backlog) ported from MUI to the kit; brand look kept, button text is sentence case.
+- `ProfileMenu` uses a Radix dropdown; the unused external-anchor mode (`useAnchorMenuState`, `anchorMenuProps`) is gone.
+- Layout tokens in `src/shared/theme/appViewLayout.ts` are Tailwind class strings.
+- Supabase types (`SupabaseUser`, `AuthError`) are re-exported from `src/shared/services/supabaseService.ts`, now the only `@supabase/*` import site.
+- Rules, skills, README, `AGENTS.md`, `ARCHITECTURE.md` and docs describe the Tailwind/shadcn stack; the modularity report tracks Radix instead of MUI.
+
+### Removed
+
+- `@mui/material`, `@mui/icons-material`, `@emotion/react`, `@emotion/styled`; MUI theme files and the runtime custom-theme loader (`custom_mui_theme`); `stack-port-mui` and the ESLint `sx` rules.
+
+### Fixed
+
+- Dependency-cruiser excluded any path containing `dist`, so vendor imports (radix-ui, lucide, dnd-kit, supabase-js) were never checked; excludes are now anchored to the repo root.
+- `/tasks` (dev): Tailwind no longer scans the runtime-written task JSON, which fully reloaded the page on every save and could cut off archiving.
+- `/tasks` (dev): "Restore → As to-do" now works on the first pick.
+- Pre-commit staged tests fall back to the full suite when Vitest finds no related test files (Vitest exits 1 there).
+
 ## [0.40.0] - 2026-10-16
 
 ### Added
