@@ -1,62 +1,48 @@
-import MuiCard, { type CardProps as MuiCardProps } from "@mui/material/Card";
+import type { ComponentProps } from "react";
+import { cn } from "@/shared/utils/cn";
 
-export interface CardProps extends MuiCardProps {
+export type CardProps = ComponentProps<"div"> & {
   /**
-   * Whether the card should have hover elevation effect
+   * Whether the card lifts (shadow) on hover
    * @default true
    */
   hoverable?: boolean;
-  /**
-   * Base elevation level
-   * @default 1
-   */
-  baseElevation?: number;
-  /**
-   * Elevation level on hover (only applies if hoverable is true)
-   * @default 6
-   */
-  hoverElevation?: number;
-}
+};
 
-export const Card = ({
-  children,
-  hoverable = true,
-  baseElevation = 1,
-  hoverElevation = 6,
-  elevation = baseElevation,
-  sx,
-  ...props
-}: CardProps) => {
+export const Card = ({ className, hoverable = true, ...props }: CardProps) => {
   return (
-    <MuiCard
-      elevation={elevation}
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: 400,
-        width: "100%",
-        borderRadius: 4,
-        transition: "box-shadow 0.2s ease-in-out",
-        "& .MuiCardHeader-root": {
-          padding: 3,
-        },
-        "& .MuiCardContent-root": {
-          padding: 3,
-        },
-        "& .MuiCardActions-root": {
-          padding: 3,
-        },
-        ...(hoverable && {
-          "&:hover": {
-            boxShadow: hoverElevation,
-          },
-        }),
-        ...sx,
-      }}
+    <div
+      data-slot="card"
+      className={cn(
+        "flex h-full w-full max-w-[400px] flex-col gap-6 rounded-2xl border bg-card py-6 text-card-foreground shadow-sm transition-shadow duration-200",
+        hoverable && "hover:shadow-xl",
+        className
+      )}
       {...props}
-    >
-      {children}
-    </MuiCard>
+    />
   );
 };
+
+export const CardHeader = ({ className, ...props }: ComponentProps<"div">) => (
+  <div data-slot="card-header" className={cn("flex flex-col gap-1.5 px-6", className)} {...props} />
+);
+
+export const CardTitle = ({ className, ...props }: ComponentProps<"div">) => (
+  <div data-slot="card-title" className={cn("leading-none font-semibold", className)} {...props} />
+);
+
+export const CardDescription = ({ className, ...props }: ComponentProps<"div">) => (
+  <div
+    data-slot="card-description"
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+);
+
+export const CardContent = ({ className, ...props }: ComponentProps<"div">) => (
+  <div data-slot="card-content" className={cn("px-6", className)} {...props} />
+);
+
+export const CardFooter = ({ className, ...props }: ComponentProps<"div">) => (
+  <div data-slot="card-footer" className={cn("flex items-center px-6", className)} {...props} />
+);

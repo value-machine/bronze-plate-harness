@@ -200,7 +200,7 @@ While inside **plan corridor** (`I`), product/scope forks use **`plan-grill` rai
 | Plan written; qualitative critique before implementation (especially Complexity M/L) | `.agents/skills/review-dev-plan/SKILL.md` |
 | Industry standard / best practice / “is this how products usually do it?” on a **plan or proposal** | `.agents/skills/pattern-review/SKILL.md` |
 | Nontrivial generic subsystem (auth, queues, parsers, webhooks, protocol clients, …) — reuse a package/pattern vs build custom | `.agents/skills/dont-reinvent-the-wheel/SKILL.md` |
-| New `src/features/` folder, new UI/data vendor, or “how hard to replace MUI/Vite/Supabase / modularity / stack leakage” | `.agents/skills/modularity-review/SKILL.md` |
+| New `src/features/` folder, new UI/data vendor, or “how hard to replace the UI kit/Vite/Supabase / modularity / stack leakage” | `.agents/skills/modularity-review/SKILL.md` |
 | Ambiguous “improve / clean up / make better” on an existing area; `/improve` | `.agents/skills/improve/SKILL.md` |
 | Should we align [existing product/feature/component] with industry standards? / how to align? | `.agents/skills/standards-align/SKILL.md` |
 | Delete / remove / rip out / `/purge` a named feature/module/path/engine with multi-asset cleanup; leftover engine after a flag-off or replacement phase; "is the old path gone?" | `.agents/skills/purge-skill/SKILL.md` |
@@ -212,7 +212,7 @@ While inside **plan corridor** (`I`), product/scope forks use **`plan-grill` rai
 | Execute an existing `DEVELOPMENT_PLAN.md` phase by phase | `.agents/skills/implement/SKILL.md` |
 | Small scoped change; plan+implement+validate in one pass | `.agents/skills/quick-piv/SKILL.md` |
 | Review plan or implementation **without** editing by default; pre-merge / post-refactor gate (auto-selects plan-review / impl-full / gate depth) | `.agents/skills/validate/SKILL.md` |
-| Component-level rubric (props, MUI, a11y, tests) | `.agents/skills/review/SKILL.md` |
+| Component-level rubric (props, kit consistency, a11y, tests) | `.agents/skills/review/SKILL.md` |
 | Version, changelog, staging gate, **local** commit | `.agents/skills/finish/SKILL.md` |
 | Bundle **all** uncommitted work from multiple agent threads (same checkout), then push | `.agents/skills/bundle-ship/SKILL.md` |
 | Push already committed work (after `finish`) | `.agents/skills/push/SKILL.md` |
@@ -353,7 +353,7 @@ Choose by **primary outcome** (what must be true when done). If two outcomes are
 ### `rule-quality` vs `review`
 
 - **`rule-quality`:** Grade or improve **rules/commands** (rubric + quality standards).
-- **`review`:** Score **React/MUI components** with component rubric.
+- **`review`:** Score **React/shadcn-ui components** with component rubric.
 
 ### `grill-me` vs `plan-grill` vs `plan-grill-auto` vs `plan` § Refine
 

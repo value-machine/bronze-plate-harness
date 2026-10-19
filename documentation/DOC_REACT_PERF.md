@@ -11,11 +11,11 @@ Stack-native performance guidance for agents and humans. **Procedure SSOT:** `.a
 | Server state | TanStack Query 5 | SWR |
 | Code-splitting | `React.lazy` + `Suspense` | `next/dynamic` |
 | API / edge | Cloudflare Workers, Supabase | Next.js route handlers |
-| Components | MUI 9 deep imports (`@mui/material/Button`) | Barrel `@mui/material` |
+| Components | shadcn/ui kit in `src/components/common/`, named `lucide-react` icon imports | Re-exporting the whole kit or icon set from one barrel |
 
 ## Already in place (0.32.x)
 
-- MUI deep path imports (faster dev cold start)
+- Kit components imported per folder (`@/components/common/Button`)
 - Lazy auth pages and route-level `Suspense` in `App.tsx`
 - Memoized auth context; stable auth handler callbacks
 - Dev-only dynamic import for React Query Devtools
@@ -41,7 +41,7 @@ Stack-native performance guidance for agents and humans. **Procedure SSOT:** `.a
 
 ### Bundle
 
-- Keep MUI/icon deep imports — never revert to barrel files.
+- Import kit components per folder and icons by name — no app-wide UI barrel.
 - Lazy-load routes and heavy panels with `React.lazy`; wrap in `Suspense`.
 - Preload on hover/focus before navigation to heavy routes.
 - Defer analytics/logging until after first paint (`requestIdleCallback` or dynamic `import()`).

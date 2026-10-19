@@ -1,13 +1,9 @@
-import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
+import { LogIn, LogOut } from "lucide-react";
 import { ProfileInfo } from "./ProfileInfo";
 import { SignInMenuItems } from "./SignInMenuItems";
 import type { User } from "@/features/auth/types/auth.types";
 import type { UserProfile } from "@/features/auth/types/auth.types";
-
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
+import { DropdownMenuItem, DropdownMenuSeparator } from "@/components/common/DropdownMenu";
 
 interface ProfileMenuContentProps {
   isLoggedIn: boolean;
@@ -34,13 +30,11 @@ export const ProfileMenuContent = ({
     return (
       <>
         <ProfileInfo user={user} profile={profile} profileLoading={profileLoading} />
-        <Divider key="divider" />
-        <MenuItem key="sign-out" onClick={onSignOut}>
-          <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
-            <LogoutIcon fontSize="small" />
-          </Box>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={onSignOut}>
+          <LogOut />
           Sign Out
-        </MenuItem>
+        </DropdownMenuItem>
       </>
     );
   }
@@ -50,11 +44,9 @@ export const ProfileMenuContent = ({
   }
 
   return (
-    <MenuItem key="not-configured" disabled>
-      <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
-        <LoginIcon fontSize="small" />
-      </Box>
+    <DropdownMenuItem disabled>
+      <LogIn />
       Supabase not configured
-    </MenuItem>
+    </DropdownMenuItem>
   );
 };

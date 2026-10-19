@@ -104,7 +104,7 @@ These names illustrate case and suffix only. They are not destinations.
 When adding external package imports:
 
 1. **Verify the package is installed**: Check `package.json` dependencies
-2. **Types may come from wrappers**: If using a library through a wrapper (e.g., TipTap through `mui-tiptap`), types often come from the wrapper, not the original package
+2. **Types may come from wrappers**: If using a library through a wrapper (e.g., TipTap through a React binding such as `@tiptap/react`), types often come from the wrapper, not the original package
 3. **When in doubt, use inline types**: Define types locally rather than importing from potentially unavailable packages. **`any` is still forbidden** — use a narrow type, `unknown`, or a local interface; only as last resort for third-party gaps, `// eslint-disable-next-line @typescript-eslint/no-explicit-any` with a one-line justification.
 
 ## Code Organization
@@ -157,44 +157,42 @@ When a user requests a styling change (e.g., "change button color"), there are m
 
 | Level | Location | Use For | Avoid |
 |-------|----------|---------|-------|
-| **Instance** | `sx` prop on specific usage | Layout/spacing (margins, padding, positioning) | Colors, typography, visual styling |
-| **Component** | Inside component file | Custom components with unique styling not in theme | Standard MUI components that should be consistent |
-| **Global Theme** | `src/shared/theme/defaultTheme.ts` | Colors, typography, component overrides, design tokens | One-off layout adjustments |
+| **Instance** | `className` on a specific usage (merge with `cn()`) | Layout/spacing (margin, padding, positioning, width) | Colors, typography, visual styling |
+| **Component** | Kit component variants (`cva`) in `src/components/common/<Name>/<Name>.tsx` | How every usage of that component (or one variant) looks | One-off layout adjustments |
+| **Global Tokens** | CSS variables in `src/index.css` (`:root` + `@theme inline`) | Colors, radius, fonts, shared surfaces (`@utility`) | Component-specific layout |
 
 ### Decision Tree
 
 ```
-Is this a design token change? (color, typography, spacing value, shadow, border)
-├─ YES → Global Theme (defaultTheme.ts)
-└─ NO → Is this a component variant? (all buttons of type X should look different)
-    ├─ YES → Theme Component Override (defaultTheme.ts → components.MuiButton.styleOverrides)
+Is this a design token change? (color, radius, font, shadow, brand surface)
+├─ YES → Global Tokens (src/index.css)
+└─ NO → Should all usages of a kit component (or one variant) look different?
+    ├─ YES → Component variant (cva in src/components/common/<Name>/<Name>.tsx)
     └─ NO → Is this layout/spacing for this specific instance?
-        ├─ YES → Instance Level (sx prop)
-        └─ NO → Is this a custom component with unique styling?
-            ├─ YES → Component Definition (inside component file)
-            └─ NO → Ask user for clarification
+        ├─ YES → Instance level (className)
+        └─ NO → Ask user for clarification
 ```
 
 ### Default Assumption
 
 When users request styling changes without specifying scope:
-- **Assume Global Theme** (most common intent)
+- **Assume Global Tokens** (most common intent)
 - **Always ask to confirm** before implementing
 - **Explain the hierarchy** so users can make informed decisions
 
 ### When User Requests Styling Changes
 
 **Step 1: Identify the change type**
-- Design token (color, typography, shadow)? → Global Theme
-- Component appearance change? → Theme Component Override
-- Layout/spacing only? → Instance (`sx` prop)
+- Design token (color, font, radius, shadow)? → Global Tokens
+- Component appearance change? → Component variant
+- Layout/spacing only? → Instance (`className`)
 
 **Step 2: Ask the user** (required):
 
 > "At what level should this styling change be applied?
 > - **Instance level**: Only this specific usage
-> - **Component level**: All usages of this custom component
-> - **Global theme level**: All instances across the app (recommended for consistency)"
+> - **Component level**: All usages of this kit component (or one variant)
+> - **Global token level**: Everything that uses the token (recommended for consistency)"
 
 **Step 3: Wait for confirmation** before implementing
 
@@ -202,37 +200,32 @@ When users request styling changes without specifying scope:
 
 ### Implementation Rules
 
-```typescript
-// ✅ CORRECT: Theme file for colors, typography, component appearance
-// src/shared/theme/defaultTheme.ts
-MuiButton: {
-  styleOverrides: {
-    contained: {
-      background: "linear-gradient(...)",
-      color: "#ffffff",
-    },
-  },
-},
+```tsx
+// ✅ CORRECT: tokens in src/index.css
+// :root { --primary: #cf13b3; }   @theme inline { --color-primary: var(--primary); }
 
-// ✅ CORRECT: sx prop for layout/spacing only
-<Button sx={{ mt: 2, ml: 1 }}>Submit</Button>
+// ✅ CORRECT: component appearance in the kit variant
+// src/components/common/Button/Button.tsx
+// variant: { default: "bg-brand-gradient text-primary-foreground", ... }
 
-// ❌ WRONG: sx prop for colors/visual styling
-<Button sx={{ backgroundColor: "blue", color: "white" }}>Submit</Button>
+// ✅ CORRECT: className for layout/spacing only
+<Button className="mt-4 w-full">Submit</Button>
 
-// ❌ WRONG: Inline styles for design tokens
+// ❌ WRONG: hardcoded colors on an instance (lint warns)
+<Button className="bg-[#0000ff] text-[#ffffff]">Submit</Button>
+
+// ❌ WRONG: inline styles for design tokens
 <Button style={{ backgroundColor: "blue" }}>Submit</Button>
 ```
 
 ### SSOT Reference
 
-The theme file (`src/shared/theme/defaultTheme.ts`) is the **Single Source of Truth** for:
-- All color definitions (palette)
-- Typography (font families, sizes, weights)
-- Component style overrides
-- Design tokens (spacing, shadows, borders)
+`src/index.css` is the **Single Source of Truth** for:
+- All color definitions (CSS variables mapped to Tailwind utilities like `bg-primary`)
+- Fonts and radius
+- Shared brand surfaces (`@utility`, e.g. `bg-brand-gradient`)
 
-See the theme file header for detailed principles.
+Kit components in `src/components/common/` own per-component variants; `radix-ui` is imported only there (`stack-port-radix` in `.dependency-cruiser.cjs`).
 
 ## Linting Standards
 

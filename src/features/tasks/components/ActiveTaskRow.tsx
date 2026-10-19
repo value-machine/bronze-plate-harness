@@ -1,25 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { GripVertical, Trash2 } from "lucide-react";
 import type { AppTask } from "@/features/tasks/types/appTask.types";
+import { Button } from "@/components/common/Button";
+import { Input } from "@/components/common/Input";
 import {
-  TASK_STATUS_COLOR,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/common/Select";
+import { Textarea } from "@/components/common/Textarea";
+import { cn } from "@/shared/utils/cn";
+import {
   TASK_STATUS_LABEL,
   TASK_STATUS_OPTIONS,
   TASK_STATUS_SELECT_MIN_WIDTH,
+  TASK_STATUS_TEXT_CLASS,
 } from "./taskStatusUi";
 
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Delete from "@mui/icons-material/Delete";
-import DragIndicator from "@mui/icons-material/DragIndicator";
+/** Grid: drag handle | status | title (wraps below on xs) | delete. `--status-w` set inline. */
+const ROW_CLASS_NAME =
+  "group grid grid-cols-[28px_var(--status-w)_auto] grid-rows-[auto_auto] items-start gap-2 rounded-lg border bg-card p-2.5 transition-[box-shadow,opacity] duration-150 hover:shadow-md sm:grid-cols-[32px_var(--status-w)_minmax(0,1fr)_40px] sm:grid-rows-1 sm:gap-3 sm:p-3";
 
 type FocusedField = "title" | "description" | null;
 
@@ -83,96 +87,56 @@ export const ActiveTaskRow = ({
     commitRow();
   };
 
-  const handleStatus = (event: SelectChangeEvent) => {
-    onStatusChange(event.target.value as AppTask["status"]);
+  const handleStatus = (value: string) => {
+    onStatusChange(value as AppTask["status"]);
   };
 
   return (
-    <Paper
+    <div
       ref={(node: HTMLDivElement | null) => {
         setNodeRef(node);
         rowRef.current = node;
       }}
-      variant="outlined"
-      style={style}
+      style={{ ...style, "--status-w": TASK_STATUS_SELECT_MIN_WIDTH } as React.CSSProperties}
       onBlur={handleRowBlur}
-      sx={{
-        display: "grid",
-        gridTemplateColumns: {
-          xs: `28px ${TASK_STATUS_SELECT_MIN_WIDTH} auto`,
-          sm: `32px ${TASK_STATUS_SELECT_MIN_WIDTH} minmax(0, 1fr) 40px`,
-        },
-        gridTemplateRows: { xs: "auto auto", sm: "auto" },
-        alignItems: "start",
-        gap: { xs: 1, sm: 1.5 },
-        p: { xs: 1.25, sm: 1.5 },
-        borderRadius: 2,
-        opacity: isDragging ? 0.75 : 1,
-        boxShadow: isDragging ? 4 : 0,
-        transition: "box-shadow 0.15s ease, opacity 0.15s ease",
-        "&:hover": {
-          boxShadow: isDragging ? 4 : 1,
-          "& .task-delete": { opacity: 1 },
-        },
-      }}
+      className={cn(ROW_CLASS_NAME, isDragging && "opacity-75 shadow-xl")}
     >
-      <IconButton
-        size="small"
+      <Button
+        variant="ghost"
+        size="icon"
         aria-label="Drag to reorder"
-        sx={{
-          cursor: "grab",
-          mt: 0.25,
-          color: "text.disabled",
-          gridColumn: { xs: 1, sm: 1 },
-          gridRow: { xs: 1, sm: 1 },
-        }}
+        className="col-start-1 row-start-1 mt-0.5 size-7 cursor-grab text-muted-foreground/60 hover:bg-accent"
         {...attributes}
         {...listeners}
       >
-        <DragIndicator fontSize="small" />
-      </IconButton>
+        <GripVertical />
+      </Button>
 
-      <Select
-        size="small"
-        value={task.status}
-        onChange={handleStatus}
-        variant="outlined"
-        sx={{
-          width: TASK_STATUS_SELECT_MIN_WIDTH,
-          minWidth: TASK_STATUS_SELECT_MIN_WIDTH,
-          maxWidth: TASK_STATUS_SELECT_MIN_WIDTH,
-          flexShrink: 0,
-          gridColumn: { xs: 2, sm: 2 },
-          gridRow: { xs: 1, sm: 1 },
-          color: TASK_STATUS_COLOR[task.status],
-          "& .MuiOutlinedInput-root": { width: TASK_STATUS_SELECT_MIN_WIDTH },
-          "& .MuiSelect-select": {
-            py: 0.75,
-            overflow: "visible",
-            textOverflow: "clip",
-          },
-          "& .MuiSelect-icon": { display: "none" },
-        }}
-      >
-        {TASK_STATUS_OPTIONS.map((status) => (
-          <MenuItem key={status} value={status} sx={{ color: TASK_STATUS_COLOR[status] }}>
-            {TASK_STATUS_LABEL[status]}
-          </MenuItem>
-        ))}
+      <Select value={task.status} onValueChange={handleStatus}>
+        <SelectTrigger
+          hideIcon
+          aria-label="Task status"
+          className={cn(
+            "col-start-2 row-start-1 w-(--status-w)",
+            TASK_STATUS_TEXT_CLASS[task.status]
+          )}
+        >
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TASK_STATUS_OPTIONS.map((status) => (
+            <SelectItem key={status} value={status} className={TASK_STATUS_TEXT_CLASS[status]}>
+              {TASK_STATUS_LABEL[status]}
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
 
-      <Box
-        sx={{
-          minWidth: 0,
-          gridColumn: { xs: "1 / -1", sm: 3 },
-          gridRow: { xs: 2, sm: 1 },
-        }}
-      >
+      <div className="col-span-full row-start-2 min-w-0 sm:col-span-1 sm:col-start-3 sm:row-start-1">
         {editingTitle ? (
-          <TextField
-            size="small"
-            fullWidth
+          <Input
             autoFocus
+            className="h-9"
             value={titleDraft}
             onChange={(e) => {
               setTitleDraft(e.target.value);
@@ -187,31 +151,22 @@ export const ActiveTaskRow = ({
             }}
           />
         ) : (
-          <Typography
-            variant="body1"
+          <p
             onClick={() => setExpanded((v) => !v)}
             onDoubleClick={() => {
               setTitleDraft(task.title);
               setEditingTitle(true);
             }}
-            sx={{
-              cursor: "pointer",
-              fontWeight: 500,
-              lineHeight: 1.4,
-              wordBreak: "break-word",
-            }}
+            className="cursor-pointer pt-1.5 leading-snug font-medium break-words"
           >
             {task.title}
-          </Typography>
+          </p>
         )}
 
-        <Collapse in={expanded && !editingTitle}>
-          <TextField
-            size="small"
-            fullWidth
-            multiline
-            minRows={2}
-            sx={{ mt: 1 }}
+        {expanded && !editingTitle && (
+          <Textarea
+            rows={2}
+            className="mt-2"
             placeholder="Description"
             value={descriptionDraft}
             onChange={(e) => {
@@ -223,14 +178,13 @@ export const ActiveTaskRow = ({
               setExpanded(true);
             }}
           />
-        </Collapse>
-      </Box>
+        )}
+      </div>
 
-      <IconButton
-        className="task-delete"
-        size="small"
+      <Button
+        variant="ghost"
+        size="icon"
         aria-label="Delete task"
-        color="error"
         onMouseDown={(event) => {
           event.preventDefault();
         }}
@@ -239,16 +193,10 @@ export const ActiveTaskRow = ({
             onDelete();
           }
         }}
-        sx={{
-          gridColumn: { xs: 3, sm: 4 },
-          gridRow: 1,
-          justifySelf: "center",
-          opacity: { xs: 1, sm: 0 },
-          transition: "opacity 0.15s ease",
-        }}
+        className="col-start-3 row-start-1 justify-self-center text-destructive transition-opacity hover:bg-destructive/10 sm:col-start-4 sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
       >
-        <Delete fontSize="small" />
-      </IconButton>
-    </Paper>
+        <Trash2 />
+      </Button>
+    </div>
   );
 };

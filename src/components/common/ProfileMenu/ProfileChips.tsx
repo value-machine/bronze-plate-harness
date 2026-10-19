@@ -1,8 +1,6 @@
 import type { UserProfile } from "@/features/auth/types/auth.types";
 import { getRoleDisplay } from "@/shared/utils/profileHelpers";
-
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
+import { Badge } from "@/components/common/Badge";
 
 interface ProfileChipsProps {
   profile: UserProfile;
@@ -18,32 +16,22 @@ export const ProfileChips = ({ profile }: ProfileChipsProps) => {
   }
 
   return (
-    <Box sx={{ display: "flex", gap: 0.5, mt: 0.5, flexWrap: "wrap" }}>
+    <div className="mt-1 flex flex-wrap gap-1">
       {roleDisplay && (
-        <Chip
-          label={roleDisplay}
-          size="small"
-          variant="outlined"
-          sx={{ fontSize: (theme) => theme.typography.caption.fontSize }}
-        />
+        <Badge variant="outline" className="text-[0.65rem]">
+          {roleDisplay}
+        </Badge>
       )}
       {hasCredits && (
-        <Chip
-          label={`${profile.remaining_credits} credits`}
-          size="small"
-          variant="outlined"
-          color="primary"
-          sx={{ fontSize: (theme) => theme.typography.caption.fontSize }}
-        />
+        <Badge variant="primary" className="text-[0.65rem]">
+          {`${profile.remaining_credits} credits`}
+        </Badge>
       )}
       {hasOrganization && (
-        <Chip
-          label={profile.ef_nl_edu_person_home_organization}
-          size="small"
-          variant="outlined"
-          sx={{ fontSize: (theme) => theme.typography.caption.fontSize }}
-        />
+        <Badge variant="outline" className="text-[0.65rem]">
+          {profile.ef_nl_edu_person_home_organization}
+        </Badge>
       )}
-    </Box>
+    </div>
   );
 };

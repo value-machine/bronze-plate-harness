@@ -21,7 +21,7 @@
   },
   {
     "title": "Configure Theme",
-    "description": "Customize MUI theme via src/shared/theme/ (themeLoader.ts and related tokens). Match brand colors, typography, and dark/light mode defaults. Verify changes in the running dev app.",
+    "description": "Customize the design tokens (CSS variables) in src/index.css: brand colors, radius, and font. Kit components in src/components/common/ read them via Tailwind utilities. Verify changes in the running dev app.",
     "status": "to-do"
   }
 ]

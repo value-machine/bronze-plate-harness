@@ -15,7 +15,6 @@ import {
 import type { AppTask } from "@/features/tasks/types/appTask.types";
 import { ActiveTaskRow } from "./ActiveTaskRow";
 import { TasksListEmptyState } from "./TasksListEmptyState";
-import Stack from "@mui/material/Stack";
 
 interface ActiveTaskListProps {
   tasks: AppTask[];
@@ -58,7 +57,7 @@ export const ActiveTaskList = ({
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={ids} strategy={verticalListSortingStrategy}>
-        <Stack spacing={1.5}>
+        <div className="flex flex-col gap-3">
           {tasks.map((task, index) => (
             <ActiveTaskRow
               key={ids[index]}
@@ -70,7 +69,7 @@ export const ActiveTaskList = ({
               onDelete={() => void onDelete(index)}
             />
           ))}
-        </Stack>
+        </div>
       </SortableContext>
     </DndContext>
   );

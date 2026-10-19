@@ -57,7 +57,7 @@ Deliver a concise, scannable summary:
 
 ### Project overview
 
-- Application type (Vite + React + MUI + Supabase starter).
+- Application type (Vite + React + Tailwind/shadcn-ui + Supabase starter).
 - Primary libraries (from `package.json`).
 - Current version (`package.json` → `version`).
 

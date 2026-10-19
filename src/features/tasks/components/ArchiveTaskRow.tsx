@@ -1,14 +1,7 @@
 import { useState } from "react";
-import type { SelectChangeEvent } from "@mui/material/Select";
 import type { ActiveTaskStatus, AppTask } from "@/features/tasks/types/appTask.types";
-
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
+import { Badge } from "@/components/common/Badge";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/common/Select";
 
 interface ArchiveTaskRowProps {
   task: AppTask;
@@ -18,63 +11,45 @@ interface ArchiveTaskRowProps {
 
 export const ArchiveTaskRow = ({ task, displayIndex, onRestore }: ArchiveTaskRowProps) => {
   const [expanded, setExpanded] = useState(false);
-  const [restoreStatus, setRestoreStatus] = useState<ActiveTaskStatus>("to-do");
 
-  const handleStatusPick = (event: SelectChangeEvent) => {
-    const status = event.target.value as ActiveTaskStatus;
-    setRestoreStatus(status);
-    void onRestore(displayIndex, status);
+  const handleStatusPick = (value: string) => {
+    void onRestore(displayIndex, value as ActiveTaskStatus);
   };
 
   return (
-    <Paper
-      variant="outlined"
-      sx={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 1.5,
-        p: { xs: 1.25, sm: 1.5 },
-        borderRadius: 2,
-        transition: "box-shadow 0.15s ease",
-        "&:hover": { boxShadow: 1 },
-      }}
-    >
-      <Box sx={{ flex: 1, minWidth: 0 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap", mb: 0.25 }}>
-          <Typography
-            variant="body1"
+    <div className="flex items-start gap-3 rounded-lg border bg-card p-2.5 transition-shadow hover:shadow-md sm:p-3">
+      <div className="min-w-0 flex-1">
+        <div className="mb-0.5 flex flex-wrap items-center gap-2">
+          <p
             onClick={() => setExpanded((v) => !v)}
-            sx={{ cursor: "pointer", fontWeight: 500, lineHeight: 1.4, wordBreak: "break-word" }}
+            className="cursor-pointer leading-snug font-medium break-words"
           >
             {task.title}
-          </Typography>
-          <Chip label="Done" size="small" color="success" variant="outlined" />
-        </Box>
+          </p>
+          <Badge variant="success">Done</Badge>
+        </div>
 
-        <Collapse in={expanded}>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, whiteSpace: "pre-wrap" }}>
+        {expanded && (
+          <p className="mt-2 text-sm whitespace-pre-wrap text-muted-foreground">
             {task.description || "No description"}
-          </Typography>
-        </Collapse>
+          </p>
+        )}
 
         {!task.description && !expanded && (
-          <Typography variant="caption" color="text.disabled">
-            Click title to view details
-          </Typography>
+          <span className="text-xs text-muted-foreground/60">Click title to view details</span>
         )}
-      </Box>
+      </div>
 
-      <Select
-        size="small"
-        value={restoreStatus}
-        onChange={handleStatusPick}
-        displayEmpty
-        renderValue={() => "Restore"}
-        sx={{ minWidth: "7.5rem", flexShrink: 0, "& .MuiSelect-select": { py: 0.75 } }}
-      >
-        <MenuItem value="to-do">As to-do</MenuItem>
-        <MenuItem value="in-progress">As active</MenuItem>
+      {/* Always unselected so every pick fires (a restore is an action, not a stored value). */}
+      <Select value="" onValueChange={handleStatusPick}>
+        <SelectTrigger aria-label="Restore task" className="w-30 shrink-0">
+          Restore
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="to-do">As to-do</SelectItem>
+          <SelectItem value="in-progress">As active</SelectItem>
+        </SelectContent>
       </Select>
-    </Paper>
+    </div>
   );
 };

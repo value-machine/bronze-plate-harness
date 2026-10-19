@@ -1,0 +1,173 @@
+/*
+ * Global styles and design tokens (shadcn/ui convention).
+ *
+ * SSOT for app colors, radius, and typography. Kit components in
+ * src/components/common/ read these through Tailwind utilities
+ * (bg-primary, text-muted-foreground, ...). Do not hardcode colors in components.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Runtime-written dev data (the /tasks page rewrites src/config/app-tasks*.json).
+ * Scanning it for class names makes every save trigger a full page reload in dev.
+ */
+@source not "./config";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: dark;
+  --radius: 0.625rem;
+  --app-toolbar-height: 64px;
+
+  --background: #070614;
+  --foreground: #ffffff;
+  --card: #1c1b29;
+  --card-foreground: #ffffff;
+  --popover: #1c1b29;
+  --popover-foreground: #ffffff;
+  --primary: #cf13b3;
+  --primary-foreground: #ffffff;
+  --primary-gradient-start: #8d0bd1;
+  --secondary: #e6196b;
+  --secondary-foreground: #ffffff;
+  --muted: #26253a;
+  --muted-foreground: #b3b3c2;
+  --accent: rgb(255 255 255 / 0.08);
+  --accent-foreground: #ffffff;
+  --destructive: #f44336;
+  --destructive-foreground: #ffffff;
+  --success: #66bb6a;
+  --warning: #ffa726;
+  --info: #29b6f6;
+  --border: rgb(255 255 255 / 0.12);
+  --input: rgb(255 255 255 / 0.23);
+  --ring: #cf13b3;
+}
+
+@theme inline {
+  --font-sans: "Montserrat", sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-gradient-start: var(--primary-gradient-start);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --spacing-toolbar: var(--app-toolbar-height);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.3) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(255 255 255 / 0.3);
+    border-radius: 4px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(255 255 255 / 0.5);
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    margin: 0;
+    min-height: 100vh;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+  code,
+  pre {
+    @apply bg-background text-foreground font-sans;
+  }
+  code {
+    @apply rounded-sm px-1 text-sm;
+  }
+}
+
+/* Brand button surfaces (used by Button variants). */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(
+    45deg,
+    var(--primary-gradient-start) 0%,
+    var(--primary) 30%,
+    var(--primary-gradient-start) 60%,
+    var(--primary) 90%,
+    var(--primary-gradient-start) 100%
+  );
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  box-shadow: 0 3px 5px 2px rgb(0 0 0 / 0.4);
+  transition: background-position 0.6s ease;
+  &:hover {
+    background-position: 100% 50%;
+  }
+  &:active {
+    box-shadow: 0 2px 4px 1px rgb(0 0 0 / 0.5);
+  }
+}
+
+@utility bg-foreground-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.6s ease;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      transparent 45%,
+      var(--foreground) 75%,
+      var(--foreground) 100%
+    );
+    background-size: 250% 250%;
+    background-position: 0% 50%;
+    transition: background-position 0.6s ease;
+  }
+  &:hover {
+    color: var(--background);
+  }
+  &:hover::before {
+    background-position: 100% 50%;
+  }
+}

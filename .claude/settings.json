@@ -50,7 +50,7 @@
       "Bash(git rev-parse:*)",
       "Bash(git ls-files:*)",
       "WebFetch(domain:react.dev)",
-      "WebFetch(domain:mui.com)",
+      "WebFetch(domain:ui.shadcn.com)",
       "WebFetch(domain:supabase.com)",
       "WebFetch(domain:tanstack.com)",
       "WebFetch(domain:vitejs.dev)",

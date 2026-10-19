@@ -57,7 +57,7 @@ This repo is **not** test-first by default. Default: add meaningful automated te
 
 **Do not default to TDD** when:
 
-- UI flows, MUI components, or layout (manual/browser validation is default — `workflow/RULE.mdc`)
+- UI flows, UI kit components, or layout (manual/browser validation is default — `workflow/RULE.mdc`)
 - Supabase RLS, auth, or Edge Functions (see § Edge Functions Testing — manual)
 - The spec is still ambiguous — resolve with user verification first (`.agents/skills/feature/SKILL.md`)
 

@@ -75,15 +75,15 @@ describe("modularity-report-lib", () => {
     assert.deepEqual(billing.wiring, ["src/pages/tasks/TasksPage.tsx"]);
   });
 
-  test("should list raw MUI file counts including adapter files when they import @mui", () => {
+  test("should list raw Radix file counts including adapter files when they import radix-ui", () => {
     const cruiseResult = {
       modules: [
         {
-          source: "src/shared/theme/defaultTheme.ts",
+          source: "src/components/common/Select/Select.tsx",
           dependencies: [
             {
-              module: "@mui/material/styles",
-              resolved: "node_modules/@mui/material/styles/index.js",
+              module: "radix-ui",
+              resolved: "node_modules/radix-ui/dist/index.mjs",
             },
           ],
         },
@@ -91,19 +91,19 @@ describe("modularity-report-lib", () => {
           source: "src/features/auth/components/SignInPanel.tsx",
           dependencies: [
             {
-              module: "@mui/material",
-              resolved: "node_modules/@mui/material/index.js",
+              module: "radix-ui",
+              resolved: "node_modules/radix-ui/dist/index.mjs",
             },
           ],
         },
       ],
     };
     const report = buildReport(cruiseResult, tmpRoot, null);
-    const mui = report.stack.find((row) => row.id === "MUI");
-    assert.ok(mui);
-    assert.equal(mui.fileCount, 2);
-    assert.ok(mui.files.includes("src/shared/theme/defaultTheme.ts"));
-    assert.ok(mui.files.includes("src/features/auth/components/SignInPanel.tsx"));
+    const radix = report.stack.find((row) => row.id === "Radix");
+    assert.ok(radix);
+    assert.equal(radix.fileCount, 2);
+    assert.ok(radix.files.includes("src/components/common/Select/Select.tsx"));
+    assert.ok(radix.files.includes("src/features/auth/components/SignInPanel.tsx"));
   });
 
   test("should not blend feature and stack totals when formatting markdown", () => {
@@ -113,8 +113,8 @@ describe("modularity-report-lib", () => {
           source: "src/features/auth/hooks/useAuth.ts",
           dependencies: [
             {
-              module: "@mui/material",
-              resolved: "node_modules/@mui/material/index.js",
+              module: "radix-ui",
+              resolved: "node_modules/radix-ui/dist/index.mjs",
             },
           ],
         },
@@ -129,15 +129,15 @@ describe("modularity-report-lib", () => {
     assert.equal(/composite/i.test(markdown), false);
   });
 
-  test("should report an increase in MUI files versus baseline without a composite score", () => {
+  test("should report an increase in Radix files versus baseline without a composite score", () => {
     const cruiseResult = {
       modules: [
         {
           source: "src/features/auth/components/A.tsx",
           dependencies: [
             {
-              module: "@mui/material",
-              resolved: "node_modules/@mui/material/index.js",
+              module: "radix-ui",
+              resolved: "node_modules/radix-ui/dist/index.mjs",
             },
           ],
         },
@@ -145,8 +145,8 @@ describe("modularity-report-lib", () => {
           source: "src/features/auth/components/B.tsx",
           dependencies: [
             {
-              module: "@mui/material",
-              resolved: "node_modules/@mui/material/index.js",
+              module: "radix-ui",
+              resolved: "node_modules/radix-ui/dist/index.mjs",
             },
           ],
         },
@@ -154,13 +154,13 @@ describe("modularity-report-lib", () => {
     };
     const previous = {
       features: [],
-      stack: [{id: "MUI", fileCount: 1}],
+      stack: [{id: "Radix", fileCount: 1}],
     };
     const report = buildReport(cruiseResult, tmpRoot, previous);
-    const muiDelta = report.delta.stack.find((row) => row.id === "MUI");
-    assert.ok(muiDelta);
-    assert.equal(muiDelta.fileCount, 2);
-    assert.equal(muiDelta.change, 1);
+    const radixDelta = report.delta.stack.find((row) => row.id === "Radix");
+    assert.ok(radixDelta);
+    assert.equal(radixDelta.fileCount, 2);
+    assert.equal(radixDelta.change, 1);
   });
 
   test("should score a vendor only when the cruise graph lists that package", () => {
@@ -178,8 +178,8 @@ describe("modularity-report-lib", () => {
       ],
     };
     const report = buildReport(cruiseResult, tmpRoot, null);
-    const mui = report.stack.find((row) => row.id === "MUI");
-    assert.equal(mui.fileCount, 0);
+    const radix = report.stack.find((row) => row.id === "Radix");
+    assert.equal(radix.fileCount, 0);
     const stripe = report.stack.find((row) => row.id === "stripe");
     assert.equal(stripe, undefined);
   });
@@ -194,14 +194,14 @@ describe("modularity-report CLI", () => {
         modules: Array.from({length: 20}, (_, i) => ({
           source: "src/features/auth/c" + i + ".tsx",
           dependencies: [{
-            module: "@mui/material",
-            resolved: "node_modules/@mui/material/index.js",
+            module: "radix-ui",
+            resolved: "node_modules/radix-ui/dist/index.mjs",
           }],
         })),
       }, ${JSON.stringify(process.cwd())}, null);
-      const mui = report.stack.find((row) => row.id === "MUI");
-      if (!mui || mui.fileCount < 16) {
-        throw new Error("expected high MUI count");
+      const radix = report.stack.find((row) => row.id === "Radix");
+      if (!radix || radix.fileCount < 16) {
+        throw new Error("expected high Radix count");
       }
       process.exit(0);
     `;

@@ -1,6 +1,4 @@
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
+import { Spinner } from "@/components/common/Spinner";
 
 interface PageLoadingStateProps {
   message?: string;
@@ -11,18 +9,8 @@ interface PageLoadingStateProps {
  * Shows a centered spinner while the lazy component loads.
  */
 export const PageLoadingState = ({ message }: PageLoadingStateProps) => (
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: 200,
-      py: 4,
-      gap: 2,
-    }}
-  >
-    <CircularProgress />
-    {message && <Typography variant="body1">{message}</Typography>}
-  </Box>
+  <div className="flex min-h-[200px] flex-col items-center justify-center gap-4 py-8">
+    <Spinner />
+    {message && <p>{message}</p>}
+  </div>
 );

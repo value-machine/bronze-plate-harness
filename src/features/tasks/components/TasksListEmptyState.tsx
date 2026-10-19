@@ -1,23 +1,19 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import ArchiveOutlined from "@mui/icons-material/ArchiveOutlined";
-import AssignmentOutlined from "@mui/icons-material/AssignmentOutlined";
+import { Archive, ClipboardList, type LucideIcon } from "lucide-react";
 
 type EmptyVariant = "active" | "archive";
 
-const COPY: Record<EmptyVariant, { icon: typeof AssignmentOutlined; title: string; hint: string }> =
-  {
-    active: {
-      icon: AssignmentOutlined,
-      title: "No active tasks",
-      hint: "Add a task to start tracking dev work in this repo.",
-    },
-    archive: {
-      icon: ArchiveOutlined,
-      title: "No archived tasks",
-      hint: "Completed tasks appear here when you mark them done.",
-    },
-  };
+const COPY: Record<EmptyVariant, { icon: LucideIcon; title: string; hint: string }> = {
+  active: {
+    icon: ClipboardList,
+    title: "No active tasks",
+    hint: "Add a task to start tracking dev work in this repo.",
+  },
+  archive: {
+    icon: Archive,
+    title: "No archived tasks",
+    hint: "Completed tasks appear here when you mark them done.",
+  },
+};
 
 interface TasksListEmptyStateProps {
   variant: EmptyVariant;
@@ -27,25 +23,10 @@ export const TasksListEmptyState = ({ variant }: TasksListEmptyStateProps) => {
   const { icon: Icon, title, hint } = COPY[variant];
 
   return (
-    <Box
-      sx={{
-        py: 6,
-        px: 2,
-        textAlign: "center",
-        border: 1,
-        borderColor: "divider",
-        borderStyle: "dashed",
-        borderRadius: 2,
-        bgcolor: "action.hover",
-      }}
-    >
-      <Icon sx={{ fontSize: 40, color: "text.disabled", mb: 1 }} />
-      <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-        {title}
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {hint}
-      </Typography>
-    </Box>
+    <div className="rounded-lg border border-dashed bg-accent/50 px-4 py-12 text-center">
+      <Icon className="mx-auto mb-2 size-10 text-muted-foreground/60" />
+      <p className="mb-1 text-muted-foreground">{title}</p>
+      <p className="text-sm text-muted-foreground">{hint}</p>
+    </div>
   );
 };
