@@ -12,9 +12,7 @@ src/
 ├── components/          # App-level components
 │   └── common/          # Reusable UI components (pure components)
 │       ├── Button/
-│       ├── Card/
 │       ├── Input/
-│       ├── Modal/
 │       ├── ProfileMenu/   # Cross-layout shell; uses auth profile hooks
 │       └── Topbar/
 ├── config/              # Configuration files (app-tasks JSON, legal URLs)
@@ -31,7 +29,7 @@ src/
 ├── shared/              # Shared across features
 │   ├── context/         # React contexts (AuthContext, QueryProvider)
 │   ├── hooks/           # Cross-feature hooks
-│   ├── services/        # Shared services (Supabase client, Airtable client)
+│   ├── services/        # Shared services (Supabase client)
 │   ├── types/           # Shared types
 │   ├── utils/           # Shared utility functions (redirectUtils, queryKeys, etc.)
 │   └── theme/           # Shared layout class names (appViewLayout.ts)
@@ -48,7 +46,7 @@ Server state (user profiles, config, API data) is managed by **TanStack Query**.
 
 - **Query keys:** Shared keys in `src/shared/utils/queryKeys.ts`; add per-feature `api/keys.ts` when a feature grows beyond shared keys
 - **Auth boundary:** On logout, `queryClient.clear()` in `authService.logout` (before `signOut()`)
-- **Features:** `useUserProfileQuery` / `useUpdateUserProfile` (auth) use canonical merge (`setQueryData` on success). `/tasks` dev backlog intentionally uses local state + fetch (not TanStack).
+- **Features:** `useUserProfileQuery` (auth); mutations follow the canonical-merge pattern (`setQueryData` on success) in `DOC_TANSTACK_QUERY.md`. `/tasks` dev backlog intentionally uses local state + fetch (not TanStack).
 
 See `documentation/DOC_TANSTACK_QUERY.md` for full reference.
 
@@ -160,7 +158,7 @@ export const HomePage = () => {
 | Route-level component | `src/pages/` |
 | Layout wrapper | `src/layouts/` |
 | Global state (Context) | `src/shared/context/` |
-| Shared service (Supabase, Airtable, data providers) | `src/shared/services/` |
+| Shared service (Supabase, data providers) | `src/shared/services/` |
 | Shared utility (cross-feature) | `src/shared/utils/` |
 
 ### Examples
@@ -363,9 +361,8 @@ These rules are defined in `eslint.config.js` using GTS's flat config format.
 This harness supports connecting to external APIs:
 
 - **Supabase**: For authentication (configure via `.env` — see README and dev task backlog)
-- **Airtable**: For data storage (optional — configure via `.env`)
 
-**Researching a new external API before wiring it up?** See `.cursor/rules/api-integration/RULE.mdc` (principles) and `.agents/skills/api-integrate/SKILL.md` (MCP-first, schema→sample procedure) — these two bullets describe *what's configured*, not *how to research* a new vendor/API.
+**Researching a new external API before wiring it up?** See `.cursor/rules/api-integration/RULE.mdc` (principles) and `.agents/skills/api-integrate/SKILL.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
 
 Both services are optional. The services are initialized in `shared/services/` and can be used directly in feature services.
 
@@ -377,7 +374,7 @@ Local development includes an in-repo task backlog for coding agents and develop
 - **UI:** `/tasks` route (dev-only) via `DevTasksFab`
 - **API:** `vite-plugin-dev-tasks.ts` — `/__dev/tasks` endpoints (serve mode only)
 
-Fresh clones ship onboarding tasks (Supabase, Hosting, App vision, Airtable optional, Theme). See `src/features/tasks/README.md` and `.agents/skills/start/SKILL.md`.
+Fresh clones ship onboarding tasks (Supabase, Hosting, App vision, Theme). See `src/features/tasks/README.md` and `.agents/skills/start/SKILL.md`.
 
 ## Best Practices
 
@@ -387,7 +384,7 @@ Fresh clones ship onboarding tasks (Supabase, Hosting, App vision, Airtable opti
 4. **Types in feature folders**: Keep types close to where they're used
 5. **Shared code in shared/**: Only put truly shared code here
 6. **Common components are reusable**: No business logic, just UI
-7. **Connect to APIs directly**: Use Supabase and Airtable services directly in feature services
+7. **Connect to APIs directly**: Use Supabase services directly in feature services
 
 ## Adding a New Feature
 

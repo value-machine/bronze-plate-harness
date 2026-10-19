@@ -148,7 +148,7 @@ Standardize project structure using this map. New files have a pre-determined ho
 src/
 ├── assets/       # Static files (images, fonts, global CSS)
 ├── components/   # UI components
-│   └── common/   # "Dumb" UI components (Button, Input, Modal) - No business logic
+│   └── common/   # "Dumb" UI components (e.g. Button, Input) - No business logic
 ├── features/     # Feature-based organization (grouped by domain)
 │   └── [feature-name]/
 │       ├── README.md    # Feature-local documentation (required for active features)
@@ -179,7 +179,7 @@ src/
 **`components/common/`** vs **`shared/`**:
 
 - **`components/common/`**: Presentation-only, reusable UI components
-  - Contains: Button, Input, Modal, Card, etc.
+  - Contains: stack-port UI primitives (e.g. Button, Input) and app shell pieces
   - Rule: Zero business logic, zero data fetching, zero feature-specific code
   - Used by: Any feature or page that needs basic UI elements
 
@@ -245,8 +245,7 @@ Project uses automated architecture enforcement via ESLint + Dependency-Cruiser.
 | Tool | Purpose | When It Runs |
 |------|---------|--------------|
 | `project-structure-validator.js` | Folder structure whitelist enforcement | CLI (pre-commit + CI/CD) |
-| `eslint-plugin-boundaries` | Layer boundary enforcement | Real-time (IDE + pre-commit) |
-| `eslint-plugin-import` | Circular dependency prevention, import ordering | Real-time (IDE + pre-commit) |
+| ESLint `no-restricted-imports` (`eslint.config.js`) | Intra-feature layer rules (components ↛ services, hooks ↛ components) | Real-time (IDE + pre-commit) |
 | `dependency-cruiser` | Deep analysis, stakeholder reports, CI validation | CI/CD + on-demand |
 | `validate-feature-size.js` (+ `feature-size-lib.js`) | Feature size / granularity budgets (per-layer + per-feature file counts) | CLI; CI (`validate:feature-size`); pre-commit (`validate:feature-size:staged`) |
 | `validate-feature-docs.js` (+ `feature-readme-lib.js`) | Feature-local `README.md` presence (and optional strict headings) | CLI; CI (`validate:feature-docs:strict`); pre-commit (`validate:feature-docs:staged`) |
@@ -333,7 +332,7 @@ Use `pnpm validate:structure` to validate:
 
 Use path aliases, not relative imports.
 
-### When ESLint Shows "boundaries/element-types" Error
+### When a Layer Rule Fails (`arch:check` or `no-restricted-imports`)
 
 This means importing from a forbidden layer. Solutions:
 1. Move the code to the appropriate layer
@@ -365,7 +364,6 @@ For legitimate cross-layer imports (rare cases), use ESLint disable comments wit
 - `pnpm arch:graph` - Generate SVG dependency graph
 - `pnpm arch:graph:html` - Generate HTML report for stakeholders
 - `pnpm arch:validate` - Full validation (lint + architecture)
-- `pnpm lint:arch` - ESLint architecture rules only
 
 **Staged Files Only (Fast, for commits):**
 - `pnpm validate:all:staged` - Staged structure + architecture check
@@ -461,7 +459,7 @@ This repo uses **TanStack Query** for server state (`@tanstack/react-query`). Th
 
 #### Related implementation in this repo
 
-- `src/features/auth/hooks/useUpdateUserProfile.ts` — one shipped instance (profile update), not a template prefix. Other mutations get their own category name in the owning feature. Prefer `setQueryData` from the mutation result over invalidation for the same key.  
+- Mutation pattern: `documentation/DOC_TANSTACK_QUERY.md` § Example mutation (not shipped; mutations get their own category name in the owning feature). Prefer `setQueryData` from the mutation result over invalidation for the same key.  
 - `src/shared/utils/queryClient.ts` — shared `QueryClient` defaults (`createQueryClient`, app singleton).  
 - `src/shared/utils/queryKeys.ts` — shared key helpers; per-feature keys follow the factory pattern in `documentation/DOC_TANSTACK_QUERY.md` (e.g. `features/<feature>/api/keys.ts` when a feature adds queries).  
 - `src/features/auth/services/userProfileService.ts` — example of a **canonical return**: `updateUserProfile` uses `.select(...)` so the caller can patch cache without an extra round-trip.  
@@ -592,7 +590,7 @@ When reducing code complexity through refactoring, all changes must comply with 
 4. Extract code using appropriate refactoring technique
 5. Use path aliases for all imports
 6. Verify layer boundaries after extraction
-7. Run `pnpm lint:arch` to verify architecture compliance
+7. Run `pnpm arch:check` to verify architecture compliance
 
 **For detailed guidance:** See `.agents/skills/optimize2/SKILL.md` (unified checklist and architecture compliance during refactors)
 

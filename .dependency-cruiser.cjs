@@ -11,7 +11,7 @@ module.exports = {
     },
 
     // === LAYER VIOLATION RULES ===
-    // Aligned with ESLint boundaries/element-types rules
+    // Aligned with the no-restricted-imports layer blocks in eslint.config.js
 
     // Pages cannot be imported by components or routes (downward-only)
     {
@@ -275,16 +275,6 @@ module.exports = {
         pathNot: "(^src/shared/services/supabaseService\\.ts$)|(\\.test\\.[jt]sx?$)",
       },
       to: { path: "node_modules/@supabase/" },
-    },
-    {
-      name: "stack-port-airtable",
-      severity: "error",
-      comment:
-        "Airtable is a stack secret. New imports must go through src/shared/services/airtableService.ts.",
-      from: {
-        pathNot: "(^src/shared/services/airtableService\\.ts$)|(\\.test\\.[jt]sx?$)",
-      },
-      to: { path: "node_modules/airtable" },
     },
 
     // === EXTERNAL DEPENDENCY RULES ===

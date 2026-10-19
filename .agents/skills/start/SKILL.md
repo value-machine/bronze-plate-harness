@@ -24,7 +24,6 @@ Guide a new user through first-time setup of this harness by following the READM
 **Working on this plate-harness template** (improving the harness itself — not building an app from a fork):
 
 - **Skip Supabase (task #1)** and **Cloudflare hosting (task #2)**. No project, no Workers Builds link, no `.env` required for most template work. The app runs locally without auth configured.
-- **Skip Airtable (task #4)** unless you are testing that integration.
 - **App vision (task #3):** may stay **`DRAFT`** while exploring or contributing to the template; do not block template PRs on it unless the change is product-facing.
 - **Still do:** prerequisites, branch workflow (SSOT: `src/config/git-workflow.json` + `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate), `pnpm dev`, and the verification checklist (§ Mandatory verification checklist).
 
@@ -34,19 +33,18 @@ When the user says they are on the **template** (or context is clearly harness m
 
 ## Dev task backlog (onboarding SSOT)
 
-Fresh clones ship five pre-seeded tasks in priority order:
+Fresh clones ship four pre-seeded tasks in priority order:
 
 1. Configure Supabase
 2. Put your app online (Cloudflare hosting)
 3. Define app vision (`documentation/DOC_APP_VISION.md`)
-4. Configure Airtable (optional)
-5. Configure Theme
+4. Configure Theme
 
 **Agent task sync (this skill + router + finish):**
 
 - At session start: read `src/config/app-tasks.json`; set relevant task `in-progress` when picking up onboarding work.
-- After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note Airtable skipped).
-- Checks: Supabase env vars present; hosting configured per README; vision doc `ACTIVE`; optional Airtable/theme as applicable.
+- After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note Theme skipped).
+- Checks: Supabase env vars present; hosting configured per README; vision doc `ACTIVE`; optional theme as applicable.
 - **Conflict:** `/tasks` UI disk-wins — reconcile with user edits; do not fight pending UI state.
 
 Configuration is via `.env`, README, and docs — there is no in-app setup wizard.
@@ -122,7 +120,7 @@ If assistant cannot perform the fork UI step, instruct user exactly what to clic
 
 Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-a"` | `"model-b"`). Then walk `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **fork setup**, **`main` ruleset**, **`develop` ruleset** for the chosen column. Behavior SSOT is that table — do not restate it here.
 
-**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches (`documentation/DOC_CLOUDFLARE_WORKERS.md`), and the baseline release tag. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
+**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches (`documentation/DOC_CLOUDFLARE_WORKERS.md`). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
 
 **Model A / B:** create `develop` from `main` once (`git push origin main:develop`).
 
@@ -144,7 +142,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 
 ### 7) Configuration tasks gate (work through backlog)
 
-**Template repo:** skip tasks #1 (Supabase), #2 (Cloudflare), and #4 (Airtable) unless explicitly testing those paths. Archive or leave them `to-do`; do not treat missing `.env` as a failure.
+**Template repo:** skip tasks #1 (Supabase) and #2 (Cloudflare) unless explicitly testing those paths. Archive or leave them `to-do`; do not treat missing `.env` as a failure.
 
 **Fork onboarding:** walk through backlog tasks in order (skip or archive optional items the user declines):
 
@@ -162,9 +160,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 
 **App vision (task #3):** Collaborate on `DOC_APP_VISION.md`; set status to **`ACTIVE`**.
 
-**Airtable (task #4, optional):** Add `VITE_AIRTABLE_*` to `.env` or archive/skip with note.
-
-**Theme (task #5):** Customize the design tokens in `src/index.css` or skip if defaults suffice.
+**Theme (task #4):** Customize the design tokens in `src/index.css` or skip if defaults suffice.
 
 Update `app-tasks.json` as each step completes.
 
