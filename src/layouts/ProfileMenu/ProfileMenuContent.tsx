@@ -1,7 +1,6 @@
 import { LogIn, LogOut } from "lucide-react";
 import { ProfileInfo } from "./ProfileInfo";
 import { SignInMenuItems } from "./SignInMenuItems";
-import { AppearanceMenuItems } from "./AppearanceMenuItems";
 import type { User } from "@/features/auth/types/auth.types";
 import type { UserProfile } from "@/features/auth/types/auth.types";
 import { DropdownMenuItem, DropdownMenuSeparator } from "@/components/common/DropdownMenu";
@@ -17,8 +16,7 @@ interface ProfileMenuContentProps {
   onSignOut: () => void;
 }
 
-/** Account section for the current auth state (signed in, signed out, or auth not configured). */
-const AccountMenuItems = ({
+export const ProfileMenuContent = ({
   isLoggedIn,
   authBackendConfigured,
   user,
@@ -52,11 +50,3 @@ const AccountMenuItems = ({
     </DropdownMenuItem>
   );
 };
-
-export const ProfileMenuContent = (props: ProfileMenuContentProps) => (
-  <>
-    <AccountMenuItems {...props} />
-    <DropdownMenuSeparator />
-    <AppearanceMenuItems />
-  </>
-);

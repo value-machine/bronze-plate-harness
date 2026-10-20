@@ -60,6 +60,7 @@
 | 5 | 2026-10-20 | review-dev-plan (precedent, adopted advisory) | Mode switch sets `style.colorScheme`, briefly disables transitions to avoid cross-fade; cross-tab `storage` event sync | Phase 3 |
 | 6 | 2026-10-20 | review-dev-plan (UX, adopted advisory) | Appearance uses Radix radio group (`menuitemradio` + `aria-checked`, visible check) and renders in all three menu states; tests cover all three | Phase 3 |
 | 7 | 2026-10-20 | review-dev-plan (delivery) | Phases 1–5 land together in one PR (Phase 1's temporary `class="dark"` never ships alone) | All |
+| 9 | 2026-10-20 | owner (D11) | Mode control becomes a cycling icon button with tooltip in the top bar (`src/layouts/Topbar/ColorModeToggle.tsx`); Appearance radios, `AppearanceMenuItems` and the dropdown radio primitives removed; amendment 6 no longer applies | Phase 3 |
 | 8 | 2026-10-20 | validate plan-review (security) | No CSP today; document that a future CSP needs the inline script's hash | Phase 5 |
 
 ## Pattern & precedent
@@ -147,6 +148,7 @@
 - Phase 2: `cn()` now uses `extendTailwindMerge` so `elevation-*` and `rounded-{button,card,input}` resolve conflicts like built-ins (found via a screenshot diff on the dev Tasks button; covered by `cn.test.ts`). Gate: screenshots pixel-identical to baseline at defaults; live override of radius, button/card radius, spacing, primary, font and brand elevation restyles `/tasks` without reload. Badges and avatars keep `rounded-full` (circles/pills by design, not theme radius).
 - Phase 3: the mode lives in `ColorModeProvider` (`src/shared/context/ColorModeContext.tsx`, same pattern as `AuthContext`) instead of a standalone `src/shared/hooks/useColorMode.ts`, because the Appearance items mount only while the menu is open and the mode must track OS/other-tab changes app-wide; `useColorMode` is exported from the context file. Tests: `colorMode.test.ts` (incl. index.html script sync), `ColorModeContext.test.tsx` (OS listener only in system, cleanup, cross-tab, storage-throws), `ProfileMenu.test.tsx` Appearance in all 3 states. `installMatchMediaMock` lives in `tests/test-utils.tsx`, installed per test in `tests/setup.ts`. Browser gate (Playwright, OS light/dark emulation): correct class before the bundle runs on both, pick Dark persists across reload, stored light wins over OS, system follows an OS flip.
 - Phase 4: `applyTheme` / `clearTheme` in `themeTokens.ts`; unknown token names fail type-check (verified with a probe). `clearTheme` removes only theme tokens (other inline variables like `--status-w` stay).
+- D11 change: toggle tested in `ColorModeToggle.test.tsx` (cycle order, persistence, tooltip text); browser check shows icon per mode, tooltip on hover, Light→Dark→System cycle with correct class.
 
 ## Decisions made
 

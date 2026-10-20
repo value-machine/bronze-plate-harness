@@ -14,9 +14,10 @@ Updated: 2026-10-20
 | D5 | Per-component restyling | closed | A few component tokens (e.g. `--button-radius`, `--card-radius`), each defaulting to the shared token; typed list, grows only when a real need appears | grill-me | Owner chose after shadcn research + pros/cons matrix. Rejected: global-only (no brand-specific shapes), full MUI-style overrides (against shadcn's own-the-source model), structure-as-code only (weak for per-login brands). |
 | D6 | Where a theme is authored | closed | CSS-first: built-in light/dark palettes in `src/index.css` (`:root` / `.dark`, shadcn convention); a typed token-name list in TS is the single contract; `applyTheme()` accepts only those names; a unit test checks every name is defined in both palettes | grill-me | Owner asked for agent recommendation. Rejected: TS-first theme file (needs anti-flash inline script, breaks shadcn preset paste), DTCG JSON + build step (tooling cost for a boilerplate). |
 | D7 | Runtime brand × light/dark | closed | Deferred. v1 `applyTheme(partialTokens)` overrides tokens on top of the active mode (covers accent-only brands). Per-mode brand palettes and mode-locking brands are deferred non-goals until a real app needs them; additive later, no API break. | grill-me | Owner: most apps (≈9/10) won't use per-login branding; per plan-grill § Generality no speculative machinery. |
-| D8 | Toggle placement | closed | 'Appearance' item (Light / Dark / System) in the profile avatar menu; works signed in or out | grill-me | Rejected: top-bar icon button, both, no toggle (would reverse D2). |
+| D8 | Toggle placement | superseded by D11 | 'Appearance' item (Light / Dark / System) in the profile avatar menu; works signed in or out | grill-me | Rejected: top-bar icon button, both, no toggle (would reverse D2). |
 | D9 | Avoiding a wrong-theme flash on load | closed | Tiny inline script in `index.html` sets the `.dark` class from the stored choice / OS before first paint (next-themes pattern) | plan-grill | clear-winner. Lost: CSS-only `@media (prefers-color-scheme)` (duplicates the dark palette and cannot honor a stored manual choice); React effect only (visible flash for users whose choice differs from the OS). |
 | D10 | Which palette is the base | closed | `:root` = light, `.dark` = dark (shadcn convention); current brand palette moves to `.dark` unchanged; light palette keeps brand primary/secondary/gradient on light surfaces | plan-grill | clear-winner. Lost: dark as `:root` with a `.light` class (breaks shadcn presets and its `dark:` variant). Light values are agent-chosen starting values, tweakable in `index.css`. |
+| D11 | Mode control (replaces D8) | closed | One icon button in the top bar that cycles Light → Dark → System; icon shows the current mode; hover text (tooltip + accessible name) says `Theme: <current> (click for <next>)`. No Appearance radios in the profile menu. | owner | Owner, mid-implementation: "way cleaner, just one icon that cycles, only hover text". Uses the kit's Radix `Tooltip`. Not on `/tasks` (no top bar there). |
 
 ## Open
 
@@ -34,3 +35,4 @@ Updated: 2026-10-20
 - 2026-10-20 — D7 closed via grill-me (deferred per owner: speculative consumer)
 - 2026-10-20 — D8 closed via grill-me (asked)
 - 2026-10-20 — D9, D10 closed via plan-grill (clear-winner)
+- 2026-10-20 — D11 closed via owner instruction (supersedes D8)
