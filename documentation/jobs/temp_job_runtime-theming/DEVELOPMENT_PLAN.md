@@ -5,8 +5,8 @@
 - **Goal:** Make the whole app restyleable from a theme: light/dark (Light / Dark / System, follows OS by default), one-token radius and density, themeable fonts/shadows/motion, a few component tokens, and a typed `applyTheme()` runtime override that a future per-login restyle can use.
 - **Why:** Boilerplate users must be able to do dark mode in a few lines, change corner radius app-wide via the theme, and restyle per login without touching components (owner, `DECISIONS.md` D1).
 - **Complexity:** M — several phases, cross-cutting styling across the kit, one new shared module, no backend.
-- **Plan review:** Required: pending
-- **Plan validate:** Required: pending
+- **Plan review:** Done 2026-10-20
+- **Plan validate:** Done 2026-10-20
 - **Scope / constraints:** Product decisions in sibling `DECISIONS.md` (D1–D10). No per-login policy, no profile-driven theme example, no per-mode brand palettes (deferred). No MUI-style component override layer. Breakpoints, z-index and type scale stay out of themes.
 
 ## Phase overview
@@ -53,6 +53,14 @@
 
 | # | Date | Source | Change | Applied to |
 |---|------|--------|--------|------------|
+| 1 | 2026-10-20 | review-dev-plan (tests) | `tests/setup.ts` gets a configurable `matchMedia` stub; add `src/shared/hooks/useColorMode.test.ts` (OS listener only while `system`, cleanup, storage-throws fallback) | Phase 3 |
+| 2 | 2026-10-20 | review-dev-plan (delivery) | Gates compare against named Playwright baselines `scratchpad/theme/base-*.png` captured before Phase 1 | Phase 1, 2 gates |
+| 3 | 2026-10-20 | review-dev-plan (scale) | Test that reads `index.html` and asserts the inline script uses the `colorMode.ts` storage key and mode values | Phase 3 |
+| 4 | 2026-10-20 | review-dev-plan (a11y, adopted advisory) | Light palette: darker `--secondary`, `--success`, `--warning`, `--info` for AA; solid focus ring; scrollbar colors become `--scrollbar` tokens; `prefers-reduced-motion` zeroes motion tokens and brand-surface transitions | Phase 1 |
+| 5 | 2026-10-20 | review-dev-plan (precedent, adopted advisory) | Mode switch sets `style.colorScheme`, briefly disables transitions to avoid cross-fade; cross-tab `storage` event sync | Phase 3 |
+| 6 | 2026-10-20 | review-dev-plan (UX, adopted advisory) | Appearance uses Radix radio group (`menuitemradio` + `aria-checked`, visible check) and renders in all three menu states; tests cover all three | Phase 3 |
+| 7 | 2026-10-20 | review-dev-plan (delivery) | Phases 1–5 land together in one PR (Phase 1's temporary `class="dark"` never ships alone) | All |
+| 8 | 2026-10-20 | validate plan-review (security) | No CSP today; document that a future CSP needs the inline script's hash | Phase 5 |
 
 ## Pattern & precedent
 
@@ -133,7 +141,11 @@
 
 ## Notes during development
 
+- Plan review ran as 3 parallel sub-agents (naming/rebel/scale, precedent/UX/tests, repo-rules validate); a worker restart interrupted two, whose checks (file placement, security, protected files, Tailwind v4 runtime-variable behavior) were completed inline by the planning agent. Not adopted: per-mode `<meta name="theme-color">` (no PWA/mobile chrome need yet).
+- Tailwind v4: spacing and shadow utilities read `var(--spacing)` / `var(--shadow-*)` at runtime, so runtime overrides work for them; fonts are currently `@theme inline` literals and must become non-inline variable mappings.
+
 ## Decisions made
 
 | # | Topic | Choice | Precedent? |
 |---|-------|--------|------------|
+| 1 | Plan review / validate acceptance | agent-accept 2026-10-20 — owner said proceed, fix the plan, implement fully without questions | n/a |
