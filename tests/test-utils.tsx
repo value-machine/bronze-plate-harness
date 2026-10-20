@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import type { AuthContextValue } from "@/features/auth/types/auth.types";
+import { ColorModeProvider } from "@/shared/context/ColorModeContext";
 
 /**
  * Creates a QueryClient for tests with retry disabled.
@@ -52,7 +53,7 @@ function AllProviders({
 }) {
   const { withRouter = true, withQueryClient = true, initialEntries, queryClient } = options;
 
-  let tree: ReactNode = children;
+  let tree: ReactNode = <ColorModeProvider>{children}</ColorModeProvider>;
 
   if (withQueryClient) {
     const client = queryClient ?? createTestQueryClient();
@@ -133,5 +134,49 @@ export function createDefaultAuthContextValue(
     clearAuthError: vi.fn(),
     setAuthError: vi.fn(),
     ...overrides,
+  };
+}
+
+/** Controls the `prefers-color-scheme` result of the window.matchMedia test double. */
+export interface MatchMediaController {
+  setPrefersDark: (prefersDark: boolean) => void;
+  /** Number of active `(prefers-color-scheme: dark)` change listeners. */
+  listenerCount: () => number;
+}
+
+/**
+ * Installs a window.matchMedia test double (jsdom has none). `(prefers-color-scheme: dark)`
+ * follows `prefersDark` and notifies "change" listeners; other queries never match.
+ * tests/setup.ts installs it with light before every test.
+ */
+export function installMatchMediaMock(prefersDark = false): MatchMediaController {
+  let dark = prefersDark;
+  const listeners = new Set<(event: MediaQueryListEvent) => void>();
+  const isDarkQuery = (query: string) => query.includes("prefers-color-scheme: dark");
+
+  window.matchMedia = (query: string) =>
+    ({
+      media: query,
+      get matches() {
+        return isDarkQuery(query) && dark;
+      },
+      onchange: null,
+      addEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+        if (isDarkQuery(query)) listeners.add(listener);
+      },
+      removeEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+        listeners.delete(listener);
+      },
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: () => false,
+    }) as unknown as MediaQueryList;
+
+  return {
+    setPrefersDark: (next) => {
+      dark = next;
+      listeners.forEach((listener) => listener({ matches: next } as MediaQueryListEvent));
+    },
+    listenerCount: () => listeners.size,
   };
 }

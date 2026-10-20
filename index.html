@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -11,6 +11,24 @@
       rel="stylesheet"
     />
     <title>plate-harness</title>
+    <script>
+      // Color mode before first paint (no flash). Mirrors src/shared/theme/colorMode.ts
+      // (storage key, modes, class); colorMode.test.ts keeps them in sync.
+      (function () {
+        var mode = "system";
+        try {
+          var stored = window.localStorage.getItem("color-mode");
+          if (stored === "light" || stored === "dark" || stored === "system") mode = stored;
+        } catch (e) {}
+        var dark =
+          mode === "dark" ||
+          (mode === "system" &&
+            !!window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+        document.documentElement.style.colorScheme = dark ? "dark" : "light";
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

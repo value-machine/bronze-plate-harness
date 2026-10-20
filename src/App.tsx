@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryProvider } from "@/shared/context/QueryProvider";
 import { AuthProvider } from "@/shared/context/AuthContext";
+import { ColorModeProvider } from "@/shared/context/ColorModeContext";
 import { Topbar } from "@/layouts/Topbar";
 import { DevTasksFab } from "@/features/tasks/components/DevTasksFab/DevTasksFab";
 import { QueryDevtoolsGate } from "@/components/common/QueryDevtoolsGate";
@@ -52,13 +53,15 @@ function AppContent() {
 
 function App() {
   return (
-    <QueryProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </AuthProvider>
-    </QueryProvider>
+    <ColorModeProvider>
+      <QueryProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryProvider>
+    </ColorModeProvider>
   );
 }
 
