@@ -16,7 +16,7 @@
   },
   {
     "title": "Configure Theme",
-    "description": "Customize the design tokens (CSS variables) in src/index.css: brand colors, radius, and font. Kit components in src/components/common/ read them via Tailwind utilities. Verify changes in the running dev app.",
+    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu.",
     "status": "to-do"
   }
 ]

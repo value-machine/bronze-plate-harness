@@ -21,7 +21,7 @@ export const ProfileMenuTrigger = ({ user, profile }: ProfileMenuTriggerProps) =
     <Tooltip title={label}>
       <DropdownMenuTrigger
         aria-label={label}
-        className="ml-4 rounded-full p-1 transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        className="ml-4 rounded-full p-1 transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring"
       >
         <Avatar>
           {avatarUrl && <AvatarImage src={avatarUrl} alt="" />}

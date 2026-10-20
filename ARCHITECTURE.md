@@ -32,8 +32,8 @@ src/
 │   ├── services/        # Shared services (Supabase client)
 │   ├── types/           # Shared types
 │   ├── utils/           # Shared utility functions (redirectUtils, queryKeys, etc.)
-│   └── theme/           # Shared layout class names (appViewLayout.ts)
-├── index.css            # Design tokens (shadcn/ui CSS variables) + Tailwind v4 setup
+│   └── theme/           # DTCG token source (tokens/), token contract + applyTheme, color mode, layout class names
+├── index.css            # Tailwind v4 setup + token wiring (values: shared/theme/tokens, W3C DTCG)
 ```
 
 ## Server State Management (TanStack Query)
@@ -326,7 +326,7 @@ The project uses ESLint rules to enforce architecture and code quality:
 
 ### Code Quality Rules
 
-- **Styling**: Colors, radius and fonts are CSS variables in `src/index.css` (shadcn/ui convention), exposed as Tailwind utilities (`bg-primary`, `text-muted-foreground`, …). Components use those utilities, never raw hex/RGB values.
+- **Styling**: Every themeable value (colors per light/dark mode, fonts, radius, density, component radii, elevation, motion) is a W3C DTCG 2025.10 token in `src/shared/theme/tokens/`, generated into CSS variables (shadcn/ui names), exposed as Tailwind utilities (`bg-primary`, `rounded-button`, `elevation-md`, …). Components use those utilities, never raw hex/RGB values. Color mode and runtime overrides: [documentation/DOC_THEMING.md](./documentation/DOC_THEMING.md).
   - UI kit components (shadcn/ui on Radix) live in `src/components/common/<Name>/`; `radix-ui` is imported only there.
   - Merge class names with `cn()` from `src/shared/utils/cn.ts`.
   - **Hardcoded color detection** (`eslint.config.js`, warn): flags Tailwind arbitrary colors in class strings (`bg-[#…]`, `text-[rgb(…)]`) and raw colors in `style` props.

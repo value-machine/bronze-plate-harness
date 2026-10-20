@@ -23,7 +23,7 @@ import {
 
 /** Grid: drag handle | status | title (wraps below on xs) | delete. `--status-w` set inline. */
 const ROW_CLASS_NAME =
-  "group grid grid-cols-[28px_var(--status-w)_auto] grid-rows-[auto_auto] items-start gap-2 rounded-lg border bg-card p-2.5 transition-[box-shadow,opacity] duration-150 hover:shadow-md sm:grid-cols-[32px_var(--status-w)_minmax(0,1fr)_40px] sm:grid-rows-1 sm:gap-3 sm:p-3";
+  "group grid grid-cols-[28px_var(--status-w)_auto] grid-rows-[auto_auto] items-start gap-2 rounded-lg border bg-card p-2.5 transition-[box-shadow,opacity] duration-(--duration-fast) hover:elevation-md sm:grid-cols-[32px_var(--status-w)_minmax(0,1fr)_40px] sm:grid-rows-1 sm:gap-3 sm:p-3";
 
 type FocusedField = "title" | "description" | null;
 
@@ -99,7 +99,7 @@ export const ActiveTaskRow = ({
       }}
       style={{ ...style, "--status-w": TASK_STATUS_SELECT_MIN_WIDTH } as React.CSSProperties}
       onBlur={handleRowBlur}
-      className={cn(ROW_CLASS_NAME, isDragging && "opacity-75 shadow-xl")}
+      className={cn(ROW_CLASS_NAME, isDragging && "opacity-75 elevation-xl")}
     >
       <Button
         variant="ghost"

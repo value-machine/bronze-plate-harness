@@ -15,7 +15,7 @@ export const DevTasksFab = () => {
     <Button
       asChild
       variant="secondary"
-      className="fixed right-6 bottom-6 z-40 shadow-lg"
+      className="fixed right-6 bottom-6 z-40 elevation-lg"
       aria-label="Open dev task backlog"
     >
       <RouterLink to="/tasks">Tasks</RouterLink>

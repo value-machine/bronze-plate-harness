@@ -22,7 +22,7 @@ export const TabsTrigger = ({
   <TabsPrimitive.Trigger
     data-slot="tabs-trigger"
     className={cn(
-      "inline-flex h-10 items-center justify-center border-b-2 border-transparent px-4 text-sm font-medium whitespace-nowrap text-foreground transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-primary data-[state=active]:text-primary",
+      "inline-flex h-10 items-center justify-center border-b-2 border-transparent px-4 text-sm font-medium whitespace-nowrap text-foreground transition-colors outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-primary data-[state=active]:text-primary",
       className
     )}
     {...props}

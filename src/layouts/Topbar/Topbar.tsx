@@ -7,7 +7,7 @@ import { ProfileMenu } from "@/layouts/ProfileMenu";
  */
 export const Topbar = () => {
   return (
-    <header className="fixed inset-x-0 top-0 z-40 bg-card text-foreground shadow-md">
+    <header className="fixed inset-x-0 top-0 z-40 bg-card text-foreground elevation-md">
       <div className="flex h-toolbar items-center px-4 sm:px-6">
         <div className="flex-1 text-xl font-bold">
           <Link to="/" className="text-primary no-underline">

@@ -311,7 +311,19 @@ module.exports = {
             },
             {
               name: "theme",
-              children: [{ name: "*.ts" }, { name: "index.ts" }],
+              children: [
+                { name: "*.ts" },
+                { name: "index.ts" },
+                // W3C DTCG 2025.10 token sources + Terrazzo output (documentation/DOC_THEMING.md)
+                {
+                  name: "tokens",
+                  children: [
+                    { name: "*.tokens.json" },
+                    { name: "*.resolver.json" },
+                    { name: "tokens.generated.css" },
+                  ],
+                },
+              ],
             },
             { name: "constants.ts" },
           ],

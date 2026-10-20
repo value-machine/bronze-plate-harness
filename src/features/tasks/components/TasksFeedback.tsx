@@ -39,7 +39,7 @@ export const TasksFeedback = ({ feedback, errorMessage, onDismiss }: TasksFeedba
       <Alert
         variant={variant}
         onClose={onDismiss}
-        className="pointer-events-auto max-w-[480px] bg-popover shadow-lg"
+        className="pointer-events-auto max-w-[480px] bg-popover elevation-lg"
       >
         {message}
       </Alert>

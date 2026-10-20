@@ -14,8 +14,8 @@ export const Card = ({ className, hoverable = true, ...props }: CardProps) => {
     <div
       data-slot="card"
       className={cn(
-        "flex h-full w-full max-w-[400px] flex-col gap-6 rounded-2xl border bg-card py-6 text-card-foreground shadow-sm transition-shadow duration-200",
-        hoverable && "hover:shadow-xl",
+        "flex h-full w-full max-w-[400px] flex-col gap-6 rounded-card border bg-card py-6 text-card-foreground elevation-sm transition-shadow duration-(--duration-normal)",
+        hoverable && "hover:elevation-xl",
         className
       )}
       {...props}
