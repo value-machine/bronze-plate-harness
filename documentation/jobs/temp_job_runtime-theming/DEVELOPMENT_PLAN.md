@@ -1,0 +1,139 @@
+# Development plan: Runtime theming (app-wide customizable styling)
+
+## Summary
+
+- **Goal:** Make the whole app restyleable from a theme: light/dark (Light / Dark / System, follows OS by default), one-token radius and density, themeable fonts/shadows/motion, a few component tokens, and a typed `applyTheme()` runtime override that a future per-login restyle can use.
+- **Why:** Boilerplate users must be able to do dark mode in a few lines, change corner radius app-wide via the theme, and restyle per login without touching components (owner, `DECISIONS.md` D1).
+- **Complexity:** M — several phases, cross-cutting styling across the kit, one new shared module, no backend.
+- **Plan review:** Required: pending
+- **Plan validate:** Required: pending
+- **Scope / constraints:** Product decisions in sibling `DECISIONS.md` (D1–D10). No per-login policy, no profile-driven theme example, no per-mode brand palettes (deferred). No MUI-style component override layer. Breakpoints, z-index and type scale stay out of themes.
+
+## Phase overview
+
+| Phase | Goal | Gate | Status |
+|-------|------|------|--------|
+| 1 | Token contract: full token set in `index.css` (light `:root`, dark `.dark`), typed token list, contract test | Contract tooling gate; app looks unchanged in dark | Pending |
+| 2 | Kit follows tokens: radius, component tokens, shadows, motion, overlay | Contract tooling gate; changing `--radius` / `--button-radius` visibly reshapes the kit | Pending |
+| 3 | Color mode: inline anti-flash script, `useColorMode`, Appearance item in profile menu | Contract tooling gate; Light / Dark / System switch works, persists per device, no flash on reload | Pending |
+| 4 | Runtime override: `applyTheme()` / `clearTheme()` | Contract tooling gate; unit tests; a manual override restyles live | Pending |
+| 5 | Docs: theming guide, README, ARCHITECTURE, code-style styling section | Docs validators green | Pending |
+
+## Conflict & compliance
+
+- **Applicable rules:** `architecture` (shared layer, stack ports), `file-placement` + `projectStructure.config.cjs`, `code-style` (styling scope section — SSOT for where styling lives; complexity limits; PascalCase/camelCase), `testing` (unit test for deterministic token contract), `agent-behavior` (protected files), `git-workflow` (mode `model-c`), `security` (inline script: static, no user input).
+- **File placements (confirmed against whitelist, no config change):**
+  - Tokens + palettes: `src/index.css`.
+  - Theme module: `src/shared/theme/themeTokens.ts` (typed token-name list, `applyTheme`, `clearTheme`), `src/shared/theme/colorMode.ts` (mode type, storage key, resolve + apply class). Tests colocated: `src/shared/theme/themeTokens.test.ts`, `src/shared/theme/colorMode.test.ts`.
+  - Hook: `src/shared/hooks/useColorMode.ts`.
+  - Kit: extend `src/components/common/DropdownMenu/DropdownMenu.tsx` with radio group/item (+ sub-menu if used).
+  - Profile menu: `src/layouts/ProfileMenu/AppearanceMenuItems.tsx` (new), wired in `ProfileMenuContent.tsx`.
+  - Anti-flash script: inline in `index.html` (root file, not under `src/`).
+  - Docs: `documentation/DOC_THEMING.md` (new, `DOC_` prefix per documentation whitelist — verify with `pnpm validate:structure`).
+- **Names (name-the-mechanism):** role names, not caller names — `themeTokens`, `colorMode`, `useColorMode`, `applyTheme`, `AppearanceMenuItems`. One consumer each today; no extraction thresholds hit.
+- **Reuse / packages (`dont-reinvent-the-wheel`):** `next-themes` considered for color mode — rejected: it targets Next.js/SSR, its value here is the anti-flash script + a hook (~40 lines), and the repo already owns tokens. Pattern copied (inline script + class on `<html>`), not the package. Token override = plain `style.setProperty` on `document.documentElement`; no library needed.
+- **Risks / attention points:**
+  - Tailwind v4 `@theme inline` maps utilities to variables at build time; runtime overrides work only for tokens exposed as CSS variables (all of ours). Shadows and fonts must move from literal values to variables for `applyTheme` to reach them.
+  - Light palette contrast: brand magenta `#cf13b3` on white must meet WCAG AA for text/buttons; check with a contrast tool, adjust `--primary` for light only if needed.
+  - Brand surfaces (`bg-brand-gradient`, `bg-foreground-sweep`) must read their colors from tokens so light mode works.
+  - `rounded-full` pills become `--button-radius` (default keeps pills: `--button-radius: 9999px`) so today's look is preserved.
+  - Inline script runs before React; must not throw when `localStorage` is unavailable (private mode) — wrap in try/catch.
+- **Standards diversions:** none (shadcn convention for `:root`/`.dark`; next-themes pattern for anti-flash).
+- **Open questions:** none.
+- **Protected files:** `.cursor/rules/code-style/RULE.mdc` (styling section update in Phase 5) needs explicit user approval at that step. No other protected file is touched.
+
+## Review contract
+
+- **Rules pinned:** `rules@c3d2220` — `.cursor/rules/architecture/RULE.mdc`, `.cursor/rules/file-placement/RULE.mdc`, `.cursor/rules/code-style/RULE.mdc`, `.cursor/rules/testing/RULE.mdc`, `.cursor/rules/agent-behavior/RULE.mdc`, `.cursor/rules/security/RULE.mdc`
+- **Required lenses:** Pattern & precedent (M), Reuse / packages, Feature decomposition (no new feature folder — shared theme module), Name the mechanism.
+- **Tooling gate:** `validate` § Tooling pass (contract gate list) + `pnpm build`.
+- **Locked decisions:** sibling `DECISIONS.md` (D1–D10) + **Decisions made** below + Amendments.
+
+### Amendments
+
+| # | Date | Source | Change | Applied to |
+|---|------|--------|--------|------------|
+
+## Pattern & precedent
+
+| Field | Value |
+|-------|--------|
+| **Capability** | App-wide theme tokens with light/dark/system mode and runtime token overrides |
+| **Precedents** | shadcn/ui theming (CSS variables, `:root`/`.dark`); next-themes (class on `<html>`, inline anti-flash script, system mode); GitHub / Vercel dashboards (Light / Dark / System in account menu) |
+| **Aspects reviewed** | Token convention; mode default and persistence; toggle placement; runtime overrides; component-level customization |
+| **Findings** | Tokens and `.dark` — aligns. Follow OS + 3-way choice persisted per device — aligns. Appearance in account menu — aligns (GitHub, Vercel). Runtime overrides via CSS variables on `<html>` — common in multi-tenant SaaS theming. Component tokens instead of an override layer — aligns with shadcn's own-the-source model. |
+| **Verdict** | Aligns with precedent |
+
+## Phase 1 — Token contract
+
+**Goal:** every themeable value is a named CSS variable, defined for light (`:root`) and dark (`.dark`), with one typed list of names.
+
+**Steps:**
+1. `src/index.css`: move today's palette to `.dark` unchanged (D10); add a light palette in `:root` (white/neutral surfaces, brand primary/secondary/gradient, success/warning/info/destructive tuned for light; check AA contrast).
+2. Add token groups to both blocks where values differ, else once in `:root`: fonts (`--font-body`, `--font-heading`, `--font-mono`), radius (`--radius` kept), density (`--spacing` override of Tailwind's base), shadows (`--shadow-sm|md|lg|xl`, `--shadow-brand`), motion (`--duration-fast|normal|slow`, `--ease-standard`), overlay (`--overlay`), component tokens (`--button-radius`, `--card-radius`, `--input-radius`) defaulting to shared tokens.
+3. `@theme inline`: expose new tokens (`--font-sans: var(--font-body)`, `--font-heading`, `--font-mono`, shadow and motion mappings, `--radius-button` etc.) so utilities exist.
+4. Brand utilities (`bg-brand-gradient`, `bg-foreground-sweep`) read only tokens.
+5. `color-scheme`: `light` on `:root`, `dark` on `.dark`.
+6. `src/shared/theme/themeTokens.ts`: `THEME_TOKENS` (readonly tuple of token names) + `ThemeTokenName` type.
+7. `src/shared/theme/themeTokens.test.ts`: parses `src/index.css` and asserts every `THEME_TOKENS` name is defined in `:root`, and every color token is also defined in `.dark`.
+8. Temporarily add `class="dark"` to `<html>` in `index.html` so the app keeps today's dark look until Phase 3.
+
+**Gate:** contract tooling gate + `pnpm build`; screenshots match today's dark look.
+
+## Phase 2 — Kit follows tokens
+
+**Goal:** changing a token reshapes/recolors every kit component; no fixed literal styles left for themeable aspects.
+
+**Steps:**
+1. Button: `rounded-full` → `rounded-button` (default `--button-radius: 9999px` keeps pills); brand shadow → `shadow-brand`; transitions use motion tokens.
+2. Card: `rounded-2xl` → `rounded-card`; shadows → shadow tokens; duration → motion token.
+3. Input, Textarea, Select trigger: radius → `rounded-input`.
+4. Modal overlay `bg-black/60` → `bg-overlay`; Modal/Card durations → motion tokens.
+5. Topbar, tasks rows, feedback, Fab, menus, tooltip: shadows → shadow tokens; durations → motion tokens.
+6. Headings use `font-heading`; `code`/`pre` use `font-mono`.
+7. Lint rule check: no new raw colors.
+
+**Gate:** contract tooling gate + `pnpm build`; manual check (Playwright screenshot) that overriding `--radius`, `--button-radius`, `--spacing`, `--primary` in devtools restyles the kit; dark look unchanged at defaults.
+
+## Phase 3 — Color mode
+
+**Goal:** Light / Dark / System, follows OS by default, persists per device, no flash.
+
+**Steps:**
+1. `src/shared/theme/colorMode.ts`: `ColorMode = "light" | "dark" | "system"`, storage key, `resolveColorMode(mode, prefersDark)`, `applyColorMode(resolved)` (toggles `.dark` on `<html>`), safe storage read/write.
+2. `index.html`: replace the Phase 1 hardcoded `class="dark"` with a small inline script that reads the stored mode (fallback `system`) and the OS preference and sets `.dark` before paint (D9); try/catch around storage. Keep the logic identical to `colorMode.ts` (comment points to it).
+3. `src/shared/hooks/useColorMode.ts`: returns `{ mode, resolvedMode, setMode }`; persists; listens to OS changes while `system`.
+4. Kit: add `DropdownMenuRadioGroup` / `DropdownMenuRadioItem` (and `DropdownMenuSub*` if the submenu reads better) to `DropdownMenu.tsx`.
+5. `src/layouts/ProfileMenu/AppearanceMenuItems.tsx`: "Appearance" with Light / Dark / System radio items; rendered in `ProfileMenuContent` for every state (signed in, signed out, not configured).
+6. Tests: `colorMode.test.ts` (resolve + storage fallbacks); extend `ProfileMenu.test.tsx` — Appearance options visible and selecting one sets the mode.
+
+**Gate:** contract tooling gate + `pnpm build`; browser: switch modes, reload keeps choice, `system` follows emulated OS change, no dark→light flash on reload (Playwright with `colorScheme` emulation).
+
+## Phase 4 — Runtime override API
+
+**Goal:** apps can restyle at runtime (e.g. per login later) with typed token overrides.
+
+**Steps:**
+1. `themeTokens.ts`: `applyTheme(overrides: Partial<Record<ThemeTokenName, string>>)` sets inline CSS variables on `<html>` (on top of the active mode, D7); `clearTheme()` removes them. Unknown names are a type error.
+2. Unit tests: applies/clears only listed tokens; does not touch the `.dark` class.
+3. No UI and no profile wiring (D2 deferred).
+
+**Gate:** contract tooling gate; unit tests green; browser check calling `applyTheme({ primary: "#2563eb", radius: "0" })` from the console restyles live.
+
+## Phase 5 — Docs
+
+**Goal:** a developer can theme an app from the docs alone.
+
+**Steps:**
+1. `documentation/DOC_THEMING.md`: token list (from `THEME_TOKENS`), how to change a palette, add dark/light values, add a component token (the "real need" rule, D5), use `applyTheme`, and what is not themeable (D4).
+2. README "Theme customization", `ARCHITECTURE.md` styling bullets, `documentation/DOC_INDEX.md` link.
+3. `.cursor/rules/code-style/RULE.mdc` § Styling: point to `DOC_THEMING.md`, mention component tokens and modes — **protected file: ask for approval at this step**.
+
+**Gate:** `pnpm validate:docs`, `pnpm validate:structure`.
+
+## Notes during development
+
+## Decisions made
+
+| # | Topic | Choice | Precedent? |
+|---|-------|--------|------------|
