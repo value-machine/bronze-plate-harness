@@ -1,11 +1,12 @@
 /**
- * Theme token contract. Every name here is a CSS variable defined in
- * src/index.css (`:root` = light defaults, `.dark` = dark color overrides).
- * themeTokens.test.ts keeps this list and the stylesheet in sync.
+ * Theme token contract. Every name here is a CSS variable generated from the
+ * W3C DTCG token files in ./tokens/ (`pnpm tokens:build` -> tokens.generated.css:
+ * `:root` = light defaults, `.dark` = dark overrides). dtcgTokens.test.ts keeps
+ * this list, the token files and the generated CSS in sync.
  * Guide: documentation/DOC_THEMING.md
  */
 
-/** Tokens whose values differ between light and dark (defined in `:root` and `.dark`). */
+/** Tokens whose values differ between light and dark (light/dark.tokens.json). */
 export const THEME_COLOR_TOKENS = [
   "background",
   "foreground",
@@ -35,7 +36,7 @@ export const THEME_COLOR_TOKENS = [
   "scrollbar-hover",
 ] as const;
 
-/** Tokens shared by both modes (defined once in `:root`). */
+/** Tokens shared by both modes (base.tokens.json; card/input radius are optional overrides). */
 export const THEME_SHARED_TOKENS = [
   "body-font",
   "heading-font",

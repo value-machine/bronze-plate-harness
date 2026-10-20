@@ -53,7 +53,9 @@
     "validate:feature-size:json": "node scripts/validate-feature-size.js --format=json",
     "validate:feature-size:staged": "node scripts/validate-feature-size-staged.js",
     "validate:feature-size:baseline": "node scripts/generate-feature-baseline.js --write",
-    "arch:check:staged": "node scripts/arch-check-staged.js"
+    "arch:check:staged": "node scripts/arch-check-staged.js",
+    "tokens:build": "tz build -c scripts/terrazzo.config.js",
+    "tokens:check": "tz check -c scripts/terrazzo.config.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -76,6 +78,8 @@
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.100.14",
     "@tanstack/react-query-devtools": "^5.100.14",
+    "@terrazzo/cli": "2.9.0",
+    "@terrazzo/plugin-css": "2.9.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -85,6 +89,8 @@
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.7",
     "@vitest/ui": "^4.1.7",
+    "ajv": "8",
+    "ajv-formats": "3",
     "dependency-cruiser": "^17.4.2",
     "eslint": "^10.4.0",
     "eslint-plugin-react-hooks": "^7.1.1",

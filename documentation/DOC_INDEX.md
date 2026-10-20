@@ -25,7 +25,7 @@ Central navigation for plate-harness documentation. For authoritative rules and 
 | **Agent: human onboarding (start)** | [`.agents/skills/start/SKILL.md`](../.agents/skills/start/SKILL.md) |
 | **App vision & goals (fillable)** | [DOC_APP_VISION.md](./DOC_APP_VISION.md) |
 | **Dev task backlog** | [src/features/tasks/README.md](../src/features/tasks/README.md) |
-| **Theming (tokens, light/dark, runtime overrides)** | [DOC_THEMING.md](./DOC_THEMING.md) |
+| **Theming (DTCG tokens, light/dark, runtime overrides)** | [DOC_THEMING.md](./DOC_THEMING.md) |
 | **TanStack Query** | [DOC_TANSTACK_QUERY.md](./DOC_TANSTACK_QUERY.md) |
 | **Testing (runners, placement, patterns)** | [DOC_TESTING.md](./DOC_TESTING.md) |
 | **Feature-local README enforcement** | [DOC_FEATURE_LOCAL_README.md](./DOC_FEATURE_LOCAL_README.md) |

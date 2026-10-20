@@ -6,7 +6,7 @@
 - **Why:** Owner wants "a max compatibility W3C Design Tokens (DTCG) Format". DTCG is the closest thing to a universal token standard, so design tools (Tokens Studio, Penpot, Figma via importers) can read and write the same files. This job comes before `temp_job_bronze-theme`, which then restyles by editing token files only.
 - **Complexity:** M — new build tool and devDeps, one protected whitelist change, and a change of source of truth (supersedes runtime-theming D6). No runtime API change.
 - **Plan review:** Waived — owner grilled every fork live (`DECISIONS.md` D1–D11); a scratch POC proved the tool, the schemas and the mode output.
-- **Plan validate:** Required: pending — `validate` after Phase 4.
+- **Plan validate:** Done 2026-10-20 — tooling pass green (lint 0 errors, type-check, arch:check, build, format:check, test:run 101, test:classify 104, validate:structure/docs).
 - **Scope / constraints:**
   - In: all current tokens (26 colors × light/dark; fonts, radius, spacing, toolbar height, component radii, motion, elevation), light/dark and reduced-motion through resolver modifiers, generated CSS, spec and drift tests, docs.
   - Out:
@@ -20,11 +20,11 @@
 
 | Phase | Goal | Gate | Status |
 |-------|------|------|--------|
-| 1 | Tooling: Terrazzo, vendored schemas, whitelist, `tokens:build` | `pnpm tokens:build` runs on a stub resolver; `validate:structure` passes | Pending |
-| 2 | Author DTCG tokens with today's exact values; generate CSS; `index.css` imports it | Generated file defines every token; build and dev load clean | Pending |
-| 3 | Contract tests: schema, drift, name contract | New tests pass; tests fail when a token file is broken or edited without regenerating | Pending |
-| 4 | Prove nothing changed visually | Computed values for every token match `main` in light, dark and reduced motion; screenshot diff is 0 px on 6 views × 2 modes | Pending |
-| 5 | Docs | DOC_THEMING, ARCHITECTURE, DOC_INDEX, theming ledger note; `validate:docs` passes | Pending |
+| 1 | Tooling: Terrazzo, vendored schemas, whitelist, `tokens:build` | `pnpm tokens:build` runs on a stub resolver; `validate:structure` passes | Done |
+| 2 | Author DTCG tokens with today's exact values; generate CSS; `index.css` imports it | Generated file defines every token; build and dev load clean | Done |
+| 3 | Contract tests: schema, drift, name contract | New tests pass; tests fail when a token file is broken or edited without regenerating | Done |
+| 4 | Prove nothing changed visually | Computed values for every token match `main` in light, dark and reduced motion; screenshot diff is 0 px on 6 views × 2 modes | Done |
+| 5 | Docs | DOC_THEMING, ARCHITECTURE, DOC_INDEX, theming ledger note; `validate:docs` passes | Done |
 
 ## Conflict & compliance
 
@@ -177,7 +177,16 @@
 
 ## Notes during development
 
+- Phase 4 evidence: Playwright against a pre-DTCG build (`6709f31`) and this build. Computed values for all 43 generated tokens plus `rounded-card/input/button/lg`, in light/dark × motion default/reduced: 0 differences. Screenshots of home, login, reset, signup, profile menu and mobile home, in light and dark: 0 changed pixels each. `--radius: 1rem` moves card/input/lg identically, and a `--card-radius: 0px` override squares only cards, as before.
+- Hex8 alpha (`legacyHex: true`) quantizes alpha to 1/255 (e.g. 0.06 → `0f`). Chrome renders and serializes it identically to the old `rgb(... / 0.06)`, so it was kept for readability.
+- The hosted `designtokens.org/schemas/2025.10/*` sub-schemas 404, so the bundle is vendored from the repo at `882ebd6`.
+- The `dtcgTokens.test.ts` drift check shells out to `tz build` with `TOKENS_OUT_DIR` set to a temp dir (~1 s). Token edits under `src/shared` already trigger the full suite in pre-commit.
+- `arch:check` reports `info no-orphan-modules: themeTokens.ts`. This is pre-existing (same on `6709f31`): `applyTheme` is public API with no in-app caller.
+
 ## Decisions made
 
 | # | Topic | Choice | Precedent? |
 |---|-------|--------|------------|
+| 1 | Hex fallback consistency | Added a test: every `hex` equals `round(components × 255)` (tools that read only `hex` must see the same color) | No (spec allows drift; max-compat guard) |
+| 2 | Test environment | Default jsdom (global setup needs `window`); node APIs still available | Repo setup |
+| 3 | Plan wording fix | Phase 4 step 3: `radius: 0` gives cards `0.375rem`, not square (same as before); verified with `radius: 1rem` + `card-radius: 0px` instead | — |

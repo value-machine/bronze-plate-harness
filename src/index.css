@@ -1,12 +1,14 @@
 /*
  * Global styles and design tokens (shadcn/ui convention).
  *
- * SSOT for app colors, radius, and typography. Kit components in
+ * Tailwind wiring for the theme tokens (values: src/shared/theme/tokens/, W3C DTCG). Kit components in
  * src/components/common/ read these through Tailwind utilities
  * (bg-primary, text-muted-foreground, ...). Do not hardcode colors in components.
  */
 @import "tailwindcss";
 @import "tw-animate-css";
+/* Generated from the DTCG token files (pnpm tokens:build). Do not edit it. */
+@import "./shared/theme/tokens/tokens.generated.css";
 
 /*
  * Runtime-written dev data (the /tasks page rewrites src/config/app-tasks*.json).
@@ -17,113 +19,20 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Theme tokens. SSOT for every themeable value; the name list is mirrored in
- * src/shared/theme/themeTokens.ts (THEME_TOKENS) and checked by its test.
- * :root = light (default), .dark = dark. Runtime overrides: applyTheme().
+ * Theme tokens. SSOT: W3C DTCG 2025.10 files in src/shared/theme/tokens/
+ * (theme.resolver.json + *.tokens.json). `pnpm tokens:build` generates the
+ * variables imported above: :root = light defaults, .dark = dark overrides,
+ * prefers-reduced-motion = motion overrides. Names are mirrored in
+ * src/shared/theme/themeTokens.ts (THEME_TOKENS). Runtime overrides: applyTheme().
  * Guide: documentation/DOC_THEMING.md
  */
+
 :root {
   color-scheme: light;
-
-  /* Typography */
-  --body-font: "Montserrat", sans-serif;
-  --heading-font: var(--body-font);
-  --mono-font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-
-  /* Shape and density */
-  --radius: 0.625rem;
-  --spacing: 0.25rem;
-  --app-toolbar-height: 64px;
-
-  /* Component tokens (default to the shared tokens) */
-  --button-radius: 9999px;
-  --card-radius: calc(var(--radius) + 0.375rem);
-  --input-radius: calc(var(--radius) - 2px);
-
-  /* Motion */
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-slow: 600ms;
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Elevation */
-  --elevation-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --elevation-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --elevation-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --elevation-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --elevation-brand: 0 3px 5px 2px rgb(0 0 0 / 0.15);
-  --elevation-brand-active: 0 2px 4px 1px rgb(0 0 0 / 0.2);
-
-  /* Colors (light) */
-  --background: #ffffff;
-  --foreground: #14131f;
-  --card: #ffffff;
-  --card-foreground: #14131f;
-  --popover: #ffffff;
-  --popover-foreground: #14131f;
-  --primary: #cf13b3;
-  --primary-foreground: #ffffff;
-  --primary-gradient-start: #8d0bd1;
-  --secondary: #c81457;
-  --secondary-foreground: #ffffff;
-  --muted: #f1f0f5;
-  --muted-foreground: #5b5a6b;
-  --accent: rgb(20 19 31 / 0.06);
-  --accent-foreground: #14131f;
-  --destructive: #c62828;
-  --destructive-foreground: #ffffff;
-  --success: #2e7d32;
-  --warning: #a65800;
-  --info: #0277bd;
-  --border: rgb(20 19 31 / 0.12);
-  --input: rgb(20 19 31 / 0.3);
-  --ring: #a1108c;
-  --overlay: rgb(20 19 31 / 0.4);
-  --scrollbar: rgb(20 19 31 / 0.3);
-  --scrollbar-hover: rgb(20 19 31 / 0.5);
 }
 
 .dark {
   color-scheme: dark;
-
-  --elevation-brand: 0 3px 5px 2px rgb(0 0 0 / 0.4);
-  --elevation-brand-active: 0 2px 4px 1px rgb(0 0 0 / 0.5);
-
-  /* Colors (dark) */
-  --background: #070614;
-  --foreground: #ffffff;
-  --card: #1c1b29;
-  --card-foreground: #ffffff;
-  --popover: #1c1b29;
-  --popover-foreground: #ffffff;
-  --primary: #cf13b3;
-  --primary-foreground: #ffffff;
-  --primary-gradient-start: #8d0bd1;
-  --secondary: #e6196b;
-  --secondary-foreground: #ffffff;
-  --muted: #26253a;
-  --muted-foreground: #b3b3c2;
-  --accent: rgb(255 255 255 / 0.08);
-  --accent-foreground: #ffffff;
-  --destructive: #f44336;
-  --destructive-foreground: #ffffff;
-  --success: #66bb6a;
-  --warning: #ffa726;
-  --info: #29b6f6;
-  --border: rgb(255 255 255 / 0.12);
-  --input: rgb(255 255 255 / 0.23);
-  --ring: rgb(207 19 179 / 0.5);
-  --overlay: rgb(0 0 0 / 0.6);
-  --scrollbar: rgb(255 255 255 / 0.3);
-  --scrollbar-hover: rgb(255 255 255 / 0.5);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-fast: 0.01ms;
-    --duration-normal: 0.01ms;
-    --duration-slow: 0.01ms;
-  }
 }
 
 /* Maps tokens to Tailwind utilities; var() references keep them runtime-overridable. */
@@ -136,8 +45,9 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-button: var(--button-radius);
-  --radius-card: var(--card-radius);
-  --radius-input: var(--input-radius);
+  /* Component radii: optional override tokens, else derived from --radius (shadcn-style). */
+  --radius-card: var(--card-radius, calc(var(--radius) + 0.375rem));
+  --radius-input: var(--input-radius, calc(var(--radius) - 2px));
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

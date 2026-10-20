@@ -207,7 +207,7 @@ Legacy note: `VITE_SUPABASE_ANON_KEY` is still accepted for backward compatibili
 
 #### Theme customization (optional) 🎨
 
-Edit the design tokens (CSS variables) in `src/index.css`: light values in `:root`, dark in `.dark`. Radius, density, fonts, shadows and motion are tokens too, and `applyTheme()` restyles at runtime (e.g. per login). Users switch Light / Dark / System with the theme icon at the bottom of the profile menu. Guide: [documentation/DOC_THEMING.md](./documentation/DOC_THEMING.md).
+Edit the design tokens in `src/shared/theme/tokens/` (W3C DTCG 2025.10 JSON: light and dark color files, a base file, a resolver), then run `pnpm tokens:build`. Radius, density, fonts, shadows and motion are tokens too, and `applyTheme()` restyles at runtime (e.g. per login). Users switch Light / Dark / System with the theme icon at the bottom of the profile menu. Guide: [documentation/DOC_THEMING.md](./documentation/DOC_THEMING.md).
 
 #### App vision
 
@@ -249,7 +249,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ### Features
 
 - ✅ **Authentication**: Supabase authentication (when configured)
-- ✅ **Theme Customization**: Light/dark mode and design tokens in `src/index.css` ([guide](./documentation/DOC_THEMING.md))
+- ✅ **Theme Customization**: Light/dark mode and W3C DTCG design tokens in `src/shared/theme/tokens/` ([guide](./documentation/DOC_THEMING.md))
 - ✅ **Frontend Development**: All UI components and features work independently
 
 ### Configuring Supabase Later
