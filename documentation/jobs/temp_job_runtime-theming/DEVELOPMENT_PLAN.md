@@ -14,7 +14,7 @@
 | Phase | Goal | Gate | Status |
 |-------|------|------|--------|
 | 1 | Token contract: full token set in `index.css` (light `:root`, dark `.dark`), typed token list, contract test | Contract tooling gate; app looks unchanged in dark | Done |
-| 2 | Kit follows tokens: radius, component tokens, shadows, motion, overlay | Contract tooling gate; changing `--radius` / `--button-radius` visibly reshapes the kit | Pending |
+| 2 | Kit follows tokens: radius, component tokens, shadows, motion, overlay | Contract tooling gate; changing `--radius` / `--button-radius` visibly reshapes the kit | Done |
 | 3 | Color mode: inline anti-flash script, `useColorMode`, Appearance item in profile menu | Contract tooling gate; Light / Dark / System switch works, persists per device, no flash on reload | Pending |
 | 4 | Runtime override: `applyTheme()` / `clearTheme()` | Contract tooling gate; unit tests; a manual override restyles live | Pending |
 | 5 | Docs: theming guide, README, ARCHITECTURE, code-style styling section | Docs validators green | Pending |
@@ -144,6 +144,7 @@
 - Plan review ran as 3 parallel sub-agents (naming/rebel/scale, precedent/UX/tests, repo-rules validate); a worker restart interrupted two, whose checks (file placement, security, protected files, Tailwind v4 runtime-variable behavior) were completed inline by the planning agent. Not adopted: per-mode `<meta name="theme-color">` (no PWA/mobile chrome need yet).
 - Tailwind v4: spacing and shadow utilities read `var(--spacing)` / `var(--shadow-*)` at runtime, so runtime overrides work for them; fonts are currently `@theme inline` literals and must become non-inline variable mappings.
 - Phase 1: Tailwind v4 bakes `shadow-*` values in at build time (verified in built CSS), so shadows are `--elevation-*` tokens with `elevation-*` utilities that keep Tailwind's ring layering. Font tokens are `--body-font`, `--heading-font`, `--mono-font` (not `--font-*`) so `@theme inline` never emits a self-referencing variable. Gate: screenshots pixel-identical to the pre-change baseline on all 6 views.
+- Phase 2: `cn()` now uses `extendTailwindMerge` so `elevation-*` and `rounded-{button,card,input}` resolve conflicts like built-ins (found via a screenshot diff on the dev Tasks button; covered by `cn.test.ts`). Gate: screenshots pixel-identical to baseline at defaults; live override of radius, button/card radius, spacing, primary, font and brand elevation restyles `/tasks` without reload. Badges and avatars keep `rounded-full` (circles/pills by design, not theme radius).
 
 ## Decisions made
 

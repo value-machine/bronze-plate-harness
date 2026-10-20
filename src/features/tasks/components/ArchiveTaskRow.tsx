@@ -17,7 +17,7 @@ export const ArchiveTaskRow = ({ task, displayIndex, onRestore }: ArchiveTaskRow
   };
 
   return (
-    <div className="flex items-start gap-3 rounded-lg border bg-card p-2.5 transition-shadow hover:shadow-md sm:p-3">
+    <div className="flex items-start gap-3 rounded-lg border bg-card p-2.5 transition-shadow hover:elevation-md sm:p-3">
       <div className="min-w-0 flex-1">
         <div className="mb-0.5 flex flex-wrap items-center gap-2">
           <p

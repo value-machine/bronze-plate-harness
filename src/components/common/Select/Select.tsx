@@ -20,7 +20,7 @@ export const SelectTrigger = ({ className, children, hideIcon, ...props }: Selec
   <SelectPrimitive.Trigger
     data-slot="select-trigger"
     className={cn(
-      "flex h-9 w-fit items-center justify-between gap-2 rounded-md border border-input bg-transparent px-3 text-sm whitespace-nowrap outline-none hover:border-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+      "flex h-9 w-fit items-center justify-between gap-2 rounded-input border border-input bg-transparent px-3 text-sm whitespace-nowrap outline-none hover:border-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
       className
     )}
     {...props}
@@ -46,7 +46,7 @@ export const SelectContent = ({
       position={position}
       sideOffset={4}
       className={cn(
-        "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+        "relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border bg-popover text-popover-foreground elevation-md data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
         className
       )}
       {...props}

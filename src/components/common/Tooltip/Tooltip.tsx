@@ -21,7 +21,7 @@ export const Tooltip = ({ title, children, side = "bottom", className }: Tooltip
           side={side}
           sideOffset={6}
           className={cn(
-            "z-50 rounded-md bg-muted px-2 py-1 text-xs text-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+            "z-50 rounded-md bg-muted px-2 py-1 text-xs text-foreground elevation-md animate-in fade-in-0 zoom-in-95",
             className
           )}
         >

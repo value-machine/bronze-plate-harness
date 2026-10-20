@@ -20,7 +20,7 @@ export const SegmentedControl = <TValue extends string>({
   className,
 }: SegmentedControlProps<TValue>) => {
   return (
-    <div role="group" className={cn("flex w-full rounded-md border border-input", className)}>
+    <div role="group" className={cn("flex w-full rounded-input border border-input", className)}>
       {options.map((option) => {
         const selected = option.value === value;
         return (
@@ -30,7 +30,7 @@ export const SegmentedControl = <TValue extends string>({
             aria-pressed={selected}
             onClick={() => onValueChange(option.value)}
             className={cn(
-              "h-9 flex-1 border-input text-sm font-medium transition-colors not-first:border-l first:rounded-l-md last:rounded-r-md focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
+              "h-9 flex-1 border-input text-sm font-medium transition-colors not-first:border-l first:rounded-l-input last:rounded-r-input focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none",
               selected ? "bg-accent text-foreground" : "text-muted-foreground hover:bg-accent/50"
             )}
           >

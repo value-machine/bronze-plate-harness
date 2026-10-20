@@ -39,7 +39,7 @@ Colocated `*.test.ts` under `services/`; shared wrappers in `tests/test-utils.ts
 ## Dependencies
 
 - `vite-plugin-dev-tasks.ts` (project root)
-- shadcn/ui kit (`src/components/common/`), lucide-react, dnd-kit (reorder)
+- shadcn/ui kit (`src/components/common/`), lucide-react, dnd-kit (reorder). Styling uses theme token utilities only (`elevation-*`, `duration-(--duration-*)`, color tokens), so rows follow the active theme and light/dark mode.
 - Agent skills: `.agents/skills/start/SKILL.md`, `router`, `finish` for task sync
 
 ## Onboarding
