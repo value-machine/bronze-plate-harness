@@ -3,11 +3,11 @@
     "$type": "fontFamily",
     "$description": "Font stacks. CSS: --<name>.",
     "body-font": {
-      "$value": ["Montserrat", "sans-serif"]
+      "$value": ["Inter", "sans-serif"]
     },
     "heading-font": {
-      "$value": "{font.body-font}",
-      "$description": "Defaults to the body font."
+      "$value": ["Cinzel", "serif"],
+      "$description": "Engraved Roman capitals for headings."
     },
     "mono-font": {
       "$value": [
@@ -25,17 +25,14 @@
     "$description": "Corner radii. card-radius / input-radius are optional overrides derived in src/index.css (@theme inline).",
     "radius": {
       "$value": {
-        "value": 0.625,
+        "value": 0.25,
         "unit": "rem"
       },
       "$description": "Base radius; Tailwind rounded-sm/md/lg/xl derive from it."
     },
     "button-radius": {
-      "$value": {
-        "value": 9999,
-        "unit": "px"
-      },
-      "$description": "Pill buttons."
+      "$value": "{shape.radius}",
+      "$description": "Plate buttons: follow the base radius."
     }
   },
   "spacing": {

@@ -5,7 +5,7 @@ import { cn } from "@/shared/utils/cn";
 
 /**
  * Button variants (shadcn/ui). Brand look lives here and in `src/index.css`:
- * - default: gradient pill for main actions
+ * - default: brand gradient (metallic bronze by default) for main actions
  * - outline: white outline with sweep-on-hover for secondary actions
  * - ghost: primary-colored text button
  */

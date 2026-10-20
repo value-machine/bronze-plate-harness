@@ -32,6 +32,17 @@ Components never use raw colors or one-off values for themeable aspects; they us
 
 **Workflow:** edit a `*.tokens.json` file → `pnpm tokens:build` → commit the JSON and `tokens.generated.css` together. If you forget the build, the test suite fails and names the fix. `pnpm tokens:check` lints the files with Terrazzo.
 
+## Default theme: bronze plate
+
+The shipped tokens are the "Engraved plate" bronze identity (`documentation/jobs/temp_job_bronze-theme/DECISIONS.md` D5):
+- **Type:** Cinzel headings (engraved Roman capitals) and Inter body.
+- **Shape:** 0.25rem plate corners; buttons follow `radius`.
+- **Primary:** bronze, with a bevelled metallic gradient button (`elevation-brand` uses inset highlight and shade).
+- **Secondary:** verdigris.
+- **Surfaces:** warm paper in light mode, warm charcoal in dark mode.
+
+Fonts load from Google Fonts in `index.html`. When you change `font.*` tokens, update that link too.
+
 ## Tokens
 
 All names are in `THEME_TOKENS` (`src/shared/theme/themeTokens.ts`).
@@ -42,7 +53,7 @@ All names are in `THEME_TOKENS` (`src/shared/theme/themeTokens.ts`).
 | Typography | `body-font`, `heading-font`, `mono-font` | `font-sans` (body), `font-heading`, `font-mono` |
 | Shape | `radius` (base; `rounded-sm/md/lg/xl` derive from it) | `rounded-*` |
 | Density | `spacing` (Tailwind's spacing base; every `p-*`, `gap-*`, `h-*` scales with it) | all spacing utilities |
-| Component tokens | `button-radius` (DTCG, pill by default); `card-radius`, `input-radius` (optional overrides: not in the DTCG files; without them cards use `radius + 0.375rem` and inputs `radius − 2px`, derived in `@theme inline`) | `rounded-button`, `rounded-card`, `rounded-input` |
+| Component tokens | `button-radius` (DTCG, alias to `radius` by default: plate buttons); `card-radius`, `input-radius` (optional overrides: not in the DTCG files; without them cards use `radius + 0.375rem` and inputs `radius − 2px`, derived in `@theme inline`) | `rounded-button`, `rounded-card`, `rounded-input` |
 | Elevation | `elevation-sm/md/lg/xl`, `elevation-brand`, `elevation-brand-active` | `elevation-sm/md/lg/xl` |
 | Motion | `duration-fast/normal/slow`, `ease-standard` | `duration-(--duration-fast)` etc. |
 | Layout | `app-toolbar-height` | `h-toolbar`, `pt-toolbar` |
@@ -55,7 +66,7 @@ Not themeable (by design): breakpoints (fixed at build time), z-index (app struc
 
 **Dark/light colors.** Edit `light.tokens.json` and `dark.tokens.json` (keep `components` and `hex` in step), then `pnpm tokens:build`. Both files must define every color token (the contract test checks it).
 
-**Corner radius everywhere.** Change `shape.radius` in `base.tokens.json`. Cards and inputs derive from it. Buttons are pills by default (`shape.button-radius` = 9999px); set it to `"{shape.radius}"` to make them follow too. To give cards or inputs their own radius, add a `card-radius` / `input-radius` token under `shape` (and drop it from `OPTIONAL_TOKENS` in `dtcgTokens.test.ts`).
+**Corner radius everywhere.** Change `shape.radius` in `base.tokens.json`. Cards and inputs derive from it. Buttons follow it too (`shape.button-radius` = `"{shape.radius}"`); set a dimension such as 9999px for pill buttons. To give cards or inputs their own radius, add a `card-radius` / `input-radius` token under `shape` (and drop it from `OPTIONAL_TOKENS` in `dtcgTokens.test.ts`).
 
 **Density.** Change `spacing.spacing` (default `0.25rem`). Smaller = denser.
 
