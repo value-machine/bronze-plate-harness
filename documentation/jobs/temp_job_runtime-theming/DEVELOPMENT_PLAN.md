@@ -61,6 +61,7 @@
 | 6 | 2026-10-20 | review-dev-plan (UX, adopted advisory) | Appearance uses Radix radio group (`menuitemradio` + `aria-checked`, visible check) and renders in all three menu states; tests cover all three | Phase 3 |
 | 7 | 2026-10-20 | review-dev-plan (delivery) | Phases 1–5 land together in one PR (Phase 1's temporary `class="dark"` never ships alone) | All |
 | 9 | 2026-10-20 | owner (D11) | Mode control becomes a cycling icon button with tooltip in the top bar (`src/layouts/Topbar/ColorModeToggle.tsx`); Appearance radios, `AppearanceMenuItems` and the dropdown radio primitives removed; amendment 6 no longer applies | Phase 3 |
+| 10 | 2026-10-20 | owner (D12) | Cycling toggle moves into the profile menu footer, bottom right (`src/layouts/ProfileMenu/ColorModeToggle.tsx`, icon-only menu item, menu stays open); top-bar button removed; tests in `ProfileMenu.test.tsx` | Phase 3 |
 | 8 | 2026-10-20 | validate plan-review (security) | No CSP today; document that a future CSP needs the inline script's hash | Phase 5 |
 
 ## Pattern & precedent
@@ -150,6 +151,7 @@
 - Phase 4: `applyTheme` / `clearTheme` in `themeTokens.ts`; unknown token names fail type-check (verified with a probe). `clearTheme` removes only theme tokens (other inline variables like `--status-w` stay).
 - D11 change: toggle tested in `ColorModeToggle.test.tsx` (cycle order, persistence, tooltip text); browser check shows icon per mode, tooltip on hover, Light→Dark→System cycle with correct class.
 - Phase 5: `documentation/DOC_THEMING.md` (tokens, common changes, runtime overrides, color mode, CSP note), README, ARCHITECTURE, DOC_INDEX and the "Configure Theme" onboarding task updated. The `.cursor/rules/code-style/RULE.mdc` styling-section update is protected and was not made; it awaits owner approval (current text stays accurate, it just doesn't mention modes/component tokens).
+- D12 change: browser check shows no top-bar theme button, the icon in the menu footer bottom-right, tooltip on hover, Light→Dark→System cycle with the menu staying open.
 
 ## Decisions made
 

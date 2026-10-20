@@ -16,7 +16,7 @@
   },
   {
     "title": "Configure Theme",
-    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the top bar.",
+    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu.",
     "status": "to-do"
   }
 ]

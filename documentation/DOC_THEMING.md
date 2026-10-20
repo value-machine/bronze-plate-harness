@@ -10,7 +10,7 @@ How to restyle the whole app: light/dark mode, brand colors, corner radius, dens
 | Tailwind mapping | `src/index.css` → `@theme inline` | Exposes tokens as utilities (`bg-primary`, `rounded-button`, `font-heading`, …). Values are `var()` references, so runtime overrides reach every utility. |
 | Token contract | `src/shared/theme/themeTokens.ts` | Typed list of token names (`THEME_TOKENS`); `themeTokens.test.ts` fails if `index.css` and the list drift apart. |
 | Color mode | `src/shared/theme/colorMode.ts`, `src/shared/context/ColorModeContext.tsx`, inline script in `index.html` | Light / Dark / System. Follows the OS by default, remembers the choice per device, syncs across tabs, no flash on load. |
-| Mode control | `src/layouts/Topbar/ColorModeToggle.tsx` | One icon button in the top bar that cycles Light → Dark → System (tooltip names current and next). |
+| Mode control | `src/layouts/ProfileMenu/ColorModeToggle.tsx` | Icon at the bottom right of the profile menu that cycles Light → Dark → System (tooltip names current and next). |
 | Runtime overrides | `applyTheme()` / `clearTheme()` in `themeTokens.ts` | Restyle at runtime (e.g. per login) on top of the active mode. |
 
 Components never use raw colors or one-off values for themeable aspects; they use token utilities. The lint rule in `eslint.config.js` warns on hardcoded colors.

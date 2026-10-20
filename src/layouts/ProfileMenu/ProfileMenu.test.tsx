@@ -176,4 +176,67 @@ describe("ProfileMenu", () => {
       expect(mockLogout).toHaveBeenCalled();
     });
   });
+
+  describe("Color mode toggle", () => {
+    const signedInUser = { id: "123", email: "test@example.com" } as User;
+
+    const openMenu = async () => {
+      const user = userEvent.setup();
+      renderMenu();
+      await user.click(screen.getByRole("button"));
+      await waitFor(() => expect(screen.getByRole("menu")).toBeInTheDocument());
+      return user;
+    };
+
+    const toggle = () => screen.getByRole("menuitem", { name: /^Theme:/ });
+
+    it("should show the toggle when signed out", async () => {
+      await openMenu();
+      expect(toggle()).toHaveAccessibleName("Theme: System (click for Light)");
+    });
+
+    it("should show the toggle when signed in", async () => {
+      vi.mocked(useAuthContext).mockReturnValue({ ...defaultAuthContext, user: signedInUser });
+      await openMenu();
+      expect(toggle()).toBeInTheDocument();
+    });
+
+    it("should show the toggle when auth is not configured", async () => {
+      vi.mocked(useAuthBackendConfigured).mockReturnValue({ isConfigured: false });
+      await openMenu();
+      expect(toggle()).toBeInTheDocument();
+    });
+
+    it("should be the last item in the menu", async () => {
+      await openMenu();
+      const items = screen.getAllByRole("menuitem");
+      expect(items[items.length - 1]).toBe(toggle());
+    });
+
+    it("should cycle Light, Dark, System and keep the menu open", async () => {
+      const user = await openMenu();
+
+      await user.click(toggle());
+      expect(toggle()).toHaveAccessibleName("Theme: Light (click for Dark)");
+      expect(document.documentElement.classList.contains("dark")).toBe(false);
+
+      await user.click(toggle());
+      expect(toggle()).toHaveAccessibleName("Theme: Dark (click for System)");
+      expect(document.documentElement.classList.contains("dark")).toBe(true);
+
+      await user.click(toggle());
+      expect(toggle()).toHaveAccessibleName("Theme: System (click for Light)");
+      expect(screen.getByRole("menu")).toBeInTheDocument();
+    });
+
+    it("should show the hover text as a tooltip", async () => {
+      const user = await openMenu();
+
+      await user.hover(toggle());
+
+      expect(await screen.findByRole("tooltip")).toHaveTextContent(
+        "Theme: System (click for Light)"
+      );
+    });
+  });
 });

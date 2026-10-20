@@ -17,7 +17,8 @@ Updated: 2026-10-20
 | D8 | Toggle placement | superseded by D11 | 'Appearance' item (Light / Dark / System) in the profile avatar menu; works signed in or out | grill-me | Rejected: top-bar icon button, both, no toggle (would reverse D2). |
 | D9 | Avoiding a wrong-theme flash on load | closed | Tiny inline script in `index.html` sets the `.dark` class from the stored choice / OS before first paint (next-themes pattern) | plan-grill | clear-winner. Lost: CSS-only `@media (prefers-color-scheme)` (duplicates the dark palette and cannot honor a stored manual choice); React effect only (visible flash for users whose choice differs from the OS). |
 | D10 | Which palette is the base | closed | `:root` = light, `.dark` = dark (shadcn convention); current brand palette moves to `.dark` unchanged; light palette keeps brand primary/secondary/gradient on light surfaces | plan-grill | clear-winner. Lost: dark as `:root` with a `.light` class (breaks shadcn presets and its `dark:` variant). Light values are agent-chosen starting values, tweakable in `index.css`. |
-| D11 | Mode control (replaces D8) | closed | One icon button in the top bar that cycles Light → Dark → System; icon shows the current mode; hover text (tooltip + accessible name) says `Theme: <current> (click for <next>)`. No Appearance radios in the profile menu. | owner | Owner, mid-implementation: "way cleaner, just one icon that cycles, only hover text". Uses the kit's Radix `Tooltip`. Not on `/tasks` (no top bar there). |
+| D11 | Mode control (replaces D8) | superseded by D12 | One icon button in the top bar that cycles Light → Dark → System; icon shows the current mode; hover text (tooltip + accessible name) says `Theme: <current> (click for <next>)`. No Appearance radios in the profile menu. | owner | Owner, mid-implementation: "way cleaner, just one icon that cycles, only hover text". Uses the kit's Radix `Tooltip`. Not on `/tasks` (no top bar there). |
+| D12 | Mode control placement (replaces D11 placement) | closed | The cycling icon (Light → Dark → System, tooltip naming current and next) lives in the profile menu, as the last item in a footer row at the bottom right; not in the top bar. It is a menu item (keyboard reachable) that keeps the menu open on click. | owner | Owner: "the toggle should still be within the profile menu, right bottom of that menu". |
 
 ## Open
 
@@ -36,3 +37,4 @@ Updated: 2026-10-20
 - 2026-10-20 — D8 closed via grill-me (asked)
 - 2026-10-20 — D9, D10 closed via plan-grill (clear-winner)
 - 2026-10-20 — D11 closed via owner instruction (supersedes D8)
+- 2026-10-20 — D12 closed via owner instruction (supersedes D11 placement)

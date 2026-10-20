@@ -207,7 +207,7 @@ Legacy note: `VITE_SUPABASE_ANON_KEY` is still accepted for backward compatibili
 
 #### Theme customization (optional) 🎨
 
-Edit the design tokens (CSS variables) in `src/index.css`: light values in `:root`, dark in `.dark`. Radius, density, fonts, shadows and motion are tokens too, and `applyTheme()` restyles at runtime (e.g. per login). Users switch Light / Dark / System with the icon in the top bar. Guide: [documentation/DOC_THEMING.md](./documentation/DOC_THEMING.md).
+Edit the design tokens (CSS variables) in `src/index.css`: light values in `:root`, dark in `.dark`. Radius, density, fonts, shadows and motion are tokens too, and `applyTheme()` restyles at runtime (e.g. per login). Users switch Light / Dark / System with the theme icon at the bottom of the profile menu. Guide: [documentation/DOC_THEMING.md](./documentation/DOC_THEMING.md).
 
 #### App vision
 
