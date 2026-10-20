@@ -17,7 +17,7 @@
 | 2 | Kit follows tokens: radius, component tokens, shadows, motion, overlay | Contract tooling gate; changing `--radius` / `--button-radius` visibly reshapes the kit | Done |
 | 3 | Color mode: inline anti-flash script, `useColorMode`, Appearance item in profile menu | Contract tooling gate; Light / Dark / System switch works, persists per device, no flash on reload | Done |
 | 4 | Runtime override: `applyTheme()` / `clearTheme()` | Contract tooling gate; unit tests; a manual override restyles live | Done |
-| 5 | Docs: theming guide, README, ARCHITECTURE, code-style styling section | Docs validators green | Pending |
+| 5 | Docs: theming guide, README, ARCHITECTURE, code-style styling section | Docs validators green | Done (except rule edit) |
 
 ## Conflict & compliance
 
@@ -149,6 +149,7 @@
 - Phase 3: the mode lives in `ColorModeProvider` (`src/shared/context/ColorModeContext.tsx`, same pattern as `AuthContext`) instead of a standalone `src/shared/hooks/useColorMode.ts`, because the Appearance items mount only while the menu is open and the mode must track OS/other-tab changes app-wide; `useColorMode` is exported from the context file. Tests: `colorMode.test.ts` (incl. index.html script sync), `ColorModeContext.test.tsx` (OS listener only in system, cleanup, cross-tab, storage-throws), `ProfileMenu.test.tsx` Appearance in all 3 states. `installMatchMediaMock` lives in `tests/test-utils.tsx`, installed per test in `tests/setup.ts`. Browser gate (Playwright, OS light/dark emulation): correct class before the bundle runs on both, pick Dark persists across reload, stored light wins over OS, system follows an OS flip.
 - Phase 4: `applyTheme` / `clearTheme` in `themeTokens.ts`; unknown token names fail type-check (verified with a probe). `clearTheme` removes only theme tokens (other inline variables like `--status-w` stay).
 - D11 change: toggle tested in `ColorModeToggle.test.tsx` (cycle order, persistence, tooltip text); browser check shows icon per mode, tooltip on hover, Light→Dark→System cycle with correct class.
+- Phase 5: `documentation/DOC_THEMING.md` (tokens, common changes, runtime overrides, color mode, CSP note), README, ARCHITECTURE, DOC_INDEX and the "Configure Theme" onboarding task updated. The `.cursor/rules/code-style/RULE.mdc` styling-section update is protected and was not made; it awaits owner approval (current text stays accurate, it just doesn't mention modes/component tokens).
 
 ## Decisions made
 
