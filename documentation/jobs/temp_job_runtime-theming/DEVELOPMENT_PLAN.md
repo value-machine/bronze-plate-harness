@@ -16,7 +16,7 @@
 | 1 | Token contract: full token set in `index.css` (light `:root`, dark `.dark`), typed token list, contract test | Contract tooling gate; app looks unchanged in dark | Done |
 | 2 | Kit follows tokens: radius, component tokens, shadows, motion, overlay | Contract tooling gate; changing `--radius` / `--button-radius` visibly reshapes the kit | Done |
 | 3 | Color mode: inline anti-flash script, `useColorMode`, Appearance item in profile menu | Contract tooling gate; Light / Dark / System switch works, persists per device, no flash on reload | Done |
-| 4 | Runtime override: `applyTheme()` / `clearTheme()` | Contract tooling gate; unit tests; a manual override restyles live | Pending |
+| 4 | Runtime override: `applyTheme()` / `clearTheme()` | Contract tooling gate; unit tests; a manual override restyles live | Done |
 | 5 | Docs: theming guide, README, ARCHITECTURE, code-style styling section | Docs validators green | Pending |
 
 ## Conflict & compliance
@@ -146,6 +146,7 @@
 - Phase 1: Tailwind v4 bakes `shadow-*` values in at build time (verified in built CSS), so shadows are `--elevation-*` tokens with `elevation-*` utilities that keep Tailwind's ring layering. Font tokens are `--body-font`, `--heading-font`, `--mono-font` (not `--font-*`) so `@theme inline` never emits a self-referencing variable. Gate: screenshots pixel-identical to the pre-change baseline on all 6 views.
 - Phase 2: `cn()` now uses `extendTailwindMerge` so `elevation-*` and `rounded-{button,card,input}` resolve conflicts like built-ins (found via a screenshot diff on the dev Tasks button; covered by `cn.test.ts`). Gate: screenshots pixel-identical to baseline at defaults; live override of radius, button/card radius, spacing, primary, font and brand elevation restyles `/tasks` without reload. Badges and avatars keep `rounded-full` (circles/pills by design, not theme radius).
 - Phase 3: the mode lives in `ColorModeProvider` (`src/shared/context/ColorModeContext.tsx`, same pattern as `AuthContext`) instead of a standalone `src/shared/hooks/useColorMode.ts`, because the Appearance items mount only while the menu is open and the mode must track OS/other-tab changes app-wide; `useColorMode` is exported from the context file. Tests: `colorMode.test.ts` (incl. index.html script sync), `ColorModeContext.test.tsx` (OS listener only in system, cleanup, cross-tab, storage-throws), `ProfileMenu.test.tsx` Appearance in all 3 states. `installMatchMediaMock` lives in `tests/test-utils.tsx`, installed per test in `tests/setup.ts`. Browser gate (Playwright, OS light/dark emulation): correct class before the bundle runs on both, pick Dark persists across reload, stored light wins over OS, system follows an OS flip.
+- Phase 4: `applyTheme` / `clearTheme` in `themeTokens.ts`; unknown token names fail type-check (verified with a probe). `clearTheme` removes only theme tokens (other inline variables like `--status-w` stay).
 
 ## Decisions made
 

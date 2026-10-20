@@ -61,3 +61,24 @@ export const THEME_SHARED_TOKENS = [
 export const THEME_TOKENS = [...THEME_COLOR_TOKENS, ...THEME_SHARED_TOKENS] as const;
 
 export type ThemeTokenName = (typeof THEME_TOKENS)[number];
+
+/** Token values to override at runtime, e.g. `{ primary: "#2563eb", radius: "0" }`. */
+export type ThemeOverrides = Partial<Record<ThemeTokenName, string>>;
+
+/**
+ * Applies token overrides on top of the active light/dark palette by setting CSS
+ * variables on <html>. Later calls add to or replace earlier overrides; use
+ * `clearTheme()` to go back to the stylesheet values.
+ */
+export const applyTheme = (overrides: ThemeOverrides): void => {
+  const style = document.documentElement.style;
+  for (const [token, value] of Object.entries(overrides)) {
+    if (value !== undefined) style.setProperty(`--${token}`, value);
+  }
+};
+
+/** Removes every runtime override set by `applyTheme`. */
+export const clearTheme = (): void => {
+  const style = document.documentElement.style;
+  for (const token of THEME_TOKENS) style.removeProperty(`--${token}`);
+};
