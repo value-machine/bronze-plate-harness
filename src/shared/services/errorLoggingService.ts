@@ -71,6 +71,7 @@ const sink: ErrorSink = supabaseSink;
 const lastSentByGroup = new Map<string, number>();
 let sendsThisSession = 0;
 
+// Second copy: supabase/functions/_shared/errorLogging.ts (Deno cannot import this file). Keep in sync.
 const SCRUBBERS: Array<[RegExp, string]> = [
   [/\beyJ[\w-]+\.[\w-]+\.[\w-]+/g, ":token"],
   [/\bbearer\s+[\w.~+/-]+=*/gi, "Bearer :token"],

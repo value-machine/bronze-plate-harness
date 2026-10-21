@@ -14,4 +14,5 @@ export default [
   'public/',
   'documentation/',
   'vite-plugin-*.ts', // Vite plugin files
+  'supabase/functions/', // Deno Edge Functions (checked with deno lint / deno check)
 ];
