@@ -155,6 +155,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 - Guide user to create `.env` in project root with `VITE_SUPABASE_*` vars (see README).
 - Remind user to restart dev server after `.env` changes.
 - For **Sign in with Google**, use **`documentation/DOC_SUPABASE_GOOGLE_OAUTH.md` as the SSOT**.
+- **Error logs + feedback:** apply `supabase/migrations/*.sql` to each project (staging first when there is one), then give the owner an admin role: Supabase dashboard → Authentication → Users → user → `app_metadata` `{"role": "admin"}` (takes effect after the next sign-in). Fill `.agents/skills/backlog-management/SKILL.md` § Configure. Details and opt-out: `documentation/DOC_ERROR_LOGGING_CONTRACT.md`.
 
 **Hosting (task #2 — Put your app online):** Follow the **Agent one-shot brief** in `documentation/DOC_CLOUDFLARE_WORKERS.md`; the task description in `src/config/app-tasks.json` is the plain-language summary. Fork must add `account_id`/custom domain; template intentionally omits them.
 

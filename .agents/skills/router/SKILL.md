@@ -3,7 +3,7 @@ name: router
 description: >-
   Picks the next action and skill, then invokes it (read that SKILL.md and execute the workflow
   in the same turn). Mid-thread: continue the logical next step on active work. Idle or new:
-  fall back to gates and app-tasks.json backlog. Maps situations to project, user, and plugin
+  fall back to gates and the backlog-management skill. Maps situations to project, user, and plugin
   skills; resolves overlaps. Product context SSOT: documentation/DOC_APP_VISION.md. Use when
   the user types /router or asks which skill to use, or routes slash commands to SKILL.md files.
   IF the user message has no clear primary outcome AND gates 1–2 are not satisfied THEN follow
@@ -27,7 +27,7 @@ Use this file to pick **one primary skill** (sometimes two in sequence).
 
 1. **Thread continuation** — active in-flight work in this conversation (see **Active thread work** below).
 2. **Substantive request** — user message names a task, question, or change → **Decision model** gates + **Situation → skill** (skip backlog).
-3. **Backlog intake** — only when step 1 finds **no** active thread work **and** the message is bare `/router` or equivalent idle dispatch (see **App task backlog**).
+3. **Backlog intake** — only when step 1 finds **no** active thread work **and** the message is bare `/router` or equivalent idle dispatch: run `.agents/skills/backlog-management/SKILL.md` (see **App task backlog**).
 
 **Bare `/router`:** Message is only `/router` (optional whitespace) with **no substantive task or question**. Run step 1 first; if no active thread work, fall through to backlog intake. This is **not** `finish` and **not** “commit the working tree” unless thread continuation clearly left off at validated, landing-ready work **and** the user’s prior turn signaled wrap-up (otherwise prefer `validate` or the next implement phase — do not auto-commit).
 
@@ -194,7 +194,8 @@ While inside **plan corridor** (`I`), product/scope forks use **`plan-grill` rai
 
 | Situation | Skill |
 |-----------|--------|
-| User sends **only** `/router` (no substantive task); see **`/router` — pick next action + skill** | Thread continuation if mid-task; else `app-tasks.json` → `prime` → `grill-me` → `quick-piv` or `plan` |
+| User sends **only** `/router` (no substantive task); see **`/router` — pick next action + skill** | Thread continuation if mid-task; else `.agents/skills/backlog-management/SKILL.md` (catch-up, signals, order, start the top task) |
+| Groom the backlog, link errors / feedback to tasks, reorder tasks | `.agents/skills/backlog-management/SKILL.md` |
 | New chat / ambiguous task; map repo rules and recent git state | `.agents/skills/prime/SKILL.md` |
 | **Goal and scope clear**; non-trivial job needing phased written plan + compliance | `.agents/skills/plan/SKILL.md` |
 | Plan written; qualitative critique before implementation (especially Complexity M/L) | `.agents/skills/review-dev-plan/SKILL.md` |
@@ -529,27 +530,21 @@ Do **not** run standalone **`pattern-review`** `scan` in the same session if **`
 ### Thread continuation vs backlog intake
 
 - **Thread continuation:** Mid-task `/router` — resume the active job via **Thread → next skill**; do not read `app-tasks.json` first.
-- **Backlog intake:** Idle thread + bare `/router` — pick from `app-tasks.json` per **App task backlog**.
+- **Backlog intake:** Idle thread + bare `/router` — `backlog-management` per **App task backlog**.
 - **Conflict:** If thread work and backlog `in-progress` disagree, **thread wins** unless the user explicitly asks to switch tasks.
 
 ### Bare `/router` vs `finish` (situation table)
 
-- **Bare `/router`** (no task text): **next-action dispatch** — **Active thread work** first; only when idle, **backlog intake** from `src/config/app-tasks.json`. **Not** default `finish` on new/idle dispatch.
+- **Bare `/router`** (no task text): **next-action dispatch** — **Active thread work** first; only when idle, **backlog intake** via `backlog-management`. **Not** default `finish` on new/idle dispatch.
 - **`/finish`:** explicit wrap-up — includes archiving the session task when applicable (see `finish` skill). Not the default for idle `/router`.
 
 ### App task backlog (SSOT)
 
-- **Active:** `src/config/app-tasks.json` (`to-do` | `in-progress` only; array order = priority).
-- **Archive:** `src/config/app-tasks-archive.json` (`done` only; append order = completion timeline). **Do not read** unless the user asks for completed history.
+- **Files and shape:** `src/config/app-tasks.json` (active; array order = priority) + `src/config/app-tasks-archive.json`; shape, `links` and status vocabulary in `src/features/tasks/README.md`.
 - **Coding agent pick up:** when the assistant **commits to execute** a backlog task, set `in-progress` in the active file **in the same turn** before `prime`, `grill-me`, `plan`, or code. User edits in `/tasks` UI do **not** trigger pick-up.
-- **Onboarding tasks:** Fresh clones ship four seeded tasks (Supabase, Hosting, App vision, Theme). Agents sync status at session boundaries per `start`, `router`, and `finish` — edit JSON directly or via `/__dev/tasks` when dev server runs. Disk-wins on UI conflicts.
-- **Backlog intake** (fallback only — after **Active thread work** is ruled out):
-  - Read only `src/config/app-tasks.json`.
-  - If `in-progress` exists: ask continue that task vs first `to-do` by list order.
-  - Else select first `to-do` by list order.
-  - Apply pick up for the chosen task (skip if already `in-progress`).
-  - Then `prime` (if needed) → `grill-me` unless `title` + `description` satisfy gates 1–2 → `quick-piv` or `plan` / `feature` per gate 3.
-- If no actionable `to-do` or `in-progress`: say so; optional `prime` for repo context — do **not** invent tasks and do **not** default to `finish`.
+- **Onboarding tasks:** Fresh clones ship four seeded tasks (Supabase, Hosting, App vision, Theme). Agents sync status at session boundaries per `start` and `finish` — edit JSON directly or via `/__dev/tasks` when dev server runs. Disk-wins on UI conflicts.
+- **Backlog intake** (fallback only — after **Active thread work** is ruled out): run [`.agents/skills/backlog-management/SKILL.md`](../backlog-management/SKILL.md). It owns what is read (including the archive and runtime signals), catch-up, ordering, and the hand-off into `debug` / `quick-piv` / `plan`. After pick-up, `grill-me` still applies when the task's `title` + `description` do not satisfy gates 1–2.
+- If no actionable `to-do` or `in-progress` remains: say so; optional `prime` for repo context — do **not** invent tasks and do **not** default to `finish`.
 
 ---
 
@@ -565,6 +560,7 @@ Do **not** run standalone **`pattern-review`** `scan` in the same session if **`
 - `.agents/skills/consolidate/SKILL.md`
 - `.agents/skills/review/SKILL.md`
 - `.agents/skills/finish/SKILL.md`
+- `.agents/skills/backlog-management/SKILL.md`
 - `.agents/skills/bundle-ship/SKILL.md`
 - `.agents/skills/push/SKILL.md`
 - `.agents/skills/quick-piv/SKILL.md`

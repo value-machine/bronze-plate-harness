@@ -12,7 +12,7 @@ Complete the implementation by doing what you haven't done yet of these tasks:
 
 ## App task backlog — archive before git (when applicable)
 
-**Same behavior as choosing `done` on `/tasks`:** remove the task from `src/config/app-tasks.json` and append `{ title, description, status: "done" }` to `src/config/app-tasks-archive.json`. Do **not** leave `done` rows in the active file.
+**Same behavior as choosing `done` on `/tasks`:** remove the task from `src/config/app-tasks.json` and append the **whole row** (including `links`) with `status: "done"` to `src/config/app-tasks-archive.json` (`completeActiveTaskAtIndex` semantics). Do **not** leave `done` rows in the active file.
 
 **Always include task-list changes in the commit:** Whenever `src/config/app-tasks.json` or `src/config/app-tasks-archive.json` have pending changes, they **must** be staged in the commit you are about to make — no matter what else that commit contains. Never leave task-list updates out of a commit. This applies even when no archive ran this session (e.g. status edits made via `/tasks`).
 
@@ -23,6 +23,23 @@ Run this block **before** version/changelog edits and **before** any `git add` /
 3. **Archive** at the resolved **active index** (remove from active preserving order; append to archive on disk). Use the same semantics as `POST /__dev/tasks/archive` with `{ index }` when the dev server is available, or edit both JSON files directly with validated shapes.
 4. **Before `git add`:** when step 3 ran, the **same commit** must stage **both** backlog JSON files. Missing either after archiving is an error — fix before commit.
 5. Restore is **not** part of `/finish` unless the user explicitly asks.
+
+### Backlog review handoff (when the task has signal links)
+
+When the archived task has `links[]`, or this session fixed tracked error clusters / feedback, hand the signals to the admin **before** `git commit`. Write mode, projects and the signals on/off test: `.agents/skills/backlog-management/SKILL.md` § Configure (signals off → skip and say so).
+
+1. Collect linked error `hash`es and feedback ids (with their `env`).
+2. Set them to `review` on every **non-production** project now (staging, or the project local dev writes to):
+   ```sql
+   -- Backlog review handoff <date>: <task title> — <one-line fix summary>
+   UPDATE public.error_logs SET status = 'review'
+   WHERE hash IN ('<hash>') AND status IN ('open', 'muted');
+   UPDATE public.app_feedback SET status = 'review'
+   WHERE id IN ('<uuid>') AND status = 'open';
+   ```
+3. **Production** rows wait until the fix is in production (Mode behavior table **production** row). List their hashes / ids in the commit message (and the PR body when **how work lands** is a PR); `backlog-management` catch-up moves them to `review` once the merge or promotion shows.
+4. Never write `resolved` / `handled` here; the admin confirms. A cluster that recurs on a newer version reopens on its own.
+5. Report counts per project and status in the final response.
 
 ### Onboarding task sync (when applicable)
 

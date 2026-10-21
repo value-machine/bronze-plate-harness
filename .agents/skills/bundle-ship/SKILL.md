@@ -68,7 +68,7 @@ Invoking this skill **is** consent to finish and push the current snapshot. Stat
 
 If the user declines after such a stop, stop. If they want thread-scoped finish instead, route to plain `finish` (no push in that turn unless they ask).
 
-**Task backlog:** If `src/config/app-tasks.json` has multiple `in-progress` rows from different threads, ask which task(s) to archive before commit — same as `finish`, but expect ambiguity more often in multi-thread landings.
+**Task backlog:** If `src/config/app-tasks.json` has multiple `in-progress` rows from different threads, ask which task(s) to archive before commit — same as `finish`, but expect ambiguity more often in multi-thread landings. Run `finish` § Backlog review handoff over the `links` of **every** archived task.
 
 ### Step 3: Run finish (bundle mode)
 

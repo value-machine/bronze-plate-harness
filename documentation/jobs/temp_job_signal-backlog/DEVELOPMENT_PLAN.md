@@ -14,13 +14,13 @@
 
 | Phase | Goal | Gate | Status |
 |-------|------|------|--------|
-| 1 | Task `links[]` schema | domain tests + tooling gate | Pending |
-| 2 | Supabase migrations (errors + feedback) | local reset ×2, role tests, types generated | Pending |
-| 3 | Client error capture + mandatory-logging rule | unit tests; boundary/global handlers wired | Pending |
-| 4 | Edge helper | file present; `deno check` or logged skip | Pending |
-| 5 | Shared realtime hook + feedback submit/ack loop | tests; manual check | Pending |
-| 6 | Admin area: guard, feedback inbox, error triage | tests; manual check | Pending |
-| 7 | Skills, rules, docs, intake report | align-harness clean; MILA-wording grep clean | Pending |
+| 1 | Task `links[]` schema | domain tests + tooling gate | Done (bronze) |
+| 2 | Supabase migrations (errors + feedback) | local reset ×2, role tests, types generated | Done (bronze) |
+| 3 | Client error capture + mandatory-logging rule | unit tests; boundary/global handlers wired | Done (bronze) |
+| 4 | Edge helper | file present; `deno check` or logged skip | Done (bronze) |
+| 5 | Shared realtime hook + feedback submit/ack loop | tests; manual check | Done (bronze) |
+| 6 | Admin area: guard, feedback inbox, error triage | tests; manual check | Done (bronze) |
+| 7 | Skills, rules, docs, intake report | align-harness clean; MILA-wording grep clean | Done (bronze) |
 | 8 | Verify on bronze (HANDOFF §7 + role checks) | owner-run checks pass | Pending |
 | 9 | Port to `plate-harness` | tooling gate in plate; shared-file diff clean | Pending |
 
@@ -224,4 +224,8 @@ Advisory, not promoted (review-dev-plan 2026-10-21): conditional mute ("until N 
 | 3 | Feedback SELECT policy | Submitter reads all own rows (MILA limited to `handled`). Postgres re-checks the updated row against SELECT, so MILA's policy rejects the submitter's own ✓/✗ ack. | — |
 | 4 | Feedback insert grants | Column-level INSERT `(body, context, environment, app_id)`; identity, status, resolution set by triggers only. | — |
 | 5 | Maintenance functions | `cleanup_old_error_logs` (errors) and `autocomplete_stale_feedback` (feedback) stay separate, one named `pg_cron` job `cleanup_signals` calls both. | — |
+| 7 | Log detail vs user copy | `getErrorDetail` added next to `getErrorMessage` in `errorUtils.ts` (PostgREST code/details/hint for logs); `getErrorMessage` output unchanged because auth UI copy uses it. | — |
+| 8 | Edge helper names / lint | `supabase/functions/_shared/errorLogging.ts` exports `logEdgeError` / `logServiceError`; `supabase/functions/` added to `eslint.ignores.js` (owner OK). `deno check` skipped: Deno not installed in the session. Scrub patterns are a marked second copy of the web service's. | — |
+| 9 | Shared UI primitives | `ConfirmDialog` and `useCopyToClipboard` created as role-named shared pieces (used by both admin features); `StatusAlert` extracted from `TasksFeedback` (4 consumers). No feature-root barrel (structure config forbids it); layouts import feature components directly. | — |
+| 10 | Admin role in app user | `User.appRole` mapped from JWT `app_metadata.role` in `mapProviderUserToAppUser`; `isAdminRole` in `shared/utils/authRole.ts` mirrors `is_admin_user()`. | — |
 | 6 | Reopen rule storage | `status_version` column stamped by the status trigger when a cluster moves to review/resolved; recurrence on a different `app_version` reopens. | Sentry "resolved in next release" |

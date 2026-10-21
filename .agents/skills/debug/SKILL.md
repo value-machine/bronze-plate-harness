@@ -28,8 +28,11 @@ When the user reports a bug without structured context, **ask in one message** (
 | **Repro steps** | Numbered, minimal |
 | **Expected vs actual** | One line each |
 | **Since when** | Always / after recent change / unknown |
+| **Signal ref** (optional) | Error cluster `hash`, feedback id, a task's `links`, or a pasted `## error_logs` / `## app_feedback` packet from the admin pages |
 
-If all four are already in the thread → **do not re-ask**; populate Preflight slots directly. Intake is for alignment only — never claim fixed.
+If all four core slots are already in the thread → **do not re-ask**; populate Preflight slots directly. Intake is for alignment only — never claim fixed.
+
+**Signal ref present:** read the row before hypotheses. Signals on (`.agents/skills/backlog-management/SKILL.md` § Configure): query via Supabase MCP on the project the ref belongs to, projected columns only — `error_logs`: `hash, message, stack, type, context, route, environment, app_version, count, first_seen_at, last_seen_at, status`; `app_feedback`: `id, created_at, body, context, environment, status` (no `user_email`). Signals off or a pasted packet: use the packet as-is and do not re-query. Production stacks are minified: map frames to source by `context`, `route` and `app_version`, not by line numbers.
 
 After a fix lands, closure uses **`finish`** § User test handoff — user confirms resolution in the app.
 
