@@ -1,7 +1,7 @@
 # Handoff: sync plate-harness updates into bronze-plate-harness (2026-10-21)
 
 **For:** the agent working in bronze-plate-harness.
-**Source:** `TMI-apps/plate-harness` `main` at `2cc255b` (v0.41.0 line, PRs #56–#60).
+**Source:** `TMI-apps/plate-harness` `main` (PRs #56–#62; first release-please release v0.42.0).
 **Relationship:** bronze descends from plate (`8083ee4`). On 2026-10-21 plate took over bronze's generic improvements (audit: plate `documentation/jobs/temp_job_plate-bronze-diff/`) and also gained work bronze does not have yet. This file lists only that second group.
 
 Bronze runs `model-c`: land each block below as its own PR to `main` (conventional title, `## Preview` section). Read the plate commit with `git show <sha>` from a plate clone; port the **method**, not the text, where bronze's version differs (shadcn/Tailwind stack, theming).
@@ -30,21 +30,14 @@ Node 22 + `preinstall` check, `NODE_VERSION` docs, Supabase staging docs, `## Pr
 
 **Check:** `pnpm validate:structure`; after merge the Release Please run on `main` proposes 0.42.0 (bronze has `feat` commits after v0.41.0), not 1.0.0.
 
-### 2. Release-please: manual run creates a missing release (priority: medium)
+**Lesson from plate:** the manifest version needs a matching GitHub release (`v<version>`). Plate set 0.41.0 by hand without a release; release-please then walked old history and its 0.42.0 notes listed unrelated commits (cleaned up in plate #62). Bronze is fine: `v0.41.0` exists. Before merging, confirm `v0.41.0` is still the latest release.
 
-**Plate change:** PR #60 (`2cc255b`, file `.github/workflows/release-please.yml`).
-- Add `workflow_dispatch:` to `on:`.
-- `bootstrap` job: pass `EVENT: ${{ github.event_name }}`; on `workflow_dispatch`, create `v<package.json version>` (at the commit that set that version) only when that release does not exist; push behavior unchanged.
-- Header comment: one line explaining the manual run.
+### 2. Preview-URL rule wording (priority: low)
 
-**Why:** agents here can dispatch a workflow but cannot create a GitHub release; this lets them repair a missing baseline without a person.
-
-### 3. Preview-URL rule wording (priority: low)
-
-**Plate change:** PR #60, `.cursor/rules/git-workflow/RULE.mdc` § Pull Requests → **Preview link** (**protected — `.cursor/**`**).
+**Plate change:** PR #60 (rule part only; its workflow part was reverted in #62), `.cursor/rules/git-workflow/RULE.mdc` § Pull Requests → **Preview link** (**protected — `.cursor/**`**).
 Take the URL from the `cloudflare-workers-and-pages[bot]` comment ("Preview URL: …", the branch-alias URL, not the per-commit one). Fallback when the comment is missing: `https://<alias>-<worker>.<subdomain>.workers.dev` (alias = branch name lowercased, non-alphanumerics → `-`), verified (HTTP 200, page loads `/assets/*.js`) before it goes in the PR. Bronze's Worker is `bronze-plate-harness`; fill in its own `workers.dev` subdomain.
 
-### 4. Tighten always-loaded harness context (priority: medium, largest)
+### 3. Tighten always-loaded harness context (priority: medium, largest)
 
 **Plate commits:** `fd821ac` (architecture, code-style, file-placement), `184d42b` (all always-on rules, −62% always-loaded bytes: 97,979 → 37,444 per `harness_scan`), `1d05337` (router and create-skill).
 
@@ -61,17 +54,17 @@ What plate did, per item:
 **Protected:** all `.cursor/**` edits — get the user's consent for the batch first.
 **Check:** `pnpm validate:docs`, `pnpm test:classify` (includes `harness_scan` tests), and the `harness_scan` byte count before and after.
 
-### 5. Remove completed job plans and stale reference material (priority: low)
+### 4. Remove completed job plans and stale reference material (priority: low)
 
 **Plate commit:** `1d9d437` (72 files, −11k lines). Criterion: a `documentation/jobs/temp_job_*` folder whose work has landed and that nothing links to is removed (git history keeps it); keep jobs that are still open or are cited as decision sources (for example the model-c job, which `release-please.yml` cites). Bronze has 30+ job folders; apply the same criterion and list the removals in the PR body.
 
-### 6. Dead app code (priority: low)
+### 5. Dead app code (priority: low)
 
 **Plate commit:** `697359e` — found with `knip`, each hit confirmed with grep. Bronze's lean cleanup (`ed7cc97`) already removed most of what plate removed. Run `npx knip` once in bronze and remove only confirmed-unused exports, files and dependencies. Do not remove anything the theming subsystem loads at runtime or by token build.
 
 ## Done when
 
-- Blocks 1–3 merged; Release Please on `main` shows a 0.x release PR, never 1.0.0.
-- Block 4 merged with the `harness_scan` before/after numbers in the PR body.
-- Blocks 5–6 merged or explicitly skipped by the user.
+- Blocks 1–2 merged; Release Please on `main` shows a 0.x release PR, never 1.0.0.
+- Block 3 merged with the `harness_scan` before/after numbers in the PR body.
+- Blocks 4–5 merged or explicitly skipped by the user.
 - Every PR green on `test` and `pr-title`, with a working `## Preview` link.
