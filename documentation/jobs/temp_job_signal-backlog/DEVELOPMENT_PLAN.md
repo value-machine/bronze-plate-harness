@@ -6,7 +6,7 @@
 - **Why:** MILA proved the loop (capture → link to task → fix → `review` → admin confirms). The harness has the task board but no signal capture, and the router's backlog intake is first-to-do only.
 - **Complexity:** L — new DB schema + RLS, cross-cutting error rule, two UI features + admin area, skill/rule changes, two repos.
 - **Plan review:** Done 2026-10-21 (see Amendments)
-- **Plan validate:** Required: pending
+- **Plan validate:** Waived: owner said "proceed" after plan review (2026-10-21)
 - **Scope / constraints:** Same capability in `bronze-plate-harness` (shadcn, git **Model C**) and `plate-harness` (MUI, git **Model B**). Shared non-UI files are identical and diff-checked (Phase 9); skill/rule text is written mode-neutral and hand-applied per repo. Everything no-ops when `isSupabaseConfigured()` is false. MILA repo is read-only reference. Product forks: sibling `DECISIONS.md` (D1–D17).
 - **Out of scope:** `bugs` tables and skill (D4, D9); pre-login/anon capture (D10); source maps (D13 — documented gap); MILA chat-feedback dialog, AI-db catalog, `ai-db-*` skills, Airtable; CI SQL guard scripts (follow-up task); applying migrations to any remote project without the owner's go.
 
@@ -219,3 +219,9 @@ Advisory, not promoted (review-dev-plan 2026-10-21): conditional mute ("until N 
 
 | # | Topic | Choice | Precedent? |
 |---|-------|--------|------------|
+| 1 | Phase 2 test bed | No Docker/Supabase CLI in the session: local Postgres 16 + Supabase-shaped `auth` stub (roles, `auth.uid()/jwt()` from `request.jwt.claims`, default privileges, `supabase_realtime`). Migrations applied twice; 25 role-based checks pass; RLS lint clean. | Supabase's own `request.jwt.claims` model |
+| 2 | Type generation | Deferred to Phase 8 (needs a project or CLI); code uses explicit row types in `src/shared/types/` until then. | — |
+| 3 | Feedback SELECT policy | Submitter reads all own rows (MILA limited to `handled`). Postgres re-checks the updated row against SELECT, so MILA's policy rejects the submitter's own ✓/✗ ack. | — |
+| 4 | Feedback insert grants | Column-level INSERT `(body, context, environment, app_id)`; identity, status, resolution set by triggers only. | — |
+| 5 | Maintenance functions | `cleanup_old_error_logs` (errors) and `autocomplete_stale_feedback` (feedback) stay separate, one named `pg_cron` job `cleanup_signals` calls both. | — |
+| 6 | Reopen rule storage | `status_version` column stamped by the status trigger when a cluster moves to review/resolved; recurrence on a different `app_version` reopens. | Sentry "resolved in next release" |
