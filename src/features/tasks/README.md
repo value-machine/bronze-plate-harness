@@ -21,6 +21,15 @@ In-repo development backlog for coding agents and local UI.
 
 **Config SSOT:** `src/config/app-tasks.json` (active), `src/config/app-tasks-archive.json` (done).
 
+## Task shape and status vocabulary
+
+`AppTask`: `{ title, description, status, links? }`.
+
+- **Order = priority:** file order of the active list is the work order.
+- **`status`:** `to-do` | `in-progress` (active file) and `done` (archive only). Extra roles live in the text: `needs-info` → description section `Waiting on:`; human-only → `HITL` in title or description; won't fix → archive with `wontfix: <reason>`; type or priority → title prefix `[bug]`, `[enhancement]`, `[P0]`.
+- **`links`** (optional, omitted when empty): runtime signals the task covers. `{ "kind": "error", "hash": "<cluster hash>" }` (same in every environment) or `{ "kind": "feedback", "env": "staging" | "production", "id": "<uuid>" }`. Many per task. Archive and restore keep links. Catch-up, linking and ordering: `.agents/skills/backlog-management/SKILL.md`.
+- **Headless agents** edit the JSON directly (validated by `services/appTasksDomain.ts`, same parser the dev API uses). Land backlog changes with the normal commit flow; never a dedicated bot commit.
+
 **Dev API (Vite serve only):** `vite-plugin-dev-tasks.ts` — `/__dev/tasks`, `/__dev/tasks/archive`, `/__dev/tasks/restore`.
 
 **UI entry:** `DevTasksFab` (floating pill `Button` link) on all routes in dev; route `/tasks` with minimal chrome (card rows, toolbar autosave chip, no column headers).

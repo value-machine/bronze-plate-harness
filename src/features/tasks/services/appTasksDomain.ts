@@ -1,6 +1,54 @@
-import type { ActiveTaskStatus, AppTask } from "@/features/tasks/types/appTask.types";
+import type { ActiveTaskStatus, AppTask, TaskLink } from "@/features/tasks/types/appTask.types";
 
-const TASK_KEYS = new Set(["title", "description", "status"]);
+const TASK_KEYS = new Set(["title", "description", "status", "links"]);
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
+}
+
+function hasOnlyKeys(record: Record<string, unknown>, keys: string[]): boolean {
+  return Object.keys(record).every((key) => keys.includes(key));
+}
+
+/** One validator per link kind; a new signal kind is one entry here. */
+const LINK_VALIDATORS: Record<TaskLink["kind"], (record: Record<string, unknown>) => boolean> = {
+  error: (record) => hasOnlyKeys(record, ["kind", "hash"]) && isNonEmptyString(record.hash),
+  feedback: (record) =>
+    hasOnlyKeys(record, ["kind", "env", "id"]) &&
+    (record.env === "staging" || record.env === "production") &&
+    isNonEmptyString(record.id),
+};
+
+function readTaskLink(value: unknown, taskIndex: number): TaskLink {
+  const record = (typeof value === "object" && value !== null ? value : {}) as Record<
+    string,
+    unknown
+  >;
+  const validate = LINK_VALIDATORS[record.kind as TaskLink["kind"]];
+  if (!validate || !validate(record)) {
+    throw new Error(`Invalid link at task index ${taskIndex}`);
+  }
+  return { ...record } as TaskLink;
+}
+
+function readTaskLinks(value: unknown, index: number): TaskLink[] | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+  if (!Array.isArray(value)) {
+    throw new Error(`Invalid links at index ${index}`);
+  }
+  return value.length > 0 ? value.map((link) => readTaskLink(link, index)) : undefined;
+}
+
+/** Copy a task with a new status; keeps links (archive and restore move the whole row). */
+function withStatus(task: AppTask, status: AppTask["status"]): AppTask {
+  const next: AppTask = { title: task.title, description: task.description, status };
+  if (task.links && task.links.length > 0) {
+    next.links = task.links;
+  }
+  return next;
+}
 
 function assertPlainTask(value: unknown, index: number): Record<string, unknown> {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
@@ -20,7 +68,12 @@ function readTaskFields(record: Record<string, unknown>, index: number): AppTask
   if (typeof title !== "string" || typeof description !== "string" || typeof status !== "string") {
     throw new Error(`Invalid task fields at index ${index}`);
   }
-  return { title, description, status: status as AppTask["status"] };
+  const task: AppTask = { title, description, status: status as AppTask["status"] };
+  const links = readTaskLinks(record.links, index);
+  if (links) {
+    task.links = links;
+  }
+  return task;
 }
 
 export function parseActiveTasks(data: unknown): AppTask[] {
@@ -72,12 +125,7 @@ export function completeActiveTaskAtIndex(
   }
   const task = active[index];
   const nextActive = active.filter((_, i) => i !== index);
-  const archived: AppTask = {
-    title: task.title,
-    description: task.description,
-    status: "done",
-  };
-  return { active: nextActive, archive: [...archive, archived] };
+  return { active: nextActive, archive: [...archive, withStatus(task, "done")] };
 }
 
 export function restoreFromArchiveDisplayIndex(
@@ -92,12 +140,7 @@ export function restoreFromArchiveDisplayIndex(
   const archiveIndex = displayIndexToArchiveIndex(displayIndex, archive.length);
   const task = archive[archiveIndex];
   const nextArchive = archive.filter((_, i) => i !== archiveIndex);
-  const restored: AppTask = {
-    title: task.title,
-    description: task.description,
-    status,
-  };
-  return { active: [restored, ...active], archive: nextArchive };
+  return { active: [withStatus(task, status), ...active], archive: nextArchive };
 }
 
 export function serializeTasksBaseline(tasks: AppTask[]): string {

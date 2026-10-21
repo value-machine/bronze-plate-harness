@@ -64,6 +64,49 @@ describe("appTasksDomain", () => {
     expect(result.archive[0].title).toBe("old");
   });
 
+  it("should round-trip links when parsing active and archive tasks", () => {
+    const linked: AppTask[] = [
+      {
+        title: "Fix crash",
+        description: "",
+        status: "to-do",
+        links: [
+          { kind: "error", hash: "abc123" },
+          { kind: "feedback", env: "production", id: "f-1" },
+        ],
+      },
+    ];
+    expect(parseActiveTasks(linked)).toEqual(linked);
+    const archived = [{ ...linked[0], status: "done" as const }];
+    expect(parseArchiveTasks(archived)).toEqual(archived);
+  });
+
+  it("should drop an empty links array when parsing", () => {
+    const parsed = parseActiveTasks([{ title: "x", description: "", status: "to-do", links: [] }]);
+    expect(parsed[0]).not.toHaveProperty("links");
+  });
+
+  it("should reject links with an unknown kind or extra keys", () => {
+    const base = { title: "x", description: "", status: "to-do" };
+    expect(() => parseActiveTasks([{ ...base, links: [{ kind: "bug", id: "1" }] }])).toThrow();
+    expect(() =>
+      parseActiveTasks([{ ...base, links: [{ kind: "error", hash: "h", extra: 1 }] }])
+    ).toThrow();
+    expect(() =>
+      parseActiveTasks([{ ...base, links: [{ kind: "feedback", env: "dev", id: "1" }] }])
+    ).toThrow();
+    expect(() => parseActiveTasks([{ ...base, links: "nope" }])).toThrow();
+  });
+
+  it("should keep links when completing and restoring a task", () => {
+    const links = [{ kind: "error" as const, hash: "h1" }];
+    const active: AppTask[] = [{ title: "L", description: "", status: "in-progress", links }];
+    const completed = completeActiveTaskAtIndex(active, [], 0);
+    expect(completed.archive[0]).toEqual({ title: "L", description: "", status: "done", links });
+    const restored = restoreFromArchiveDisplayIndex([], completed.archive, 0, "to-do");
+    expect(restored.active[0].links).toEqual(links);
+  });
+
   it("should update row for flush snapshot when applying pending edit", () => {
     const edited = applyPendingRowEdit(activeSample, 1, { title: "B edited" });
     expect(edited[1].title).toBe("B edited");
