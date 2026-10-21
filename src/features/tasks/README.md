@@ -38,7 +38,7 @@ In-repo development backlog for coding agents and local UI.
 
 ## User feedback policy
 
-- **Mutation/async errors:** single fixed top `Alert` via `TasksFeedback` (tasks pattern is SSOT for non-form mutations).
+- **Mutation/async errors:** single fixed top alert via `TasksFeedback`, which renders the shared `src/components/common/StatusAlert` (SSOT for the floating outcome alert).
 - **Initial load failures:** same feedback path via `reloadForView` try/catch.
 
 ## Testing

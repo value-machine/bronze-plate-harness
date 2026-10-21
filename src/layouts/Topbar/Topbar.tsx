@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ProfileMenu } from "@/layouts/ProfileMenu";
+import { HandledFeedbackMenu } from "@/features/feedback/components/HandledFeedbackMenu";
 
 /**
  * Topbar component that is always visible.
@@ -16,6 +17,7 @@ export const Topbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <HandledFeedbackMenu />
           <ProfileMenu />
         </div>
       </div>

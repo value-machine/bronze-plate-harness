@@ -1,4 +1,4 @@
-import { LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut, MessageSquarePlus } from "lucide-react";
 import { ProfileInfo } from "./ProfileInfo";
 import { SignInMenuItems } from "./SignInMenuItems";
 import { ColorModeToggle } from "./ColorModeToggle";
@@ -15,6 +15,7 @@ interface ProfileMenuContentProps {
   onSignInWithGoogle: () => void;
   onGoToLogin: () => void;
   onSignOut: () => void;
+  onSendFeedback: () => void;
 }
 
 /** Account section for the current auth state (signed in, signed out, or auth not configured). */
@@ -27,12 +28,17 @@ const AccountMenuItems = ({
   onSignInWithGoogle,
   onGoToLogin,
   onSignOut,
+  onSendFeedback,
 }: ProfileMenuContentProps) => {
   if (isLoggedIn) {
     return (
       <>
         <ProfileInfo user={user} profile={profile} profileLoading={profileLoading} />
         <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={onSendFeedback}>
+          <MessageSquarePlus />
+          Send feedback
+        </DropdownMenuItem>
         <DropdownMenuItem onSelect={onSignOut}>
           <LogOut />
           Sign Out

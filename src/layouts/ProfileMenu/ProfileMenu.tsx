@@ -6,6 +6,8 @@ import { DropdownMenu, DropdownMenuContent } from "@/components/common/DropdownM
 import { ProfileMenuContent } from "./ProfileMenuContent";
 import { ProfileMenuTrigger } from "./ProfileMenuTrigger";
 import { useAccountMenuActions } from "@/shared/hooks/useAccountMenuActions";
+import { FeedbackDialog } from "@/features/feedback/components/FeedbackDialog";
+import { StatusAlert } from "@/components/common/StatusAlert";
 
 /**
  * ProfileMenu component for displaying user account information and sign-in options.
@@ -17,26 +19,49 @@ export const ProfileMenu = () => {
   const { isConfigured: authBackendConfigured } = useAuthBackendConfigured();
   const [open, setOpen] = useState(false);
   const handleClose = useCallback(() => setOpen(false), []);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackSent, setFeedbackSent] = useState(false);
+  const handleSendFeedback = useCallback(() => {
+    setOpen(false);
+    setFeedbackSent(false);
+    setFeedbackOpen(true);
+  }, []);
+  const handleFeedbackSent = useCallback(() => {
+    setFeedbackOpen(false);
+    setFeedbackSent(true);
+  }, []);
 
   const { handleSignIn, handleGoToLogin, handleSignOut } = useAccountMenuActions({
     onClose: handleClose,
   });
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <ProfileMenuTrigger user={user} profile={profile ?? null} />
-      <DropdownMenuContent id="account-menu" align="end" className="w-[240px] max-w-[280px]">
-        <ProfileMenuContent
-          isLoggedIn={user !== null}
-          authBackendConfigured={authBackendConfigured}
-          user={user}
-          profile={profile ?? null}
-          profileLoading={profileLoading}
-          onSignInWithGoogle={handleSignIn}
-          onGoToLogin={handleGoToLogin}
-          onSignOut={handleSignOut}
-        />
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <ProfileMenuTrigger user={user} profile={profile ?? null} />
+        <DropdownMenuContent id="account-menu" align="end" className="w-[240px] max-w-[280px]">
+          <ProfileMenuContent
+            isLoggedIn={user !== null}
+            authBackendConfigured={authBackendConfigured}
+            user={user}
+            profile={profile ?? null}
+            profileLoading={profileLoading}
+            onSignInWithGoogle={handleSignIn}
+            onGoToLogin={handleGoToLogin}
+            onSignOut={handleSignOut}
+            onSendFeedback={handleSendFeedback}
+          />
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <FeedbackDialog
+        open={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
+        onSent={handleFeedbackSent}
+      />
+      <StatusAlert
+        message={feedbackSent ? "Thanks! Your feedback was sent." : null}
+        onDismiss={() => setFeedbackSent(false)}
+      />
+    </>
   );
 };

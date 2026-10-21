@@ -1,5 +1,6 @@
 import type { SaveFeedback } from "@/features/tasks/types/appTask.types";
-import { Alert, type AlertProps } from "@/components/common/Alert";
+import type { AlertProps } from "@/components/common/Alert";
+import { StatusAlert } from "@/components/common/StatusAlert";
 
 const FEEDBACK_LABEL: Record<Exclude<SaveFeedback, "idle">, string> = {
   saving: "Saving…",
@@ -30,19 +31,5 @@ export const TasksFeedback = ({ feedback, errorMessage, onDismiss }: TasksFeedba
         ? FEEDBACK_LABEL[feedback]
         : errorMessage;
 
-  if (!message) {
-    return null;
-  }
-
-  return (
-    <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 sm:top-6">
-      <Alert
-        variant={variant}
-        onClose={onDismiss}
-        className="pointer-events-auto max-w-[480px] bg-popover elevation-lg"
-      >
-        {message}
-      </Alert>
-    </div>
-  );
+  return <StatusAlert message={message} variant={variant} onDismiss={onDismiss} />;
 };
