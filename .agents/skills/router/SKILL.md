@@ -598,6 +598,7 @@ Do **not** run standalone **`pattern-review`** `scan` in the same session if **`
 - `.agents/skills/name-the-mechanism/SKILL.md`
 - `.agents/skills/review-dev-plan/SKILL.md`
 - `.agents/skills/write-adoption-guide/SKILL.md`
+- `.agents/skills/cursor-migration/SKILL.md` (move this repo's Cursor rules, commands and MCP config to Claude Code; dry run, one approval, undo)
 
 ### Router references (not skills)
 

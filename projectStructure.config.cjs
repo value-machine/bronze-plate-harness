@@ -14,6 +14,15 @@
  * - .cursor/rules/file-placement/RULE.mdc - File placement rules
  * - .cursor/rules/architecture/RULE.mdc - Architecture rules
  */
+/** Script files a skill may ship in scripts/ (and one level of subfolders below it). */
+const SKILL_SCRIPT_FILES = [
+  { name: "*.py" },
+  { name: "*.cjs" },
+  { name: "*.js" },
+  { name: "*.sh" },
+  { name: "*.mjs" },
+];
+
 /** @type {import('./scripts/project-structure-validator').ProjectStructureConfig} */
 module.exports = {
   structure: [
@@ -702,12 +711,14 @@ module.exports = {
                 {
                   name: "scripts",
                   children: [
-                    { name: "*.py" },
-                    { name: "*.cjs" },
-                    { name: "*.js" },
-                    { name: "*.sh" },
-                    { name: "*.mjs" },
+                    ...SKILL_SCRIPT_FILES,
+                    { name: "*", children: SKILL_SCRIPT_FILES },
                   ],
+                },
+                // Files a skill copies into the repo it runs on (e.g. cursor-migration's sync script)
+                {
+                  name: "templates",
+                  children: [{ name: "*.mjs" }],
                 },
               ],
             },

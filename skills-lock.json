@@ -5,7 +5,13 @@
       "source": "project",
       "sourceType": "local",
       "skillPath": ".agents/skills/react-perf-vite/SKILL.md",
-      "derivedFrom": "vercel-labs/agent-skills (MIT) — adapted; vendored tree removed 2026-06-24"
+      "derivedFrom": "vercel-labs/agent-skills (MIT) \u2014 adapted; vendored tree removed 2026-06-24"
+    },
+    "cursor-migration": {
+      "source": "project",
+      "sourceType": "local",
+      "skillPath": ".agents/skills/cursor-migration/SKILL.md",
+      "derivedFrom": "TMI-apps/MILA plugins/cursor-migration (plugin 0.1.1, commit e7d18b1) \u2014 copied by hand; change it in MILA, then copy again"
     }
   }
 }
