@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import type { ErrorInfo } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryProvider } from "@/shared/context/QueryProvider";
 import { AuthProvider } from "@/shared/context/AuthContext";
@@ -9,6 +10,7 @@ import { QueryDevtoolsGate } from "@/components/common/QueryDevtoolsGate";
 import { MainLayout } from "@/layouts/MainLayout/MainLayout";
 import { PageLoadingState } from "@/components/common/PageLoadingState";
 import { QueryErrorBoundary } from "@/components/common/QueryErrorBoundary";
+import { logAppError } from "@/shared/services/errorLoggingService";
 
 const HomePage = lazy(() => import("@/pages/HomePage").then((m) => ({ default: m.HomePage })));
 const TasksPage = lazy(() =>
@@ -22,6 +24,12 @@ const AuthCallbackPage = lazy(() =>
   import("@/pages/AuthCallbackPage").then((m) => ({ default: m.AuthCallbackPage }))
 );
 
+function logBoundaryError(error: Error, info: ErrorInfo): void {
+  void logAppError(error, "react_boundary", "react_boundary", {
+    extraStack: info.componentStack ?? undefined,
+  });
+}
+
 function AppContent() {
   const location = useLocation();
   const isTasksRoute = location.pathname === "/tasks";
@@ -30,7 +38,7 @@ function AppContent() {
     <>
       {!isTasksRoute && <Topbar />}
       <div className={isTasksRoute ? undefined : "pt-toolbar"}>
-        <QueryErrorBoundary>
+        <QueryErrorBoundary onError={logBoundaryError}>
           <Suspense fallback={<PageLoadingState />}>
             <Routes>
               <Route element={<MainLayout />}>

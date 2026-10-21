@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ErrorInfo, ReactNode } from "react";
 import { Component } from "react";
 import { Alert } from "@/components/common/Alert";
 import { Button } from "@/components/common/Button";
@@ -6,7 +6,7 @@ import { Button } from "@/components/common/Button";
 interface QueryErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
-  onError?: (error: Error) => void;
+  onError?: (error: Error, info: ErrorInfo) => void;
 }
 
 interface QueryErrorBoundaryState {
@@ -34,11 +34,9 @@ export class QueryErrorBoundary extends Component<
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error): void {
-    this.props.onError?.(error);
-    if (import.meta.env.DEV) {
-      console.error("QueryErrorBoundary caught:", error);
-    }
+  componentDidCatch(error: Error, info: ErrorInfo): void {
+    // App.tsx wires onError to the central error log; React already prints the error in dev.
+    this.props.onError?.(error, info);
   }
 
   handleRetry = (): void => {
