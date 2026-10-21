@@ -334,6 +334,7 @@ When working with TypeScript and React:
 - Catch errors with `unknown` type and check the type
 - Provide meaningful error messages
 - Handle loading and error states explicitly
+- **Central error logging is mandatory for runtime errors.** Every runtime `console.error` in app code is paired with `logError(context, error)` or `logAppError(error, context, type)` from `src/shared/services/errorLoggingService.ts`; Edge Functions use `logEdgeError` / `logServiceError` from `supabase/functions/_shared/errorLogging.ts`. Errors then reach `error_logs` (admin triage, agent backlog) whenever Supabase is connected. Use a stable `context` (`FeatureService.method`). Exceptions: the logging files themselves, tests, and temporary debug output the user approved. Contract (payload, privacy, allowed `N/A`): `documentation/DOC_ERROR_LOGGING_CONTRACT.md`.
 
 ---
 

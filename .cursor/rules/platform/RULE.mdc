@@ -82,8 +82,14 @@ command 2>&1; if ($LASTEXITCODE -ne 0) { exit 1 }
 - `VITE_SUPABASE_PUBLISHABLE_KEY` - Your Supabase anonymous/public key (legacy name: `VITE_SUPABASE_ANON_KEY`)
 - Access in code: `import { getSupabase, isSupabaseConfigured } from "@/shared/services/supabaseService"`
 
+**Error logs and feedback (optional, `documentation/DOC_ERROR_LOGGING_CONTRACT.md`):**
+- `VITE_APP_ENVIRONMENT` - `preview` | `staging` | `production` per deploy (localhost is always `local_dev`)
+- `VITE_APP_VERSION` - release tag; defaults to the `package.json` version (`vite.config.ts`)
+- `VITE_APP_ID` - feedback app label; defaults to `app`
+
 **For Edge Functions (set in Supabase Dashboard):**
 - `GAMMA_API_KEY` - Gamma API key for presentation generation
+- `ERROR_LOG_ENVIRONMENT` / `APP_VERSION` - optional tags for `supabase/functions/_shared/errorLogging.ts`
 - Other secrets configured via Supabase Dashboard → Project Settings → Edge Functions → Secrets
 
 **Other Environment Variables:**

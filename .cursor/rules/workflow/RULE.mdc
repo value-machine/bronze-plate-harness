@@ -52,6 +52,8 @@ Read `src/config/git-workflow.json`, then apply `.cursor/rules/git-workflow/RULE
 - [ ] Security considerations addressed (`security/RULE.mdc`)
 - [ ] Documentation changes are limited to required contract docs only
 - [ ] Feature-local README updated when `src/features/*` code changed
+- [ ] New or changed runtime failure surfaces reach `error_logs` (`logError` / `logAppError`, Edge helpers) or the plan states an allowed `N/A` (`documentation/DOC_ERROR_LOGGING_CONTRACT.md`); every runtime `console.error` is paired with central logging
+- [ ] No secrets, tokens, raw prompts or unnecessary PII in error `message` / `stack` / `context` or feedback `context`
 - [ ] No console.log or debug code left behind
 - [ ] Linting passes (GTS or project-specified tool)
 
