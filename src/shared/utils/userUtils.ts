@@ -27,9 +27,11 @@ export const mapProviderUserToAppUser = (providerUser: SupabaseUser | null): Use
     return null;
   }
 
+  const appRole = providerUser.app_metadata?.role;
   return {
     id: providerUser.id,
     email: providerUser.email || "",
     created_at: providerUser.created_at,
+    ...(typeof appRole === "string" && { appRole }),
   };
 };

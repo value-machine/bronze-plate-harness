@@ -54,7 +54,7 @@ Returns:
 - `@/shared/utils/appOrigin` – absolute app URLs (basename-aware)
 - `@/config/legal` – placeholder Privacy/Terms URLs (`LEGAL_ORIGIN`)
 - `@/shared/hooks/useAuthBackendConfigured` – auth backend readiness for UI
-- `@/shared/utils/userUtils` – `mapProviderUserToAppUser`
+- `@/shared/utils/userUtils` – `mapProviderUserToAppUser` (copies JWT `app_metadata.role` to `User.appRole`; `@/shared/utils/authRole` `isAdminRole` reads it for admin UI gating)
 - `@/shared/utils/redirectUtils` – safe post-login redirect paths
 - `@/shared/utils/queryKeys` – TanStack profile query keys
 

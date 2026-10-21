@@ -1,4 +1,4 @@
-import { LogIn, LogOut, MessageSquarePlus } from "lucide-react";
+import { Bug, Inbox, LogIn, LogOut, MessageSquarePlus } from "lucide-react";
 import { ProfileInfo } from "./ProfileInfo";
 import { SignInMenuItems } from "./SignInMenuItems";
 import { ColorModeToggle } from "./ColorModeToggle";
@@ -16,6 +16,8 @@ interface ProfileMenuContentProps {
   onGoToLogin: () => void;
   onSignOut: () => void;
   onSendFeedback: () => void;
+  /** Shown only for admins (JWT app_metadata.role). */
+  onOpenAdmin?: (path: "/admin/feedback" | "/admin/errors") => void;
 }
 
 /** Account section for the current auth state (signed in, signed out, or auth not configured). */
@@ -29,6 +31,7 @@ const AccountMenuItems = ({
   onGoToLogin,
   onSignOut,
   onSendFeedback,
+  onOpenAdmin,
 }: ProfileMenuContentProps) => {
   if (isLoggedIn) {
     return (
@@ -39,6 +42,18 @@ const AccountMenuItems = ({
           <MessageSquarePlus />
           Send feedback
         </DropdownMenuItem>
+        {onOpenAdmin && (
+          <>
+            <DropdownMenuItem onSelect={() => onOpenAdmin("/admin/feedback")}>
+              <Inbox />
+              Feedback inbox
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => onOpenAdmin("/admin/errors")}>
+              <Bug />
+              Errors
+            </DropdownMenuItem>
+          </>
+        )}
         <DropdownMenuItem onSelect={onSignOut}>
           <LogOut />
           Sign Out

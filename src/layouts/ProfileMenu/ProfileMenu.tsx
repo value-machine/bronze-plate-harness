@@ -1,4 +1,6 @@
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { isAdminRole } from "@/shared/utils/authRole";
 import { useAuthContext } from "@/shared/context/AuthContext";
 import { useAuthBackendConfigured } from "@/shared/hooks/useAuthBackendConfigured";
 import { useUserProfileQuery } from "@/features/auth/hooks/useUserProfileQuery";
@@ -26,6 +28,14 @@ export const ProfileMenu = () => {
     setFeedbackSent(false);
     setFeedbackOpen(true);
   }, []);
+  const navigate = useNavigate();
+  const handleOpenAdmin = useCallback(
+    (path: string) => {
+      setOpen(false);
+      void navigate(path);
+    },
+    [navigate]
+  );
   const handleFeedbackSent = useCallback(() => {
     setFeedbackOpen(false);
     setFeedbackSent(true);
@@ -50,6 +60,7 @@ export const ProfileMenu = () => {
             onGoToLogin={handleGoToLogin}
             onSignOut={handleSignOut}
             onSendFeedback={handleSendFeedback}
+            onOpenAdmin={isAdminRole(user) ? handleOpenAdmin : undefined}
           />
         </DropdownMenuContent>
       </DropdownMenu>

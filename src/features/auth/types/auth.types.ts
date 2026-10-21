@@ -2,6 +2,8 @@ export interface User {
   id: string;
   email: string;
   created_at?: string;
+  /** JWT `app_metadata.role` (set server-side; users cannot edit it). Updates after token refresh. */
+  appRole?: string;
 }
 
 export type UserRole = "anonymous" | "free" | "premium" | "admin" | "super-admin";
