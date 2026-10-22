@@ -22,7 +22,7 @@ Node 22 + `preinstall` check, `NODE_VERSION` docs, Supabase staging docs, `## Pr
 **Problem:** with `release-type: node` and no config, a `feat!:` before 1.0 makes release-please propose **1.0.0**. Plate hit this with #56. Bronze has the same setup (`release-please.yml` line `release-type: node`).
 
 **Plate change:** PR #59 (`91eb3e1`).
-- Add `release-please-config.json`: package `.`, `release-type: node`, `package-name: bronze-plate-harness`, `include-component-in-tag: false`, `bump-minor-pre-major: true`, `bump-patch-for-minor-pre-major: false`.
+- Add `release-please-config.json`: package `.`, `release-type: node`, `include-component-in-tag: false` (no `package-name`: release-please reads `name` from `package.json`, which is still `plate-harness` here), `bump-minor-pre-major: true`, `bump-patch-for-minor-pre-major: false`.
 - Add `.release-please-manifest.json`: `{ ".": "0.41.0" }` (bronze's latest GitHub release is `v0.41.0`; the manifest must equal the last **released** version, not `package.json` if they differ).
 - `release-please.yml`: replace `release-type: node` with `config-file: release-please-config.json` and `manifest-file: .release-please-manifest.json` (action v4 has no input for `bump-minor-pre-major`).
 - `projectStructure.config.cjs` (**protected — ask the user**): whitelist both new root files next to `package.json`.
