@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.41.0...v0.42.0) (2026-10-22)
+
+
+### Features
+
+* **theme:** app-wide theme tokens with light/dark/system mode and runtime overrides ([#7](https://github.com/value-machine/bronze-plate-harness/issues/7)) ([c4ce5c1](https://github.com/value-machine/bronze-plate-harness/commit/c4ce5c1131f8a7a7d4f4fe859bf1894a30b23a3c))
+* **theme:** bronze "Engraved plate" default theme ([#8](https://github.com/value-machine/bronze-plate-harness/issues/8)) ([a6fc464](https://github.com/value-machine/bronze-plate-harness/commit/a6fc4641c2e12022e3c05c98d76f1772dfee1f99))
+
+
+### Bug Fixes
+
+* **deploy:** point the Node-version hint at the Previews build tab too ([#11](https://github.com/value-machine/bronze-plate-harness/issues/11)) ([58da782](https://github.com/value-machine/bronze-plate-harness/commit/58da782897b2039ebdf19f5df04716f4a4fe914c))
+* **deploy:** use Node 22 for wrangler and require preview links in PRs ([#4](https://github.com/value-machine/bronze-plate-harness/issues/4)) ([dc1dd37](https://github.com/value-machine/bronze-plate-harness/commit/dc1dd3787a2a0a3e358c2cbc8f12e2771c448183))
+
 ## [0.41.0] - 2026-10-19
 
 ### Added
@@ -1546,5 +1560,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Custom theme loader with localStorage persistence
   - Theme validation utilities
   - Default theme fallback mechanism
-
-
