@@ -38,6 +38,7 @@ Updated: 2026-10-23
 | D29 | Skill names | closed | Rename the replacement skills to agent-intuitive, self-explaining names. | grill-me | Naming convention → D32. |
 | D30 | Rework phasing | closed | Phased, breadth-first: phase 1 = descriptions and edges (triggers, in / out, calls, called-by) for **all** replacement skills; phase 2 = build each skill on one recurring structure (template). Not one skill per phase. | grill-me | PO: too big for one pass; existing skills are too messy to patch. |
 | D31 | Cross-referencing between skills | closed | Skills must reference the skills they call and hand off to (and who calls them) explicitly, from inside the skill. Part of the recurring structure (D30) and checked in phase 1 edges. | grill-me | PO: not enough referencing in v0.42.0. |
+| D32 | Skill naming convention | closed | `<category>-<verb>-<object>`: `loop-*` (loop stages + shared ask protocol), `spec-*` (specialists), `meta-*` (harness maintenance, onboarding, overlays). | grill-me | Rejected: plain verb-object, numbered stages, category folders. |
 
 ## Open
 
@@ -64,4 +65,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D24 closed via grill-me (asked)
 - 2026-10-23 — D25 closed via grill-me (asked)
 - 2026-10-23 — D26–D31 closed via grill-me (PO stated)
+- 2026-10-23 — D32 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
