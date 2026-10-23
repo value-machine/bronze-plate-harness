@@ -15,15 +15,19 @@ Updated: 2026-10-23
 | D6 | `feature` mandatory stops vs D2 | closed | Drop the mandatory stops. All between-stop decisions follow the plan-grill rule: include the PO only when a decision can't be deduced or logically inferred (true tie after enumeration); otherwise log and continue. | grill-me | Refines D2: the middle is plan-grill (ask on true ties), not blanket plan-grill-auto. Fate of the `feature` skill itself → D8. |
 | D7 | Always-ask decisions | closed | Always stop for the PO on: (a) adding a new dependency; (b) choosing to patch on top (workaround / hasty coding) instead of the structural fix. Plus D3 conflicts and D6 true ties. | grill-me | (b) matches layer-consistency-check's existing WARNING, WORKAROUND stop; (a) is new and must be wired into dont-reinvent-the-wheel and implement. |
 | D8 | `feature` vs `plan` | closed | Fold `feature` into `plan` and consolidate; no separate feature skill. | grill-me | PO: feature is just planning a feature. Supersedes the D6 agent inference that feature stays a specialist. |
+| D9 | Interview method per phase | closed | One shared ask protocol (one question per turn, options + challenge, ask only on true ties per D6, always-ask per D7, conflict flag per D3, log to ledger) + a short per-stage "what to ask" focus section. | grill-me | clear-winner after PO raised it. Rejected: one universal interview (loses phase focus); separate interview skill per phase (duplicates mechanics — how grill-me / plan-grill / plan-grill-auto drifted). |
 
 ## Open
 
 | id | topic | status | options briefly | blocked phase |
 |----|-------|--------|-----------------|---------------|
+| D10 | Loop shape | open | Agent proposal (PO asked agent to improve it): STOP 1 Bet (agent ranks 2–3 next directions → PO picks → refine/scope/appetite) → autonomous Plan/Build/Check/PR preview (interrupts: D3, D6, D7, appetite overrun) → STOP 2 Review on preview (pass → land / fix → inner loop / rethink → shape) → autonomous close (promote decisions, learn only on troubled laps, propose next bets) | Direction |
+| D11 | Stop 2 timing (conflicts with D2) | open | Preview before landing (rec) / keep D2 after landing / by appetite / drop appetite | Direction |
 
 ## Log
 
 - 2026-10-23 — D1 closed via grill-me (asked)
 - 2026-10-23 — D2–D7 closed via grill-me (asked)
 - 2026-10-23 — D8 closed via grill-me (PO stated)
+- 2026-10-23 — D9 closed (clear-winner); D10, D11 opened (agent loop proposal, awaiting PO)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
