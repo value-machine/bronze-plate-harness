@@ -1,4 +1,5 @@
-// Steps the user takes outside the repo (app settings, user-level folders). The migration never does these (D12).
+// Steps the user takes outside the repo (app settings, user-level folders). The migration never reads or
+// changes anything there (D12), so these are instructions, not findings.
 // Each step is emitted only when it applies to this inventory.
 
 const code = value => `\`${value}\``;
@@ -30,19 +31,17 @@ function contextStep() {
   };
 }
 
-function shadowStep(user) {
-  if (user.shadowedSkills.length === 0) return null;
-  const identical = user.shadowedSkills.filter(s => s.identical).map(s => code(s.name));
-  const different = user.shadowedSkills.filter(s => !s.identical).map(s => code(s.name));
+/** The migration never reads the home folder, so the user checks for same-named personal skills. */
+function shadowStep(inventory) {
+  if (inventory.agentsSkills.length + inventory.cursorSkills.length + inventory.commands.length === 0) return null;
   return {
     id: 'personal-skills-shadow',
     tool: 'Claude Code',
-    title: 'Personal skills hide repo skills with the same name',
+    title: 'Check for personal skills that hide repo skills',
     steps: [
-      'Claude Code runs a personal skill (`~/.claude/skills/<name>`) instead of a repo skill with the same name, so the repo version never loads on this machine.',
-      ...(different.length ? [`Different from the repo version: ${different.join(', ')}.`] : []),
-      ...(identical.length ? [`Same as the repo version (safe to delete): ${identical.join(', ')}.`] : []),
-      'Per skill, choose: delete the personal copy (the repo version loads), rename it (both load; the personal one under the new name), or keep it (the repo version stays hidden for you).',
+      'Claude Code runs a personal skill (`~/.claude/skills/<name>`) instead of a repo skill with the same name, so the repo version never loads on that machine.',
+      'List your personal skills (`~/.claude/skills`; on Windows `%USERPROFILE%\\.claude\\skills`) and compare the folder names with `.agents/skills`.',
+      'Per match, choose: delete the personal copy (the repo version loads), rename it (both load; the personal one under the new name), or keep it (the repo version stays hidden for you).',
       '`~/.claude/skills` is shared by every project on this machine. Check other repos before deleting.',
     ],
   };
@@ -69,19 +68,7 @@ function cursorThirdPartyStep(inventory) {
     steps: [
       'Cursor Settings → "Include third-party Plugins, Skills, and other configs" decides whether Cursor also reads Claude Code config such as `.claude/skills`.',
       'Either setting works here: `.claude/skills` is an exact copy of `.agents/skills`, and Cursor shows a skill found in both once.',
-    ],
-  };
-}
-
-function cursorUserDuplicatesStep(user) {
-  if (user.cursorUserDuplicates.length === 0) return null;
-  return {
-    id: 'cursor-user-duplicates',
-    tool: 'Cursor',
-    title: 'Skills listed twice in Cursor',
-    steps: [
-      `These skills exist in both \`~/.agents/skills\` and \`~/.cursor/skills-cursor\`: ${user.cursorUserDuplicates.map(code).join(', ')}.`,
-      'Cursor does not merge user-level folders, so each shows twice. `~/.cursor/skills-cursor` is managed by Cursor; remove the copy in `~/.agents/skills` if you did not put it there on purpose.',
+      'Cursor does not merge user-level folders: a skill in both `~/.agents/skills` and `~/.cursor/skills-cursor` shows twice. `~/.cursor/skills-cursor` is managed by Cursor; remove the copy in `~/.agents/skills` if you did not put it there on purpose.',
     ],
   };
 }
@@ -101,10 +88,9 @@ export function buildGuidedSteps(inventory) {
   return [
     mcpStep(inventory),
     contextStep(),
-    shadowStep(inventory.userConfig),
+    shadowStep(inventory),
     cloudStep(),
     cursorUserRulesStep(),
     cursorThirdPartyStep(inventory),
-    cursorUserDuplicatesStep(inventory.userConfig),
   ].filter(Boolean);
 }

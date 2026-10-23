@@ -1,6 +1,6 @@
 {
   "name": "cursor-migration",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Migrate a repo's Cursor setup (rules, commands, skills, MCP, .cursorrules) to Claude Code while Cursor, Copilot and Codex keep working. Plan first, one approval, exact undo.",
   "author": {
     "name": "value-machine"

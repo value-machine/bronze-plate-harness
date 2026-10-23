@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generator": "cursor-migration inventory v0.2.0",
+  "generator": "cursor-migration inventory v0.3.0",
   "keepCursor": true,
   "excludes": [],
   "environment": {
@@ -51,10 +51,6 @@
   "sourceHashes": {
     ".cursorrules": "32d9823909bf34470214233019ff3fefa77294e70713182a1291d864f4e1cf98"
   },
-  "userConfig": {
-    "shadowedSkills": [],
-    "cursorUserDuplicates": []
-  },
   "judgment": [
     {
       "id": "J1",
@@ -99,7 +95,8 @@
       "title": "Third-party configs toggle",
       "steps": [
         "Cursor Settings → \"Include third-party Plugins, Skills, and other configs\" decides whether Cursor also reads Claude Code config such as `.claude/skills`.",
-        "Either setting works here: `.claude/skills` is an exact copy of `.agents/skills`, and Cursor shows a skill found in both once."
+        "Either setting works here: `.claude/skills` is an exact copy of `.agents/skills`, and Cursor shows a skill found in both once.",
+        "Cursor does not merge user-level folders: a skill in both `~/.agents/skills` and `~/.cursor/skills-cursor` shows twice. `~/.cursor/skills-cursor` is managed by Cursor; remove the copy in `~/.agents/skills` if you did not put it there on purpose."
       ]
     }
   ]

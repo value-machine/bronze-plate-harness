@@ -2,15 +2,6 @@
 name: migrate
 description: Migrate this repo's Cursor setup to Claude Code while Cursor, Copilot and Codex keep working. Moves .cursor rules, commands and skills, .cursor/mcp.json and .cursorrules to .claude/rules, .agents/skills (mirrored to .claude/skills), .mcp.json, AGENTS.md and CLAUDE.md, rewrites .cursor/ links, and wires a pre-commit sync. Read-only dry run first, one approval, exact undo. Use when the user wants to move from Cursor to Claude Code or set a repo up for both.
 argument-hint: "[--keep-cursor=yes|no]"
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/inventory.mjs *)
-  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/apply.mjs *)
-  - Bash(node scripts/sync-agent-config.mjs *)
-  - Bash(git status *)
-  - Bash(git diff *)
 ---
 
 # Migrate Cursor → Claude Code
@@ -20,7 +11,7 @@ Two scripts do the mechanical work; you do the judgment. Never edit anything bef
 - Inventory (read-only): `node ${CLAUDE_PLUGIN_ROOT}/scripts/inventory.mjs`
 - Apply / undo: `node ${CLAUDE_PLUGIN_ROOT}/scripts/apply.mjs`
 
-Both write state only under `.git/cursor-migration/` (`inventory.json`, `MIGRATION_REPORT.md`, `applied.json`, byte backups). Neither edits `~/.claude`, `~/.cursor` or app settings; those become guided steps for the user.
+Both write state only under `.git/cursor-migration/` (`inventory.json`, `MIGRATION_REPORT.md`, `applied.json`, byte backups). Neither reads nor edits anything outside the repo (`~/.claude`, `~/.cursor`, app settings); those become guided steps for the user.
 
 ## 1. Preconditions
 
@@ -87,7 +78,7 @@ Do not commit. The user commits with their normal workflow; the pre-commit hook 
 
 ## 6. Guided steps
 
-Give the user the **Guided steps outside the repo** section of the report, as-is or shortened. It only lists steps that apply here: approving MCP servers, checking `/context` and `/skills`, personal skills in `~/.claude/skills` that hide repo skills with the same name, Cursor User Rules, and the Cursor third-party configs toggle.
+Give the user the **Guided steps outside the repo** section of the report, as-is or shortened. It only lists steps that apply here: approving MCP servers, checking `/context` and `/skills`, a manual check for personal skills in `~/.claude/skills` that hide repo skills with the same name, Cursor User Rules, and the Cursor third-party configs toggle.
 
 ## Undo
 
