@@ -6,8 +6,8 @@ description: >-
   right execution skill. Use when the user asks "should we align with industry
   standards?", "more industry-standard?", "how do we get closer to common
   practice?", or wants simplification opportunities that also align with
-  mainstream product patterns. Not a proactive plan gate (use pattern-review for
-  that) and not repo-rule lint (use validate).
+  mainstream product patterns. Not a proactive plan gate (loop-plan review-precedent covers
+  that) and not repo-rule lint (use loop-check).
 disable-model-invocation: false
 ---
 
@@ -24,19 +24,19 @@ disable-model-invocation: false
 
 | Concern | Use instead |
 |---------|-------------|
-| Front door when technique unknown (`/improve`) | [`improve`](../improve/SKILL.md) |
-| Proactive industry check on a **plan/proposal** before novel `src/` work | [`pattern-review`](../pattern-review/SKILL.md) |
+| Vague "make it better" request | [`router`](../router/SKILL.md) → a backlog task through the loop |
+| Proactive industry check on a **plan/proposal** before novel `src/` work | [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) |
 | Internal layer / workaround shapes | [`layer-consistency-check`](../layer-consistency-check/SKILL.md) |
 | Simplify one feature **without** asking “vs market?” | [`challenge`](../challenge/SKILL.md) |
-| Cross-feature duplication only | [`consolidate`](../consolidate/SKILL.md) |
-| Repo rule compliance | [`validate`](../validate/SKILL.md) |
+| Cross-feature duplication only | [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) |
+| Repo rule compliance | [`loop-check`](../loop-check/SKILL.md) |
 
-**Rubric SSOT:** Do **not** copy the industry lens. Phase 3 reads [`pattern-review/references/rubric.md`](../pattern-review/references/rubric.md). This skill owns the **should** gate and **how** orchestration.
+**Rubric SSOT:** Do **not** copy the industry lens. Phase 3 reads [`pattern-review/references/rubric.md`](../loop-plan/references/precedent-rubric.md). This skill owns the **should** gate and **how** orchestration.
 
-**When both `pattern-review` and this skill could apply:**
+**When both precedent review (`loop-plan`) and this skill could apply:**
 
-- Mid-plan / novel UX gate → **`pattern-review`** (proactive).
-- User asks “should we align?” / “how to align [existing scope]?” → **`standards-align`** (this skill). After Align decision, hand off; if contracts change, a later `pattern-review` pass is fine.
+- Mid-plan / novel UX gate → **precedent review (`loop-plan`)** (proactive).
+- User asks “should we align?” / “how to align [existing scope]?” → **`standards-align`** (this skill). After Align decision, hand off; if contracts change, a later precedent review (`loop-plan`) pass is fine.
 
 **When both this skill and `layer-consistency-check` apply:** run **layer-consistency-check** first if workaround cues appear; then continue this loop.
 
@@ -52,7 +52,7 @@ Confirm before analysis:
 4. **Constraints** — must-keep compliance, brand, contracts, data (required if known)
 5. **Precedent hints** — optional (“like Stripe / Linear / …”)
 
-If target or outcome is unclear, ask concise questions and wait. Optional: `grill-me` when product vision is the blocker.
+If target or outcome is unclear, ask concise questions and wait. Optional: `loop-refine` when product vision is the blocker.
 
 ---
 
@@ -76,7 +76,7 @@ No code edits.
 
 ### Phase 3 — Precedent scan
 
-Follow [`pattern-review`](../pattern-review/SKILL.md) using its rubric:
+Follow [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) using its rubric:
 
 1. Name **1–3** external precedents (not “we already do it in-repo”)
 2. Select **relevant dimensions** only
@@ -123,9 +123,9 @@ Present progressive options. **Option shapes (Trim / Streamline / Reframe / opti
 
 | Option | Meaning | Typical next skill |
 |--------|---------|-------------------|
-| **A Trim** | Drop custom extras; keep overall shape | `challenge` Phase 7 (or `quick-piv` if XS/S and no challenge session) |
-| **B Streamline** | Match mainstream composition/flow | `challenge` Phase 7; re-check with `pattern-review` if contracts shift |
-| **C Reframe** | New model = precedent | `plan` (M/L) or `feature` if product-level |
+| **A Trim** | Drop custom extras; keep overall shape | `challenge` Phase 7, or a backlog task through the loop when no challenge session is open |
+| **B Streamline** | Match mainstream composition/flow | `challenge` Phase 7; re-check with precedent review (`loop-plan`) if contracts shift |
+| **C Reframe** | New model = precedent | `loop-plan` (M/L) or `loop-refine` if product-level |
 
 When handing to `challenge` after Should + How are decided: pass the STANDARDS ALIGN decisions as **constraints**; skip challenge Phases 1–6 re-grilling — go to **Phase 7** (or Phase 4 only if How was not yet chosen).
 
@@ -133,7 +133,7 @@ Route by unit:
 
 - **Component** → `challenge` (code mode) ± design-system tokens
 - **Feature** → `challenge` (flow + code)
-- **Cross-feature / product** → per-surface align first, then `consolidate` if duplication remains; product-wide journeys → `feature` / `plan`
+- **Cross-feature / product** → per-surface align first, then `loop-plan` deepen-modules if duplication remains; product-wide journeys → `loop-refine` / `loop-plan`
 
 If the structural path risks a workaround shape → run [`layer-consistency-check`](../layer-consistency-check/SKILL.md) before implementing.
 
@@ -145,10 +145,10 @@ Stop again:
 
 After how choice, **read and run** the next skill (do not only name it):
 
-- Approved small change → `challenge` Phase 7 (preferred) or `quick-piv` when XS/S and no open challenge session
-- Multi-phase / contract change → `plan` (include STANDARDS ALIGN gap table + decisions as input) → later `implement`
-- Cross-feature unify after align → `consolidate`
-- IF Align-* / Mixed how choice changes `src/` OR pre-ship gate needed THEN [`validate`](../validate/SKILL.md); IF read-only gap report only THEN skip `validate` → user test
+- Approved small change → `challenge` Phase 7 (preferred) or `loop-plan` (XS/S) when XS/S and no open challenge session
+- Multi-phase / contract change → `loop-plan` (include STANDARDS ALIGN gap table + decisions as input) → later `loop-build`
+- Cross-feature unify after align → `loop-plan` deepen-modules
+- IF Align-* / Mixed how choice changes `src/` OR pre-ship gate needed THEN [`loop-check`](../loop-check/SKILL.md); IF read-only gap report only THEN skip `loop-check` → user test
 
 ---
 
@@ -198,20 +198,20 @@ On first stop, you may omit detailed How or mark it **pending decision** so the 
 | User asks should-we-align / how-to-align / industry-standard simplification for a **named existing scope** | Run full loop |
 | Idle `/router` maps here from situation table | Same |
 | Already waived for this scope and scope unchanged | Skip; one-line reminder |
-| Pure plan gate before novel code | Prefer `pattern-review`, not this skill |
+| Pure plan gate before novel code | Prefer precedent review (`loop-plan`), not this skill |
 
-**Not proactive** on every plan — that remains `pattern-review`. This skill is **on-demand** (user or router).
+**Not proactive** on every plan — that remains precedent review (`loop-plan`). This skill is **on-demand** (user or router).
 
 ---
 
 ## Related
 
-- [`improve`](../improve/SKILL.md) — vague “make better” / `/improve` entry (may hand off here)
-- [`pattern-review`](../pattern-review/SKILL.md) — industry rubric + proactive plan gate
+- [`router`](../router/SKILL.md) — vague “make better” requests enter the loop as a backlog task
+- [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) — industry rubric + proactive plan gate
 - [`challenge`](../challenge/SKILL.md) — execute feature/component simplification
-- [`consolidate`](../consolidate/SKILL.md) — cross-feature unify after align
+- [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) — cross-feature unify after align
 - [`layer-consistency-check`](../layer-consistency-check/SKILL.md) — internal layer guard
-- [`grill-me`](../grill-me/SKILL.md) — vision/tradeoff clarity before Phase 1
-- [`plan`](../plan/SKILL.md) / [`quick-piv`](../quick-piv/SKILL.md) — after Align-hard / Trim
+- [`loop-refine`](../loop-refine/SKILL.md) — vision/tradeoff clarity before Phase 1
+- [`loop-plan`](../loop-plan/SKILL.md) / [`loop-plan`](../loop-plan/SKILL.md) — after Align-hard / Trim
 
-**Next:** Owner picks Should → How → invoke execution skill → `validate` → user test.
+**Next:** Owner picks Should → How → invoke execution skill → `loop-check` → user test.

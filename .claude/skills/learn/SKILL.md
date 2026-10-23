@@ -14,7 +14,7 @@ Extract lessons from **what just happened** (diffs, errors, retries) and persist
 
 **Bias:** Removal-first when existing harness text contributed to the mistake or adds always-on noise without enforcement value. Mechanical lessons → validators (`validate:structure`, `harness_scan`, etc.), not prose.
 
-**Related:** Rule grading: `.agents/skills/rule-quality/SKILL.md`. Structural harness conflicts → `.agents/skills/align-harness/SKILL.md`. Finish hook: `.agents/skills/finish/SKILL.md` § Lesson check. Skill authoring (domain knowledge the agent would not already know): `.agents/skills/create-skill/SKILL.md`.
+**Related:** Rule grading: `.agents/skills/rule-quality/SKILL.md`. Structural harness conflicts → `.agents/skills/align-harness/SKILL.md`. Loop hook: `.agents/skills/loop-verdict/SKILL.md` (any non-Pass verdict runs this skill; lessons ride the lap's PR). Skill authoring (domain knowledge the agent would not already know): `.agents/skills/create-skill/SKILL.md`.
 
 **This project:** In-repo skills live under `.agents/skills/<name>/SKILL.md` (whitelisted in `projectStructure.config.cjs`). Add new skills as new folders with a `SKILL.md`; do not create other file types under `skills/` unless the whitelist is extended.
 
@@ -30,22 +30,22 @@ Durable, discoverable guidance that a blank capable model would **not** already 
 
 - **Manual:** User invokes learn, asks for a retrospective, or “sharpen rules.”
 - **Proactive:** After a loop (3+ failed attempts), a critical CI fix, or a non-obvious repo discovery — only when the user **confirms** debugging is resolved. **Never** run as primary in parallel with active **`debug`**.
-- **Finish pipeline:** `finish` § Lesson check offers `/learn` when plan § Notes contain a mistake signal.
+- **Loop pipeline:** `loop-verdict` runs this skill on any non-Pass verdict (Change or Drop), feeding it the plan § Notes mistake signals; lessons commit to the same PR so the next Pass approves them (D50).
 
 ### Turn contract (manual `/learn` — no deferral)
 
-**Manual invocation is blocking.** Attached or slash `/learn` is not a wrap-up after the fire. Do not wait for CI green, a code fix, or `finish` § Lesson check.
+**Manual invocation is blocking.** Attached or slash `/learn` is not a wrap-up after the fire. Do not wait for CI green, a code fix, or the next verdict.
 
 - **Same turn:** Run Steps 0–5 in this turn (audit → lesson → persist → report).
 - **Before commit:** If a commit or push is also in flight, persist the lesson **before** `git commit`. Repair may continue after the Report (or after the skill/rule edit is on disk).
 - **Do not misread Proactive:** “Never as primary in parallel with `debug`” and “only when debugging is resolved” apply to **proactive** learn only. They do **not** override a **manual** `/learn` on an incident message.
 - **Salience:** A long CI log or red check in the same message is **not** a reason to skip this skill. Fixing the check does not complete `/learn`.
 
-### Mistake shape (capture in plan § Notes during `implement` / `debug`)
+### Mistake shape (capture in plan § Notes during `loop-build` / `debug`)
 
 `request → wrong action → fix → lesson → add | narrow | delete | enforce`
 
-Record a one-line signal in the job plan **Notes during development** when the assistant was corrected, reverted, or repeated a failure — `finish` reads this before handoff.
+Record a one-line signal in the job plan **Notes during development** when the assistant was corrected, reverted, or repeated a failure — `loop-verdict` reads this when a verdict is not Pass.
 
 ---
 
@@ -122,13 +122,13 @@ Pick **one primary** location. Cross-link elsewhere in one line if needed — ne
 | Vitest, coverage, test layout | `.cursor/rules/testing/RULE.mdc` |
 | Branch strategy, PRs, production promotion | `.cursor/rules/git-workflow/RULE.mdc` |
 | Protected files, when to ask the owner, success reporting (verified vs unverified) | `.cursor/rules/agent-behavior/RULE.mdc` |
-| Code review, dev process, workflow hub routing | `.cursor/rules/workflow/RULE.mdc` |
-| Changelog, version, finish / commit flow | `.agents/skills/finish/SKILL.md` |
+| Dev process, loop stages | `.agents/skills/router/references/loop-map.md` + the `loop-*` skills |
+| Changelog, version, commit / PR flow | `.agents/skills/loop-ship/SKILL.md` |
 | Known symptom → fix pattern (repeatable) | `.agents/skills/debug/patterns.md` |
 | Edge Functions vs frontend | `.cursor/rules/cloud-functions/RULE.mdc` |
 | TanStack Query, server state | `ARCHITECTURE.md`, `documentation/DOC_TANSTACK_QUERY.md`, or feature `api/` keys patterns (one primary) |
 | Long procedural workflow | Relevant `.agents/skills/<name>/SKILL.md` |
-| **Product problem, persona, app role (fillable template)** | `documentation/DOC_APP_VISION.md` (onboarding: `.agents/skills/start/SKILL.md`) |
+| **Product problem, persona, app role (fillable template)** | `documentation/DOC_APP_VISION.md` (onboarding: `.agents/skills/loop-backlog/SKILL.md`) |
 | Reusable multi-step procedure (not a one-line rule) | New or existing `.agents/skills/<name>/SKILL.md` in this repo, or a user-level skill outside the repo |
 | Harness-wide structural conflict | `.agents/skills/align-harness/SKILL.md` (not ad-hoc multi-file edits) |
 

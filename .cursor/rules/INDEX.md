@@ -19,14 +19,14 @@ Quick reference guide to all rules and their relationships.
 ---
 
 ### Architecture (`architecture/RULE.mdc`)
-- **Proactive design checks:** pattern risk (`pattern-review`), don't reinvent the wheel, performance cost risk, layer consistency (workaround guard; naming via `code-style` § Naming)
+- **Proactive design checks:** pattern risk (precedent review, `loop-plan`), don't reinvent the wheel, performance cost risk, layer consistency (workaround guard; naming via `code-style` § Naming)
 - **Code placement**, edge-case placement, import direction
 - **Folder structure** and **path aliases** (SSOT: `@/*` → `src/*` only)
 - **Feature granularity / bounded context** (budgets in `featureBudgets.config.cjs`, cross-feature imports)
 - **TanStack Query optimistic + canonical merge** (summary; playbook SSOT `documentation/DOC_TANSTACK_QUERY.md`)
 - Changing architecture rules/configs; architecture docs
 
-**Related to:** code-style, testing, security, workflow
+**Related to:** code-style, testing, security
 
 ---
 
@@ -39,7 +39,7 @@ Quick reference guide to all rules and their relationships.
 - Test organization
 - Quality standards
 
-**Related to:** code-style, architecture, workflow
+**Related to:** code-style, architecture
 
 ---
 
@@ -49,27 +49,17 @@ Quick reference guide to all rules and their relationships.
 - Data protection
 - Vulnerability prevention
 
-**Related to:** architecture, code-style, workflow
-
----
-
-### Workflow hub (`workflow/RULE.mdc`)
-- Code review process and development process
-- Deployment pointers (links to `DOC_CLOUDFLARE_WORKERS`, `cloud-functions/RULE.mdc`)
-- **Rule routing** to child domain rules (do not duplicate their bodies here)
-- **Minimal branch gate stub** — read `src/config/git-workflow.json`; full per-mode behavior in `git-workflow/RULE.mdc` § Mode behavior table and § Mode-aware branch gate
-
-**Related to:** All other rules (references them in review process)
+**Related to:** architecture, code-style
 
 ---
 
 ### Git workflow (`git-workflow/RULE.mdc`)
 - **Branch and release strategy** (SSOT: § Mode behavior table — Model C default, A/B selectable; config: `src/config/git-workflow.json`)
 - Branch protection, PR standards (Model A), merge diagnostics
-- Production per mode (C: user merges the PR; A/B: **Promote to production** workflow)
-- Commit/push flow pointers (`finish` / `push` skills for semver/changelog SSOT)
+- Stop 2 surface + production per mode (owner's Pass → C: merge the PR; A/B: **Promote to production**)
+- Commit/push/PR flow pointers (`loop-ship` for semver/changelog SSOT)
 
-**Related to:** workflow hub, agent-behavior, platform
+**Related to:** agent-behavior, platform
 
 ---
 
@@ -79,7 +69,7 @@ Quick reference guide to all rules and their relationships.
 - Success reporting (verified vs unverified)
 - Agent role and control
 
-**Related to:** workflow hub, git-workflow, debugging
+**Related to:** git-workflow, debugging
 
 ---
 
@@ -98,7 +88,7 @@ Quick reference guide to all rules and their relationships.
 - Deployment model and fragility considerations
 - Testing strategy and migration paths
 
-**Related to:** architecture, workflow, security
+**Related to:** architecture, security
 
 ---
 
@@ -110,7 +100,7 @@ Quick reference guide to all rules and their relationships.
 - Testing migrations (fresh database and incremental updates)
 - Error handling and logging patterns
 
-**Related to:** security, workflow, architecture
+**Related to:** security, architecture
 
 ---
 
@@ -119,10 +109,10 @@ Quick reference guide to all rules and their relationships.
 - Doc-freshness (don't trust cached/stale docs)
 - Cite doc URL(s) or MCP tool(s) actually used
 - POC-before-code for new/unfamiliar vendors
-- Pointer to `.agents/skills/api-integrate/SKILL.md` for the full procedure (MCP fallback decision tree, schema→sample discipline, vendor worked examples)
-- Absorbs the former `workflow/RULE.mdc` § Documentation Lookup
+- Pointer to `.agents/skills/loop-plan/references/research-api.md` for the full procedure (MCP fallback decision tree, schema→sample discipline, vendor worked examples)
+- Absorbs the former workflow rule § Documentation Lookup
 
-**Related to:** workflow, security, database, cloud-functions, project-specific
+**Related to:** security, database, cloud-functions, project-specific
 
 ---
 
@@ -131,7 +121,7 @@ Quick reference guide to all rules and their relationships.
 - Pointers to `debug` and `hypothesis` skills for scientific-method procedure
 - Reductive strategy for bugs and new features
 
-**Related to:** workflow, testing, architecture
+**Related to:** testing, architecture
 
 ---
 
@@ -152,7 +142,7 @@ Quick reference guide to all rules and their relationships.
 - **Feature-local README (Option 1):** SSOT `documentation/DOC_FEATURE_LOCAL_README.md`; `pnpm validate:feature-docs` / `validate:feature-docs:strict` / `validate:feature-docs:staged`
 - **Feature size / granularity:** SSOT `featureBudgets.config.cjs`; `pnpm validate:feature-size` / `validate:feature-size:staged`; see `.cursor/rules/architecture/RULE.mdc` § Feature granularity
 
-**Related to:** architecture, workflow
+**Related to:** architecture
 
 ---
 
@@ -162,20 +152,20 @@ When modifying a rule, check these related rules:
 
 | Rule | Check These Rules |
 |------|-------------------|
-| `code-style` | architecture, testing, workflow |
-| `architecture` | code-style, testing, security, workflow, cloud-functions, database |
-| `testing` | code-style, architecture, workflow, debugging |
-| `security` | architecture, code-style, workflow, cloud-functions, database, project-specific, api-integration |
+| `code-style` | architecture, testing |
+| `architecture` | code-style, testing, security, cloud-functions, database |
+| `testing` | code-style, architecture, debugging |
+| `security` | architecture, code-style, cloud-functions, database, project-specific, api-integration |
 | `workflow` | All rules (hub), git-workflow, agent-behavior, platform, api-integration |
-| `git-workflow` | workflow, agent-behavior, platform, cloud-functions, testing |
-| `agent-behavior` | workflow, git-workflow, debugging, finish skill |
-| `platform` | workflow, git-workflow, security |
-| `cloud-functions` | architecture, workflow, security, project-specific |
-| `database` | security, workflow, architecture |
-| `api-integration` | workflow, security, database, cloud-functions, project-specific |
-| `debugging` | workflow, testing, architecture |
+| `git-workflow` | agent-behavior, platform, cloud-functions, testing |
+| `agent-behavior` | git-workflow, debugging, loop-ship + loop-verdict skills |
+| `platform` | git-workflow, security |
+| `cloud-functions` | architecture, security, project-specific |
+| `database` | security, architecture |
+| `api-integration` | security, database, cloud-functions, project-specific |
+| `debugging` | testing, architecture |
 | `project-specific` | security, cloud-functions, database |
-| `file-placement` | architecture, workflow |
+| `file-placement` | architecture |
 
 ## Adding a New Rule
 

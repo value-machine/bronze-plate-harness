@@ -40,8 +40,8 @@ Colocated `*.test.ts` under `services/`; shared wrappers in `tests/test-utils.ts
 
 - `vite-plugin-dev-tasks.ts` (project root)
 - shadcn/ui kit (`src/components/common/`), lucide-react, dnd-kit (reorder). Styling uses theme token utilities only (`elevation-*`, `duration-(--duration-*)`, color tokens), so rows follow the active theme and light/dark mode.
-- Agent skills: `.agents/skills/start/SKILL.md`, `router`, `finish` for task sync
+- Agent skills: `.agents/skills/loop-backlog/SKILL.md` (order, pick-up, onboarding), `loop-verdict` (archive on Pass)
 
 ## Onboarding
 
-Fresh clones ship four pre-seeded tasks in `app-tasks.json`. Agents sync status at session boundaries per start/router/finish skills.
+Fresh clones ship four pre-seeded tasks in `app-tasks.json`. Agents sync status per `loop-backlog` (catch-up and pick-up) and `loop-verdict` (archive on Pass).

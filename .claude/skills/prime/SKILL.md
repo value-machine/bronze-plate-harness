@@ -3,8 +3,8 @@ name: prime
 description: >-
   Loads project context at session start (structure, governance, active jobs, enforced boundaries).
   IF new chat OR the user asks what to do next without naming a skill THEN use this skill.
-  Not a substitute for grill-me / plan § Refine (gates 1–2). Not human onboarding (start)
-  or pre-merge gates (validate).
+  Not a substitute for loop-refine (scoping). Not human onboarding (loop-backlog onboarding gates)
+  or pre-merge checks (loop-check).
 ---
 
 # prime
@@ -12,7 +12,7 @@ description: >-
 Load project context at the start of a new session. Build an understanding of this harness’s structure, governance, and active state before tackling tasks.
 
 **When to use:** New chat, ambiguous task, or before larger refactors.  
-**Related:** For architecture/quality gate, use `.agents/skills/validate/SKILL.md` (auto-selects gate depth). For planning features, use `.agents/skills/plan/SKILL.md`. For onboarding a human, use `.agents/skills/start/SKILL.md`.
+**Related:** For architecture/quality gate, use `.agents/skills/loop-check/SKILL.md` (auto-selects gate depth). For planning features, use `.agents/skills/loop-plan/SKILL.md`. For onboarding a human, use `.agents/skills/loop-backlog/SKILL.md`.
 
 ## Objective
 
@@ -28,7 +28,7 @@ Align with project rules and architecture so work does not violate enforced boun
 - **Architecture overview:** Read `ARCHITECTURE.md` (folder layout, TanStack Query, layers, path aliases).
 - **Doc index:** Read `documentation/DOC_INDEX.md` (SSOT map, quick links).
 - **Testing guide:** Skim `documentation/DOC_TESTING.md` when the task adds or changes tests (runners, colocation, `tests/test-utils`).
-- **App vision (product SSOT):** Read `documentation/DOC_APP_VISION.md`. If the vision status line is still **`DRAFT`**, state in **Actionable insights** that feature/plan ambiguity should be resolved by filling that file (or running `.agents/skills/start/SKILL.md` § App vision) before major product decisions.
+- **App vision (product SSOT):** Read `documentation/DOC_APP_VISION.md`. If the vision status line is still **`DRAFT`**, state in **Actionable insights** that feature/plan ambiguity should be resolved by filling that file (or running `.agents/skills/loop-backlog/SKILL.md` § App vision) before major product decisions.
 - **Features (discover, do not assume):** List `src/features/` — this harness ships with **`auth`** and **`setup`** only; forks may add more. Do not use a fixed feature list from another repo.
 - **Entry points:** Read `index.html`, `src/main.tsx`, `src/App.tsx` (provider order: `QueryProvider` → `AuthProvider` → `BrowserRouter`).
 
@@ -91,10 +91,10 @@ Deliver a concise, scannable summary:
 
 | Not `prime` | Use instead |
 |-------------|-------------|
-| Human first-time setup | `start` |
-| Product vision Q&A | `grill-me` |
-| Product forks during planning | `plan-grill` |
-| Write `DEVELOPMENT_PLAN.md` | `plan` |
-| Commit / push | `finish` / `push` |
+| Human first-time setup | onboarding (`loop-backlog`) |
+| Product vision Q&A | `loop-refine` |
+| Product forks during planning | `loop-plan` fork checklist |
+| Write `DEVELOPMENT_PLAN.md` | `loop-plan` |
+| Commit / push / PR | `loop-ship` |
 
-**Next:** **`plan`**, **`plan` § Refine**, or **`grill-me`** per router gates — not **`implement`** alone.
+**Next:** back to the stage that called it — [`router`](../router/SKILL.md) or [`loop-refine`](../loop-refine/SKILL.md).

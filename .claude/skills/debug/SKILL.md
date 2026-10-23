@@ -31,7 +31,7 @@ When the user reports a bug without structured context, **ask in one message** (
 
 If all four are already in the thread → **do not re-ask**; populate Preflight slots directly. Intake is for alignment only — never claim fixed.
 
-After a fix lands, closure uses **`finish`** § User test handoff — user confirms resolution in the app.
+After a fix lands, closure is the owner's Stop 2 test on the preview (**`loop-verdict`**) — the owner confirms resolution in the app.
 
 ---
 
@@ -120,7 +120,7 @@ Before forming hypotheses:
 
 If a pattern matches, promote it into the hypothesis set with a falsifier. If no pattern matches, record the searched tokens.
 
-When a fixing session yields a **new reusable** pattern, add it to `patterns.md` per `.agents/skills/finish/SKILL.md` (quality gate applies).
+When a fixing session yields a **new reusable** pattern, add it to `patterns.md` per `.agents/skills/loop-ship/SKILL.md` (quality gate applies).
 
 ---
 
@@ -240,7 +240,7 @@ For small follow-up turns, a compact version is fine, but it must still mention 
 
 ## Next
 
-When the user **confirms** the issue is resolved, optionally offer **`.agents/skills/learn/SKILL.md`** to persist reusable lessons. For commit/changelog, **`.agents/skills/finish/SKILL.md`** only when the user requests it.
+When the user **confirms** the issue is resolved, optionally offer **`.agents/skills/learn/SKILL.md`** to persist reusable lessons. For commit/changelog, **`.agents/skills/loop-ship/SKILL.md`** only when the user requests it.
 
 ---
 
@@ -249,7 +249,7 @@ When the user **confirms** the issue is resolved, optionally offer **`.agents/sk
 | Not `debug` | Use instead |
 |-------------|-------------|
 | Pre-registered experiment after failed fixes | `hypothesis` |
-| Known small scoped fix | `quick-piv` |
+| Known small scoped fix | `loop-plan` (XS/S) |
 | Persist lessons after resolution | `learn` |
-| Plan-driven feature work | `implement` |
-| Commit / push | `finish` / `push` |
+| Plan-driven feature work | `loop-build` |
+| Commit / push / PR | `loop-ship` |

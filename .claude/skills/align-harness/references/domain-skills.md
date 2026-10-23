@@ -6,7 +6,7 @@ Audited by **Lenses 1–5** (inherited from skill-library audit).
 
 - `SKILL.md` + `references/` per skill
 - Router situation table + skill index
-- Handoff DAG vs `skill-relationship-flow.md`
+- Handoff DAG vs `loop-map.md`
 
 ## SSOT rules
 
@@ -14,7 +14,7 @@ Audited by **Lenses 1–5** (inherited from skill-library audit).
 |---------|-------|
 | Situation → skill routing | `router/SKILL.md` |
 | Per-skill procedure | That skill's `SKILL.md` |
-| Relationship diagram | `router/references/skill-relationship-flow.md` |
+| Relationship diagram | `router/references/loop-map.md` |
 
 ## Common findings
 

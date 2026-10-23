@@ -363,7 +363,6 @@ await updateDoc(userRef, {
 - `api-integration/RULE.mdc` - Researching a new third-party API before wiring it into a Server-Only-Capabilities function
 
 **Rules that reference this rule:**
-- `workflow/RULE.mdc` - References deployment of cloud functions
 - `architecture/RULE.mdc` - References function organization patterns
 - `security/RULE.mdc` - References security considerations for functions
 - `testing/RULE.mdc` - References Edge Functions testing considerations

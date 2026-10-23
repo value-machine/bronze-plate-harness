@@ -84,4 +84,4 @@ Reduce with early returns/guard clauses, helper extraction, and options objects;
 
 ## Related Rules
 
-When modifying this rule, check `architecture`, `testing`, `workflow`, `.agents/skills/optimize2/SKILL.md`, and `.agents/skills/layer-consistency-check/SKILL.md`.
+When modifying this rule, check `architecture`, `testing`, `.agents/skills/optimize2/SKILL.md`, and `.agents/skills/layer-consistency-check/SKILL.md`.

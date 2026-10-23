@@ -16,7 +16,7 @@ When you see these cues, spend one deliberate beat asking: *what does the user a
 
 ### Repo architecture cues (this harness)
 
-- **Disconnected patch — config/onboarding UI:** Request adds page-level connect/configure UI for an optional integration whose SSOT is **off-app** (`.env`, `src/config/app-tasks.json`, README/docs — no in-app setup wizard). Detection: search for existing onboarding path (`app-tasks.json`, README, `start` skill) before adding UI. If SSOT is env/tasks/docs, a one-off product-page button is shape #4 — structural path extends the existing onboarding surface, not a bolt-on component.
+- **Disconnected patch — config/onboarding UI:** Request adds page-level connect/configure UI for an optional integration whose SSOT is **off-app** (`.env`, `src/config/app-tasks.json`, README/docs — no in-app setup wizard). Detection: search for existing onboarding path (`app-tasks.json`, README, onboarding (`loop-backlog`) skill) before adding UI. If SSOT is env/tasks/docs, a one-off product-page button is shape #4 — structural path extends the existing onboarding surface, not a bolt-on component.
 
 ## Implementation-side shapes (reactive)
 

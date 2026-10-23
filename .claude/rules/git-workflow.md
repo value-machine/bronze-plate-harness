@@ -7,7 +7,7 @@ SSOT: `.cursor/rules/git-workflow/RULE.mdc` — every mode-dependent behavior is
 - **Branch model / landing / CI follow-up:** per § Mode behavior table rows **daily branch**, **how work lands**, **CI watcher**. Never force-push protected branches.
 - **Agents never write to `main`** in any mode — a hook blocks `git commit` / `git push` there (the user runs bootstrap or emergency commands themselves).
 - **Under A/B (derived from the table):** never open a PR to `main`; "promote / land on main / merge develop to main" means § Promote to production (workflow dispatch). Cursor's babysit step = the desktop app's PR monitor here.
-- **Commit timing and version source:** per the table rows **commit timing** and **version source** (A/B: `finish` only, with bump; C: when the user asks, release-please owns versions).
-- **Staging gate:** Before committing, show staged + unstaged lists. If unstaged work exists, **stop and ask**.
+- **Commit timing and version source:** per the table rows **commit timing** and **version source** (`loop-ship` commits once `loop-check` passes; A/B bump the version there; C: release-please owns versions). Production only after the owner's Pass at Stop 2 (rows **Stop 2 surface**, **production**).
+- **Staging check:** before committing, list staged + unstaged files. Work outside the lap is never auto-staged — treat it as concurrency smoke (`.agents/skills/loop-ship/references/concurrency.md`).
 - **Pre-commit hooks:** Never use `--no-verify`. Fix the underlying issue instead. Staged test tiers: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Local git.
 - **Protected files** (need explicit user approval): full manifest in `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files — do not duplicate the list here.

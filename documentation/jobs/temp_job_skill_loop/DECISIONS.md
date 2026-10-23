@@ -70,6 +70,9 @@ Updated: 2026-10-23
 | D61 | Batch 0 approval | closed | PO approved PHASE2 update + batch 0, including protected writes (`.agents/skills/**`, `.husky/pre-commit`, `.github/workflows/ci.yml`, `projectStructure.config.cjs`). | template review | |
 | D62 | Rule edits land with their destination | closed | A rule edit that hands content to a skill lands in the batch that builds that skill, so no rule ever points at a skill that doesn't exist yet: `git-workflow` commit timing C + Stop 2 per mode, `workflow` deletion and D50 Pass-as-consent → batch 2; `debugging` strategy split → batch 3. | batch 1 | clear-winner: the alternative (land them now) leaves rules pointing at missing skills. |
 | D63 | Styling-scope and heavy-operation asks vs the stop list | closed | The agent decides: styling defaults to global tokens and reports the scope used; heavy operations take the cheaper design, with the trade-off recorded in the plan or PR. Both rules keep their guidance and point to `agent-behavior` § When to ask for real stops. | conflict (D3) | Resolves the clash between D20/D40 and `code-style` § Styling scope + `architecture` § Performance cost risk. |
+| D64 | Batch 2 deletion scope | closed | Batch 2 deleted every v0.42.0 skill whose replacements are all built: grill-me, feature, plan, plan-grill, plan-grill-auto, quick-piv, review-dev-plan, validate, api-integrate, pattern-review, purge-skill, consolidate, modularity-review, implement, review, finish, push, bundle-ship, start; plus `improve` (retired, D35) and the `workflow` rule (D34). Port-map completeness (D55) passes for all of them. | batch 2 | Earlier note expected validate / consolidate / review in batch 3; they are fully replaced by loop-plan + loop-check, so they went now. `optimize2` stays until spec-optimize-performance exists. |
+| D65 | Onboarding home | closed | `start`'s ordered gates live in `loop-backlog/references/onboarding.md`; each seeded task's description points at its gate. | batch 2 | Refines D41 (keeps the walkthrough — weak spot #10). |
+| D66 | Loop → specialist links during the transition | closed | Until batch 3, loop skills call the v0.42.0 specialists by their current names (`debug`, `prime`, `challenge`, `optimize2`, `dont-reinvent-the-wheel`, `layer-consistency-check`, `learn`); batch 3/4 swaps the links to `spec-*` / `meta-*` and makes Calls ⇄ Called by reciprocal. | batch 2 | No skill links a folder that doesn't exist. |
 
 ## Open
 
@@ -104,4 +107,5 @@ Updated: 2026-10-23
 - D39–D54 closed via critique round (PO: adopt all); amended rows marked
 - D55–D57 closed via weak-spot review (PO: adopt); D1, D53 amended
 - D58–D61 closed via template review (PO: update PHASE2, build batch 0)
+- D62–D66 closed (batches 1–2)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)

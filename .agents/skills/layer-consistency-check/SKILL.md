@@ -8,8 +8,8 @@ description: >-
   a workaround shape (special-case flag, parallel path, symptom tuning, disconnected
   patch, instance-encoded naming, growing scope, "for now" comment) or mid-impl when
   your own code starts to look like a workaround. Posts WARNING, WORKAROUND and stops
-  until the user chooses. Not industry precedent (pattern-review), repo lint
-  (validate), or post-hoc wrong-layer repair (consolidate). Always-on via
+  until the user chooses. Not industry precedent (loop-plan review-precedent), repo lint
+  (loop-check), or post-hoc wrong-layer repair (loop-plan deepen-modules). Always-on via
   architecture/RULE.mdc § Layer consistency.
 disable-model-invocation: false
 ---
@@ -61,8 +61,8 @@ Per [`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`](../../../documentation/DOC_AG
 4. **Naming first (shape #5).** Read `code-style/RULE.mdc` § Naming and apply it before writing the name. The one-off skip does not apply. If the name or copy count still violates that rule, stop with WARNING.
 5. **Other shapes.** Skip a genuinely one-off exception with no recurring cost.
 6. If a non-naming shape still clears that filter → post **WARNING, WORKAROUND** from [`references/alert-template.md`](references/alert-template.md) → **stop** until the user chooses.
-7. If the user picks the **structural alternative**: IF scope is XS/S THEN `quick-piv`; IF multi-phase/migration/contracts THEN `plan` (cite `router/references/tiebreaks.md` § `implement` vs `quick-piv`). If they pick the workaround → implement as asked.
-8. **When invoked from `improve`:** treat the IMPROVE finding text + target name as the proactive cue; run the one-beat check before any code.
+7. If the user picks the **structural alternative**: IF scope is XS/S THEN `loop-plan` (XS/S); IF multi-phase/migration/contracts THEN `loop-plan` (cite `router/references/tiebreaks.md` § `loop-build` vs `loop-plan` (XS/S)). If they pick the workaround → implement as asked.
+8. **When invoked from `router`:** treat the IMPROVE finding text + target name as the proactive cue; run the one-beat check before any code.
 
 ---
 
@@ -82,18 +82,18 @@ Full domain variety is in the shapes rubric. Illustrative cases:
 
 | Concern | Use instead |
 |---------|-------------|
-| External industry / product precedent | [`pattern-review`](../pattern-review/SKILL.md) |
+| External industry / product precedent | [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) |
 | Package / pattern reuse vs custom code | [`dont-reinvent-the-wheel`](../dont-reinvent-the-wheel/SKILL.md) |
 | Heavy DB/UI operation cost | `architecture/RULE.mdc` § Performance cost risk |
-| Repo rule compliance on plan or diff | [`validate`](../validate/SKILL.md) |
-| Post-hoc wrong-layer repair in existing code | [`consolidate`](../consolidate/SKILL.md) § Semantic placement |
-| Front door when technique unknown (`/improve`) | [`improve`](../improve/SKILL.md) |
+| Repo rule compliance on plan or diff | [`loop-check`](../loop-check/SKILL.md) |
+| Post-hoc wrong-layer repair in existing code | [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) § Semantic placement |
+| Vague "make it better" request | [`router`](../router/SKILL.md) → a backlog task through the loop |
 | Simplify an overbuilt feature workflow | [`challenge`](../challenge/SKILL.md) |
 | Should we / how to align existing scope with industry standards | [`standards-align`](../standards-align/SKILL.md) |
 | Hotspot refactor / Rule of Three | [`optimize2`](../optimize2/SKILL.md) |
 | How to name new symbols, and when a copy must be extracted | `code-style/RULE.mdc` § Naming — this skill only **stops** if that rule is violated |
 
-**When both `pattern-review` and this skill apply:** run **layer-consistency-check first** (cheaper one-beat check). If the user picks a structural path that changes UX/API contracts, run `pattern-review` before implementing.
+**When both precedent review (`loop-plan`) and this skill apply:** run **layer-consistency-check first** (cheaper one-beat check). If the user picks a structural path that changes UX/API contracts, run precedent review (`loop-plan`) before implementing.
 
 ---
 
@@ -113,8 +113,8 @@ Next: owner pick workaround vs structural alternative → then implement / plan 
 
 ## Related
 
-- [`pattern-review`](../pattern-review/SKILL.md) — industry precedent (complementary lens)
+- [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) — industry precedent (complementary lens)
 - [`standards-align`](../standards-align/SKILL.md) — should/how industry align on existing scope
-- [`consolidate`](../consolidate/SKILL.md) — semantic placement repair (post-hoc)
-- [`router` tiebreaks](../router/references/tiebreaks.md) § `pattern-review` vs `layer-consistency-check`
+- [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) — semantic placement repair (post-hoc)
+- [`router` tiebreaks](../router/references/tiebreaks.md) § precedent review (`loop-plan`) vs `layer-consistency-check`
 - [`learn`](../learn/SKILL.md) — persist lessons from resolved workaround debates

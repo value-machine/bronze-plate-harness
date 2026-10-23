@@ -25,7 +25,7 @@ If the conversation already shows the workflow ("turn this into a skill"), extra
 3. What output format is expected?
 4. Test cases? Suggest yes for objectively checkable outputs (transforms, extraction, code, fixed workflows), usually no for subjective ones (style, art) — the user decides.
 
-Then ask about edge cases, inputs/outputs, example files, success criteria, and dependencies. Research with available MCPs or docs so the user carries less of the load. Before writing, check for overlap with existing skills (router § Skill index) — refine one instead of adding a near-duplicate.
+Then ask about edge cases, inputs/outputs, example files, success criteria, and dependencies. Research with available MCPs or docs so the user carries less of the load. Before writing, check for overlap with existing skills (`router/references/catalog.md`) — refine one instead of adding a near-duplicate.
 
 ## 2. Write the SKILL.md
 
@@ -64,15 +64,15 @@ Re-run the tests after each revision; stop when the user is happy, the feedback 
 
 1. Write ~20 realistic queries: 8–10 that should trigger (varied phrasings, casual and formal, the skill not named, cases where it should beat a neighbor) and 8–10 near-misses that share keywords but need something else. Obvious non-matches test nothing.
 2. Review the set with the user.
-3. Check each query against the description (and the competing skills' descriptions in router § Skill index); revise until should-trigger queries clearly match and near-misses clearly don't. Skills fire mainly for multi-step or specialized work, so one-step queries are poor tests.
+3. Check each query against the description (and the competing skills' descriptions in `router/references/catalog.md`); revise until should-trigger queries clearly match and near-misses clearly don't. Skills fire mainly for multi-step or specialized work, so one-step queries are poor tests.
 4. Show the before/after description.
 
 ## 6. Integrate
 
 - `.agents/skills/**` is protected: get explicit user approval before writing (`.cursor/rules/agent-behavior/RULE.mdc` § Protected Files).
 - Add or update the skill's row in [`router/references/catalog.md`](../router/references/catalog.md) and run `pnpm validate:skills` (admission check).
-- Add the skill to `.agents/skills/router/SKILL.md` § Skill index (situation → skill) and, if it competes with another, to `router/references/tiebreaks.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
-- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see `pattern-review` / `dont-reinvent-the-wheel` in `architecture/RULE.mdc`).
+- If it competes with another skill outside the loop, add a row to `router/references/tiebreaks.md`; if it is a loop stage, update `router/references/loop-map.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
+- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see precedent review (`loop-plan`) / `dont-reinvent-the-wheel` in `architecture/RULE.mdc`).
 - Run `pnpm validate:docs` and `pnpm validate:structure`.
 
 ## What this is NOT

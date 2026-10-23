@@ -22,7 +22,7 @@ On-demand performance playbook for **this repo's stack**. Rules live in `rules/`
 |-------------|------|
 | `optimize2` | Hotspot refactor across design → approach → efficiency → complexity; Rule of Three |
 | `web-perf` | Browser-measured CWVs, traces, network (DevTools MCP) |
-| `review` | Component quality rubric (props, kit consistency, a11y) |
+| `loop-check` component lens | Component quality rubric (props, kit consistency, a11y) |
 | SWR / Next.js patterns | This repo uses TanStack Query + Vite — not applicable |
 
 **Do not** add a compiled `AGENTS.md` in this folder — it would bloat every agent turn.
@@ -52,9 +52,9 @@ On-demand performance playbook for **this repo's stack**. Rules live in `rules/`
 1. Identify the symptom (waterfall, bundle, re-render, list jank).
 2. Read the matching `rules/<name>.md` only.
 3. Apply with repo conventions (`@/` imports, feature layers, TanStack keys).
-4. IF the fix needs structural redesign THEN hand off to [`optimize2`](../optimize2/SKILL.md); ELSE apply the rule and offer [`validate`](../validate/SKILL.md) when shipping.
+4. IF the fix needs structural redesign THEN hand off to [`optimize2`](../optimize2/SKILL.md); ELSE apply the rule; [`loop-check`](../loop-check/SKILL.md) audits it before shipping.
 
-**Next:** Structural redesign → `optimize2`; otherwise continue implement/quick-piv path → `validate` when ready to ship.
+**Next:** Structural redesign → `optimize2`; otherwise continue implement/quick-piv path → `loop-check` when ready to ship.
 
 ## Upstream
 

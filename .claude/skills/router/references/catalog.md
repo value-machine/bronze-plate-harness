@@ -8,14 +8,14 @@ Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG
 
 | Skill | Status | Replaces (v0.42.0) |
 |---|---|---|
-| `router` | planned | `router` |
-| `loop-backlog` | planned | `router`, `start` |
-| `loop-refine` | planned | `grill-me`, `feature` |
-| `loop-plan` | planned | `plan`, `feature`, `plan-grill`, `plan-grill-auto`, `quick-piv`, `review-dev-plan`, `validate`, `api-integrate`, `pattern-review`, `purge-skill`, `consolidate`, `modularity-review`, `optimize2` |
-| `loop-build` | planned | `implement`, `quick-piv` |
-| `loop-check` | planned | `validate`, `review` |
-| `loop-ship` | planned | `finish`, `push`, `bundle-ship` |
-| `loop-verdict` | planned | `finish` |
+| `router` | built | `router` |
+| `loop-backlog` | built | `router`, `start` |
+| `loop-refine` | built | `grill-me`, `feature` |
+| `loop-plan` | built | `plan`, `feature`, `plan-grill`, `plan-grill-auto`, `quick-piv`, `review-dev-plan`, `validate`, `api-integrate`, `pattern-review`, `purge-skill`, `consolidate`, `modularity-review`, `optimize2` |
+| `loop-build` | built | `implement`, `quick-piv` |
+| `loop-check` | built | `validate`, `review` |
+| `loop-ship` | built | `finish`, `push`, `bundle-ship` |
+| `loop-verdict` | built | `finish` |
 | `spec-load-context` | planned | `prime` |
 | `spec-debug-runtime` | planned | `debug`, `hypothesis` |
 | `spec-reuse-package` | planned | `dont-reinvent-the-wheel` |

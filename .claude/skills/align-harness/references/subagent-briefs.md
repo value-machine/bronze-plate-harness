@@ -81,7 +81,7 @@ Orient (above). Produce:
 
 1. **Shared-action contradictions:** build an `action → permitted skill(s)` table for sensitive actions (commit, push, edit protected files, default read-only). Flag any skill instruction that contradicts it.
 2. **Router collisions:** any situation the router maps to >1 primary skill, or any skill not listed / listed >1 time in the router.
-3. **Handoff contract mismatches:** where skill A says "hand to B" but B's declared inputs do not accept A's output artifact (e.g. `plan` emits `DEVELOPMENT_PLAN.md` — does `implement` declare it as input?).
+3. **Handoff contract mismatches:** where skill A says "hand to B" but B's declared inputs do not accept A's output artifact (e.g. `loop-plan` emits `DEVELOPMENT_PLAN.md` — does `loop-build` declare it as input?).
 
 Return findings: `type | skills/files | contradiction | suggested resolution`. No edits.
 
@@ -95,7 +95,7 @@ Orient (above). Using `links-to` from the registry:
 2. **Orphans:** skills nothing routes to (unreachable from the router front door).
 3. **Dead ends:** skills that never state "what's next" where a successor is expected.
 4. **Front-door check:** confirm the router is the only situation→skill map and that every skill is reachable and listed once.
-5. **Relationship diagram:** read [`.agents/skills/router/references/skill-relationship-flow.md`](../../router/references/skill-relationship-flow.md). Flag **diagram stale** if the mermaid omits or contradicts a live clarify/plan handoff edge (especially `grill-me` / `plan-grill` / `plan-grill-auto` / `plan` / `feature` / `pattern-review` / `quick-piv`). Include `skill-relationship-flow: needs update | current` in the return.
+5. **Relationship diagram:** read [`.agents/skills/router/references/loop-map.md`](../../router/references/loop-map.md). Flag **diagram stale** if the mermaid omits or contradicts a live clarify/plan handoff edge (especially `loop-refine` / `loop-plan` fork checklist / the away switch / `loop-plan` / `loop-refine` / precedent review (`loop-plan`) / `loop-plan` (XS/S)). Include `skill-relationship-flow: needs update | current` in the return.
 
 Return: the edge list + a findings list `issue | skill(s) | fix`. No edits.
 

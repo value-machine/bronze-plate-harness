@@ -6,7 +6,7 @@ description: >-
   lenses, tiered issue table, and no-information-loss gate. Foreign content hands off to
   update-harness. Use when the harness drifts, after ingest, or for periodic health checks.
   Not external intake (update-harness), single-skill authoring (create-skill), or app code
-  (consolidate/validate).
+  (loop-plan / loop-check).
 disable-model-invocation: false
 ---
 
@@ -29,7 +29,7 @@ Keep the **agent harness** one coherent system: SSOT enforced, no conflicting in
 | Set | Paths | Treatment |
 |-----|-------|-----------|
 | **Harness corpus** | `AGENTS.md`, `.cursor/rules/**`, `.cursor/rules/INDEX.md`, `.claude/rules/*`, `.agents/skills/**`, `ARCHITECTURE.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, subagent brief files | Audited; edited after gate |
-| **Routing spine** | `router/SKILL.md`, `DOC_AGENT_WORKFLOW_LAYERS.md`, `skill-relationship-flow.md` | Audited; updated when harness routing changes |
+| **Routing spine** | `router/SKILL.md`, `DOC_AGENT_WORKFLOW_LAYERS.md`, `loop-map.md` | Audited; updated when harness routing changes |
 | **Artifacts** | `documentation/jobs/harness/` (registry, ledger, scan manifest) | Persist audit outputs |
 | **Reference-only** | User/plugin skills outside repo | Read for overlap; never edited |
 
@@ -45,8 +45,8 @@ Domain lenses: [`references/domain-*.md`](references/).
 | [`tighten-harness`](../tighten-harness/SKILL.md) | Cutting harness **context cost** (prune, merge, relocate) without behavior change |
 | [`learn`](../learn/SKILL.md) | Capturing a **lesson** from a session |
 | [`standards-align`](../standards-align/SKILL.md) | Product vs repo standards decision |
-| [`consolidate`](../consolidate/SKILL.md) | `src/` application code duplication |
-| [`validate`](../validate/SKILL.md) | Plan/impl **compliance** audit |
+| [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) | `src/` application code duplication |
+| [`loop-check`](../loop-check/SKILL.md) | Plan/impl **compliance** audit |
 
 ## Triggers
 
@@ -80,7 +80,7 @@ Manifest SSOT: `documentation/jobs/harness/entry-points.yaml`. Record facts (alw
 
 Same as former skill-library Phase 0, persisted under `documentation/jobs/harness/`. Include harness domains beyond skills (rules catalog rows, `AGENTS.md` units).
 
-**Diagram need-check:** `router/references/skill-relationship-flow.md` — verdict in notes.
+**Diagram need-check:** `router/references/loop-map.md` — verdict in notes.
 
 ### Phase 1 — Parallel lens subagents (read-only)
 
@@ -112,7 +112,7 @@ Merge lens + scan outputs. Format:
 
 ### Phase 3 — Decision gate
 
-**Do not edit before approval.** User picks rows. Structural SSOT moves or many files → stop, run [`plan`](../plan/SKILL.md).
+**Do not edit before approval.** User picks rows. Structural SSOT moves or many files → stop, run [`loop-plan`](../loop-plan/SKILL.md).
 
 ### Phase 4 — Execute (approved only)
 
@@ -124,7 +124,7 @@ Same contract as former `improve-skill-library` — `MISSING` must be 0.
 
 ### Phase 6 — Reconcile
 
-Router lists each harness skill once; registry updated; `skill-relationship-flow.md` if stale.
+Router lists each harness skill once; registry updated; `loop-map.md` if stale.
 
 ## Escalation
 

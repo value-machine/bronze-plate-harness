@@ -1,146 +1,53 @@
 # Agent workflow layers (plate-harness)
 
-How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together. Use this when adding or changing agent guidance so layers stay aligned.
+How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together. Use this when adding or changing agent guidance so the layers stay aligned.
 
 ## Layers
 
 | Layer | Location | Purpose |
 |-------|----------|---------|
-| **Skill** | `.agents/skills/<slug>/SKILL.md` | Full procedure the agent runs (SSOT for *how*) |
-| **Rule** | `.cursor/rules/<category>/RULE.mdc` | Always-on principles; **link** to skills/docs, avoid copying long checklists |
-| **Human doc** | `documentation/DOC_*.md` | Product/process narrative for people and agents |
+| **Rule** | `.cursor/rules/<category>/RULE.mdc` | Always-on coding fundamentals and corrections, plus the triggers for guards. Links to skills; never holds a process |
+| **Loop skill** | `.agents/skills/router/` + `.agents/skills/loop-*/SKILL.md` | The product-owner loop: one stage each (SSOT for *how*) |
+| **Specialist** | `.agents/skills/<name>/SKILL.md` (`spec-*` after batch 3 of the rework) | Called by two or more loop stages when a condition fires; the owner may also call one directly |
+| **Meta skill** | `.agents/skills/<name>/SKILL.md` (`meta-*` after batch 4) | Harness maintenance, outside the loop; called directly |
+| **Human doc** | `documentation/DOC_*.md` | Product and process narrative for people and agents |
 | **Enforcement** | `.husky/*`, `scripts/*`, `.github/workflows/*` | Machine checks; shared helpers in `scripts/*.cjs` |
 
-**Catalog:** `.agents/skills/router/SKILL.md` § Skill index. **Routing:** `.agents/skills/router/SKILL.md` + `router/references/dev-cycle-matrix.md`.
+**Registry:** [`.agents/skills/router/references/catalog.md`](../.agents/skills/router/references/catalog.md) — the admission check (`pnpm validate:skills`) rejects a skill folder that isn't listed or doesn't follow [`create-skill/references/skill-template.md`](../.agents/skills/create-skill/references/skill-template.md). **Routing:** [`router`](../.agents/skills/router/SKILL.md) + [`router/references/loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
-**Commands:** This repo uses **skills only** (no `.cursor/commands/` hub). Invoke via slash commands that read `.agents/skills/<name>/SKILL.md` or attach the skill in chat.
+**Claude Code discovery:** `.claude/skills/` is a generated mirror of `.agents/skills/` (`scripts/sync-agent-config.mjs`, `agent-sync.config.json`). Pre-commit refreshes it and CI fails on drift; edit the source only.
 
-## Pattern / industry-standard review (single entry point)
+## The product-owner loop
 
-Compares **implementation proposals and plans** to **industry standards and common best practice** before coding. The agent **chooses relevant review aspects** per change (see rubric). Agents apply **proactively** per `pattern-review` skill and `architecture/RULE.mdc` § Pattern risk.
+```text
+STOP 1  loop-backlog → loop-refine          (owner: pick / confirm the top task; answer scope gaps)
+        loop-plan → loop-build → loop-check → loop-ship   (autonomous)
+STOP 2  loop-verdict on the preview          (owner: Pass / Change / Drop)
+```
 
-No separate `documentation/DOC_*` procedure for this workflow — invocable steps live in **skills** (link from docs and rules only).
+Between the stops the agent asks only per `.cursor/rules/agent-behavior/RULE.mdc` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a patch on top instead of the fix, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/pattern-review/SKILL.md` |
-| **Humans** | Same skill + `references/` below; router § Skill index |
+## Proactive guards (rule-triggered)
 
-| Content | Path |
-|---------|------|
-| Procedure (when / how / modes) | `.agents/skills/pattern-review/SKILL.md` |
-| Review lens, dimension pool, verdicts | `.agents/skills/pattern-review/references/rubric.md` |
-| Pattern risk alert block | `.agents/skills/pattern-review/references/alert-template.md` |
-| Always-on reminder | `.cursor/rules/architecture/RULE.mdc` § Pattern risk |
-| Plan section template | `.agents/skills/plan/references/implementation-plan-template.md` § Pattern & precedent |
+Always-on rules fire the guards; the loop stages call the procedure when a rule fires (D56).
 
-**Callers:** `plan`, `router`, `feature`, `review-dev-plan` (industry lens), `standards-align` (Phase 3 rubric only). Do not duplicate the rubric elsewhere — link these paths.
+| Guard | Trigger (rule) | Procedure |
+|---|---|---|
+| Naming / copy counts | `code-style` § Naming | The rule itself (F1–F6) |
+| Layer consistency / workaround | `architecture` § Layer consistency | [`layer-consistency-check`](../.agents/skills/layer-consistency-check/SKILL.md) |
+| Industry precedent | `architecture` § Pattern risk | [`loop-plan/references/review-precedent.md`](../.agents/skills/loop-plan/references/review-precedent.md) |
+| Package / pattern reuse | `architecture` § Don't reinvent the wheel | [`dont-reinvent-the-wheel`](../.agents/skills/dont-reinvent-the-wheel/SKILL.md) |
+| Heavy DB / UI operations | `architecture` § Performance cost risk | [`optimize2`](../.agents/skills/optimize2/SKILL.md), [`react-perf-vite`](../.agents/skills/react-perf-vite/SKILL.md) |
+| External API research | `api-integration` rule | [`loop-plan/references/research-api.md`](../.agents/skills/loop-plan/references/research-api.md) |
+| Foundation cleanup (deep modules, duplication, placement) | `loop-plan` § Steps 2 | [`loop-plan/references/deepen-modules.md`](../.agents/skills/loop-plan/references/deepen-modules.md) |
 
-**Not the same as:** `.agents/skills/validate/SKILL.md` (repo rule compliance); `.agents/skills/standards-align/SKILL.md` (should-we / how-to align an **existing** scope — reuses this rubric); `.agents/skills/dont-reinvent-the-wheel/SKILL.md` (package/pattern *reuse* vs custom code).
+On-demand, outside the loop: should-we-align with industry practice → [`standards-align`](../.agents/skills/standards-align/SKILL.md); simplify one flow → [`challenge`](../.agents/skills/challenge/SKILL.md).
 
-## Don't reinvent the wheel (package / pattern reuse)
+## Where decisions live
 
-Before writing custom code for a **generic** subsystem, check whether a well-maintained package or a verified public pattern is worth reusing. Agents apply **proactively** per `dont-reinvent-the-wheel` skill and `architecture/RULE.mdc` § Don't reinvent the wheel. Stops at a recommendation (no install, no adapted code).
-
-No separate `documentation/DOC_*` procedure — invocable steps live in the skill.
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/dont-reinvent-the-wheel/SKILL.md` |
-| **Humans** | Same skill; router tiebreaks § `dont-reinvent-the-wheel` vs `pattern-review` vs `api-integrate` |
-
-| Content | Path |
-|---------|------|
-| Procedure (existing coverage → search → shortlist → license → rec) | `.agents/skills/dont-reinvent-the-wheel/SKILL.md` |
-| Always-on reminder | `.cursor/rules/architecture/RULE.mdc` § Don't reinvent the wheel |
-| Plan persistence | `.agents/skills/plan/references/implementation-plan-template.md` § Conflict & compliance |
-
-**Callers:** `plan` § Investigate, `feature` § 3.1a, `implement` / `quick-piv` catch, `router`. Order: this skill → `api-integrate` (if still researching a vendor) → `pattern-review` on the chosen approach.
-
-**Not the same as:** `.agents/skills/pattern-review/SKILL.md` (industry *design* fit); `.agents/skills/api-integrate/SKILL.md` (vendor contract / MCP / wire shape).
-
-## Standards align loop (should + how)
-
-Answers **whether** an existing product / feature / component should move closer to industry practice, and **how** (trim / streamline / reframe), then hands off to `challenge`, `consolidate`, `plan`, or `quick-piv`. **On-demand** (user or router) — not the proactive plan gate (`pattern-review`).
-
-No separate `documentation/DOC_*` procedure — invocable steps live in the skill.
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/standards-align/SKILL.md` |
-| **Humans** | Same skill; router tiebreaks § `standards-align` vs `pattern-review` vs `challenge` |
-
-| Content | Path |
-|---------|------|
-| Procedure (bound → map → precedent → gap score → should → how → handoff) | `.agents/skills/standards-align/SKILL.md` |
-| Industry lens (do not duplicate) | `.agents/skills/pattern-review/references/rubric.md` |
-
-**Callers:** `router` when user asks should/how align; after Align decision → execution skills above.
-
-**Not the same as:** `.agents/skills/pattern-review/SKILL.md` (evaluate plan/proposal; proactive); `.agents/skills/challenge/SKILL.md` (simplify one feature without industry should-gate); `.agents/skills/improve/SKILL.md` (facade when technique unknown).
-
-## Improve facade (product entry)
-
-User-facing front door for “make this part better.” Resolves target in plain language, checks vision only when missing, silent multi-lens lite audit, ≤3 findings, then invokes `challenge` / `standards-align` / `consolidate` / `layer-consistency-check` / `validate` / `review`. **On-demand** (`/improve` or vague improve language).
-
-No separate `documentation/DOC_*` procedure — invocable steps live in the skill.
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/improve/SKILL.md` |
-| **Humans** | Same skill; router tiebreaks § `improve` vs specialized improve skills |
-
-| Content | Path |
-|---------|------|
-| Procedure (target → vision → audit → pick → handoff) | `.agents/skills/improve/SKILL.md` |
-| Child procedures | Linked skills above — do not duplicate |
-
-**Callers:** `router` on `/improve` or ambiguous improve intent.
-
-**Not the same as:** child skills when the user already named the technique; `feature` / `debug` for new work or bugs.
-
-## Layer consistency / workaround guard (single entry point)
-
-Catches requests or in-progress code that conflict with a deeper layer (physics/math, abstraction hierarchy, system architecture) **before** silently shipping a workaround. Core reflex: every request to change existing behavior carries an assumption about how the system works — verify it before acting (user can't see the impl). Agents apply **proactively** per `layer-consistency-check` skill and `architecture/RULE.mdc` § Layer consistency (workaround guard).
-
-No separate `documentation/DOC_*` procedure for this workflow — invocable steps live in **skills** (link from docs and rules only).
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/layer-consistency-check/SKILL.md` |
-| **Humans** | Same skill + `references/` below; router tiebreaks § `pattern-review` vs `layer-consistency-check` |
-
-| Content | Path |
-|---------|------|
-| Procedure (when / how / severity) | `.agents/skills/layer-consistency-check/SKILL.md` |
-| Request cues + seven workaround shapes | `.agents/skills/layer-consistency-check/references/workaround-shapes.md` |
-| WARNING, WORKAROUND alert block | `.agents/skills/layer-consistency-check/references/alert-template.md` |
-| Always-on reminder | `.cursor/rules/architecture/RULE.mdc` § Layer consistency (workaround guard) |
-
-**Callers:** always-on during implementation; `router` (tiebreak vs `pattern-review`). Do not duplicate the shapes rubric elsewhere — link these paths.
-
-**Not the same as:** `.agents/skills/pattern-review/SKILL.md` (external industry precedent); `.agents/skills/validate/SKILL.md` (repo rule compliance); `.agents/skills/consolidate/SKILL.md` § Semantic placement (post-hoc wrong-layer repair).
-
-## External API / backend integration research (single entry point)
-
-Research an external API, vendor, or backend **before** writing integration code — MCP-first when a server exists, contract before sample. Agents route through `api-integrate` skill and `api-integration` rule (globs-scoped, not `alwaysApply`).
-
-No separate `documentation/DOC_*` procedure for this workflow — invocable steps live in **skills** (link from docs and rules only).
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/api-integrate/SKILL.md` |
-| **Humans** | Same skill + `references/` below; router tiebreaks § External API research |
-
-| Content | Path |
-|---------|------|
-| Procedure (MCP fallback tree, phases) | `.agents/skills/api-integrate/SKILL.md` |
-| Worked example — Supabase (MCP path) | `.agents/skills/api-integrate/references/vendor-supabase.md` |
-| Globs-scoped principles | `.cursor/rules/api-integration/RULE.mdc` (`alwaysApply: false`) |
-
-**Callers:** `plan` § Optional: Foundation validation, `router`, `api-integrate`. Do not duplicate the MCP fallback tree or worked examples elsewhere — link these paths. (`security`, `database`, and `cloud-functions` rules cross-link here via Related Rules.)
-
-**Not the same as:** stack plugin skills (`supabase`, `cloudflare`, etc.) — those cover operating inside a stack you're already on, not researching an unfamiliar vendor.
+- **Durable:** next to what they govern — the feature `README.md`, `documentation/DOC_APP_VISION.md`, or a rule (D48). `loop-refine` reads them before asking anything; a changed decision line shows in the PR diff, and `loop-verdict` lists it for the owner.
+- **Per lap:** `documentation/jobs/temp_job_<slug>/DECISIONS.md` on the lap's branch ([template](../.agents/skills/loop-refine/references/decisions-template.md)), folded into the durable homes by `loop-build` before merge.
+- **Impl-time choices:** the plan's **Decisions made**.
 
 ## Cross-repo adoption guides
 
@@ -154,12 +61,12 @@ No separate `documentation/DOC_*` procedure for this workflow — invocable step
 
 Copy `write-adoption-guide/` to other projects and adjust the skill **Configuration** block (output folder, repo display name).
 
-## Local git: finish → push
+## Local git: commit → push (`loop-ship`)
 
 | Step | Skill | Hook / script |
 |------|-------|----------------|
-| Commit | `finish` | `.husky/pre-commit` (light path + staged tests — see below) |
-| Push | `push` | `.husky/pre-push` (no local tests; CI `test` job is merge gate) |
+| Commit | [`loop-ship`](../.agents/skills/loop-ship/SKILL.md) | `.husky/pre-commit` (skill admission check, `.claude/skills` mirror, light path + staged tests — see below) |
+| Push + PR | [`loop-ship`](../.agents/skills/loop-ship/SKILL.md) | `.husky/pre-push` (no local tests; CI `test` job is the merge gate) |
 
 **Pre-commit light path** (SSOT: [`scripts/change-classify.cjs`](../scripts/change-classify.cjs)):
 
@@ -194,82 +101,31 @@ PR / push CI runs full `pnpm test:classify`, `pnpm test:run`, and cold `pnpm typ
 
 See `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate (`src/config/git-workflow.json`) and `.cursor/rules/agent-behavior/RULE.mdc` for protected files.
 
-## Agent-only mode (human files features/bugs)
-
-When the human only files feature requests or bug reports and tests in the app:
-
-| Role | Responsibility |
-|------|----------------|
-| Human | Describe goal or bug; test in app; confirm pass/fail |
-| Agent | Full delivery chain — no git/CI coordination required from human |
-
-**Default agent chain:** `router` → plan/feature/debug as needed → `implement` or `quick-piv` → `validate` → `finish` → `push` → **post-push CI** per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **CI watcher** (A: babysit PR to `develop`; B: report the commit URL and stop; C: desktop app PR monitor on the PR to `main` — never `gh run watch`) → **Ready for you to test** handoff (`finish` § User test).
-
-**Standing protected-file consent:** Optional Cursor **user rule** listing categories agents may edit without per-task ask (e.g. `.agents/skills/**` for workflow glue). Repo `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files stays strict — the user rule is external standing consent, not a repo policy change.
-
-**Test tiers:** See [`DOC_TESTING.md`](./DOC_TESTING.md) and pre-commit tables above; merge safety is CI `test` where work lands (table → **how work lands**), not pre-commit related mode alone.
-
 ## Release and versioning
 
-- Mode-aware changesets: `documentation/DOC_CHANGESETS.md` + conventional commits (`finish` SSOT).
-- Version source per table → **version source**: Model A/B bump with each landing on `develop` via `finish`, and production is a separate **Promote to production** step; Model C has no per-PR bump — release-please opens a release PR on `main`, and merging a PR is the production step.
+- Mode-aware changesets: `documentation/DOC_CHANGESETS.md` + conventional commits ([`loop-ship/references/commit-standards.md`](../.agents/skills/loop-ship/references/commit-standards.md)).
+- Version source per table → **version source**: Model A/B bump with each landing on `develop` in `loop-ship`, and production is **Promote to production** after the owner's Pass; Model C has no per-PR bump — release-please opens a release PR on `main`, and the owner's Pass merges the lap's PR.
 
 ## When you change something
 
 | You change… | Also update… |
 |-------------|----------------|
-| `src/config/git-workflow.json` / mode docs | `git-workflow/RULE.mdc`, `start` / `push` / `router` matrix, `DOC_CONTRIBUTING`, `DOC_CLOUDFLARE_WORKERS`, this doc agent chain |
-| `.husky/pre-commit` | `git-workflow/RULE.mdc`, `agent-behavior/RULE.mdc`, `finish` skill, this doc if hook scope changes |
-| `.husky/pre-push` | `git-workflow/RULE.mdc`, `push` skill, this doc if hook scope changes |
-| `finish` / `push` flow | Both skills, `router` matrix |
-| New invocable workflow | `router/SKILL.md` (situation table + skill index); [`router/references/skill-relationship-flow.md`](../.agents/skills/router/references/skill-relationship-flow.md) when clarify/plan relationships change |
-| Product decision ledger (`DECISIONS.md`) / `grill-me` ↔ `plan-grill` ↔ `plan-grill-auto` | `.agents/skills/plan-grill/` (template SSOT); `grill-me`, `plan-grill-auto`, `feature`, `plan`, `implement`; router § Plan corridor flow + [`skill-relationship-flow.md`](../.agents/skills/router/references/skill-relationship-flow.md) |
-| Rules registry for skills | `.agents/skills/plan/references/rules-registry.md`; callers link only |
-| Pattern / industry-standard review | `.agents/skills/pattern-review/` — see § Pattern / industry-standard review above |
-| Package / pattern reuse (don't reinvent) | `.agents/skills/dont-reinvent-the-wheel/` — see § Don't reinvent the wheel above |
-| Standards align (should + how) | `.agents/skills/standards-align/` — see § Standards align loop above |
-| Improve facade (product entry) | `.agents/skills/improve/` — see § Improve facade above |
-| Feature purge / multi-asset removal | `.agents/skills/purge-skill/` — router situation + skill index |
-| Project skill authoring (`/create-skill`) | `.agents/skills/create-skill/` — project SSOT; user Cursor copy reference-only |
-| Layer consistency / workaround guard | `.agents/skills/layer-consistency-check/` — see § Layer consistency / workaround guard above |
-| External API / backend integration research | `.agents/skills/api-integrate/` — see § External API / backend integration research above |
+| `src/config/git-workflow.json` / mode docs | `git-workflow/RULE.mdc`, `loop-ship`, `loop-verdict`, `loop-backlog/references/onboarding.md`, `DOC_CONTRIBUTING`, `DOC_CLOUDFLARE_WORKERS` |
+| `.husky/pre-commit` | `git-workflow/RULE.mdc`, `agent-behavior/RULE.mdc`, `loop-ship`, this doc if hook scope changes |
+| `.husky/pre-push` | `git-workflow/RULE.mdc`, `loop-ship/references/push-safety.md`, this doc if hook scope changes |
+| A loop stage (add, rename, reorder) | `router/references/loop-map.md`, `router/references/catalog.md`, the neighbor stages' Edges (Calls ⇄ Called by — `pnpm validate:skills`) |
+| Any skill | `create-skill/references/skill-template.md` structure + catalog row; `pnpm validate:skills` |
+| The stop list / when to ask | `agent-behavior/RULE.mdc` § When to ask; `loop-refine/references/asking.md` for *how* |
+| Rules registry for skills | `.agents/skills/loop-plan/references/rules-registry.md`; callers link only |
+| A guard's trigger | the rule section in § Proactive guards above + the loop skills' `Calls` lines |
 | New cross-repo adoption guide | `write-adoption-guide` skill; file under `documentation/handoffs/*_ADOPTION_GUIDE.md` |
-
-## Product decision ledger (`DECISIONS.md`)
-
-Shared anti-dup ledger for product/scope forks (not impl-time plan **Decisions made**).
-
-### Flow (corridor + rail)
-
-1. **Optional:** `grill-me` warm start → Closed rows in `DECISIONS.md`.
-2. **`plan` corridor:** Refine → Investigate → Create.
-3. **`plan-grill` rail:** beside every corridor phase — fork checklist before locking; loop ask → ledger → **same phase**. IF the user forbids questions → **`plan-grill-auto`** (same checklist; agent-pick; no Present wait).
-4. **`DEVELOPMENT_PLAN.md`:** how to build (after locks are logged).
-5. **M/L:** `review-dev-plan` before `implement`. Default: user accepts. Auto: `agent-accept` in plan **Decisions made** and Plan review `Done`, then `implement` with no Present wait.
-
-Router SSOT: `.agents/skills/router/SKILL.md` § Plan corridor flow.  
-Diagram SSOT: [`.agents/skills/router/references/skill-relationship-flow.md`](../.agents/skills/router/references/skill-relationship-flow.md).  
-Checklist/cues SSOT: `.agents/skills/plan-grill/SKILL.md`. Auto-answer: `.agents/skills/plan-grill-auto/SKILL.md`.
-
-| Audience | Start here |
-|----------|------------|
-| **Agents** | `.agents/skills/plan-grill/SKILL.md` + [`references/decisions-template.md`](../.agents/skills/plan-grill/references/decisions-template.md); auto-answer `.agents/skills/plan-grill-auto/SKILL.md` |
-| **Writers** | `grill-me`, `plan-grill`, `plan-grill-auto`, `feature` (first writer creates `documentation/jobs/temp_job_<name>/DECISIONS.md`) |
-| **Readers** | `plan` (anti-dup + M/L ledger gate), `implement` (soft-warn on open rows; auto resolves Open rows without asking) |
-
-**Not the same as:** `DEVELOPMENT_PLAN.md` § Decisions made (filled during `implement`).
 
 ## Related
 
+- Loop map: `.agents/skills/router/references/loop-map.md`
+- Skill registry: `.agents/skills/router/references/catalog.md`
+- Skill template: `.agents/skills/create-skill/references/skill-template.md`
 - Write adoption guides: `.agents/skills/write-adoption-guide/SKILL.md`
-- Pattern review: `.agents/skills/pattern-review/SKILL.md`
-- Don't reinvent the wheel: `.agents/skills/dont-reinvent-the-wheel/SKILL.md`
-- Standards align: `.agents/skills/standards-align/SKILL.md`
-- Improve facade: `.agents/skills/improve/SKILL.md`
-- Purge feature: `.agents/skills/purge-skill/SKILL.md`
-- Create skill (project): `.agents/skills/create-skill/SKILL.md`
-- Layer consistency: `.agents/skills/layer-consistency-check/SKILL.md`
-- External API integration: `.agents/skills/api-integrate/SKILL.md`
 - Doc hub: `documentation/DOC_INDEX.md`
 - Changesets: `documentation/DOC_CHANGESETS.md`
 - App vision: `documentation/DOC_APP_VISION.md`

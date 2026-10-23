@@ -90,6 +90,6 @@ For a one-line obvious typo or a clear stack trace pointing at a single line, ju
 |------------------|-------------|
 | Default runtime incident (first pass) | `.agents/skills/debug/SKILL.md` |
 | Obvious one-line fix | Fix directly |
-| Persist reusable bug class | `.agents/skills/debug/patterns.md` via `finish` or `learn` |
+| Persist reusable bug class | `.agents/skills/debug/patterns.md` via `loop-ship` or `learn` |
 
 **Router tiebreak:** `.agents/skills/router/references/tiebreaks.md` § `debug` vs `hypothesis`.

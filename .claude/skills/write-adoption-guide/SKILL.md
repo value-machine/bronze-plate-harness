@@ -111,7 +111,7 @@ After writing the file:
 |--------|------|
 | Link from workflow layers | `{WORKFLOW_LAYERS_DOC}` → § Related (one line to the new guide) |
 | Optional one-line pointer | `AGENTS.md` only if the capability is repo-wide important |
-| Catalog | `.agents/skills/router/SKILL.md` § Skill index — link **example** guide in Related if useful |
+| Catalog | `.agents/skills/router/references/catalog.md` — link **example** guide in Related if useful |
 
 Do **not** require `learn`, `router`, or `finish` to run. No mandatory changeset for docs-only.
 

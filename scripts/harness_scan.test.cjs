@@ -18,7 +18,7 @@ describe("harness_scan", () => {
     });
     const report = JSON.parse(out);
     assert.ok(Array.isArray(report.rules));
-    assert.ok(report.rules.length >= 14);
+    assert.ok(report.rules.length >= 13);
     assert.equal(typeof report.alwaysOn.lineCount, "number");
     assert.ok(report.alwaysOn.lineCount > 0);
     assert.equal(typeof report.reachableCount, "number");
@@ -31,11 +31,11 @@ describe("harness_scan", () => {
       encoding: "utf8",
     });
     const report = JSON.parse(out);
-    // router/SKILL.md lists these only after its ``` fence; an unstripped
+    // router/references/loop-map.md lists caveman only after its ``` fence; an unstripped
     // fence mis-pairs inline backticks and hides them as false orphans.
     assert.ok(!report.orphanCandidates.includes(".agents/skills/caveman/SKILL.md"));
     assert.ok(
-      !report.orphanCandidates.includes(".agents/skills/bundle-ship/SKILL.md"),
+      !report.orphanCandidates.includes(".agents/skills/loop-ship/SKILL.md"),
     );
   });
 

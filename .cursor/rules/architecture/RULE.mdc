@@ -13,7 +13,7 @@ Each check runs **before** the code or plan step it guards, without waiting for 
 
 ### Pattern risk (industry precedent — plans and proposals)
 
-When a design may diverge from common industry practice for the capability, run [`.agents/skills/pattern-review/SKILL.md`](../../../.agents/skills/pattern-review/SKILL.md) (rubric: [`references/rubric.md`](../../../.agents/skills/pattern-review/references/rubric.md); the agent picks the relevant aspects). Codebase convention alone does not justify divergence. Plans with Complexity M/L or material behavioral design fill **Pattern & precedent** (`.agents/skills/plan/references/implementation-plan-template.md`); `review-dev-plan` has the same lens. Not for internal workaround shapes (§ Layer consistency) or package reuse (§ Don't reinvent the wheel).
+When a design may diverge from common industry practice for the capability — at any size — review it against precedent with [`loop-plan/references/review-precedent.md`](../../../.agents/skills/loop-plan/references/review-precedent.md) (rubric: [`precedent-rubric.md`](../../../.agents/skills/loop-plan/references/precedent-rubric.md); the agent picks the relevant aspects). This rule is the trigger; `loop-plan` and `loop-check` call it when it fires (D56). Codebase convention alone does not justify divergence. Plans with material behavioral design fill **Pattern & precedent** (`.agents/skills/loop-plan/references/plan-template.md`); the size-M plan review has the same lens. Not for internal workaround shapes (§ Layer consistency) or package reuse (§ Don't reinvent the wheel).
 
 ### Don't reinvent the wheel (package / pattern reuse)
 
@@ -35,7 +35,7 @@ Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/ski
 
 **Proactively** on any request to change existing behavior ("add a color to the gradient", "just add a field/button/flag"), minimizer/exception language, a first-of-a-kind instance without a category, or behavior-by-analogy. **Reactively** when the diff takes a workaround shape (special-case flag, parallel path, symptom tuning, disconnected patch, instance-encoded naming, growing scope, "for now" comment).
 
-Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `code-style/RULE.mdc` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the user picks workaround vs structural fix. When pattern-review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
+Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `code-style/RULE.mdc` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the owner picks workaround vs structural fix (stop list: patch on top, `agent-behavior` § When to ask). When the precedent review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
 
 ## Code placement
 
@@ -113,4 +113,4 @@ Legitimate cross-layer exception (rare): regenerate the dependency-cruiser basel
 
 ## Related Rules
 
-When modifying this rule, check: `code-style`, `testing`, `security`, `workflow`, `cloud-functions`, `database`, and `.agents/skills/optimize2/SKILL.md` (refactors must respect these placements).
+When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/optimize2/SKILL.md` (refactors must respect these placements).

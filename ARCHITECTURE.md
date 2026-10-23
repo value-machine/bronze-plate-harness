@@ -342,7 +342,7 @@ This harness supports connecting to external APIs:
 
 - **Supabase**: For authentication (configure via `.env` — see README and dev task backlog)
 
-**Researching a new external API before wiring it up?** See `.cursor/rules/api-integration/RULE.mdc` (principles) and `.agents/skills/api-integrate/SKILL.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
+**Researching a new external API before wiring it up?** See `.cursor/rules/api-integration/RULE.mdc` (principles) and `.agents/skills/loop-plan/references/research-api.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
 
 Both services are optional. The services are initialized in `shared/services/` and can be used directly in feature services.
 
@@ -354,7 +354,7 @@ Local development includes an in-repo task backlog for coding agents and develop
 - **UI:** `/tasks` route (dev-only) via `DevTasksFab`
 - **API:** `vite-plugin-dev-tasks.ts` — `/__dev/tasks` endpoints (serve mode only)
 
-Fresh clones ship onboarding tasks (Supabase, Hosting, App vision, Theme). See `src/features/tasks/README.md` and `.agents/skills/start/SKILL.md`.
+Fresh clones ship onboarding tasks (Supabase, Hosting, App vision, Theme). See `src/features/tasks/README.md` and `.agents/skills/loop-backlog/SKILL.md` (onboarding gates: `references/onboarding.md`).
 
 ## Best Practices
 

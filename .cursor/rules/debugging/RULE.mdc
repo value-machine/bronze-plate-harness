@@ -67,7 +67,7 @@ When asking the user to test something, give the next step for **both** outcomes
 
 **Pre-registered hypothesis loop (optional):** `.agents/skills/hypothesis/SKILL.md` — when naive fixes failed or the user invokes hypothesis mode. Router tiebreak: `.agents/skills/router/SKILL.md` (runtime incident → `debug`; pre-registered experiment loop → `hypothesis`).
 
-**Pattern library SSOT:** `.agents/skills/debug/patterns.md` — updated from `finish` or `learn` when a reusable bug class is proved.
+**Pattern library SSOT:** `.agents/skills/debug/patterns.md` — updated from `loop-ship` (cleanup step) or `learn` when a reusable bug class is proved.
 
 Do not duplicate the full scientific-method checklist in this rule. This file owns **logging**, **API troubleshooting**, **scope reduction**, and **user test instructions** above.
 

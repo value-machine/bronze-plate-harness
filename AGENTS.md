@@ -11,11 +11,11 @@ Project memory for coding agents (Cursor, Claude Code, Codex, and other AGENTS.m
 
 ## Workflow — agent skills
 
-Project agent workflows live under **`.agents/skills/<name>/SKILL.md`**. **Full catalog and routing:** `.agents/skills/router/SKILL.md` § Skill index.
+Project agent workflows live under **`.agents/skills/<name>/SKILL.md`**. **Registry:** `.agents/skills/router/references/catalog.md`. **Routing:** `.agents/skills/router/SKILL.md` + `router/references/loop-map.md`.
 
 **Routing:** For ambiguous work, read `.agents/skills/router/SKILL.md` first.
 
-**Product context:** Fill `documentation/DOC_APP_VISION.md` (see `.agents/skills/start/SKILL.md`).
+**Product context:** Fill `documentation/DOC_APP_VISION.md` (seeded onboarding task; gates in `.agents/skills/loop-backlog/references/onboarding.md`).
 
 Layer model: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
 
@@ -49,7 +49,6 @@ Grouped by YAML `alwaysApply`. Include `globs` when present.
 | `.cursor/rules/architecture/RULE.mdc` | Architectural patterns and structural organization standards · `alwaysApply: true` |
 | `.cursor/rules/file-placement/RULE.mdc` | CRITICAL: Before creating any new file or folder, validate placement against projectStructure.config.cjs and architecture rules. Check structure whitelist, verify allowed file patterns, and suggest correct locations if invalid. Applies when user requests file/folder creation or assistant needs to create files. · `alwaysApply: true` |
 | `.cursor/rules/code-style/RULE.mdc` | Global code style and formatting standards for all projects · `alwaysApply: true` |
-| `.cursor/rules/workflow/RULE.mdc` | Development workflow hub — code review, dev process, deployment pointers · `alwaysApply: true` |
 | `.cursor/rules/agent-behavior/RULE.mdc` | When to ask the owner (choice definition + stop list), success reporting, and protected-file consent · `alwaysApply: true` |
 | `.cursor/rules/testing/RULE.mdc` | Testing standards, patterns, and quality requirements · `alwaysApply: true` |
 | `.cursor/rules/debugging/RULE.mdc` | Debugging strategy, logging, issue analysis, and scientific method debugging · `alwaysApply: true` |
@@ -66,11 +65,31 @@ Grouped by YAML `alwaysApply`. Include `globs` when present.
 | `.cursor/rules/project-specific/RULE.mdc` | Supabase Edge Function rate limiting (Postgres rate_limits). Not a home for other hosts. · `alwaysApply: false` · `globs: ["**/supabase/functions/**/*.ts"]` |
 | `.cursor/rules/api-integration/RULE.mdc` | Principles for researching an external API, vendor, or backend before writing integration code (MCP-first, doc-freshness, POC-before-code) · `alwaysApply: false` · `globs: ["**/services/**", "**/lib/**", "**/supabase/functions/**", "cloud-functions/**"]` |
 
+## Where things live
+
+| Concern | SSOT |
+|---------|------|
+| The product-owner loop (stages, stops, where a lap stands) | `.agents/skills/router/references/loop-map.md` |
+| Branch model, PRs, production, commit timing | `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table (mode: `src/config/git-workflow.json`) |
+| Semver, changelog, commit format | same table → **version source** (A/B: `.agents/skills/loop-ship/SKILL.md`; C: release-please) |
+| Protected files, when to ask the owner, success reporting | `.cursor/rules/agent-behavior/RULE.mdc` |
+| Shell rules, env vars | `.cursor/rules/platform/RULE.mdc` |
+| Architecture, code placement | `.cursor/rules/architecture/RULE.mdc`; whitelist `projectStructure.config.cjs`; layers `.dependency-cruiser.cjs` |
+| Reductive strategy, debugging | `.cursor/rules/debugging/RULE.mdc` |
+| API / vendor research | `.cursor/rules/api-integration/RULE.mdc` |
+| Dev task backlog / onboarding | `src/config/app-tasks.json` + `src/features/tasks/README.md` |
+| App vision | `documentation/DOC_APP_VISION.md` |
+| Agent workflow layers | `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` |
+| Frontend hosting (Cloudflare Workers) | `documentation/DOC_CLOUDFLARE_WORKERS.md` + `wrangler.jsonc` |
+| Edge / cloud functions deploys | `.cursor/rules/cloud-functions/RULE.mdc` |
+
+Deploy functions yourself when a change requires it, and verify the deploy succeeded (`.cursor/rules/cloud-functions/RULE.mdc`). Hand-off checklist before shipping: `.agents/skills/loop-check/SKILL.md` § Steps 5.
+
 ## Defaults
 
 - **Always read before edit.** Run `pnpm validate:structure` if creating new files in unfamiliar locations.
 - **Git workflow mode:** Read `src/config/git-workflow.json`, then apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. What each mode does: § Mode behavior table (Model C default; A/B selectable).
 - **Name the mechanism before code.** Before adding or copying a function, hook, component, type, file, or feature folder — including a one-line edit — read `code-style/RULE.mdc` § Naming and follow it.
 - **Layer consistency before code.** Every request to change existing behavior carries an assumption about how the system works — verify it before acting (user can't see the impl). Cues: `.agents/skills/layer-consistency-check/references/workaround-shapes.md` § Request-side cues → run `.agents/skills/layer-consistency-check/SKILL.md` and stop for user choice before writing code.
-- **Plan before non-trivial work.** Anything beyond a one-line fix should start with the `plan` skill (`.agents/skills/plan/SKILL.md`).
+- **Work through the loop.** Any repo change runs as a lap: `router` → `loop-backlog` → `loop-refine` → `loop-plan` → `loop-build` → `loop-check` → `loop-ship` → `loop-verdict` (`.agents/skills/router/references/loop-map.md`). The size estimate sets how much plan a lap needs.
 - **Lean output.** Don't restate skill content — point to the file and follow it.

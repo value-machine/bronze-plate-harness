@@ -191,7 +191,7 @@ Apply the quality standards above to rewrite the rule:
 
 | Not `rule-quality` | Use instead |
 |--------------------|-------------|
-| Score a React/shadcn-ui component | `.agents/skills/review/SKILL.md` |
+| Score a React/shadcn-ui component | `.agents/skills/loop-check/SKILL.md` |
 | Decide **where** a lesson should live (rule vs skill vs doc) | `.agents/skills/learn/SKILL.md` |
 | Audit the whole skill library system | `.agents/skills/align-harness/SKILL.md` |
 

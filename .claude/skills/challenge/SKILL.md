@@ -188,7 +188,7 @@ Do not implement until the user explicitly chooses.
 
 ### Phase 7: Execute Chosen Option
 
-**This skill owns execution** after the user picks A/B/C/D — do not hand off to `quick-piv`/`implement` solely to apply the chosen option (unless the option is M/L and needs a durable `DEVELOPMENT_PLAN.md`, then hand to `plan` → `implement`).
+**This skill owns execution** after the user picks A/B/C/D — do not hand off to `quick-piv`/`implement` solely to apply the chosen option (unless the option is M/L and needs a durable `DEVELOPMENT_PLAN.md`, then hand to `loop-plan` → `loop-build`).
 
 Implementation rules:
 - Keep changes minimal and local
@@ -197,7 +197,7 @@ Implementation rules:
 - Preserve required constraints from input
 - Prefer guard clauses over deep nesting when it improves clarity
 - Prefer fewer, clearer transformations when behavior stays equivalent
-- **Commit only via `finish`** when the user requests a commit — never commit inside this skill
+- **Commit only via `loop-ship`** when the user requests a commit — never commit inside this skill
 
 After changes:
 - IF option changes `src/` THEN run lint + type-check; IF behavior change THEN run related tests or manual repro steps
@@ -278,4 +278,4 @@ Which option should I implement?
 - If simplification conflicts with security/compliance requirements, keep the requirement and simplify around it.
 - By default, challenge a feature through both Flow Mode and Code Mode in the same pass.
 
-**Next:** After Phase 7 + user test → **`validate`** (when shipping) → **`finish`** when the user wants a commit. Vague improve entry → **`improve`**; industry should/how → **`standards-align`**; repo-wide patterns → **`consolidate`**; hotspot polish → **`optimize2`**.
+**Next:** After Phase 7 + user test → **`loop-check`** (when shipping) → **`loop-ship`** when the user wants a commit. Vague improve entry → **`router`**; industry should/how → **`standards-align`**; repo-wide patterns → **`loop-plan` deepen-modules**; hotspot polish → **`optimize2`**.

@@ -83,7 +83,7 @@ These often read as odd or overly specific, which is exactly why they exist:
 - After edits, verify nothing dangles: every path, `@` import, skill name, and anchor that was
   referenced still resolves (`rg` for the old names).
 - Run `pnpm validate:docs` (markdown links + cursor doc references). If a skill was renamed,
-  moved, or added, update `router/SKILL.md` § Skill index and situation tables.
+  moved, or added, update `router/references/catalog.md` (and `router/references/loop-map.md` when a loop stage changes).
 
 ## 5. Sanity-check behavior (when stakes are high)
 

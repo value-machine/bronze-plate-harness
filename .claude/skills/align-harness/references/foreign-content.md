@@ -33,4 +33,4 @@ Suggested resolutions:
 
 ## Escalation
 
-Structural SSOT move or >handful of files → stop and run [`plan`](../../plan/SKILL.md).
+Structural SSOT move or >handful of files → stop and run [`loop-plan`](../../loop-plan/SKILL.md).

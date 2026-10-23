@@ -27,14 +27,14 @@ Procedure below is the SSOT. Callers **link and run** it — they do not copy St
 
 | Caller | When |
 |--------|------|
-| [`plan`](../plan/SKILL.md) § Investigate | After the internal reuse search, before locking a custom/greenfield build |
-| [`feature`](../feature/SKILL.md) § 3.1a | Before § 3.1b `pattern-review` |
-| [`implement`](../implement/SKILL.md) / [`quick-piv`](../quick-piv/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
+| [`loop-plan`](../loop-plan/SKILL.md) § Steps 2 (investigate) | After the internal reuse search, before locking a custom/greenfield build |
+| `architecture` rule § Don't reinvent the wheel | The always-on trigger (D56) — fires in any stage |
+| [`loop-build`](../loop-build/SKILL.md) / [`loop-plan`](../loop-plan/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
 | Always-on reminder | `architecture/RULE.mdc` § Don't reinvent the wheel |
 
-**Order when several apply:** this skill (reuse vs custom) → [`api-integrate`](../api-integrate/SKILL.md) if still researching a vendor contract → [`pattern-review`](../pattern-review/SKILL.md) on the chosen approach (M/L or new contracts).
+**Order when several apply:** this skill (reuse vs custom) → [`loop-plan → research-api`](../loop-plan/references/research-api.md) if still researching a vendor contract → [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) on the chosen approach (M/L or new contracts).
 
-**Persist:** compact recommendation in `DEVELOPMENT_PLAN.md` § Conflict & compliance (reuse / packages). If license or coupling is a product fork, log it in `DECISIONS.md` via [`plan-grill`](../plan-grill/SKILL.md). This skill still **stops at the recommendation** — no install, no adapted code.
+**Persist:** compact recommendation in `DEVELOPMENT_PLAN.md` § Conflict & compliance (reuse / packages). If license or coupling is a product fork, log it in `DECISIONS.md` via [`loop-plan → fork checklist`](../loop-plan/references/fork-checklist.md). This skill still **stops at the recommendation** — no install, no adapted code.
 
 ## Step 0: Check what's already there
 
@@ -110,13 +110,13 @@ This skill's job ends at a clear, honest recommendation — it does not install 
 
 | Concern | Use instead |
 |---------|-------------|
-| Industry / product *design* fit (is this how products usually do X?) | [`pattern-review`](../pattern-review/SKILL.md) |
-| Vendor API contract / MCP / wire shape | [`api-integrate`](../api-integrate/SKILL.md) |
+| Industry / product *design* fit (is this how products usually do X?) | [`loop-plan → review-precedent`](../loop-plan/references/review-precedent.md) |
+| Vendor API contract / MCP / wire shape | [`loop-plan → research-api`](../loop-plan/references/research-api.md) |
 | Internal layer / workaround vs structural path | [`layer-consistency-check`](../layer-consistency-check/SKILL.md) |
-| Repo rule compliance | [`validate`](../validate/SKILL.md) |
+| Repo rule compliance | [`loop-check`](../loop-check/SKILL.md) |
 
 ## Related
 
-- [`plan`](../plan/SKILL.md) — primary Investigate call site
-- [`router` tiebreaks](../router/references/tiebreaks.md) § `dont-reinvent-the-wheel` vs `pattern-review` vs `api-integrate`
+- [`loop-plan`](../loop-plan/SKILL.md) — primary Investigate call site
+- [`router` tiebreaks](../router/references/tiebreaks.md) § `dont-reinvent-the-wheel` vs precedent review (`loop-plan`) vs `loop-plan` research-api
 - [`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`](../../../documentation/DOC_AGENT_WORKFLOW_LAYERS.md) § Don't reinvent the wheel

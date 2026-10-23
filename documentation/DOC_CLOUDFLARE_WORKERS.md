@@ -16,7 +16,7 @@ Push → Cloudflare builds & deploys. GitHub blocks bad merges. There is no GitH
 
 ## Agent one-shot brief (fork setup)
 
-For coding agents completing the **"Put your app online (Cloudflare hosting)"** task from `src/config/app-tasks.json`. Run it after the user's Supabase env vars exist. Use `.agents/skills/quick-piv/SKILL.md` for the change, or `plan` + `implement` if rulesets/dashboard need research. Branch model: read `src/config/git-workflow.json`; apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. The **user** confirms success — do not claim done without their test.
+For coding agents completing the **"Put your app online (Cloudflare hosting)"** task from `src/config/app-tasks.json`. Run it after the user's Supabase env vars exist. Run it as a lap through the loop (`.agents/skills/router/SKILL.md`); onboarding gates: `.agents/skills/loop-backlog/references/onboarding.md`. Branch model: read `src/config/git-workflow.json`; apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. The **user** confirms success — do not claim done without their test.
 
 **Target:** GitHub = CI gate only (`ci.yml` on every PR + push to `main` and `develop`; rulesets per mode table below; **no** deploy workflow; **no** `CLOUDFLARE_API_TOKEN` secret). Cloudflare Workers Builds = sole deploy path (`main` → production; per-branch previews — required for Model C, optional in A; `develop` → stable staging preview in A/B). Same Supabase project for preview and production.
 

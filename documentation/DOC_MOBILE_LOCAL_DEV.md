@@ -1,6 +1,6 @@
 # Mobile local development (physical device)
 
-> **SSOT:** This file is the **only** place this harness documents how to open **local dev on a real phone** with working auth redirects. README Quick Start, `start` skill, debug patterns, and feature READMEs **link here** — they do not duplicate adb or IdP steps.
+> **SSOT:** This file is the **only** place this harness documents how to open **local dev on a real phone** with working auth redirects. README Quick Start, the onboarding gates (`loop-backlog`), debug patterns, and feature READMEs **link here** — they do not duplicate adb or IdP steps.
 
 **Cross-repo porting:** [handoffs/MOBILE_LOCAL_DEV_ADOPTION_GUIDE.md](./handoffs/MOBILE_LOCAL_DEV_ADOPTION_GUIDE.md)
 

@@ -487,14 +487,14 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
 2. Document what was removed and why
 3. Remove code
 4. Run tests to verify no breakage
-5. Commit: Hand off to **`.agents/skills/finish/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
+5. Commit: Hand off to **`.agents/skills/loop-ship/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
 
 ### Action Type: REPLACE (1B)
 
 1. Identify replacement library/built-in
 2. Implement replacement
 3. Remove old implementation
-4. Hand off to **`.agents/skills/finish/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
+4. Hand off to **`.agents/skills/loop-ship/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
 
 ### Action Type: REWRITE (2A/2B/2C)
 
@@ -503,7 +503,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
    - **Note:** If the rewrite naturally requires extracting helper functions (even with <3 concrete use cases), this is acceptable as a "Level 2 rewrite side effect" [exception](#rule-of-three-mandatory-for-extractions). Document in commit message.
 3. Remove old implementation
 4. Run complexity analysis on new code
-5. Hand off to **`.agents/skills/finish/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
+5. Hand off to **`.agents/skills/loop-ship/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
 
 ### Action Type: OPTIMIZE (3A/3B/3C/3D)
 
@@ -513,7 +513,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
    - Bundle: Note size before
 2. Implement optimization
 3. **Verify performance improvement**
-4. Hand off to **`.agents/skills/finish/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
+4. Hand off to **`.agents/skills/loop-ship/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
 
 ### Action Type: REFACTOR (4A/4B/4C/4D)
 
@@ -526,7 +526,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
 2. Check architecture compliance (see [Phase 5](#phase-5-architecture-compliance-for-refactoring))
 3. Execute refactoring (extract methods, simplify conditionals, reduce coupling, parameter objects)
 4. Run complexity analysis—verify metrics meet [thresholds](#complexity-metrics)
-5. Hand off to **`.agents/skills/finish/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
+5. Hand off to **`.agents/skills/loop-ship/SKILL.md`** when the user wants to commit (do not commit inline during optimize2).
 
 ---
 
@@ -619,10 +619,10 @@ Common indicators for each level:
 
 | Not `optimize2` | Use instead |
 |-----------------|-------------|
-| Repo-wide duplication discovery | `consolidate` |
-| Wrong layer / feature placement | `consolidate` § Semantic placement mode |
+| Repo-wide duplication discovery | `loop-plan` deepen-modules |
+| Wrong layer / feature placement | `loop-plan` deepen-modules § Semantic placement mode |
 | Simplify whether feature should exist | `challenge` |
 | Browser-measured perf (CWVs) | `web-perf` plugin skill |
-| Commit / changelog | `finish` |
+| Commit / changelog | `loop-ship` |
 
-**Next:** User picks option → **`implement`** or **`quick-piv`** → **`validate`** → **`finish`**.
+**Next:** User picks option → **`loop-build`** or **`loop-plan` (XS/S)** → **`loop-check`** → **`loop-ship`**.
