@@ -20,7 +20,7 @@ When this skill is done, the harness is one coherent system that costs no more c
 
 | Field | Value |
 |---|---|
-| In | `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/**`, `.claude/rules/*`, `.agents/skills/**` (incl. port maps), `.cursor/rules/INDEX.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, `documentation/jobs/harness/entry-points.yaml` |
+| In | `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*`, `.agents/skills/**` (incl. port maps), `documentation/DOC_RULES_INDEX.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, `documentation/jobs/harness/entry-points.yaml` |
 | Out | Issue table and ledger under `documentation/jobs/harness/`; approved edits to the harness corpus |
 | Calls | coherence lens → [`references/coherence-audit.md`](references/coherence-audit.md) (scan: `.agents/skills/meta-audit-harness/scripts/harness_scan.cjs`) · context-cost lens → [`references/context-cost.md`](references/context-cost.md) · if one rule file needs grading or a rewrite → [`meta-grade-rule`](../meta-grade-rule/SKILL.md) · if a landed change needs a fork porting note → [`meta-write-adoption-guide`](../meta-write-adoption-guide/SKILL.md) |
 | Called by | [`meta-write-skill`](../meta-write-skill/SKILL.md) (spine change), [`meta-intake-harness`](../meta-intake-harness/SKILL.md) (after apply), [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) (structural conflict) · owner |

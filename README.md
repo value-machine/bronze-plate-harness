@@ -145,7 +145,7 @@ pnpm install
 
 ### Step 3: Set up branch workflow for this repo
 
-Mode lives in `src/config/git-workflow.json`; what each mode does is the SSOT table in `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table. The onboarding gates (`.agents/skills/loop-backlog/references/onboarding.md`) walk the setup.
+Mode lives in `src/config/git-workflow.json`; what each mode does is the SSOT table in `.claude/rules/git-workflow.md` § Mode behavior table. The onboarding gates (`.agents/skills/loop-backlog/references/onboarding.md`) walk the setup.
 
 | Mode | Daily work | Production | Config |
 |------|------------|------------|--------|
@@ -225,7 +225,7 @@ Chrome DevTools device mode is enough for width breakpoints; it is **not** enoug
 
 ### You're ready
 
-Start building per your git-workflow mode (`src/config/git-workflow.json`) — `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **daily branch** and **production**.
+Start building per your git-workflow mode (`src/config/git-workflow.json`) — `.claude/rules/git-workflow.md` § Mode behavior table → **daily branch** and **production**.
 
 ## Installation
 
@@ -407,7 +407,7 @@ GitHub Actions workflow runs on every push/PR:
 See [documentation/DOC_CONTRIBUTING.md](./documentation/DOC_CONTRIBUTING.md) for how to contribute safely. Key points:
 
 1. **Workflow & versioning** – Use [`.agents/skills/loop-ship/SKILL.md`](./.agents/skills/loop-ship/SKILL.md) before committing
-2. **Architecture** – Follow [`.cursor/rules/architecture/RULE.mdc`](./.cursor/rules/architecture/RULE.mdc)
+2. **Architecture** – Follow [`.claude/rules/architecture.md`](./.claude/rules/architecture.md)
 3. **Documentation index** – [documentation/DOC_INDEX.md](./documentation/DOC_INDEX.md) for all docs
 4. Ensure all checks pass (`pnpm lint`, `pnpm format:check`, `pnpm test:classify`, `pnpm test:run`, `pnpm validate:version-sync`)
 5. Update CHANGELOG.md for significant changes

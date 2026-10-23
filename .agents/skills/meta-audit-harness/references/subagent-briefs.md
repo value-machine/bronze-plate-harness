@@ -4,7 +4,7 @@ Self-contained prompts. Each subagent **does not see the chat**, so paste the fu
 
 Every brief starts with the same **orient** step:
 
-> Orient: read `documentation/jobs/harness/entry-points.yaml`, run `node .agents/skills/meta-audit-harness/scripts/harness_scan.cjs` (facts only), then read `AGENTS.md`, `.cursor/rules/INDEX.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, `ARCHITECTURE.md`, every `.cursor/rules/**/RULE.mdc`, every `.agents/skills/*/SKILL.md` (and `references/`), and `.claude/rules/*`. Domain context: `meta-audit-harness/references/domain-*.md`. Treat user/plugin skills outside the repo as **reference-only**.
+> Orient: read `documentation/jobs/harness/entry-points.yaml`, run `node .agents/skills/meta-audit-harness/scripts/harness_scan.cjs` (facts only), then read `AGENTS.md`, `documentation/DOC_RULES_INDEX.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, `ARCHITECTURE.md`, every `.claude/rules/**/*.md`, every `.agents/skills/*/SKILL.md` (and `references/`), and `.claude/rules/*`. Domain context: `meta-audit-harness/references/domain-*.md`. Treat user/plugin skills outside the repo as **reference-only**.
 
 ---
 
@@ -122,15 +122,15 @@ No edits.
 
 ---
 
-## Lens 6 — Catalog drift (`AGENTS.md` ↔ rules YAML) (read-only)
+## Lens 6 — Catalog drift (`AGENTS.md` ↔ `.claude/rules`) (read-only)
 
 Orient (above). Read [`domain-agents-md.md`](domain-agents-md.md) and [`domain-rules.md`](domain-rules.md).
 
-1. For each `RULE.mdc`, compare YAML `description` (+ `alwaysApply` / `globs`) to the matching `AGENTS.md` catalog row.
-2. Flag path drift (`RULE.md` vs `RULE.mdc`), missing rows, extra rows, or description mismatch without "update YAML first" workflow.
-3. Flag `@` imports in `AGENTS.md` that duplicate `alwaysApply: true` bodies (double-load risk).
+1. For each `.claude/rules/*.md`, compare its `paths:` frontmatter (none = always on) to the matching `AGENTS.md` catalog row and section.
+2. Flag path drift, missing rows, extra rows, and rows whose section or `paths:` list disagrees with the file.
+3. Flag `@` imports of `.claude/rules/` files in `AGENTS.md` or `CLAUDE.md` (Claude Code already loads them: double-load).
 
-Return: `severity | file/row | drift type | fact | suggested fix`. Facts only for YAML text — no verdict on whether drift is intentional. No edits.
+Return: `severity | file/row | drift type | fact | suggested fix`. Facts only — no verdict on whether drift is intentional. No edits.
 
 ---
 

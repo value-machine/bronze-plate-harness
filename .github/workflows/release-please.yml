@@ -1,4 +1,4 @@
-# Release PRs for Model C (git-workflow/RULE.mdc § Mode behavior table → version source).
+# Release PRs for Model C (.claude/rules/git-workflow.md § Mode behavior table → version source).
 # - `mode` reads the mode through the single reader (validate-git-workflow.cjs --print-mode).
 # - `bootstrap` (model-c only) creates the baseline GitHub release `v<package.json version>`
 #   once, when the repo has no release yet, so release-please has a starting point and no

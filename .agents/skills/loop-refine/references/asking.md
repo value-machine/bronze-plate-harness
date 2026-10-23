@@ -1,6 +1,6 @@
 # Asking the owner — shared protocol
 
-**When** to ask is [`agent-behavior/RULE.mdc` § When to ask](../../../../.cursor/rules/agent-behavior/RULE.mdc) (choice definition + stop list). This file is **how** to ask, shared by every loop skill — link here, never copy it. Ported from `grill-me` § Question style (v0.42.0).
+**When** to ask is [`.claude/rules/agent-behavior.md` § When to ask](../../../../.claude/rules/agent-behavior.md) (choice definition + stop list). This file is **how** to ask, shared by every loop skill — link here, never copy it. Ported from `grill-me` § Question style (v0.42.0).
 
 Every answer, and every clear-winner after enumerating the alternatives, is logged in the lap's `DECISIONS.md` ([`decisions-template.md`](decisions-template.md)) so no later stage re-asks it.
 

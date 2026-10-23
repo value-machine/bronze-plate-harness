@@ -4,7 +4,7 @@ Used by [`loop-ship`](../SKILL.md). Ported from `finish` (v0.42.0) § Version an
 
 ## Version and changelog gate
 
-**Applies when** `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **version source** says the ship step bumps (Model A/B). **Model C:** skip this whole section — no `package.json` / `CHANGELOG.md` edits and no `[VERSION]` prefix; release-please builds the release from the PR title.
+**Applies when** `.claude/rules/git-workflow.md` § Mode behavior table → **version source** says the ship step bumps (Model A/B). **Model C:** skip this whole section — no `package.json` / `CHANGELOG.md` edits and no `[VERSION]` prefix; release-please builds the release from the PR title.
 
 Before editing `package.json` or `CHANGELOG.md`, classify staged changes per **`scripts/change-classify.cjs`** (matrix SSOT: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Local git).
 
@@ -77,7 +77,7 @@ Closes #123
 After `git add`, expect hook behavior per **`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`** § Local git (classifier SSOT: `scripts/change-classify.cjs`). Do not duplicate the matrix here.
 
 - **Preview hook test selection:** `pnpm test:staged` (dry-run — does not run tests). **Run hook tests without committing:** `pnpm test:staged:live`. Classifier reads staged files only — `git add` before preview.
-- **CI / merge parity:** `pnpm test:classify && pnpm test:run`. Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands** / **CI watcher**).
+- **CI / merge parity:** `pnpm test:classify && pnpm test:run`. Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** / **CI watcher**).
 - **Model B concurrency:** Prefer one active agent per checkout on `develop` (`src/config/git-workflow.json`). Shared-branch contention is higher than feature branches — treat smoke signals ([`concurrency.md`](concurrency.md)) seriously.
 - **Force full locally:** `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (PowerShell: `$env:PRECOMMIT_TEST_FULL=1; pnpm test:staged`).
 - Do **not** use `--no-verify` to avoid slow hooks on app-code commits; fix tests or split commits (docs/migrations separate from `src/`).

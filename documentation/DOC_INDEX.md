@@ -30,19 +30,19 @@ Central navigation for plate-harness documentation. For authoritative rules and 
 | **Supabase: Sign in with Google (dashboard setup)** | [DOC_SUPABASE_GOOGLE_OAUTH.md](./DOC_SUPABASE_GOOGLE_OAUTH.md) |
 | **Mobile local dev (physical device)** | [DOC_MOBILE_LOCAL_DEV.md](./DOC_MOBILE_LOCAL_DEV.md) |
 | **Cloudflare Workers deployment** | [DOC_CLOUDFLARE_WORKERS.md](./DOC_CLOUDFLARE_WORKERS.md) |
-| **Complexity reduction** | See `.cursor/rules/architecture/RULE.mdc` complexity section |
+| **Complexity reduction** | See `.claude/rules/architecture.md` complexity section |
 
 ## SSOT Map (Single Source of Truth)
 
 | Topic | SSOT Location |
 |-------|----------------|
 | Workflow, versioning, changelog | `.agents/skills/loop-ship/SKILL.md` (+ `references/commit-standards.md`) |
-| Branch strategy, release promotion flow | `.cursor/rules/git-workflow/RULE.mdc` (mode: `src/config/git-workflow.json`) |
+| Branch strategy, release promotion flow | `.claude/rules/git-workflow.md` (mode: `src/config/git-workflow.json`) |
 | Git workflow mode selector | `src/config/git-workflow.json` + `src/config/git-workflow.README.md` |
-| Protected files, agent behaviors | `.cursor/rules/agent-behavior/RULE.mdc` |
-| PowerShell / local environment | `.cursor/rules/platform/RULE.mdc` |
+| Protected files, agent behaviors | `.claude/rules/agent-behavior.md` |
+| PowerShell / local environment | `.claude/rules/platform.md` |
 | Development process (the product-owner loop) | `.agents/skills/router/references/loop-map.md` |
-| Architecture patterns | `.cursor/rules/architecture/RULE.mdc` |
+| Architecture patterns | `.claude/rules/architecture.md` |
 | Project structure | `projectStructure.config.cjs` |
 | Dependency rules | `.dependency-cruiser.cjs` |
 | **Dev task backlog / onboarding checklist** | `src/config/app-tasks.json` + `src/features/tasks/README.md` |

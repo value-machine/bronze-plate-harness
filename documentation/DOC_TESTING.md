@@ -2,7 +2,7 @@
 
 Single source of truth for **where tests live**, **which runner to use**, and **which patterns to copy** when building on this starter.
 
-Agent philosophy and commit-tier authority: [`.cursor/rules/testing/RULE.mdc`](../.cursor/rules/testing/RULE.mdc).  
+Agent philosophy and commit-tier authority: [`.claude/rules/testing.md`](../.claude/rules/testing.md).  
 Local git test modes (pre-commit / CI): [`DOC_AGENT_WORKFLOW_LAYERS.md`](./DOC_AGENT_WORKFLOW_LAYERS.md) § Local git.
 
 ---
@@ -112,7 +112,7 @@ Options: `{ withRouter: false }`, `{ withQueryClient: false }`, `{ initialEntrie
 | Area | Approach |
 |------|----------|
 | Full E2E / browser flows | Manual or add Playwright later — not in this harness |
-| Supabase Edge Functions | Manual deploy + test — see `cloud-functions/RULE.mdc` |
+| Supabase Edge Functions | Manual deploy + test — see `.claude/rules/cloud-functions.md` |
 | UI layout polish | DevTools / device — the owner's Stop 2 test on the preview (`loop-verdict`) |
 
 ---

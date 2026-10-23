@@ -80,7 +80,7 @@
       "Edit(./.prettierrc.json)",
       "Edit(./.editorconfig)",
       "Edit(./tsconfig*.json)",
-      "Edit(./.cursor/rules/**)",
+      "Edit(./.claude/rules/**)",
       "Edit(./.agents/skills/**)",
       "Edit(./.husky/**)",
       "Edit(./.github/workflows/**)",
@@ -135,6 +135,17 @@
         ]
       }
     ]
+  },
+  "extraKnownMarketplaces": {
+    "plate-harness": {
+      "source": {
+        "source": "github",
+        "repo": "value-machine/bronze-plate-harness"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "cursor-migration@plate-harness": true
   },
   "outputStyle": "default",
   "plansDirectory": "./documentation/jobs"

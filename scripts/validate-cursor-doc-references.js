@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Validate file references inside .cursor/rules and .agents/skills markdown files.
+ * Validate file references inside .claude/rules and .agents/skills markdown files
+ * (the sources; generated .cursor/rules/*.mdc and .claude/skills mirrors are skipped).
  *
  * Goal:
  * Catch stale references early (e.g. deleted docs still referenced by rules/skills).
@@ -15,8 +16,7 @@ const path = require("path");
 
 const ROOT = process.cwd();
 const TARGET_DIRS = [
-  path.join(".cursor", "rules"),
-  path.join(".cursor", "skills"),
+  path.join(".claude", "rules"),
   path.join(".agents", "skills"),
 ];
 
@@ -48,11 +48,7 @@ function collectMarkdownFiles(dirPath, output) {
       collectMarkdownFiles(fullPath, output);
       continue;
     }
-    if (
-      entry.isFile() &&
-      (entry.name.endsWith(".md") ||
-        (entry.name.endsWith(".mdc") && toPosix(fullPath).includes("/.cursor/rules/")))
-    ) {
+    if (entry.isFile() && entry.name.endsWith(".md")) {
       output.push(fullPath);
     }
   }
@@ -92,6 +88,7 @@ function looksLikeRepoPath(value) {
 
   const rootPrefixes = [
     ".cursor/",
+    ".claude/",
     ".agents/",
     "src/",
     "documentation/",
@@ -119,7 +116,7 @@ function resolveCandidatePath(refPath, sourceFilePath) {
   // Shorthand rule ref like architecture/RULE.mdc or cloud-functions/RULE.mdc
   if (/^[a-z0-9-]+\/RULE\.mdc?$/i.test(refPath)) {
     const posix = toPosix(sourceFilePath);
-    const inRules = posix.includes("/.cursor/rules/");
+    const inRules = posix.includes("/.claude/rules/");
     const inSkills = posix.includes("/.agents/skills/");
     if (inRules || inSkills) {
       return path.join(ROOT, ".cursor", "rules", refPath);
@@ -131,6 +128,7 @@ function resolveCandidatePath(refPath, sourceFilePath) {
   }
   if (
     refPath.startsWith(".cursor/") ||
+    refPath.startsWith(".claude/") ||
     refPath.startsWith(".agents/") ||
     refPath.startsWith("src/") ||
     refPath.startsWith("documentation/")

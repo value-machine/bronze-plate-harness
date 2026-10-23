@@ -38,8 +38,8 @@ Used by [`loop-plan`](../SKILL.md) at size **M**. XS / S plans live in `BRIEF.md
 
 The bar this plan and its implementation are graded against. [`plan-review.md`](plan-review.md) and `loop-check` grade against this section. Anything outside it is advisory unless the user promotes it (see Amendments).
 
-- **Rules pinned:** `rules@<short SHA>` (`git log -1 --format=%h -- .cursor/rules`) — <rule paths from Conflict & compliance § Applicable rules>
-- **Required lenses:** Pattern & precedent (material design), Reuse / packages, Feature decomposition, Foundation cleanup, Naming (`code-style/RULE.mdc` § Naming) — mark any that are skipped with a reason
+- **Rules pinned:** `rules@<short SHA>` (`git log -1 --format=%h -- .claude/rules`) — <rule paths from Conflict & compliance § Applicable rules>
+- **Required lenses:** Pattern & precedent (material design), Reuse / packages, Feature decomposition, Foundation cleanup, Naming (`.claude/rules/code-style.md` § Naming) — mark any that are skipped with a reason
 - **Tooling gate:** [`loop-check/references/rule-audit.md`](../../loop-check/references/rule-audit.md) § Tooling pass (contract gate list) — phase gates cite this list instead of restating commands
 - **Locked decisions:** recorded decisions (feature READMEs, vision, rules) + sibling `DECISIONS.md` + **Decisions made** below + Amendments
 
@@ -94,7 +94,7 @@ Optional sections when relevant: Source / context, User stories (from `BRIEF.md`
 ## Gate examples
 
 - **Frontend (Vite + React + Tailwind / shadcn-ui):** expected UI present; primary flows work; loading / error / empty states; responsive where relevant (browser MCP when available).
-- **Edge Functions:** invoke locally or deployed and verify the response (`cloud-functions/RULE.mdc`).
+- **Edge Functions:** invoke locally or deployed and verify the response (`.claude/rules/cloud-functions.md`).
 - **Database:** migration applied to a test or staging DB; schema verified; RLS tested with representative roles.
 - **Repo quality:** lint, type-check and the tests the change touches pass at each phase boundary; the acceptance test passes at the last one.
 

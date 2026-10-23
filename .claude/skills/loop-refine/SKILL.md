@@ -23,11 +23,11 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 | Calls | if repo context is missing → [`spec-load-context`](../spec-load-context/SKILL.md) · if the task is a bug → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) (reproduce only) · if the request changes existing behavior → [`spec-check-layer`](../spec-check-layer/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Next | [`loop-plan`](../loop-plan/SKILL.md) |
-| Owner stops | Stop list only ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)), asked per [`references/asking.md`](references/asking.md) |
+| Owner stops | Stop list only ([`agent-behavior` rule § When to ask](../../../.claude/rules/agent-behavior.md)), asked per [`references/asking.md`](references/asking.md) |
 
 ## Steps
 
-1. **Open the lap.** Derive `<slug>` (kebab-case) from the task title. Create the lap branch per [`git-workflow` rule § Mode-aware branch gate](../../../.cursor/rules/git-workflow/RULE.mdc) (one lap = one branch, skill-loop D45), then `documentation/jobs/temp_job_<slug>/` on it. Read the task. For a Change verdict, the feedback is the task.
+1. **Open the lap.** Derive `<slug>` (kebab-case) from the task title. Create the lap branch per [`git-workflow` rule § Mode-aware branch gate](../../../.claude/rules/git-workflow.md) (one lap = one branch, skill-loop D45), then `documentation/jobs/temp_job_<slug>/` on it. Read the task. For a Change verdict, the feedback is the task.
 2. **Read before asking.** Read the vision, then the `README.md` of every feature the task plausibly touches, then those features' code paths ([`references/grounding.md`](references/grounding.md)). Recorded decisions live in those READMEs, the vision and the rules (skill-loop D48). If the vision is still `DRAFT` and the task changes product meaning, note `vision-deferred` and keep the perimeter minimal.
 3. **Bugs:** call [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) to reproduce and pin the failing behavior only. The fix depth (patch, refactor, redesign) sets the size like any other work (skill-loop D27).
 4. **Draft `BRIEF.md` silently:** problem, success check, in scope, out of scope (will NOT do / will NOT touch), the edges table, generality (clear winner unless a second consumer is named), and requirements when size ≥ M spans roles or journeys ([`references/requirements.md`](references/requirements.md)).

@@ -4,7 +4,7 @@
  * @relatedFiles
  * - scripts/validate-feature-size.js
  * - scripts/generate-feature-baseline.js
- * - .cursor/rules/architecture/RULE.mdc § Feature granularity
+ * - .claude/rules/architecture.md § Feature granularity
  */
 /** @type {import('./scripts/feature-size-lib').FeatureBudgetsConfig} */
 module.exports = {

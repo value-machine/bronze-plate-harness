@@ -13,7 +13,7 @@ description: >-
 
 # spec-check-layer
 
-When this skill is done, the request's assumption about the system is verified or corrected, and no workaround is built silently: either the structural path is planned, or the owner chose the workaround knowingly. The trigger and core reflex live in `architecture/RULE.mdc` § Layer consistency (skill-loop D33, D56); this skill holds the rubric and the alert.
+When this skill is done, the request's assumption about the system is verified or corrected, and no workaround is built silently: either the structural path is planned, or the owner chose the workaround knowingly. The trigger and core reflex live in `.claude/rules/architecture.md` § Layer consistency (skill-loop D33, D56); this skill holds the rubric and the alert.
 
 ## Edges
 

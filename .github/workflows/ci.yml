@@ -72,11 +72,14 @@ jobs:
       - name: Skill admission check
         run: pnpm validate:skills
 
-      - name: Agent-config mirror (.claude/skills)
-        run: node scripts/sync-agent-config.mjs --check
-
       - name: Structure validation
         run: pnpm validate:structure
+
+      - name: Agent config mirrors in sync (.claude/skills, .cursor/rules)
+        run: node scripts/sync-agent-config.mjs --check
+
+      - name: cursor-migration plugin tests
+        run: pnpm test:plugin
 
       - name: Feature size validation
         run: pnpm validate:feature-size

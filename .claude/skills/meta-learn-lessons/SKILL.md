@@ -19,7 +19,7 @@ When this skill is done, the mistake cannot silently repeat: the guidance that c
 
 | Field | Value |
 |---|---|
-| In | Plan § Notes mistake signals, the diff and `git log`, CI output, owner corrections, `.cursor/rules/INDEX.md`, the rules and skills in the lesson's domain |
+| In | Plan § Notes mistake signals, the diff and `git log`, CI output, owner corrections, `documentation/DOC_RULES_INDEX.md`, the rules and skills in the lesson's domain |
 | Out | Edits to one rule, skill or `spec-debug-runtime/references/patterns.md` on the lap's branch; the lesson report |
 | Calls | always → [`references/lesson-procedure.md`](references/lesson-procedure.md) · if the lesson is a reusable procedure (a skill) → [`meta-write-skill`](../meta-write-skill/SKILL.md) · if it is a harness-wide structural conflict → [`meta-audit-harness`](../meta-audit-harness/SKILL.md) · if a rule's wording needs tightening → [`meta-grade-rule`](../meta-grade-rule/SKILL.md) |
 | Called by | [`loop-verdict`](../loop-verdict/SKILL.md) (Change or Drop) · owner |

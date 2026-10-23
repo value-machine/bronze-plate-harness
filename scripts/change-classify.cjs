@@ -82,6 +82,10 @@ function isDocsOnlyFile(filePath) {
   if (n.startsWith('.agents/')) {
     return true;
   }
+  // Agent config sources and their generated mirrors (agent-sync.config.json).
+  if (n.startsWith('.claude/rules/') || n.startsWith('.claude/skills/')) {
+    return true;
+  }
   return n.endsWith('.md');
 }
 

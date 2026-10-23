@@ -19,7 +19,7 @@ Keep the **agent harness** one coherent system: SSOT enforced, no conflicting in
 
 | Set | Paths | Treatment |
 |-----|-------|-----------|
-| **Harness corpus** | `AGENTS.md`, `.cursor/rules/**`, `.cursor/rules/INDEX.md`, `.claude/rules/*`, `.agents/skills/**`, `ARCHITECTURE.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, subagent brief files | Audited; edited after gate |
+| **Harness corpus** | `AGENTS.md`, `.claude/rules/*`, `documentation/DOC_RULES_INDEX.md`, `.agents/skills/**`, `ARCHITECTURE.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, subagent brief files | Audited; edited after gate |
 | **Routing spine** | `router/SKILL.md`, `DOC_AGENT_WORKFLOW_LAYERS.md`, `loop-map.md` | Audited; updated when harness routing changes |
 | **Artifacts** | `documentation/jobs/harness/` (registry, ledger, scan manifest) | Persist audit outputs |
 | **Reference-only** | User/plugin skills outside repo | Read for overlap; never edited |
@@ -84,7 +84,7 @@ Launch in parallel per [`references/subagent-briefs.md`](subagent-briefs.md):
 | 3 | Conflicts | skills + rules |
 | 4 | Composition / handoffs | skills |
 | 5 | Quality / trigger clarity | skills |
-| 6 | Catalog drift (`AGENTS.md` ↔ YAML) | `domain-agents-md.md`, `domain-rules.md` |
+| 6 | Catalog drift (`AGENTS.md` ↔ `.claude/rules`) | `domain-agents-md.md`, `domain-rules.md` |
 | 7 | Foreign / orphan content | `foreign-content.md` |
 | 8 | Loadability / context budget | `domain-rules.md`, `domain-agents-md.md` |
 

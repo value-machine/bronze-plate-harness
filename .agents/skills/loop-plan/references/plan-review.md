@@ -8,7 +8,7 @@ Each prompt is self-contained (subagents don't see the chat). It includes the pl
 
 | # | Lens | Brief |
 |---|---|---|
-| 1 | **Naming generality (fixed)** | Read `code-style/RULE.mdc` § Naming and scan the plan for violations: a forbidden name, a second copy without its marker, a third or later copy, a placement line naming one file as the home, or a glob keyed to an instance name. Don't flag test titles, examples explicitly marked as wrong, or paths labeled as one shipped instance. |
+| 1 | **Naming generality (fixed)** | Read `.claude/rules/code-style.md` § Naming and scan the plan for violations: a forbidden name, a second copy without its marker, a third or later copy, a placement line naming one file as the home, or a glob keyed to an instance name. Don't flag test titles, examples explicitly marked as wrong, or paths labeled as one shipped instance. |
 | 2 | **Rebel (fixed)** | Say plainly when a clean-slate or different approach beats the plan, with a high-level alternative. No incremental polish. |
 | 3 | **Scale / modularity (fixed)** | Load, cost, data growth, failure modes, ceilings; coupling, layers, ports, swappable dependencies, lock-in. |
 | 4 | **Industry precedent (fixed)** | Use [`precedent-rubric.md`](precedent-rubric.md): pick the relevant aspects, name the precedents, flag material divergence and a missing § Pattern & precedent. |

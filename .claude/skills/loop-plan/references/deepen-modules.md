@@ -2,7 +2,7 @@
 
 Read when the modules a change touches are shallow, duplicated, badly named, misplaced, or hard to replace (skill-loop D21). The cleanup becomes part of the plan and counts toward the size (skill-loop D12). It is not a separate job and not an owner stop, unless choosing the patch instead of the cleanup is the question (stop list: patch on top).
 
-Sources: TMI-apps/MILA `improve-codebase-architecture` (deep-module lens), `consolidate` and `modularity-review` (v0.42.0). Vocabulary: [`module-language.md`](module-language.md) — use **module, interface, depth, seam, adapter, leverage, locality** exactly. Copy counts and names: `code-style/RULE.mdc` § Naming (never restate them here).
+Sources: TMI-apps/MILA `improve-codebase-architecture` (deep-module lens), `consolidate` and `modularity-review` (v0.42.0). Vocabulary: [`module-language.md`](module-language.md) — use **module, interface, depth, seam, adapter, leverage, locality** exactly. Copy counts and names: `.claude/rules/code-style.md` § Naming (never restate them here).
 
 ## Contents
 

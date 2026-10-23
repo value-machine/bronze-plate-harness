@@ -32,7 +32,7 @@ Then ask about edge cases, inputs/outputs, example files, success criteria, and 
 - **Description = the trigger.** Say what it does *and* when to use it, including the phrases users actually type; agents tend to under-trigger, so be a little pushy ("use whenever the user mentions X, even if they don't say Y"). Add a short "Not for … (use Z)" when a neighbor skill competes. All "when to use" belongs in the description, not the body.
 - **Progressive disclosure:** the description is always listed; the body loads on trigger (keep it under ~500 lines); `references/` load only when pointed to — say *when* to read each. Large references get a table of contents. Multi-variant skills put one variant per reference file.
 - **Style:** imperative; explain *why* instead of stacking ALL-CAPS MUSTs (a model that knows the reason generalizes); keep it general rather than fitted to the examples; give exact templates for required output formats and short input → output examples.
-- **Repo fit:** follow `code-style/RULE.mdc` § Naming for the skill name; point at SSOT rules instead of restating them; end with what it is *not* for and the **Next** step.
+- **Repo fit:** follow `.claude/rules/code-style.md` § Naming for the skill name; point at SSOT rules instead of restating them; end with what it is *not* for and the **Next** step.
 - **No surprises:** nothing whose intent the user wouldn't expect if described (no malware, exfiltration, deceptive behavior).
 
 ## 3. Test (optional)
@@ -60,10 +60,10 @@ Re-run the tests after each revision; stop when the user is happy, the feedback 
 
 ## 6. Integrate
 
-- `.agents/skills/**` is protected: get explicit user approval before writing (`.cursor/rules/agent-behavior/RULE.mdc` § Protected Files).
+- `.agents/skills/**` is protected: get explicit user approval before writing (`.claude/rules/agent-behavior.md` § Protected Files).
 - Add or update the skill's row in [`router/references/catalog.md`](../../router/references/catalog.md) and run `pnpm validate:skills` (admission check).
 - If it competes with another skill outside the loop, add a row to `router/references/tiebreaks.md`; if it is a loop stage, update `router/references/loop-map.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
-- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see precedent review (`loop-plan`) / `spec-reuse-package` in `architecture/RULE.mdc`).
+- A **proactive guard** skill also gets a thin always-on pointer in the matching `.claude/rules/<name>.md` (see precedent review (`loop-plan`) / `spec-reuse-package` in `.claude/rules/architecture.md`).
 - Run `pnpm validate:docs` and `pnpm validate:structure`.
 
 ## What this is NOT

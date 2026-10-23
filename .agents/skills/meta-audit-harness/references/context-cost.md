@@ -63,10 +63,10 @@ These often read as odd or overly specific, which is exactly why they exist:
 ## 4. Apply
 
 - Show the plan (ledger draft, step 6) before editing protected files (SSOT:
-  `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files — includes `.cursor/rules/**` and
+  `.claude/rules/agent-behavior.md` § Protected Files — includes `.claude/rules/**` and
   `.agents/skills/**`) or any file outside the requested scope.
-- Rule descriptions have two copies: YAML `description` in `RULE.mdc` (SSOT) and the portable
-  catalog in `AGENTS.md`. Edit the YAML first, then the catalog.
+- Rule descriptions live only in the `AGENTS.md` catalog; rule files carry no `description`
+  frontmatter. Always-on rules (no `paths:`) load every session, so they are the first place to cut.
 - Edit in place; keep file paths stable so existing pointers don't break.
 - After edits, verify nothing dangles: every path, `@` import, skill name, and anchor that was
   referenced still resolves (`rg` for the old names).

@@ -1,6 +1,6 @@
 # Debugging strategy — scope reduction and test planning
 
-Read by [`spec-debug-runtime`](../SKILL.md). Moved from `debugging/RULE.mdc` § Debugging Strategy (v0.42.0, skill-loop D34). The reductive strategy and user test instructions stay in that rule (always-on corrections).
+Read by [`spec-debug-runtime`](../SKILL.md). Moved from `.claude/rules/debugging.md` § Debugging Strategy (v0.42.0, skill-loop D34). The reductive strategy and user test instructions stay in that rule (always-on corrections).
 
 ## Scope Reduction
 

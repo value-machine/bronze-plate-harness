@@ -2,7 +2,7 @@
 /**
  * Validates src/config/git-workflow.json — mode enum SSOT for Model A / B / C.
  * The only code that reads the mode; CI and hooks call `--print-mode` instead of
- * parsing the JSON themselves (behavior per mode: git-workflow/RULE.mdc § Mode behavior table).
+ * parsing the JSON themselves (behavior per mode: .claude/rules/git-workflow.md § Mode behavior table).
  *
  * Usage:
  *   node scripts/validate-git-workflow.cjs               → "validate-git-workflow: OK (mode=…)", exit 0 | error, exit 1

@@ -18,7 +18,7 @@ description: >-
 
 | Field | Value |
 |---|---|
-| In | PR and preview link, check summary, `BRIEF.md` success check, PR diff of decision homes (feature READMEs, `documentation/DOC_APP_VISION.md`, `.cursor/rules/**`, `.agents/skills/**`), parked questions, plan **Notes during development** |
+| In | PR and preview link, check summary, `BRIEF.md` success check, PR diff of decision homes (feature READMEs, `documentation/DOC_APP_VISION.md`, `.claude/rules/**`, `.agents/skills/**`), parked questions, plan **Notes during development** |
 | Out | Merge / promotion (via `loop-ship`), archived task, closed PR, or feedback tasks on the backlog; lessons committed to the same PR |
 | Calls | if the verdict is Pass → [`loop-ship`](../loop-ship/SKILL.md) (merge / promote) · if the verdict is Change or Drop (any non-Pass counts as trouble, skill-loop D50) → [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) · after any verdict → [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-ship`](../loop-ship/SKILL.md) |

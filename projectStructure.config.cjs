@@ -11,8 +11,8 @@
  * - package.json - Scripts that run validation (validate:structure)
  * - documentation/PROJECT-STRUCTURE-VALIDATION.md - User documentation
  * - ARCHITECTURE.md - Architecture documentation
- * - .cursor/rules/file-placement/RULE.mdc - File placement rules
- * - .cursor/rules/architecture/RULE.mdc - Architecture rules
+ * - .claude/rules/file-placement.md - File placement rules
+ * - .claude/rules/architecture.md - Architecture rules
  */
 /**
  * One skill folder layout, shared by .agents/skills (SSOT) and its generated
@@ -674,15 +674,9 @@ module.exports = {
       name: ".cursor",
       children: [
         {
+          // Generated from .claude/rules by scripts/sync-agent-config.mjs — do not edit
           name: "rules",
-          children: [
-            {
-              name: "*",
-              children: [{ name: "RULE.mdc" }],
-            },
-            { name: "README.md" },
-            { name: "INDEX.md" },
-          ],
+          children: [{ name: "*.mdc" }, { name: ".generated.json" }],
         },
         {
           name: "plans",
@@ -735,7 +729,7 @@ module.exports = {
         { name: "skills", children: SKILL_FOLDERS },
       ],
     },
-    // Claude Code project config (thin rule pointers + settings)
+    // Claude Code project config: rules (SSOT), generated skills mirror, settings
     {
       name: ".claude",
       children: [
@@ -750,6 +744,57 @@ module.exports = {
         },
         { name: "settings.json" },
         { name: "settings.local.json" },
+      ],
+    },
+    // Claude Code plugin marketplace for this repo (lists plugins/*)
+    {
+      name: ".claude-plugin",
+      children: [{ name: "marketplace.json" }],
+    },
+    // Vendored Claude Code plugins (zero-dependency Node; own node --test suite via pnpm test:plugin)
+    {
+      name: "plugins",
+      children: [
+        {
+          name: "*",
+          children: [
+            { name: "README.md" },
+            { name: "LICENSE" },
+            {
+              name: ".claude-plugin",
+              children: [{ name: "plugin.json" }, { name: "icon.png" }],
+            },
+            {
+              name: "skills",
+              children: [{ name: "*", children: [{ name: "SKILL.md" }] }],
+            },
+            {
+              name: "scripts",
+              children: [{ name: "*.mjs" }, { name: "*", children: [{ name: "*.mjs" }] }],
+            },
+            {
+              name: "templates",
+              children: [{ name: "*.mjs" }],
+            },
+            {
+              name: "test",
+              children: [
+                { name: "*.mjs" },
+                { name: "*", children: [{ name: "*.mjs" }, { name: "*.json" }] },
+              ],
+            },
+            {
+              name: "evals",
+              children: [
+                { name: ".gitignore" },
+                {
+                  name: "*",
+                  children: [{ name: "*.md" }, { name: "graders", children: [{ name: "*.md" }] }],
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     // GitHub workflows (if exists)

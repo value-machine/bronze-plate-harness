@@ -1,6 +1,6 @@
 # Rule audit — modes, subagent contract, tooling pass
 
-How [`loop-check`](../SKILL.md) audits a built change, and how [`loop-plan/references/plan-review.md`](../../loop-plan/references/plan-review.md) audits a plan. Ported from `validate` (v0.42.0). One read-only subagent per relevant rule in `.cursor/rules/`, plus the tooling pass and a plan-compliance pass. Registry: [`loop-plan/references/rules-registry.md`](../../loop-plan/references/rules-registry.md).
+How [`loop-check`](../SKILL.md) audits a built change, and how [`loop-plan/references/plan-review.md`](../../loop-plan/references/plan-review.md) audits a plan. Ported from `validate` (v0.42.0). One read-only subagent per relevant rule in `.claude/rules/`, plus the tooling pass and a plan-compliance pass. Registry: [`loop-plan/references/rules-registry.md`](../../loop-plan/references/rules-registry.md).
 
 ## Modes
 
@@ -21,7 +21,7 @@ When the governing plan has a **Review contract** (plan review, impl), the contr
 | Basis | When | Max severity |
 |-------|------|--------------|
 | `contract` | Rule is pinned in the contract and the finding holds under the **pinned** text (`git show <pin>:<rule path>`) | Blocker |
-| `drift` | Finding holds only under rule text changed after the pin (`git diff --name-only <pin>..HEAD -- .cursor/rules`) | Warning |
+| `drift` | Finding holds only under rule text changed after the pin (`git diff --name-only <pin>..HEAD -- .claude/rules`) | Warning |
 | `advisory` | Rule is not pinned in the contract, but plausibly relevant | Warning |
 | `repo-current` | No governing contract (gate mode, legacy plan without one) — current rule text is the bar | Blocker |
 
@@ -36,7 +36,7 @@ Every rule subagent is invoked the same way. The parent spawns a read-only subag
 
 - **Mode** — `plan-review` (from `loop-plan/references/plan-review.md`), `impl` (lap with a plan), or `gate` (diff with no plan).
 - **Scope** — plan path for plan review; changed paths or unified diff otherwise.
-- **Rule file** — exactly one (e.g. `.cursor/rules/architecture/RULE.mdc`).
+- **Rule file** — exactly one (e.g. `.claude/rules/architecture.md`).
 - **Contract** — the plan's Review contract, the pin SHA, whether this rule is pinned, and the paths of `DECISIONS.md` / Amendments (or `none` in gate mode).
 - **Output schema** — every subagent returns the structure below.
 
@@ -46,7 +46,7 @@ Every rule subagent is invoked the same way. The parent spawns a read-only subag
 
 ```json
 {
-  "rule": ".cursor/rules/<name>/RULE.mdc",
+  "rule": ".claude/rules/<name>.md",
   "applicable": true,
   "findings": [
     {
@@ -72,7 +72,7 @@ If the rule does not apply to the scope, return `{ "applicable": false, "finding
 
 ### Category naming (code-style subagent, every mode)
 
-The parent prompt for `.cursor/rules/code-style/RULE.mdc` must require a naming sweep of the scope. The subagent reads `code-style/RULE.mdc` § Naming and reports a finding for each violation. Do not apply a stricter test than that rule section. Do not return `applicable: false` just because quotes and imports look fine.
+The parent prompt for `.claude/rules/code-style.md` must require a naming sweep of the scope. The subagent reads `.claude/rules/code-style.md` § Naming and reports a finding for each violation. Do not apply a stricter test than that rule section. Do not return `applicable: false` just because quotes and imports look fine.
 
 Do not flag test titles (`should … when …`), an example explicitly marked as the wrong name, or a path labeled as one shipped instance rather than the template.
 
@@ -127,7 +127,7 @@ Group findings by category (Architecture, File placement, Code style, … — pl
 
 - **Finding** — what is wrong, missing, or risky
 - **Suggestion** — concrete improvement
-- **Rule** — `.cursor/rules/<name>/RULE.mdc` § section
+- **Rule** — `.claude/rules/<name>.md` § section
 - **Severity** — Blocker | Warning | Suggestion
 - **Source** — `file:line` for impl/gate, plan section for plan review
 - **Owner answer** — when resolving the finding hit the stop list, the owner's answer (or `parked` when it waits)

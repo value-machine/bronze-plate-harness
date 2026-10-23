@@ -9,7 +9,7 @@ Systematically analyze code for optimization opportunities across four levels: D
 
 **Key Insight:** Fixing at the wrong level wastes effort. A complex function might need a design change (Level 1), not refactoring (Level 4). Always assess all levels before acting.
 
-**SSOT:** `eslint.config.js` complexity rules (table: `code-style/RULE.mdc` § Complexity).
+**SSOT:** `eslint.config.js` complexity rules (table: `.claude/rules/code-style.md` § Complexity).
 
 ## Workflow Overview
 
@@ -23,7 +23,7 @@ ANALYZE (all 4 levels) → PRESENT OPTIONS → USER CHOOSES → EXECUTE → VERI
 
 ### Rule of Three (MANDATORY for Extractions)
 
-**For a novel abstraction inferred from duplicated business logic, don't extract until `code-style/RULE.mdc` § Naming says so.** Copy-count thresholds live only in that rule section. This section still blocks a speculative extract that the rule does not require.
+**For a novel abstraction inferred from duplicated business logic, don't extract until `.claude/rules/code-style.md` § Naming says so.** Copy-count thresholds live only in that rule section. This section still blocks a speculative extract that the rule does not require.
 
 **Why:** Every extraction adds indirection. Can you trace the feature without opening >5 files?
 
@@ -31,7 +31,7 @@ ANALYZE (all 4 levels) → PRESENT OPTIONS → USER CHOOSES → EXECUTE → VERI
 
 **Not governed by Rule of Three:**
 
-1. **Names and copy counts:** `code-style/RULE.mdc` § Naming. Do not restate them here.
+1. **Names and copy counts:** `.claude/rules/code-style.md` § Naming. Do not restate them here.
 2. **Established primitives and patterns:** Reuse standard UI controls, design-system components, platform APIs, and existing repo abstractions immediately. A text input does not need three contextual copies before it can use a role-named control.
 3. **Thin project primitive with an existing contract:** A first-use wrapper is justified when it enforces an already-established project-wide contract such as theme, accessibility, validation, or error presentation. Otherwise use the underlying standard primitive directly; do not add a speculative passthrough wrapper.
 4. **Composition and boundaries:** Keep context-specific labels, data, and behavior in props, the caller, or a thin contextual wrapper from day one. This is modular placement, not an abstraction inferred from duplication.
@@ -58,26 +58,26 @@ Signs of too much abstraction (see also: [Over-Engineering Indicators](#over-eng
 - 🚩 **Can't answer "where does X happen?" quickly** → Feature scattered across too many files
 - 🚩 **High fan-out (file imports 10+ things)** → Responsibilities scattered
 - 🚩 **Wrapper functions that add nothing** → `logError = (msg) => console.error(msg)`
-- 🚩 **Two similar business-logic functions** → `code-style/RULE.mdc` § Naming
+- 🚩 **Two similar business-logic functions** → `.claude/rules/code-style.md` § Naming
 
 ### Over-Engineering Indicators
 
 When NOT to refactor (accept complexity instead):
 
 - Creating files for single-use novel abstractions (unless [exception](#rule-of-three-mandatory-for-extractions) applies)
-- Extracting a novel shared helper before `code-style/RULE.mdc` § Naming requires it (violates [Rule of Three](#rule-of-three-mandatory-for-extractions))
+- Extracting a novel shared helper before `.claude/rules/code-style.md` § Naming requires it (violates [Rule of Three](#rule-of-three-mandatory-for-extractions))
 - Breaking up cohesive functions that do one thing
 - High statement count but low cognitive complexity
 - Verbose operations inflating metrics (style copying, config objects, DOM manipulation)
 - Abstraction layers with single implementations
 - "Future-proofing" for requirements that don't exist
-- Two similar business-logic functions → `code-style/RULE.mdc` § Naming
+- Two similar business-logic functions → `.claude/rules/code-style.md` § Naming
 
 **Remember:** The cure should not be worse than the disease. Prefer inline code over scattered micro-files.
 
 ### Complexity Metrics
 
-Thresholds: `.cursor/rules/code-style/RULE.mdc` § Complexity (SSOT `eslint.config.js`).
+Thresholds: `.claude/rules/code-style.md` § Complexity (SSOT `eslint.config.js`).
 
 ---
 
@@ -188,7 +188,7 @@ Assuming design is sound, evaluate the algorithmic approach:
   - Missing indexes for frequent lookups?
 
 - **Are there unnecessary abstractions? (Indirection Check)**
-  - **Apply [Rule of Three](#rule-of-three-mandatory-for-extractions):** novel abstractions from duplicated business logic follow `code-style/RULE.mdc` § Naming. Do not restate the copy count.
+  - **Apply [Rule of Three](#rule-of-three-mandatory-for-extractions):** novel abstractions from duplicated business logic follow `.claude/rules/code-style.md` § Naming. Do not restate the copy count.
   - Over-abstracted for flexibility never used?
   - Indirection that adds overhead without benefit? (See [Indirection Red Flags](#indirection-red-flags))
   - Patterns used for pattern's sake?
@@ -281,7 +281,7 @@ pnpm lint
 
 | Question | If NO → Default to 4E |
 |----------|----------------------|
-| Does `code-style/RULE.mdc` § Naming require an extract? | If it does not, keep inline, unless an exception in [Rule of Three](#rule-of-three-mandatory-for-extractions) applies |
+| Does `.claude/rules/code-style.md` § Naming require an extract? | If it does not, keep inline, unless an exception in [Rule of Three](#rule-of-three-mandatory-for-extractions) applies |
 | Would extracted helpers be reusable elsewhere? | Non-reusable → keep inline |
 | Is cognitive complexity high (not just statement count)? | High statements + low cognitive = acceptable |
 | Would a new developer understand it better after extraction? | Same/worse readability → keep together |
@@ -293,10 +293,10 @@ pnpm lint
 - Single-purpose utility used in one place
 - Function is cohesive and readable despite exceeding thresholds
 - Extraction would create files with only 1-2 private helpers
-- Two similar business-logic functions → `code-style/RULE.mdc` § Naming
+- Two similar business-logic functions → `.claude/rules/code-style.md` § Naming
 
 **Possible outcomes:**
-- **4A - Extract methods/functions:** Break down large functions *(for novel shared abstractions: only if `code-style/RULE.mdc` § Naming requires it, or a [Rule of Three exception](#rule-of-three-mandatory-for-extractions) applies)*
+- **4A - Extract methods/functions:** Break down large functions *(for novel shared abstractions: only if `.claude/rules/code-style.md` § Naming requires it, or a [Rule of Three exception](#rule-of-three-mandatory-for-extractions) applies)*
 - **4B - Simplify conditionals:** Guard clauses, polymorphism
 - **4C - Reduce coupling:** Extract interfaces, dependency injection
 - **4D - Introduce parameter object:** Reduce parameter count
@@ -527,7 +527,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
 
 ## Phase 5: Architecture Compliance (For Refactoring)
 
-Extracted code follows `.cursor/rules/architecture/RULE.mdc` § Code placement and § Folder structure (layer choice, downward imports, `@/` alias only). Use existing folders; a new folder needs the whitelist in `projectStructure.config.cjs` (protected — ask first).
+Extracted code follows `.claude/rules/architecture.md` § Code placement and § Folder structure (layer choice, downward imports, `@/` alias only). Use existing folders; a new folder needs the whitelist in `projectStructure.config.cjs` (protected — ask first).
 
 ### Architecture Checklist
 

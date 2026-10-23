@@ -2,7 +2,7 @@
 
 This document explains the architectural decisions and rules enforced in this harness.
 
-**SSOT:** `.cursor/rules/architecture/RULE.mdc` is the canonical source for architecture rules. This guide is the user-facing overview. Structure enforcement: `projectStructure.config.cjs` and `.dependency-cruiser.cjs`. Feature-local `README.md` policy and validation commands: `documentation/DOC_FEATURE_LOCAL_README.md`.
+**SSOT:** `.claude/rules/architecture.md` is the canonical source for architecture rules. This guide is the user-facing overview. Structure enforcement: `projectStructure.config.cjs` and `.dependency-cruiser.cjs`. Feature-local `README.md` policy and validation commands: `documentation/DOC_FEATURE_LOCAL_README.md`.
 
 ## Folder Structure
 
@@ -68,7 +68,7 @@ Pages → Components → Hooks → Services → Shared Services
 
 ### Import Patterns
 
-Use **`@/`** path aliases only — never relative parent imports (`../`). Full mapping: `.cursor/rules/architecture/RULE.mdc`.
+Use **`@/`** path aliases only — never relative parent imports (`../`). Full mapping: `.claude/rules/architecture.md`.
 
 ```typescript
 // ✅ Good
@@ -199,7 +199,7 @@ The project enforces complexity thresholds to maintain code maintainability:
 - **Statements**: ≤ 15 per function (ESLint `max-statements`)
 - **Parameters**: ≤ 3 per function (ESLint `max-params`; use an options object when more are needed)
 
-Exact thresholds live in `eslint.config.js` and `.cursor/rules/code-style/RULE.mdc` if this list drifts.
+Exact thresholds live in `eslint.config.js` and `.claude/rules/code-style.md` if this list drifts.
 
 **Refactoring Patterns Used:**
 - **Extract Method/Function**: Break long functions into smaller, focused functions
@@ -342,7 +342,7 @@ This harness supports connecting to external APIs:
 
 - **Supabase**: For authentication (configure via `.env` — see README and dev task backlog)
 
-**Researching a new external API before wiring it up?** See `.cursor/rules/api-integration/RULE.mdc` (principles) and `.agents/skills/loop-plan/references/research-api.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
+**Researching a new external API before wiring it up?** See `.claude/rules/api-integration.md` (principles) and `.agents/skills/loop-plan/references/research-api.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
 
 Both services are optional. The services are initialized in `shared/services/` and can be used directly in feature services.
 

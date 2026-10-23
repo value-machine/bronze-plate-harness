@@ -16,7 +16,7 @@ Procedure below is the SSOT. Callers **link and run** it — they do not copy St
 | [`loop-plan`](../../loop-plan/SKILL.md) § Steps 2 (investigate) | After the internal reuse search, before locking a custom/greenfield build |
 | `architecture` rule § Don't reinvent the wheel | The always-on trigger (skill-loop D56) — fires in any stage |
 | [`loop-build`](../../loop-build/SKILL.md) / [`loop-plan`](../../loop-plan/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
-| Always-on reminder | `architecture/RULE.mdc` § Don't reinvent the wheel |
+| Always-on reminder | `.claude/rules/architecture.md` § Don't reinvent the wheel |
 
 **Order when several apply:** this skill (reuse vs custom) → [`loop-plan → research-api`](../../loop-plan/references/research-api.md) if still researching a vendor contract → [`loop-plan → review-precedent`](../../loop-plan/references/review-precedent.md) on the chosen approach (M/L or new contracts).
 

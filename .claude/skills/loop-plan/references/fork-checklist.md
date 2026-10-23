@@ -23,15 +23,15 @@ A **fork** exists when **any** of these is true for a topic **not** already deci
 | Concrete API example, schema field list, RLS policy text | Plan detail — write it; data / irreversible shapes are stop-list items |
 | Industry “is this standard?” | [`review-precedent.md`](review-precedent.md) |
 | Package/pattern reuse vs custom (library search) | [`spec-reuse-package`](../../spec-reuse-package/SKILL.md) — a new dependency is a stop-list item |
-| Helper extract / copy counts | `code-style/RULE.mdc` § Naming — not this cue |
+| Helper extract / copy counts | `.claude/rules/code-style.md` § Naming — not this cue |
 | Stack/feature replaceability scores after a folder exists | [`deepen-modules.md`](deepen-modules.md) § Replaceability |
-| Pure code mechanism with **no** product/scope/boundary effect (local refactor shape) | Agent decides — still prefer a one-line note in plan Notes if non-obvious. **Names** are not a product fork: `code-style/RULE.mdc` § Naming |
+| Pure code mechanism with **no** product/scope/boundary effect (local refactor shape) | Agent decides — still prefer a one-line note in plan Notes if non-obvious. **Names** are not a product fork: `.claude/rules/code-style.md` § Naming |
 
 ### Generality (composition vs rewirable)
 
 **SSOT for this fork.** Run the checklist on this topic before the brief or the plan assumes a platform or a one-off. Do not silently over-build or under-build.
 
-**Modularity is the default; speculative platforms are not.** Every level below uses composition and a narrow replaceable boundary from the first implementation. Identifier names and copy counts: `code-style/RULE.mdc` § Naming. The fork decides how much product-specific extension machinery to build, not whether the code is modular.
+**Modularity is the default; speculative platforms are not.** Every level below uses composition and a narrow replaceable boundary from the first implementation. Identifier names and copy counts: `.claude/rules/code-style.md` § Naming. The fork decides how much product-specific extension machinery to build, not whether the code is modular.
 
 **Three levels** (later options add stronger product extension machinery):
 

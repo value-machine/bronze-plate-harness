@@ -44,7 +44,7 @@ On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skill
 - **[`loop-plan/references/research-api.md`](../../loop-plan/references/research-api.md):** Use for an **unfamiliar/new** vendor or API — MCP-first check, then Phase 1 schema/contract → Phase 2 sample/wire-shape discipline (the same two-phase order the retired `airtable-inspect` skill used, now generalized). Worked example: Supabase (MCP path).
 - **Stack plugin skill** (`supabase`, `cloudflare`, `wrangler`, etc.): Use for **operating inside a stack you're already on** — see the Supabase/Cloudflare disambiguations below. Don't route routine stack work through the research reference.
 - **A fork's own vendor-specific skill** (if one exists, e.g. a fork-added `stripe-inspect`): prefer it when it's more specific than the generic research path — don't force every integration through one skill.
-- See also `.cursor/rules/api-integration/RULE.mdc` for the globs-scoped principles this skill implements (`alwaysApply: false`).
+- See also `.claude/rules/api-integration.md` for the globs-scoped principles this skill implements (`alwaysApply: false`).
 
 ### Supabase: `supabase` vs `supabase-postgres-best-practices` vs API research
 

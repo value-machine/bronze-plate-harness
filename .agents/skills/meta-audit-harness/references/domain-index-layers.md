@@ -4,7 +4,7 @@ Audited by **Lens 2** and **Lens 6**.
 
 ## Scope
 
-- `.cursor/rules/INDEX.md` — deep topic map (not short-description SSOT)
+- `documentation/DOC_RULES_INDEX.md` — deep topic map (not short-description SSOT)
 - `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` — layer model + coupling table
 - `ARCHITECTURE.md` — user-facing architecture overview
 
@@ -12,10 +12,10 @@ Audited by **Lens 2** and **Lens 6**.
 
 | Concept | Owner |
 |---------|-------|
-| Short rule descriptions | YAML on `RULE.mdc` + `AGENTS.md` catalog |
+| Short rule descriptions | `AGENTS.md` catalog |
 | Topic bullets / relationships | `INDEX.md` |
 | Skills vs rules vs scripts layers | `DOC_AGENT_WORKFLOW_LAYERS.md` |
-| Enforced structure | `architecture/RULE.mdc` + `ARCHITECTURE.md` overview |
+| Enforced structure | `.claude/rules/architecture.md` + `ARCHITECTURE.md` overview |
 
 ## Common findings
 

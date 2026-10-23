@@ -10,6 +10,8 @@ export default [
   '*.config.ts',
   'eslint.ignores.js',
   'scripts/',
+  'plugins/', // vendored Claude Code plugins (upstream style; own tests)
+  '.claude/skills/', // generated mirror of .agents/skills (agent-sync.config.json)
   'pnpm-lock.yaml',
   'public/',
   'documentation/',

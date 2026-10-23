@@ -7,6 +7,6 @@ Claude Code entry point. `AGENTS.md` is the vendor-neutral SSOT for project memo
 ## Claude Code notes
 
 - **Skills:** the source is `.agents/skills/<name>/SKILL.md` (vendor-neutral). `.claude/skills/` is a generated mirror (`scripts/sync-agent-config.mjs`, refreshed by pre-commit, drift-checked in CI) so the Skill tool lists them — edit the source, never the mirror. For any repo change or workflow request (`/router`, "next", "plan this", "ship it", ...): start from `.agents/skills/router/SKILL.md`, which finds the loop stage (`.agents/skills/router/references/loop-map.md`). Prefer the repo copy over any same-named user-level skill. New skills: `.agents/skills/meta-write-skill/references/skill-template.md` and a row in `.agents/skills/router/references/catalog.md` (`pnpm validate:skills`).
-- **Rules:** bodies live in `.cursor/rules/**/RULE.mdc` (SSOT, also read by Cursor). Open the relevant one on demand; `.claude/rules/*.md` are thin pointers only.
+- **Rules:** `.claude/rules/*.md` load automatically — always-on ones at launch, `paths:` ones when you touch a matching file. Where to edit: `AGENTS.md` § Where to edit agent config.
 - **Tool mapping:** skills written with Cursor wording map as — "Task subagent" → `Agent` tool; "AskQuestion" → `AskUserQuestion`; `~/.cursor/skills-cursor/*` → not available here, skip.
-- **Shell:** Windows. The Bash tool is Git Bash — follow `.cursor/rules/platform/RULE.mdc` § Git Bash; its PowerShell sections apply only in PowerShell.
+- **Shell:** Windows. The Bash tool is Git Bash — follow `.claude/rules/platform.md` § Git Bash; its PowerShell sections apply only in PowerShell.

@@ -46,7 +46,7 @@ Record a one-line signal in the job plan **Notes during development** when the a
 
 ### 0. Context audit
 
-- Read `.cursor/rules/INDEX.md` and any rule files that match the lesson domain.
+- Read `documentation/DOC_RULES_INDEX.md` and any rule files that match the lesson domain.
 - **Deduplicate:** Update an existing subsection if the lesson fits; add new only when no home fits.
 
 ### 1. Inspect what happened
@@ -62,7 +62,7 @@ Summarize in 3–7 bullets: **symptom → root cause → fix** (facts only).
 
 Using the root cause from Step 1, check whether existing guidance **steered the assistant toward** the mistake. While scanning that domain, also flag lines that only restate base knowledge (they load context and add no unique signal).
 
-- **Scan:** Search `.cursor/rules/` and `.agents/skills/` for lines related to the root cause.
+- **Scan:** Search `.claude/rules/` and `.agents/skills/` for lines related to the root cause.
 - **Classify each hit:**
   - **Misleading** — the rule directly caused or encouraged the wrong behavior → recommend **delete** or **rewrite**.
   - **Overly broad** — correct in spirit but its wording invites misapplication → recommend **narrow** (add scope qualifier or exception).
@@ -102,32 +102,32 @@ Pick **one primary** location. Cross-link elsewhere in one line if needed — ne
 
 | Lesson type | Primary location (this repo) |
 |-------------|-------------------------------|
-| `AGENTS.md` catalog drift | Update YAML on `RULE.mdc` first, then `AGENTS.md` row |
-| `.claude/rules/*` thin pointers | `.claude/rules/*.md` — link to `RULE.mdc`, no body copy |
-| Deep topic map | `.cursor/rules/INDEX.md` |
+| `AGENTS.md` catalog drift | Edit the `.claude/rules/<name>.md` file and its `AGENTS.md` row together |
+| Generated mirrors | Never edit `.cursor/rules/*.mdc` or `.claude/skills/`; edit the source and let the hook sync |
+| Deep topic map | `documentation/DOC_RULES_INDEX.md` |
 | Layer / harness coupling | `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` |
-| Architecture overview (human) | `ARCHITECTURE.md` — link to `architecture/RULE.mdc` |
+| Architecture overview (human) | `ARCHITECTURE.md` — link to `.claude/rules/architecture.md` |
 | Subagent brief duplication | Owning skill's `references/subagent-briefs.md` |
-| Postgres migrations, Supabase schema, RLS, idempotent migrations | `.cursor/rules/database/RULE.mdc` |
-| Local dev URLs, `pnpm dev`, env wiring, Supabase setup | `.cursor/rules/platform/RULE.mdc` and/or `README.md` Quick Start |
-| Auth, secrets, validation | `.cursor/rules/security/RULE.mdc` |
-| Folder placement, imports, layers, path aliases | `.cursor/rules/architecture/RULE.mdc` or `.cursor/rules/file-placement/RULE.mdc` |
-| Vitest, coverage, test layout | `.cursor/rules/testing/RULE.mdc` |
-| Branch strategy, PRs, production promotion | `.cursor/rules/git-workflow/RULE.mdc` |
-| Protected files, when to ask the owner, success reporting (verified vs unverified) | `.cursor/rules/agent-behavior/RULE.mdc` |
+| Postgres migrations, Supabase schema, RLS, idempotent migrations | `.claude/rules/database.md` |
+| Local dev URLs, `pnpm dev`, env wiring, Supabase setup | `.claude/rules/platform.md` and/or `README.md` Quick Start |
+| Auth, secrets, validation | `.claude/rules/security.md` |
+| Folder placement, imports, layers, path aliases | `.claude/rules/architecture.md` or `.claude/rules/file-placement.md` |
+| Vitest, coverage, test layout | `.claude/rules/testing.md` |
+| Branch strategy, PRs, production promotion | `.claude/rules/git-workflow.md` |
+| Protected files, when to ask the owner, success reporting (verified vs unverified) | `.claude/rules/agent-behavior.md` |
 | Dev process, loop stages | `.agents/skills/router/references/loop-map.md` + the `loop-*` skills |
 | Changelog, version, commit / PR flow | `.agents/skills/loop-ship/SKILL.md` |
 | Known symptom → fix pattern (repeatable) | `.agents/skills/spec-debug-runtime/references/patterns.md` |
-| Edge Functions vs frontend | `.cursor/rules/cloud-functions/RULE.mdc` |
+| Edge Functions vs frontend | `.claude/rules/cloud-functions.md` |
 | TanStack Query, server state | `ARCHITECTURE.md`, `documentation/DOC_TANSTACK_QUERY.md`, or feature `api/` keys patterns (one primary) |
 | Long procedural workflow | Relevant `.agents/skills/<name>/SKILL.md` |
 | **Product problem, persona, app role (fillable template)** | `documentation/DOC_APP_VISION.md` (onboarding: `.agents/skills/loop-backlog/SKILL.md`) |
 | Reusable multi-step procedure (not a one-line rule) | New or existing `.agents/skills/<name>/SKILL.md` in this repo, or a user-level skill outside the repo |
 | Harness-wide structural conflict | `.agents/skills/meta-audit-harness/SKILL.md` (not ad-hoc multi-file edits) |
 
-Confirm ownership via `.cursor/rules/INDEX.md` and `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
+Confirm ownership via `documentation/DOC_RULES_INDEX.md` and `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
 
-**Procedures vs rules:** Single-line constraints belong in the right `RULE.mdc`. Use a **skill** (this folder pattern or user skills) when the lesson is a reusable workflow the agent should follow step-by-step.
+**Procedures vs rules:** Single-line constraints belong in the right `.claude/rules/<name>.md`. Use a **skill** (this folder pattern or user skills) when the lesson is a reusable workflow the agent should follow step-by-step.
 
 **Tiering:** Use `[CRITICAL]` / `[HINT]` only if the target file already uses that style; otherwise use clear “Always” / “Never” per `.agents/skills/meta-grade-rule/SKILL.md`.
 
@@ -135,7 +135,7 @@ Confirm ownership via `.cursor/rules/INDEX.md` and `documentation/DOC_AGENT_WORK
 
 - Read the target file (or section); match tone and structure.
 - **Imperatives:** Direct verbs (“Always…”, “Never…”).
-- **Examples:** Short `// BAD` / `// GOOD` only where this repo already uses code in that file (e.g. `debug.md` patterns). For `RULE.mdc` edits, prefer concise bullets; follow `.agents/skills/meta-grade-rule/SKILL.md` when tightening prose.
+- **Examples:** Short `// BAD` / `// GOOD` only where this repo already uses code in that file (e.g. `debug.md` patterns). For rule edits, prefer concise bullets; follow `.agents/skills/meta-grade-rule/SKILL.md` when tightening prose.
 - **Minimal diff:** Small subsection or bullet group; merging duplicates in the same section is fine. Large rewrites need **explicit user confirmation**.
 - **Deletions & narrowing (from Step 1b):** When the Reverse Audit flagged misleading, outdated, or **base-knowledge** guidance, present each proposed removal or rewrite to the user **before** applying. Never delete or substantially rewrite rule content without explicit user approval.
 

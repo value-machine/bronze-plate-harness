@@ -22,7 +22,7 @@ When this skill is done, the change has passed every check the repo can run, and
 | Calls | always → [`references/rule-audit.md`](references/rule-audit.md) (mode `impl`, or `gate` when there's no plan) · if UI components were added or changed → [`references/component-lens.md`](references/component-lens.md) · if a heavy operation is involved (`architecture` rule § Performance cost risk) → [`spec-optimize-performance`](../spec-optimize-performance/SKILL.md) · if blocking findings → [`loop-build`](../loop-build/SKILL.md) · if clean → [`loop-ship`](../loop-ship/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-build`](../loop-build/SKILL.md) |
 | Next | [`loop-ship`](../loop-ship/SKILL.md) |
-| Owner stops | None, unless resolving a finding hits the stop list ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)) |
+| Owner stops | None, unless resolving a finding hits the stop list ([`agent-behavior` rule § When to ask](../../../.claude/rules/agent-behavior.md)) |
 
 ## Steps
 

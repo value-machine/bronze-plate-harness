@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Claude Code PreToolUse (Bash) hook: agents never write to `main` in any git workflow mode
- * (git-workflow/RULE.mdc § Mode behavior table invariants).
+ * (.claude/rules/git-workflow.md § Mode behavior table invariants).
  * Blocks `git commit` while `main` is checked out, and any `git push` whose destination is `main`.
  * No override: the user runs bootstrap/emergency commands on `main` themselves.
  *
@@ -16,7 +16,7 @@ const PROTECTED_BRANCH = "main";
 const SEPARATORS = new Set(["&&", "||", ";", "|", "&", "\n"]);
 const GIT_OPTS_WITH_VALUE = new Set(["-C", "-c", "--git-dir", "--work-tree", "--namespace"]);
 const REASON =
-  "Blocked: agents never commit or push to `main` (git-workflow/RULE.mdc § Mode behavior table). " +
+  "Blocked: agents never commit or push to `main` (.claude/rules/git-workflow.md § Mode behavior table). " +
   "Work on a branch and open a PR; if this is a bootstrap or emergency step, the user runs the command themselves.";
 
 /**

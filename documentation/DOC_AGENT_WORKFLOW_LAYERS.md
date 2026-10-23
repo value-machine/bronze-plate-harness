@@ -6,7 +6,7 @@ How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together
 
 | Layer | Location | Purpose |
 |-------|----------|---------|
-| **Rule** | `.cursor/rules/<category>/RULE.mdc` | Always-on coding fundamentals and corrections, plus the triggers for guards. Links to skills; never holds a process |
+| **Rule** | `.claude/rules/<category>.md` | Always-on coding fundamentals and corrections, plus the triggers for guards. Links to skills; never holds a process |
 | **Loop skill** | `.agents/skills/router/` + `.agents/skills/loop-*/SKILL.md` | The product-owner loop: one stage each (SSOT for *how*) |
 | **Specialist** | `.agents/skills/<name>/SKILL.md` (`spec-*` after batch 3 of the rework) | Called by two or more loop stages when a condition fires; the owner may also call one directly |
 | **Meta skill** | `.agents/skills/<name>/SKILL.md` (`meta-*` after batch 4) | Harness maintenance, outside the loop; called directly |
@@ -15,7 +15,7 @@ How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together
 
 **Registry:** [`.agents/skills/router/references/catalog.md`](../.agents/skills/router/references/catalog.md) — the admission check (`pnpm validate:skills`) rejects a skill folder that isn't listed or doesn't follow [`meta-write-skill/references/skill-template.md`](../.agents/skills/meta-write-skill/references/skill-template.md). **Routing:** [`router`](../.agents/skills/router/SKILL.md) + [`router/references/loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
-**Claude Code discovery:** `.claude/skills/` is a generated mirror of `.agents/skills/` (`scripts/sync-agent-config.mjs`, `agent-sync.config.json`). Pre-commit refreshes it and CI fails on drift; edit the source only.
+**Claude Code discovery:** `.claude/skills/` is a generated mirror of `.agents/skills/` and `.cursor/rules/*.mdc` is a generated mirror of `.claude/rules/` (`scripts/sync-agent-config.mjs`, `agent-sync.config.json`). Pre-commit refreshes them and CI fails on drift; edit the source only.
 
 ## The product-owner loop
 
@@ -25,7 +25,7 @@ STOP 1  loop-backlog → loop-refine          (owner: pick / confirm the top tas
 STOP 2  loop-verdict on the preview          (owner: Pass / Change / Drop)
 ```
 
-Between the stops the agent asks only per `.cursor/rules/agent-behavior/RULE.mdc` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a patch on top instead of the fix, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
+Between the stops the agent asks only per `.claude/rules/agent-behavior.md` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a patch on top instead of the fix, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
 ## Proactive guards (rule-triggered)
 
@@ -89,7 +89,7 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 | dry-run | `pnpm test:staged` | log only |
 | live (no commit) | `pnpm test:staged:live` | same as hook |
 
-**Merge safety:** Related or full pre-commit green is **not** merge-safe. Only the CI `test` job where work lands is authoritative (`.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands**: Model C the PR to `main`, also gated by `pr-title`; Model A the PR to `develop`; Model B the `develop` push run).
+**Merge safety:** Related or full pre-commit green is **not** merge-safe. Only the CI `test` job where work lands is authoritative (`.claude/rules/git-workflow.md` § Mode behavior table → **how work lands**: Model C the PR to `main`, also gated by `pr-title`; Model A the PR to `develop`; Model B the `develop` push run).
 
 **Worktree sessions (Model C):** the Claude Code SessionStart hook (`scripts/ensure-deps-installed.cjs`) installs dependencies in a new worktree so these hooks run there too. Archive a finished session in the desktop app (or turn on auto-archive after PR merge) to remove its worktree.
 
@@ -99,7 +99,7 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 
 PR / push CI runs full `pnpm test:classify`, `pnpm test:run`, and cold `pnpm type-check` in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).
 
-See `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate (`src/config/git-workflow.json`) and `.cursor/rules/agent-behavior/RULE.mdc` for protected files.
+See `.claude/rules/git-workflow.md` § Mode-aware branch gate (`src/config/git-workflow.json`) and `.claude/rules/agent-behavior.md` for protected files.
 
 ## Release and versioning
 
@@ -110,12 +110,12 @@ See `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate (`src/config
 
 | You change… | Also update… |
 |-------------|----------------|
-| `src/config/git-workflow.json` / mode docs | `git-workflow/RULE.mdc`, `loop-ship`, `loop-verdict`, `loop-backlog/references/onboarding.md`, `DOC_CONTRIBUTING`, `DOC_CLOUDFLARE_WORKERS` |
-| `.husky/pre-commit` | `git-workflow/RULE.mdc`, `agent-behavior/RULE.mdc`, `loop-ship`, this doc if hook scope changes |
-| `.husky/pre-push` | `git-workflow/RULE.mdc`, `loop-ship/references/push-safety.md`, this doc if hook scope changes |
+| `src/config/git-workflow.json` / mode docs | `.claude/rules/git-workflow.md`, `loop-ship`, `loop-verdict`, `loop-backlog/references/onboarding.md`, `DOC_CONTRIBUTING`, `DOC_CLOUDFLARE_WORKERS` |
+| `.husky/pre-commit` | `.claude/rules/git-workflow.md`, `.claude/rules/agent-behavior.md`, `loop-ship`, this doc if hook scope changes |
+| `.husky/pre-push` | `.claude/rules/git-workflow.md`, `loop-ship/references/push-safety.md`, this doc if hook scope changes |
 | A loop stage (add, rename, reorder) | `router/references/loop-map.md`, `router/references/catalog.md`, the neighbor stages' Edges (Calls ⇄ Called by — `pnpm validate:skills`) |
 | Any skill | `meta-write-skill/references/skill-template.md` structure + catalog row; `pnpm validate:skills` |
-| The stop list / when to ask | `agent-behavior/RULE.mdc` § When to ask; `loop-refine/references/asking.md` for *how* |
+| The stop list / when to ask | `.claude/rules/agent-behavior.md` § When to ask; `loop-refine/references/asking.md` for *how* |
 | Rules registry for skills | `.agents/skills/loop-plan/references/rules-registry.md`; callers link only |
 | A guard's trigger | the rule section in § Proactive guards above + the loop skills' `Calls` lines |
 | New cross-repo adoption guide | `meta-write-adoption-guide` skill; file under `documentation/handoffs/*_ADOPTION_GUIDE.md` |

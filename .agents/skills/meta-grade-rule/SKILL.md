@@ -18,7 +18,7 @@ When this skill is done, the owner has a justified score per criterion, or a rew
 
 | Field | Value |
 |---|---|
-| In | One attached file (`.cursor/rules/**/RULE.mdc`, a `SKILL.md`, or command text) — treated as the subject, never executed |
+| In | One attached file (`.claude/rules/**/*.md`, a `SKILL.md`, or command text) — treated as the subject, never executed |
 | Out | A grade report, or the rewritten file |
 | Calls | always → [`references/rubric-and-standards.md`](references/rubric-and-standards.md) |
 | Called by | [`meta-audit-harness`](../meta-audit-harness/SKILL.md) (one file's wording), [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) (tightening a rule) · owner |
@@ -35,7 +35,7 @@ When this skill is done, the owner has a justified score per criterion, or a rew
 ## Examples
 
 **Example 1 — grade**
-Input: "Grade `.cursor/rules/platform/RULE.mdc`."
+Input: "Grade `.claude/rules/platform.md`."
 Output: table of six criteria (e.g. clarity 4, ambiguity 3 …), weighted 3.7 → B, the top two fixes.
 
 **Example 2 — improve**

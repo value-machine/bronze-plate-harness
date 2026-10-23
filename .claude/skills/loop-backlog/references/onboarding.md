@@ -17,7 +17,7 @@ Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seede
 
 - **Skip Supabase (task #1)** and **Cloudflare hosting (task #2)**. No project, no Workers Builds link, no `.env` required for most template work. The app runs locally without auth configured.
 - **App vision (task #3):** may stay **`DRAFT`** while exploring or contributing to the template; do not block template PRs on it unless the change is product-facing.
-- **Still do:** prerequisites, branch workflow (SSOT: `src/config/git-workflow.json` + `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate), `pnpm dev`, and the verification checklist (§ Mandatory verification checklist).
+- **Still do:** prerequisites, branch workflow (SSOT: `src/config/git-workflow.json` + `.claude/rules/git-workflow.md` § Mode-aware branch gate), `pnpm dev`, and the verification checklist (§ Mandatory verification checklist).
 
 **Working on a fork** (someone cloned this to build their own app): full backlog applies — Supabase, hosting, vision **`ACTIVE`**, etc.
 
@@ -110,15 +110,15 @@ If assistant cannot perform the fork UI step, instruct user exactly what to clic
 
 > Claude Code defaults — PR to `main`, merge = production (Model C, default), feature branches → `develop` (Model A), or direct `develop` (Model B)?
 
-Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-a"` | `"model-b"`). Then walk `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **fork setup**, **`main` ruleset**, **`develop` ruleset** for the chosen column. Behavior SSOT is that table — do not restate it here.
+Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-a"` | `"model-b"`). Then walk `.claude/rules/git-workflow.md` § Mode behavior table → **fork setup**, **`main` ruleset**, **`develop` ruleset** for the chosen column. Behavior SSOT is that table — do not restate it here.
 
-**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches (`documentation/DOC_CLOUDFLARE_WORKERS.md`). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
+**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches, and **no `NODE_VERSION` build variable** on either the Production or the Previews tab — it overrides `.node-version` and the `preinstall` guard then fails the build, release-please's branch included (`documentation/DOC_CLOUDFLARE_WORKERS.md` § build variables). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
 
 **Model A / B:** create `develop` from `main` once (`git push origin main:develop`).
 
 - **Model A:** `git switch develop && git pull origin develop`, then `git switch -c feature/<name>`.
 - **Model B:** `git switch develop && git pull origin develop`; do **not** create `feature/*` for daily work. **Ruleset confirmation gate (B — required):** confirm the live `develop` ruleset matches the table (user confirmation or `gh api repos/OWNER/REPO/rules/branches/develop`): `pull_request` **absent**; `required_status_checks` (`test`) present; `non_fast_forward` + `deletion` present. Do not proceed on click-path instructions alone.
-- **First-promotion bootstrap (A/B):** once the promote workflow file exists on `develop`, `main` is fast-forwarded once — **the user runs** the command in `.cursor/rules/git-workflow/RULE.mdc` § Promote to production § First promotion bootstrap (agents are blocked from writing to `main`). Use **Promote to production** thereafter.
+- **First-promotion bootstrap (A/B):** once the promote workflow file exists on `develop`, `main` is fast-forwarded once — **the user runs** the command in `.claude/rules/git-workflow.md` § Promote to production § First promotion bootstrap (agents are blocked from writing to `main`). Use **Promote to production** thereafter.
 
 If steps are web-UI only, provide exact click-path and wait for user confirmation.
 

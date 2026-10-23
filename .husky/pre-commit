@@ -1,3 +1,11 @@
+# cursor-migration: rebuild generated agent-config mirrors from staged files (see agent-sync.config.json).
+# Fails open; CI and pre-push run `node scripts/sync-agent-config.mjs --check` strictly.
+if command -v node >/dev/null 2>&1; then
+  node scripts/sync-agent-config.mjs --staged || true
+else
+  echo "pre-commit: node not found; .claude/skills not synced (install Node, then run node scripts/sync-agent-config.mjs)"
+fi
+
 # Pre-commit hook — staged tests, type-check, and structural validators on full path.
 # SSOT: scripts/change-classify.cjs, scripts/test-staged.cjs
 # Policy: documentation/DOC_AGENT_WORKFLOW_LAYERS.md § Local git
@@ -10,9 +18,7 @@ pnpm lint-staged || exit 1
 echo "Running feature documentation validation for staged files..."
 pnpm validate:feature-docs:staged || exit 1
 
-# Agent skills: refresh the generated .claude/skills mirror (fails open; CI --check is strict),
-# then the skill admission check on every path (SSOT: scripts/validate-skills.cjs)
-node scripts/sync-agent-config.mjs --staged || true
+# Skill admission check on every path (SSOT: scripts/validate-skills.cjs)
 pnpm validate:skills || exit 1
 
 # Light path: docs, migrations, or tooling-only — skip tests, type-check, structure, feature-size, arch

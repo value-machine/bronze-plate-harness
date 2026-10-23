@@ -2,7 +2,7 @@
 
 How version bumps on `develop` relate to feature work, production promotion, and **`loop-ship`**.
 
-Mode: `src/config/git-workflow.json`. Behavior: `.cursor/rules/git-workflow/RULE.mdc`.
+Mode: `src/config/git-workflow.json`. Behavior: `.claude/rules/git-workflow.md`.
 
 ## Model A — feature branches
 
@@ -37,4 +37,4 @@ Mode: `src/config/git-workflow.json`. Behavior: `.cursor/rules/git-workflow/RULE
 
 - Layer model: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Release and versioning
 - Commit/changelog SSOT: `.agents/skills/loop-ship/SKILL.md`
-- Branch strategy SSOT: `.cursor/rules/git-workflow/RULE.mdc`
+- Branch strategy SSOT: `.claude/rules/git-workflow.md`
