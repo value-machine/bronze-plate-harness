@@ -85,5 +85,5 @@ Breadth-first by layer (D30). Each batch is one PR. Old skills are deleted in th
 
 | Item | Status |
 |---|---|
-| Batch 0 protected writes | Approved (D61) |
+| Batch 0 protected writes | Approved (D61) · built in `19da0a8` |
 | Batches 1–4 (protected writes; deleting 30 v0.42.0 skills) | Pending, per batch |
