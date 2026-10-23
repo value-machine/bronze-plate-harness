@@ -22,6 +22,8 @@ Updated: 2026-10-23
 | D13 | Target loop skill set | closed | 8 loop skills: `refine-request` (Stop 1: grill-me + router backlog intake + feature reqs + prime-on-demand + size estimate), `plan` (absorbs feature, plan-grill, plan-grill-auto, quick-piv as XS/S depth, review-dev-plan as M/L step), `implement` (+D7 dependency stop), `validate`, `ship` (finish + push + bundle-ship + git-workflow PR/CI steps), `review-preview` (Stop 2 + close), `ask-protocol` (D9 shared), slim `router` (locate position in loop, resume). | grill-me | Rejected: ~5-skill merge, separate quick-piv fast path, no router. Specialists, rules and meta skills sorted later. |
 | D14 | Where next directions come from | closed | A `backlog-management` stage runs at the start of Stop 1, before `/refine-request`: agent reviews the backlog order and suggests priority changes; PO confirms. Base: TMI-apps/MILA `.agents/skills/backlog-management/SKILL.md`. | grill-me | Backlog file order stays the priority SSOT; agent proposes, PO confirms (no silent reorder). Integrate before refine-request. |
 | D15 | backlog-management port shape | closed | Port the generic core from MILA: catch-up (archive landed tasks via git log + changelog + archive evidence), prioritize (full proposed order, one-line reason per move, PO confirms top), hand off to `/refine-request`. Signal steps (error/feedback read, status write-back, link/orphan tasks) become an optional adapter section an app enables once it has such tables. | grill-me | Rejected: port whole + add tables, tasks-only, Stop-2-feedback-only. |
+| D16 | Backlog ranking criteria | closed | Blockers/prerequisites first; then value (vision fit + PO feedback) ÷ size estimate (D12), cheapest high-value first. With the signal adapter on, add impact × frequency. | grill-me | Rejected: vision-only, keep-PO-order-flag-only, PO value tags. |
+| D17 | Stop 2 feedback → backlog | closed | Non-blocking Stop 2 feedback ("later", nice-to-have, newly noticed gaps) is written as backlog tasks; Stop 2's "propose next bets" runs backlog-management's prioritize step. | grill-me | clear-winner: keeps one priority SSOT (app-tasks.json) and makes PO test feedback the default signal. |
 
 ## Open
 
@@ -39,4 +41,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D13 closed via grill-me (asked)
 - 2026-10-23 — D14 closed via grill-me (PO stated)
 - 2026-10-23 — D15 closed via grill-me (asked)
+- 2026-10-23 — D16 closed via grill-me (asked); D17 clear-winner
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
