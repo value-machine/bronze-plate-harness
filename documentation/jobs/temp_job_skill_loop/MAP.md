@@ -87,6 +87,19 @@ Loop shape today (dev-cycle-matrix): direction → plan → review → implement
 | `rule-quality` | 201 | Same |
 | `write-adoption-guide` | 169 | Exports patterns to other repos |
 
+## Target loop (D10, D13)
+
+| Loop part | Target skill | Absorbs |
+|---|---|---|
+| Stop 1 Bet | `refine-request` | `grill-me`, `router` backlog intake, `feature` requirements, `prime` (on demand), size estimate (D12) |
+| Plan | `plan` (depth by size) | `feature`, `plan-grill`, `plan-grill-auto`, `quick-piv`, `review-dev-plan` (M/L) |
+| Build | `implement` | + D7 new-dependency stop |
+| Check | `validate` | — |
+| Ship (to PR preview) | `ship` | `finish`, `push`, `bundle-ship`, `git-workflow` PR/CI steps |
+| Stop 2 Review + close | `review-preview` | `finish` § User test, decision promotion, `learn` trigger, next bets |
+| Shared | `ask-protocol` | `grill-me` § Question style, `agent-behavior` § Decision Questioning Protocol |
+| Dispatch | `router` (slim) | locate loop position, resume |
+
 ## Overlap clusters to work through one by one
 
 | # | Cluster | Members | Status |

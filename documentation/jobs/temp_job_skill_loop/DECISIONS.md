@@ -19,6 +19,7 @@ Updated: 2026-10-23
 | D12 | Appetite / size estimate | closed | Agent estimates size (XS–L) from: the first refinement (`/refine-request` output) + the edges it touches + the refactor work needed for a clean implementation (cleanup is part of the size, not a separate optional job). Estimate is shown in the Stop 1 summary; PO may object. A recorded estimate counts as an earlier choice, so overrun → D3 conflict stop. | grill-me | PO is not asked to guess size. Confirmation step not stated by PO → shown-in-summary default (agent inference). Names Stop 1's first step `/refine-request`. |
 | D10 | Loop shape | closed | STOP 1 Bet: agent proposes 2–3 ranked next directions → PO picks → `/refine-request` (refine, scope) → size estimate (D12). Autonomous: Plan → Build → Check → PR with preview; interrupts only D3, D6, D7, estimate overrun. STOP 2 Review on preview: pass → land / fix → inner loop (Build → Check → preview, no re-bet) / rethink → back to refine. Autonomous close: land, promote decisions to DOC_PRODUCT_DECISIONS.md, `learn` only on troubled laps, propose next bets. | grill-me | Agent proposal at PO's request ("improve this using all your wisdom"); PO engaged and amended via D11/D12. Prioritize moved to the front of Stop 1. |
 | D11 | Stop 2 timing | closed | PO tests the PR preview before landing; only a pass merges. Amends D2 ("test the shipped update" → "test the preview"). | grill-me | Rejected: test after landing, size-dependent, feature flags. |
+| D13 | Target loop skill set | closed | 8 loop skills: `refine-request` (Stop 1: grill-me + router backlog intake + feature reqs + prime-on-demand + size estimate), `plan` (absorbs feature, plan-grill, plan-grill-auto, quick-piv as XS/S depth, review-dev-plan as M/L step), `implement` (+D7 dependency stop), `validate`, `ship` (finish + push + bundle-ship + git-workflow PR/CI steps), `review-preview` (Stop 2 + close), `ask-protocol` (D9 shared), slim `router` (locate position in loop, resume). | grill-me | Rejected: ~5-skill merge, separate quick-piv fast path, no router. Specialists, rules and meta skills sorted later. |
 
 ## Open
 
@@ -33,4 +34,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D9 closed (clear-winner); D10, D11 opened (agent loop proposal, awaiting PO)
 - 2026-10-23 — D12 closed via grill-me (PO stated)
 - 2026-10-23 — D10, D11 closed via grill-me (asked)
+- 2026-10-23 — D13 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
