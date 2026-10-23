@@ -188,10 +188,11 @@ Called by loop stages, never the owner's entry point (D1).
 | `spec-optimize-performance` | `optimize2` (efficiency levels), `react-perf-vite` | Finds performance hotspots and fixes them at the right level. | plan, check | ❓ C8 |
 | `spec-score-component` | `review` | Scores one UI component against the quality rubric. | check | ❓ C8 |
 | `spec-remove-feature` | `purge-skill` | Fully removes a feature or module and its trailing references. | plan (removal work) | ✅ |
-| `spec-check-layer` | `layer-consistency-check` | Verifies the system assumption behind a behavior change; flags a workaround shape → D7(b). | refine, build | ❓ C9 |
-| `spec-name-mechanism` | `name-the-mechanism` | Names shared code by role; marks the second copy, extracts the third. | build | ❓ C9 |
+| `spec-check-layer` | `layer-consistency-check` (rubric + alert only; core → `architecture` rule, D33) | Workaround-shape rubric and alert, called when the `architecture` rule's assumption check fires; flags patch-on-top → D7(b). | `architecture` rule trigger in refine, build | ✅ |
 
 Removed without replacement: `improve` (an owner-facing front door to specialists breaks D1) ❓ C8.
+
+Moved into rules (D33): `name-the-mechanism` → `code-style` rule body.
 
 ## 3. Meta (`meta-*`)
 
@@ -216,7 +217,6 @@ Harness maintenance, onboarding and overlays — outside the product loop.
 |---|---|
 | C7 | Does `spec-debug-runtime` also absorb the process half of the `debugging` rule? |
 | C8 | Is the "make better" group one specialist with lenses (`spec-deepen-modules`) or several; does `spec-score-component` survive? |
-| C9 | Are `spec-check-layer` / `spec-name-mechanism` rules (always-on corrections, D1) or specialists? |
 | C10 | Which process parts leave the rules (`workflow`, `agent-behavior`, `git-workflow`, `debugging`) and which loop skill takes them? |
 | C11 | Do meta skills keep owner entry points (they sit outside the product loop), and do `align-harness` + `tighten-harness` merge? |
 | C12 | Covered by `loop-route-next` above — confirm. |
