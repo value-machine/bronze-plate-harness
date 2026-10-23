@@ -1,214 +1,197 @@
 # Phase 1 catalog — replacement skills: names, descriptions, edges
 
-Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Decisions: [`DECISIONS.md`](DECISIONS.md) · v0.42.0 map: [`MAP.md`](MAP.md)
+Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Decisions: [`DECISIONS.md`](DECISIONS.md) (D1–D54) · v0.42.0 map: [`MAP.md`](MAP.md)
 
-**Phase 1 scope (D30):** every replacement skill gets a name (D32), a draft `description`, and its edges. No skill bodies yet — phase 2 builds them on one recurring structure.
+**Phase 1 scope (D30):** every replacement skill gets a name (D32, D39), a draft `description`, and its edges. No skill bodies yet — phase 2 builds them on one recurring structure.
 
-**Edge fields (D31):** **Trigger** (when it runs) · **In** (what it reads) · **Out** (what it writes) · **Calls** (skills it invokes) · **Called by** · **Next** (hand-off) · **PO stops** (when it may stop for the product owner).
+**Edge fields (D31):** **Trigger** · **In** (reads) · **Out** (writes) · **Calls** (`if <condition> → <skill or reference>`, D53) · **Called by** · **Next** · **Owner stops**.
 
-**Status:** ✅ edges follow from closed decisions · ❓ open — needs a PO call (listed in § Open edges).
+**Specialist threshold (D53):** a specialist is its own skill only when ≥ 2 stages call it; otherwise it is a reference file inside its single caller.
 
 ---
 
 ## Loop map
 
 ```text
-loop-route-next (dispatcher: where in the loop are we?)
+router (single entry: where in the loop are we?)
    │
-   ▼
-STOP 1 ── loop-manage-backlog ──► loop-refine-request
-                                        │
-AUTONOMOUS                              ▼
-   loop-plan-change ──► loop-build-change ──► loop-check-change ──► loop-ship-change
-        ▲                     ▲                                          │
-        │                     └────── Fix round ──────────┐              ▼
-STOP 2 ─┴── Rethink ◄──────────────────────────── loop-review-preview ◄──┘
-                                                       │ Pass
-                                                       ▼
-                                         land → close → loop-manage-backlog
+STOP 1 ── loop-backlog ──► loop-refine ── ends with "Building: X. Not: Y. Size: S." (no wait)
+                               │
+AUTONOMOUS                     ▼
+   loop-plan ──► loop-build ──► loop-check ──► loop-ship ──► preview
+                                                               │
+STOP 2 ──────────────────────────────────────── loop-verdict ◄─┘
+     Pass   → merge (C) / promote (A/B) → loop-backlog
+     Change → feedback = new top request → loop-refine
+     Drop   → close PR → loop-backlog
 
-All loop stages ask through loop-ask-owner (shared protocol).
+Waiting on owner (Stop 2, or a parked always-ask question) = one state; the agent pulls the next task (D45, D46).
+Sizes XS / S / M only; larger work is cut into ≤ M laps (D44).
 ```
 
+**When the agent asks** lives in the `agent-behavior` rule (D40). A *choice* = ≥ 2 options with different results that outlast the lap (user-visible, data, cost, code structure). Ask only when it is on the always-ask list — conflict with a recorded decision, new dependency, patch-on-top vs structural fix, data / irreversible change, cost or external service — or a true tie, **and** it cannot be derived from vision, decisions or code. **How to ask** is the shared reference `loop-refine/references/asking.md` (one question per turn, real options + a challenge option, answer logged), linked by every loop skill.
+
+**Where decisions live (D48):** feature README, app vision, or rule — next to what they govern. Job `DECISIONS.md` is lap scratch on the branch, folded into those homes before merge.
+
 ---
 
-## 1. Loop skills (`loop-*`)
+## 1. Router + loop skills
 
-### `loop-route-next` ✅
-Replaces: `router` (dispatch only), `prime` (as an on-demand step).
+### `router`
+Replaces: `router` (dispatch only).
 
-> Finds where the current work sits in the product-owner loop and runs that stage. Use on any new chat, bare "next" / `/router`, or when it is unclear which stage applies. New chat or unfamiliar repo: loads repo context first. Never picks specialists for the owner.
+> Single entry point. Finds where the current work sits in the loop (backlog, refine, plan, build, check, ship, verdict, or waiting on the owner) and runs that stage. Requests with no repo change are answered directly, not as a lap (D54).
 
 | Field | Value |
 |---|---|
-| Trigger | New chat; "next"; ambiguous request; resume after interruption |
-| In | Job folder state (`BRIEF.md`, `DECISIONS.md`, plan), `git status`, open PR state, `src/config/app-tasks.json` |
+| Trigger | New chat; "next"; any request; resume after interruption |
+| In | `git status`, branches, open PRs + previews, `src/config/app-tasks.json`, job folders |
 | Out | One line `Next: <stage>` |
-| Calls | `spec-load-context` (new chat / unfamiliar repo) |
-| Called by | Owner; any stage that loses its place |
+| Calls | if new chat or unfamiliar repo → `spec-load-context` |
+| Called by | Owner |
 | Next | The stage it found |
-| PO stops | None |
+| Owner stops | None |
 
-### `loop-ask-owner` ✅ (shared protocol, D9)
-Replaces: `grill-me` § Question style, `plan-grill` / `plan-grill-auto` mechanics, `agent-behavior` § Decision Questioning Protocol.
+### `loop-backlog` (Stop 1, part 1)
+Replaces: `router` backlog intake; `start` onboarding (D41). Port base: MILA `backlog-management` (D14–D17).
 
-> Shared protocol for when and how any loop stage asks the product owner. Ask only on: a conflict with a logged decision, a true tie after enumerating options, a new dependency, a patch-on-top vs structural fix, data / irreversible changes, cost or external services. One question per turn, real options plus a challenge option, every answer logged. Supports an "away" switch.
-
-| Field | Value |
-|---|---|
-| Trigger | Referenced by every loop stage before it locks a choice |
-| In | `documentation/DOC_PRODUCT_DECISIONS.md`, job `DECISIONS.md`, app vision |
-| Out | `DECISIONS.md` rows (asked / clear-winner / agent-pick) |
-| Calls | — |
-| Called by | Every `loop-*` stage |
-| Next | Back to the calling stage |
-| PO stops | Defines them: D3 conflict, D6 tie, D7 dependency / patch-on-top, D20 data / cost. Away switch (D24): decide ties, queue the rest for Stop 2 |
-
-### `loop-manage-backlog` ✅ (Stop 1, part 1)
-Replaces: `router` backlog intake. Port base: MILA `backlog-management` (D14–D17, D26).
-
-> Opens Stop 1. Puts anything the owner points at on top of the backlog. Otherwise catches up the backlog against landed work, proposes a ranked order (blockers first, then value per size), and asks the owner to confirm the top item. Optional signal adapter for apps with error or feedback tables.
+> Opens Stop 1. Puts anything the owner points at on top (D26). Otherwise catches up the backlog against landed work and proposes a ranked order: blockers first (untested previews, seeded onboarding tasks), then value per size. Owner confirms the top item. Optional signal adapter for error / feedback tables; post-release watch happens here (D52).
 
 | Field | Value |
 |---|---|
-| Trigger | Stop 1 opens: new direction, owner request, close of the previous lap |
-| In | `app-tasks.json` + archive, git log, changelog, Stop 2 feedback tasks, app vision; signal tables when the adapter is on |
+| Trigger | Stop 1: owner request, Pass or Drop at Stop 2, idle `router` |
+| In | `app-tasks.json` + archive, git log, changelog, open previews, app vision; signal tables when the adapter is on |
 | Out | Reordered `app-tasks.json`; top task `in-progress` |
-| Calls | `loop-ask-owner` (confirm the top item) |
-| Called by | `loop-route-next`; `loop-review-preview` (close) |
-| Next | `loop-refine-request` |
-| PO stops | Confirm the top item when the order changes (skipped when the owner just named the task) |
+| Calls | — |
+| Called by | `router`; `loop-verdict` |
+| Next | `loop-refine` |
+| Owner stops | Confirm the top item when the order changes (skipped when the owner named the task) |
 
-### `loop-refine-request` ✅ (Stop 1, part 2)
-Replaces: `grill-me`, `feature` (requirements part), the size estimate.
+### `loop-refine` (Stop 1, part 2)
+Replaces: `grill-me`, `feature` (requirements part), size estimate.
 
-> Turns the top backlog task (feature or bug) into a brief the agent can plan from. Reads the task, vision, decision log and code; drafts `BRIEF.md` silently; asks the owner only about gaps it cannot infer, true ties, and impactful choices. Estimates the size from the touched edges and the cleanup a clean implementation needs.
-
-| Field | Value |
-|---|---|
-| Trigger | After `loop-manage-backlog` picks the task; Rethink from Stop 2 |
-| In | Task, app vision, `DOC_PRODUCT_DECISIONS.md`, code around the touched edges |
-| Out | `documentation/jobs/temp_job_<slug>/BRIEF.md` (problem, success check, in / out, edges, size XS–L); `DECISIONS.md` rows. User stories only when the work spans roles or journeys and size ≥ M |
-| Calls | `loop-ask-owner`; `spec-load-context` when context is missing; `spec-debug-runtime` (reproduce only, for bugs) |
-| Called by | `loop-manage-backlog`; `loop-review-preview` (Rethink) |
-| Next | `loop-plan-change` (always; size sets the depth) |
-| PO stops | Only via `loop-ask-owner` |
-
-### `loop-plan-change` ✅
-Replaces: `plan`, `feature` (D8), `plan-grill`, `plan-grill-auto` (D24), `quick-piv` (XS/S depth), `review-dev-plan` + `validate` plan-review (merged, D23).
-
-> Writes the build plan at a depth set by the size estimate. XS/S: a short inline plan. M/L: a full plan plus one merged review (critique lenses plus rule compliance, run in parallel; must-fixes applied). Includes cleanup of an unclean foundation, done by a specialist. No owner sign-off.
+> Turns the top task — feature, bug, or Stop 2 feedback — into a brief the agent can plan from. Reads the task, vision, and the READMEs and code of the touched edges; drafts `BRIEF.md` silently; asks only per the `agent-behavior` stop list. Sizes the work XS / S / M from edges plus the cleanup a clean implementation needs, cutting anything larger into ≤ M laps. Ends with one restatement line; no wait.
 
 | Field | Value |
 |---|---|
-| Trigger | After `loop-refine-request` |
-| In | `BRIEF.md`, `DECISIONS.md`, rules, code |
-| Out | XS/S: plan section in `BRIEF.md`. M/L: `DEVELOPMENT_PLAN.md` + Amendments |
-| Calls | `loop-ask-owner`; `spec-deepen-modules` (D21/D22); `spec-reuse-package`; `spec-research-api`; `spec-review-precedent`; review lenses (M/L) |
-| Called by | `loop-refine-request` |
-| Next | `loop-build-change` |
-| PO stops | Only via `loop-ask-owner` |
+| Trigger | After `loop-backlog`; Change verdict |
+| In | Task, app vision, feature READMEs of touched edges, rules, code |
+| Out | `documentation/jobs/temp_job_<slug>/BRIEF.md` (problem, success check, in / out, **listed edges**, size); lap `DECISIONS.md`; follow-up backlog tasks when work is cut into laps |
+| Calls | if repo context missing → `spec-load-context`; if bug → `spec-debug-runtime` (reproduce only); if the request changes existing behavior → `spec-check-layer` (via `architecture` rule); if the user flow is in question → `spec-simplify-flow` |
+| Called by | `loop-backlog` |
+| Next | `loop-plan` |
+| Owner stops | Stop list only (D40) |
 
-### `loop-build-change` ✅
-Replaces: `implement`; the implement half of `quick-piv`.
+### `loop-plan`
+Replaces: `plan`, `feature`, `plan-grill`, `plan-grill-auto`, `quick-piv`, `review-dev-plan` + `validate` plan-review (D23); absorbs four former specialists as references (D53).
 
-> Builds the plan phase by phase with each phase's gate. Stops for the owner before adding a dependency, or before choosing a patch-on-top over the structural fix. Stops if the work outgrows the size estimate.
-
-| Field | Value |
-|---|---|
-| Trigger | After `loop-plan-change`; Fix round from Stop 2 |
-| In | Plan, `DECISIONS.md` |
-| Out | Code + tests; plan progress |
-| Calls | `loop-ask-owner`; `spec-debug-runtime` (failures); `spec-reuse-package` (before a new dependency) |
-| Called by | `loop-plan-change`; `loop-review-preview` (Fix) |
-| Next | `loop-check-change` |
-| PO stops | D7 dependency / patch-on-top; size overrun (D12) — via `loop-ask-owner` |
-
-### `loop-check-change` ✅
-Replaces: `validate` (impl-review half).
-
-> Audits the built change against the plan and repo rules with parallel read-only lenses, then fixes contract findings before shipping. No owner stop.
+> Writes the build plan at a depth set by the size. First turns the brief's success check into a failing test (D49). XS / S: short plan in `BRIEF.md`. M: `DEVELOPMENT_PLAN.md` plus one merged review (critique + rule compliance, parallel; must-fixes applied). Plans the cleanup of an unclean foundation as part of the work. No owner sign-off.
 
 | Field | Value |
 |---|---|
-| Trigger | After `loop-build-change` |
+| Trigger | After `loop-refine` |
+| In | `BRIEF.md`, lap `DECISIONS.md`, rules, code |
+| Out | Failing acceptance test; plan (in `BRIEF.md` or `DEVELOPMENT_PLAN.md`) |
+| Calls | if touched modules are shallow, duplicated, badly named or misplaced → `references/deepen-modules.md` (port of MILA `improve-codebase-architecture`, D22); if an external API or vendor is involved → `references/research-api.md`; if material UX / API / architecture design at size M → `references/review-precedent.md`; if work removes a feature or module → `references/remove-feature.md`; if generic subsystem → `spec-reuse-package`; if the user flow grows → `spec-simplify-flow`; if perf-sensitive → `spec-optimize-performance` |
+| Called by | `loop-refine` |
+| Next | `loop-build` |
+| Owner stops | Stop list only |
+
+### `loop-build`
+Replaces: `implement`; implement half of `quick-piv`.
+
+> Builds the plan phase by phase until the acceptance test passes. Stops on the stop list (new dependency, patch-on-top). Stops when the diff touches a feature area outside the brief's listed edges (D51). Folds lap decisions into their homes (feature README / vision / rule) as it goes.
+
+| Field | Value |
+|---|---|
+| Trigger | After `loop-plan` |
+| In | Plan, acceptance test, lap `DECISIONS.md` |
+| Out | Code + tests; updated feature READMEs; plan progress |
+| Calls | if a test or runtime fails unexpectedly → `spec-debug-runtime`; if a new package is needed → `spec-reuse-package` (then owner stop); if the diff starts to look like a workaround → `spec-check-layer` (via `architecture` rule) |
+| Called by | `loop-plan` |
+| Next | `loop-check` |
+| Owner stops | Stop list; edge overrun |
+
+### `loop-check`
+Replaces: `validate` (impl-review); `review` as a UI lens (D35); `workflow` rule hand-off checklist (D34).
+
+> Runs the acceptance test, the suite, rule lint and the hand-off checklist; at size M also the parallel lens review. Fixes contract findings, then hands to ship. No owner stop.
+
+| Field | Value |
+|---|---|
+| Trigger | After `loop-build` |
 | In | Diff, plan, rules |
-| Out | Findings → fixes; check summary for Stop 2 |
-| Calls | Rule lenses; UI component lens (from `review`, D35) on UI changes; `spec-optimize-performance` when perf-sensitive |
-| Called by | `loop-build-change` |
-| Next | `loop-ship-change`; back to `loop-build-change` on blocking findings |
-| PO stops | None |
+| Out | Fixes; check summary for Stop 2 |
+| Calls | if UI components changed → `references/component-lens.md` (from `review`); if perf-sensitive → `spec-optimize-performance` |
+| Called by | `loop-build` |
+| Next | `loop-ship`; back to `loop-build` on blocking findings |
+| Owner stops | None |
 
-### `loop-ship-change` ✅
-Replaces: `finish`, `push`, `bundle-ship`, `git-workflow` PR / CI-watch steps (D25).
+### `loop-ship`
+Replaces: `finish`, `push`, `bundle-ship`, `git-workflow` PR / CI-watch / promote steps (D25, D34).
 
-> Commits, pushes and opens the PR with a preview link, then drives CI to green. Never merges — merging waits for the owner's pass at Stop 2.
-
-| Field | Value |
-|---|---|
-| Trigger | After `loop-check-change` passes |
-| In | Working tree, `git-workflow.json` mode |
-| Out | Commit(s), PR, preview link, green CI |
-| Calls | `spec-debug-runtime` (CI failures) |
-| Called by | `loop-check-change` |
-| Next | `loop-review-preview` |
-| PO stops | None |
-
-### `loop-review-preview` ✅ (Stop 2 + close)
-Replaces: `finish` § User test; close duties (decision promotion, `learn` trigger, next bets).
-
-> Stop 2. Hands the owner test steps for the preview, plus any queued away-mode decisions. Pass → merge, promote decisions to `DOC_PRODUCT_DECISIONS.md`, run lessons when the lap had trouble, then reopen the backlog. Fix → back to build. Rethink → back to refine. Non-blocking feedback becomes backlog tasks.
+> Commits, pushes, opens the PR with a preview link, and drives CI to green. Never merges or promotes on its own — that waits for the owner's Pass.
 
 | Field | Value |
 |---|---|
-| Trigger | After `loop-ship-change` |
-| In | PR + preview, check summary, queued decisions |
-| Out | Merge; `DOC_PRODUCT_DECISIONS.md` rows; backlog tasks from feedback |
-| Calls | `loop-ask-owner`; `meta-learn-lessons` (troubled laps only) |
-| Called by | `loop-ship-change` |
-| Next | Pass → `loop-manage-backlog`; Fix → `loop-build-change`; Rethink → `loop-refine-request` |
-| PO stops | Stop 2 itself |
+| Trigger | After `loop-check`; Pass from `loop-verdict` (merge / promote) |
+| In | Working tree, `src/config/git-workflow.json` mode |
+| Out | Commits, PR, preview link, green CI; merge or promote on Pass |
+| Calls | if CI fails → `spec-debug-runtime` |
+| Called by | `loop-check`; `loop-verdict` |
+| Next | `loop-verdict` |
+| Owner stops | None |
+
+### `loop-verdict` (Stop 2)
+Replaces: `finish` § User test; close duties.
+
+> Stop 2, before production (D47). Gives the owner test steps for the preview, the decision lines this PR changes, and any rule changes it carries. Pass → merge (C) or promote (A / B), archive the task. Change → lessons run first on the same PR, then the feedback becomes a new top request. Drop → close the PR.
+
+| Field | Value |
+|---|---|
+| Trigger | After `loop-ship` |
+| In | PR + preview, check summary, PR diff of decision homes (READMEs, vision, rules) |
+| Out | Merge / promote, or closed PR; feedback as backlog tasks |
+| Calls | if verdict is not Pass → `meta-learn-lessons` (commits to the same PR); Pass → `loop-ship` to merge / promote |
+| Called by | `loop-ship` |
+| Next | Pass / Drop → `loop-backlog`; Change → `loop-backlog` (feedback on top) → `loop-refine` |
+| Owner stops | Stop 2 itself; Pass counts as consent for listed protected-rule changes (D50) |
 
 ---
 
-## 2. Specialists (`spec-*`)
+## 2. Specialists (`spec-*`) — each called by ≥ 2 stages
 
-Called by loop stages, never the owner's entry point (D1).
+| Name | Replaces | Description (draft) | Called by (condition) |
+|---|---|---|---|
+| `spec-load-context` | `prime` | Loads repo structure, rules, git mode and open laps for a new or unfamiliar session. | `router` (new chat), `loop-refine` (context missing) |
+| `spec-debug-runtime` | `debug`, `hypothesis`, `debugging` rule strategy (D34) | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | `loop-refine` (bug: reproduce), `loop-build` (unexpected failure), `loop-ship` (CI red) |
+| `spec-reuse-package` | `dont-reinvent-the-wheel` | Checks for a maintained package or known pattern before custom generic code; a new dependency is an owner stop. | `loop-plan` (generic subsystem), `loop-build` (new package) |
+| `spec-simplify-flow` | `challenge`, `standards-align` (D35) | Cuts steps and complexity from one user flow, aligned with common practice. | `loop-refine` (flow in question), `loop-plan` (flow grows) |
+| `spec-optimize-performance` | `optimize2` efficiency levels, `react-perf-vite` (D35) | Finds performance hotspots and fixes them at the right level. | `loop-plan`, `loop-check` (perf-sensitive) |
+| `spec-check-layer` | `layer-consistency-check` rubric + alert (core → `architecture` rule, D33) | Workaround-shape rubric and alert; a confirmed patch-on-top is an owner stop. | `architecture` rule trigger in `loop-refine` and `loop-build` |
 
-| Name | Replaces | Description (draft) | Called by | Status |
-|---|---|---|---|---|
-| `spec-load-context` | `prime` | Loads repo structure, rules, git mode and active jobs for a new or unfamiliar session. | `loop-route-next`, `loop-refine-request` | ✅ |
-| `spec-debug-runtime` | `debug`, `hypothesis`, `debugging` rule strategy (D34) | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | refine (reproduce), build, ship | ✅ |
-| `spec-deepen-modules` | MILA `improve-codebase-architecture` (D22), `consolidate`, `modularity-review`, `optimize2` design/approach levels (D35) | Finds shallow, duplicated, badly named, misplaced or hard-to-replace modules on the change's path and proposes the cleanup. | `loop-plan-change` | ✅ |
-| `spec-reuse-package` | `dont-reinvent-the-wheel` | Checks for a maintained package or known pattern before custom generic code; a new dependency goes to the owner (D7). | plan, build | ✅ |
-| `spec-research-api` | `api-integrate` | Researches an external API or vendor (MCP first, schema then sample) before integration code. | plan | ✅ |
-| `spec-review-precedent` | `pattern-review` | Compares a plan or proposal to industry practice. | plan (M/L, material design) | ✅ |
-| `spec-simplify-flow` | `challenge`, `standards-align` | Cuts steps and complexity from one flow; aligns with common practice. | refine, plan | ✅ |
-| `spec-optimize-performance` | `optimize2` (efficiency levels), `react-perf-vite` | Finds performance hotspots and fixes them at the right level. | plan, check | ✅ |
-| `spec-remove-feature` | `purge-skill` | Fully removes a feature or module and its trailing references. | plan (removal work) | ✅ |
-| `spec-check-layer` | `layer-consistency-check` (rubric + alert only; core → `architecture` rule, D33) | Workaround-shape rubric and alert, called when the `architecture` rule's assumption check fires; flags patch-on-top → D7(b). | `architecture` rule trigger in refine, build | ✅ |
+**Became references inside `loop-plan` (D53):** `deepen-modules` (MILA `improve-codebase-architecture` + `consolidate` + `modularity-review` + `optimize2` design levels), `research-api` (`api-integrate`), `review-precedent` (`pattern-review`), `remove-feature` (`purge-skill`). **Inside `loop-check`:** `component-lens` (`review`).
 
-Removed without replacement: `improve` (an owner-facing front door to specialists breaks D1, D35). `review` → UI lens inside `loop-check-change` (D35).
+**Moved into rules:** `name-the-mechanism` → `code-style` (D33); stop list + choice definition → `agent-behavior` (D40).
 
-Moved into rules (D33): `name-the-mechanism` → `code-style` rule body.
+**Deleted:** `improve` (D35), `loop-ask-owner` (D40), `start` / `meta-onboard-app` (D41), `bundle-ship` (D45).
 
-## 3. Meta (`meta-*`)
+## 3. Meta (`meta-*`) — outside the product loop, owner may call directly (D36)
 
-Harness maintenance, onboarding and overlays — outside the product loop.
-
-| Name | Replaces | Description (draft) | Called by | Status |
-|---|---|---|---|---|
-| `meta-learn-lessons` | `learn` | Turns a troubled lap's failures into rule or skill updates. | `loop-review-preview` | ✅ |
-| `meta-audit-harness` | `align-harness`, `tighten-harness` (D36) | One harness audit with two lenses: coherence and context cost. | Owner; `meta-write-skill` after a skill change | ✅ |
-| `meta-intake-harness` | `update-harness` | Takes in external harness content from the inbox and feeds findings into `meta-audit-harness`. | Owner | ✅ |
-| `meta-write-skill` | `create-skill` | Sole path for adding or changing a skill: recurring structure, naming, edges, catalog entry; then `meta-audit-harness`. Backed by a commit / CI admission check (D37). | Owner, `meta-learn-lessons`, any agent editing a skill | ✅ |
-| `meta-grade-rule` | `rule-quality` | Grades or rewrites one rule file. | Owner, `meta-audit-harness` | ✅ |
-| `meta-write-adoption-guide` | `write-adoption-guide` | Writes a cross-repo adoption guide for an implemented pattern. | Owner | ✅ |
-| `meta-onboard-app` | `start` | First-time setup and app vision, before the first loop lap. | Owner | ✅ |
-| `meta-compress-output` | `caveman` | Ultra-brief output overlay. | Owner | ✅ |
+| Name | Replaces | Description (draft) | Called by |
+|---|---|---|---|
+| `meta-write-skill` | `create-skill` | Sole path for adding or changing a skill: recurring structure, naming, edges, catalog entry; backed by a commit / CI admission check (D37). Ends with `meta-audit-harness` and `meta-write-adoption-guide`. | Owner, `meta-learn-lessons`, any agent editing a skill |
+| `meta-audit-harness` | `align-harness`, `tighten-harness` (D36) | One harness audit, two lenses: coherence and context cost. | Owner, `meta-write-skill`, `meta-intake-harness` |
+| `meta-intake-harness` | `update-harness` | Takes in external harness content (including fork adoption notes) and feeds findings into `meta-audit-harness`. | Owner |
+| `meta-write-adoption-guide` | `write-adoption-guide` | Writes the fork-facing porting note for a landed harness change, including any rename map (D42). | `meta-write-skill`, `meta-audit-harness` |
+| `meta-learn-lessons` | `learn` | Turns a non-Pass lap's failures into rule or skill updates on the same PR. | `loop-verdict` (non-Pass) |
+| `meta-grade-rule` | `rule-quality` | Grades or rewrites one rule file. | Owner, `meta-audit-harness` |
+| `meta-compress-output` | `caveman` | Ultra-brief output overlay. | Owner |
 
 ---
+
+**Count:** 21 skills (`router` + 7 loop + 6 specialists + 7 meta), down from 37 in v0.42.0.
 
 ## Open edges
 
-None — C7–C12 closed (D33–D38). Phase 1 ready for owner sign-off.
+None. Phase 1 ready for owner sign-off.
