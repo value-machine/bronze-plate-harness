@@ -136,6 +136,17 @@
       }
     ]
   },
+  "extraKnownMarketplaces": {
+    "tmi-apps": {
+      "source": {
+        "source": "github",
+        "repo": "TMI-apps/MILA"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "cursor-migration@tmi-apps": true
+  },
   "outputStyle": "default",
   "plansDirectory": "./documentation/jobs"
 }
