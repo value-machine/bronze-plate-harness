@@ -430,52 +430,14 @@ test('rewriteText: specific old paths in a sentence about legacy copies stay for
   );
 });
 
-function withHome(files, fn) {
-  const home = createFixtureRepo(files, {commit: false});
-  const previous = process.env.CURSOR_MIGRATION_HOME;
-  process.env.CURSOR_MIGRATION_HOME = home.dir;
-  try {
-    return fn();
-  } finally {
-    process.env.CURSOR_MIGRATION_HOME = previous;
-    home.cleanup();
-  }
-}
-
-test('personal skills that shadow repo skills are listed with a guided step', () => {
+test('personal skills are a manual check: the inventory never reads the home folder', () => {
   const skill = body => `---\nname: x\ndescription: d\n---\n${body}\n`;
-  const repo = createFixtureRepo({
-    '.agents/skills/finish/SKILL.md': skill('repo finish'),
-    '.agents/skills/tdd/SKILL.md': skill('same'),
-  });
+  const repo = createFixtureRepo({'.agents/skills/finish/SKILL.md': skill('repo finish')});
   try {
-    const inventory = withHome(
-      {
-        '.claude/skills/finish/SKILL.md': skill('personal finish'),
-        '.claude/skills/tdd/SKILL.md': skill('same'),
-        '.claude/skills/solo/SKILL.md': skill('only personal'),
-        '.agents/skills/canvas/SKILL.md': skill('a'),
-        '.cursor/skills-cursor/canvas/SKILL.md': skill('b'),
-      },
-      () =>
-        buildInventory(repo.dir, {keepCursor: true, templatePath: TEMPLATE}),
-    );
-    assert.deepEqual(inventory.userConfig, {
-      shadowedSkills: [
-        {name: 'finish', identical: false},
-        {name: 'tdd', identical: true},
-      ],
-      cursorUserDuplicates: ['canvas'],
-    });
-    const ids = inventory.guidedSteps.map(step => step.id);
-    assert.ok(ids.includes('personal-skills-shadow'));
-    assert.ok(ids.includes('cursor-user-duplicates'));
-    const report = renderReport(inventory);
-    assert.match(report, /Different from the repo version: `finish`\./);
-    assert.match(
-      report,
-      /Same as the repo version \(safe to delete\): `tdd`\./,
-    );
+    const inventory = buildInventory(repo.dir, {keepCursor: true, templatePath: TEMPLATE});
+    assert.ok(!('userConfig' in inventory));
+    assert.ok(inventory.guidedSteps.some(step => step.id === 'personal-skills-shadow'));
+    assert.match(renderReport(inventory), /compare the folder names with `\.agents\/skills`/);
   } finally {
     repo.cleanup();
   }
@@ -501,7 +463,7 @@ test('guided steps only appear when they apply', () => {
   const withMcp = ids(FIXTURES.mdc(), true);
   assert.ok(withMcp.includes('claude-approve-mcp'));
   assert.ok(withMcp.includes('cursor-third-party-configs'));
-  assert.ok(!withMcp.includes('personal-skills-shadow'));
+  assert.ok(withMcp.includes('personal-skills-shadow'), 'repo has skills: manual check shown');
 });
 
 test('rewriteText: an old path next to its new home on one line stays for review', async () => {

@@ -13,13 +13,6 @@ import {
 import {tmpdir} from 'node:os';
 import {dirname, join, relative, sep} from 'node:path';
 
-// Inventory reads user-level skill folders from the home folder; tests use an empty one so
-// results never depend on the machine. A test can point it at its own fixture home.
-process.env.CURSOR_MIGRATION_HOME ??= join(
-  tmpdir(),
-  'cursor-migration-empty-home',
-);
-
 /** Repo-relative path with forward slashes, for stable snapshots on Windows. */
 export function toPosix(p) {
   return p.split(sep).join('/');

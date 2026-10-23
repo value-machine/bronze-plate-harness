@@ -57,7 +57,7 @@ The skill:
 
 It never commits. You review `git status` and commit with your normal workflow.
 
-All state lives under `.git/cursor-migration/` (inventory, report, applied changes, byte backups). Nothing outside the repo is changed: app settings and files in your home folder are guided steps in the report.
+All state lives under `.git/cursor-migration/` (inventory, report, applied changes, byte backups). Nothing outside the repo is read or changed: app settings and files in your home folder are guided steps in the report.
 
 ## What changes in the repo
 
@@ -88,7 +88,7 @@ The skill prints the exact command. It restores every path the last apply change
 - **Codex:** reads `AGENTS.md` and `.agents/skills`; no Codex-specific files are generated.
 - **Nested configs** (a `.cursor/` or `AGENTS.md` below the repo root) are reported, not converted.
 - **lefthook and the pre-commit framework:** the hook step is added by hand from the snippet in the report.
-- **Personal skills:** a skill in `~/.claude/skills` with the same name as a repo skill hides the repo version in Claude Code. The report lists these; deciding is up to you.
+- **Personal skills:** a skill in `~/.claude/skills` with the same name as a repo skill hides the repo version in Claude Code. The plugin never reads your home folder, so the report gives the check as a guided step; deciding is up to you.
 
 ## Development
 

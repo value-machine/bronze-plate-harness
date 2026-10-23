@@ -21,7 +21,6 @@ import {
 } from './environment.mjs';
 import {buildGuidedSteps} from './guided.mjs';
 import {buildJudgment} from './judgment.mjs';
-import {readUserConfig} from './user.mjs';
 
 export const INVENTORY_SCHEMA_VERSION = 1;
 const PLUGIN_MANIFEST = new URL('../../.claude-plugin/plugin.json', import.meta.url);
@@ -172,7 +171,6 @@ export function buildInventory(root, {keepCursor, templatePath, excludes = []}) 
     excluded: listExclusions(root),
     bytesAdded: bytesAdded(rules),
     sourceHashes: hashSources(root, cursor),
-    userConfig: readUserConfig(root, new Set([...agentsSkillNames, ...cursorSkills.map(row => row.name)])),
   };
   inventory.judgment = buildJudgment(inventory);
   inventory.guidedSteps = buildGuidedSteps(inventory);

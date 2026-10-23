@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generator": "cursor-migration inventory v0.2.0",
+  "generator": "cursor-migration inventory v0.3.0",
   "keepCursor": true,
   "excludes": [],
   "environment": {
@@ -199,10 +199,6 @@
     "AGENTS.md": "acefe40767acf5fa80ede1ae0701bbdb43dc181881a3287e64eee275a9fea0f4",
     "CLAUDE.md": "f27e066ee2b4a320a80de4094b25fe20cd07330021a9fcdf2966bdc0d4da175c"
   },
-  "userConfig": {
-    "shadowedSkills": [],
-    "cursorUserDuplicates": []
-  },
   "judgment": [
     {
       "id": "J1",
@@ -259,6 +255,17 @@
       ]
     },
     {
+      "id": "personal-skills-shadow",
+      "tool": "Claude Code",
+      "title": "Check for personal skills that hide repo skills",
+      "steps": [
+        "Claude Code runs a personal skill (`~/.claude/skills/<name>`) instead of a repo skill with the same name, so the repo version never loads on that machine.",
+        "List your personal skills (`~/.claude/skills`; on Windows `%USERPROFILE%\\.claude\\skills`) and compare the folder names with `.agents/skills`.",
+        "Per match, choose: delete the personal copy (the repo version loads), rename it (both load; the personal one under the new name), or keep it (the repo version stays hidden for you).",
+        "`~/.claude/skills` is shared by every project on this machine. Check other repos before deleting."
+      ]
+    },
+    {
       "id": "claude-cloud-sessions",
       "tool": "Claude Code",
       "title": "Cloud sessions",
@@ -281,7 +288,8 @@
       "title": "Third-party configs toggle",
       "steps": [
         "Cursor Settings → \"Include third-party Plugins, Skills, and other configs\" decides whether Cursor also reads Claude Code config such as `.claude/skills`.",
-        "Either setting works here: `.claude/skills` is an exact copy of `.agents/skills`, and Cursor shows a skill found in both once."
+        "Either setting works here: `.claude/skills` is an exact copy of `.agents/skills`, and Cursor shows a skill found in both once.",
+        "Cursor does not merge user-level folders: a skill in both `~/.agents/skills` and `~/.cursor/skills-cursor` shows twice. `~/.cursor/skills-cursor` is managed by Cursor; remove the copy in `~/.agents/skills` if you did not put it there on purpose."
       ]
     }
   ]
