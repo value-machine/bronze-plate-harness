@@ -88,7 +88,7 @@ When `code-style/RULE.mdc` § Naming requires a rename or extraction, updating r
    - Only proceed after user explicitly approves the specific change
    - After receiving explicit user approval, proceed to make the change yourself
 
-2. **Consent at Stop 2:** a rule or skill change that a lap carries (for example lessons from `learn`) and that the `loop-verdict` handoff card **lists** is approved by the owner's **Pass**. An unlisted protected-file change is never covered (D50).
+2. **Consent at Stop 2:** a rule or skill change that a lap carries (for example lessons from `meta-learn-lessons`) and that the `loop-verdict` handoff card **lists** is approved by the owner's **Pass**. An unlisted protected-file change is never covered (D50).
 
 3. **Never assume consent:**
    - Even if the fix seems obvious, always ask

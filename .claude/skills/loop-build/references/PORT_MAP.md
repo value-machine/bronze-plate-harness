@@ -1,6 +1,6 @@
 # Port map — loop-build
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). `quick-piv` is shared with `loop-plan`.
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). `quick-piv` is shared with `loop-plan`.
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

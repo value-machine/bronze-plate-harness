@@ -1,6 +1,6 @@
 # Port map — loop-refine
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). `feature` is shared with `loop-plan` (Phase 3–4 rows live in [`loop-plan/references/PORT_MAP.md`](../../loop-plan/references/PORT_MAP.md)).
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). `feature` is shared with `loop-plan` (Phase 3–4 rows live in [`loop-plan/references/PORT_MAP.md`](../../loop-plan/references/PORT_MAP.md)).
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

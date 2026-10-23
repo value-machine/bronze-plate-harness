@@ -1,6 +1,6 @@
 # Port map — loop-check
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). `validate` is shared with `loop-plan` (plan-review mode).
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). `validate` is shared with `loop-plan` (plan-review mode).
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

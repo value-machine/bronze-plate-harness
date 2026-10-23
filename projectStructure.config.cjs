@@ -16,7 +16,7 @@
  */
 /**
  * One skill folder layout, shared by .agents/skills (SSOT) and its generated
- * .claude/skills mirror. Template: .agents/skills/create-skill/references/skill-template.md
+ * .claude/skills mirror. Template: .agents/skills/meta-write-skill/references/skill-template.md
  */
 const SKILL_FOLDERS = [
   {

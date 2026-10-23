@@ -104,4 +104,4 @@ Next: owner pick workaround vs structural alternative → then implement / plan 
 - [`spec-simplify-flow`](../../spec-simplify-flow/SKILL.md) — should/how industry align on existing scope
 - [`loop-plan → deepen-modules`](../../loop-plan/references/deepen-modules.md) — semantic placement repair (post-hoc)
 - [`router` tiebreaks](../../router/references/tiebreaks.md) § precedent review (`loop-plan`) vs `spec-check-layer`
-- [`learn`](../../learn/SKILL.md) — persist lessons from resolved workaround debates
+- [`meta-learn-lessons`](../../meta-learn-lessons/SKILL.md) — persist lessons from resolved workaround debates

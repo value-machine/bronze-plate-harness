@@ -82,4 +82,4 @@ For a one-line obvious typo or a clear stack trace pointing at a single line, ju
 |------------------|-------------|
 | Default runtime incident (first pass) | [`scientific-method.md`](scientific-method.md) |
 | Obvious one-line fix | Fix directly |
-| Persist reusable bug class | [`patterns.md`](patterns.md) via `loop-ship` or `learn` |
+| Persist reusable bug class | [`patterns.md`](patterns.md) via `loop-ship` or `meta-learn-lessons` |

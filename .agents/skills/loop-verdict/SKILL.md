@@ -20,7 +20,7 @@ description: >-
 |---|---|
 | In | PR and preview link, check summary, `BRIEF.md` success check, PR diff of decision homes (feature READMEs, `documentation/DOC_APP_VISION.md`, `.cursor/rules/**`, `.agents/skills/**`), parked questions, plan **Notes during development** |
 | Out | Merge / promotion (via `loop-ship`), archived task, closed PR, or feedback tasks on the backlog; lessons committed to the same PR |
-| Calls | if the verdict is Pass → [`loop-ship`](../loop-ship/SKILL.md) (merge / promote) · if the verdict is Change or Drop (any non-Pass counts as trouble, D50) → [`learn`](../learn/SKILL.md) · after any verdict → [`loop-backlog`](../loop-backlog/SKILL.md) |
+| Calls | if the verdict is Pass → [`loop-ship`](../loop-ship/SKILL.md) (merge / promote) · if the verdict is Change or Drop (any non-Pass counts as trouble, D50) → [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) · after any verdict → [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-ship`](../loop-ship/SKILL.md) |
 | Next | [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Owner stops | Stop 2 itself — one question, Pass / Change / Drop ([`loop-refine/references/asking.md`](../loop-refine/references/asking.md)) |
@@ -34,13 +34,13 @@ description: >-
    2. Archive the task: remove it from `src/config/app-tasks.json` and append `{ title, description, status: "done" }` to `src/config/app-tasks-archive.json`, in the same commit as other changes to those files. Under Model C, commit the archive on the lap branch before merging.
    3. Non-blocking remarks become new backlog tasks after the current top one (D17).
 4. **Change:**
-   1. Run [`learn`](../learn/SKILL.md): a non-Pass verdict is the trouble signal (D50). Feed it the verdict plus any red CI, size overrun, or mistake signals in **Notes during development**, and commit its rule or skill edits to this PR, so the next Pass approves them.
+   1. Run [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md): a non-Pass verdict is the trouble signal (D50). Feed it the verdict plus any red CI, size overrun, or mistake signals in **Notes during development**, and commit its rule or skill edits to this PR, so the next Pass approves them.
    2. Write the feedback as the top backlog task, linked to this lap (same branch and PR; a fix round stays on the PR, D11).
    3. Hand to [`loop-backlog`](../loop-backlog/SKILL.md), which starts it at once (owner-named task, D26) → `loop-refine` sizes the fix depth (D50).
 5. **Drop:**
    1. Close the PR. Its lap decisions vanish with the branch, because they only land through the merge (D48).
    2. Archive the task with `status: "done"` and a `dropped: <one-line reason>` note in the description.
-   3. Run [`learn`](../learn/SKILL.md) (a Drop is a non-Pass verdict). With no PR left to ride, its edits become one backlog task ("lessons from <lap>"), placed after the current top. Then go to [`loop-backlog`](../loop-backlog/SKILL.md).
+   3. Run [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) (a Drop is a non-Pass verdict). With no PR left to ride, its edits become one backlog task ("lessons from <lap>"), placed after the current top. Then go to [`loop-backlog`](../loop-backlog/SKILL.md).
 6. **Report faithfully** (`agent-behavior` rule § Success Validation): what was verified by checks, and what only the owner's test can tell.
 
 ## Examples

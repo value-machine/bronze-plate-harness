@@ -6,7 +6,7 @@ User-level and plugin skills the loop may hand to. Read by [`../SKILL.md`](../SK
 
 | Situation | Skill |
 |-----------|--------|
-| Author or refine a project skill under `.agents/skills/` | [`create-skill`](../../create-skill/SKILL.md) (this repo's SSOT; `~/.cursor/skills-cursor/create-skill` is reference-only here) |
+| Author or refine a project skill under `.agents/skills/` | [`meta-write-skill`](../../meta-write-skill/SKILL.md) (this repo's SSOT; `~/.cursor/skills-cursor/create-skill` is reference-only here) |
 | Migrate `.mdc` rules / slash commands → skills | `~/.cursor/skills-cursor/migrate-to-skills/SKILL.md` |
 | Create `.cursor/rules` `.mdc` guidance | `~/.cursor/skills-cursor/create-rule/SKILL.md` |
 | Cursor hooks (`hooks.json`, hook scripts) | `~/.cursor/skills-cursor/create-hook/SKILL.md` |

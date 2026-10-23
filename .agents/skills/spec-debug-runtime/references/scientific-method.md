@@ -238,7 +238,7 @@ For small follow-up turns, a compact version is fine, but it must still mention 
 
 ## Next
 
-When the user **confirms** the issue is resolved, optionally offer **`.agents/skills/learn/SKILL.md`** to persist reusable lessons. For commit/changelog, **`.agents/skills/loop-ship/SKILL.md`** only when the user requests it.
+When the user **confirms** the issue is resolved, optionally offer **`.agents/skills/meta-learn-lessons/SKILL.md`** to persist reusable lessons. For commit/changelog, **`.agents/skills/loop-ship/SKILL.md`** only when the user requests it.
 
 ---
 
@@ -248,6 +248,6 @@ When the user **confirms** the issue is resolved, optionally offer **`.agents/sk
 |-------------|-------------|
 | Pre-registered experiment after failed fixes | `spec-debug-runtime` |
 | Known small scoped fix | `loop-plan` (XS/S) |
-| Persist lessons after resolution | `learn` |
+| Persist lessons after resolution | `meta-learn-lessons` |
 | Plan-driven feature work | `loop-build` |
 | Commit / push / PR | `loop-ship` |

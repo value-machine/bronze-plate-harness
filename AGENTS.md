@@ -21,7 +21,7 @@ Layer model: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
 
 **Package / pattern reuse:** `.agents/skills/spec-reuse-package/SKILL.md` (before custom generic subsystems).
 
-**Harness maintenance:** Coherence audit → `.agents/skills/align-harness/SKILL.md`. Context-cost pruning → `.agents/skills/tighten-harness/SKILL.md`. External intake → drop in `.agents/harness-inbox/` then `.agents/skills/update-harness/SKILL.md`.
+**Harness maintenance:** Coherence audit and context-cost pruning → `.agents/skills/meta-audit-harness/SKILL.md`. External intake → drop in `.agents/harness-inbox/` then `.agents/skills/meta-intake-harness/SKILL.md`.
 
 ## Rules
 

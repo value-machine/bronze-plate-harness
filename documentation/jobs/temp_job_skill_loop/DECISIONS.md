@@ -74,6 +74,7 @@ Updated: 2026-10-23
 | D65 | Onboarding home | closed | `start`'s ordered gates live in `loop-backlog/references/onboarding.md`; each seeded task's description points at its gate. | batch 2 | Refines D41 (keeps the walkthrough — weak spot #10). |
 | D66 | Loop → specialist links during the transition | closed | Until batch 3, loop skills call the v0.42.0 specialists by their current names (`debug`, `prime`, `challenge`, `optimize2`, `dont-reinvent-the-wheel`, `layer-consistency-check`, `learn`); batch 3/4 swaps the links to `spec-*` / `meta-*` and makes Calls ⇄ Called by reciprocal. | batch 2 | No skill links a folder that doesn't exist. |
 | D67 | What the `debugging` rule keeps after the split | closed | The rule keeps Logs, API troubleshooting, filtering / pagination, the reductive strategy and user test instructions — always-on corrections (D1), also for features. Only scope reduction and test planning move to `spec-debug-runtime/references/strategy.md`; the scientific-method procedure and hypothesis mode live in that skill. Merged pairs (`debug` + `hypothesis`, `challenge` + `standards-align`, `optimize2` + `react-perf-vite`) lose their router tiebreaks; the skill picks the mode. | batch 3 | One home per instruction; no tiebreak between modes of one skill. |
+| D68 | Meta layer build | closed | The seven `meta-*` skills keep their source bodies verbatim as references; `meta-audit-harness` holds two lenses (`coherence-audit.md`, `context-cost.md`) and owns `harness_scan`. The skill template and port-map format move to `meta-write-skill`. Slash phrases the owner types (`/learn`, `/caveman`, `/create-skill`) stay in descriptions as triggers. The fork porting note with the full rename map is `documentation/handoffs/SKILL_LOOP_ADOPTION_GUIDE.md`. No v0.42.0 skill is left (legacy allowlist empty). | batch 4 | No aliases (D42); forks apply the map via `meta-intake-harness`. |
 
 ## Open
 
@@ -110,4 +111,5 @@ Updated: 2026-10-23
 - D58–D61 closed via template review (PO: update PHASE2, build batch 0)
 - D62–D66 closed (batches 1–2)
 - D67 closed (batch 3)
+- D68 closed (batch 4)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)

@@ -13,7 +13,7 @@ How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together
 | **Human doc** | `documentation/DOC_*.md` | Product and process narrative for people and agents |
 | **Enforcement** | `.husky/*`, `scripts/*`, `.github/workflows/*` | Machine checks; shared helpers in `scripts/*.cjs` |
 
-**Registry:** [`.agents/skills/router/references/catalog.md`](../.agents/skills/router/references/catalog.md) — the admission check (`pnpm validate:skills`) rejects a skill folder that isn't listed or doesn't follow [`create-skill/references/skill-template.md`](../.agents/skills/create-skill/references/skill-template.md). **Routing:** [`router`](../.agents/skills/router/SKILL.md) + [`router/references/loop-map.md`](../.agents/skills/router/references/loop-map.md).
+**Registry:** [`.agents/skills/router/references/catalog.md`](../.agents/skills/router/references/catalog.md) — the admission check (`pnpm validate:skills`) rejects a skill folder that isn't listed or doesn't follow [`meta-write-skill/references/skill-template.md`](../.agents/skills/meta-write-skill/references/skill-template.md). **Routing:** [`router`](../.agents/skills/router/SKILL.md) + [`router/references/loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
 **Claude Code discovery:** `.claude/skills/` is a generated mirror of `.agents/skills/` (`scripts/sync-agent-config.mjs`, `agent-sync.config.json`). Pre-commit refreshes it and CI fails on drift; edit the source only.
 
@@ -55,11 +55,11 @@ On-demand, outside the loop: should-we-align with industry practice → [`spec-s
 
 | Item | Path |
 |------|------|
-| How to write a guide | `.agents/skills/write-adoption-guide/SKILL.md` |
+| How to write a guide | `.agents/skills/meta-write-adoption-guide/SKILL.md` |
 | Output folder (config in skill) | `documentation/handoffs/` |
-| Template + voice rules | `.agents/skills/write-adoption-guide/references/adoption-guide-template.md`, `references/voice-and-naming.md` |
+| Template + voice rules | `.agents/skills/meta-write-adoption-guide/references/adoption-guide-template.md`, `references/voice-and-naming.md` |
 
-Copy `write-adoption-guide/` to other projects and adjust the skill **Configuration** block (output folder, repo display name).
+Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Configuration** block (output folder, repo display name).
 
 ## Local git: commit → push (`loop-ship`)
 
@@ -114,18 +114,19 @@ See `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate (`src/config
 | `.husky/pre-commit` | `git-workflow/RULE.mdc`, `agent-behavior/RULE.mdc`, `loop-ship`, this doc if hook scope changes |
 | `.husky/pre-push` | `git-workflow/RULE.mdc`, `loop-ship/references/push-safety.md`, this doc if hook scope changes |
 | A loop stage (add, rename, reorder) | `router/references/loop-map.md`, `router/references/catalog.md`, the neighbor stages' Edges (Calls ⇄ Called by — `pnpm validate:skills`) |
-| Any skill | `create-skill/references/skill-template.md` structure + catalog row; `pnpm validate:skills` |
+| Any skill | `meta-write-skill/references/skill-template.md` structure + catalog row; `pnpm validate:skills` |
 | The stop list / when to ask | `agent-behavior/RULE.mdc` § When to ask; `loop-refine/references/asking.md` for *how* |
 | Rules registry for skills | `.agents/skills/loop-plan/references/rules-registry.md`; callers link only |
 | A guard's trigger | the rule section in § Proactive guards above + the loop skills' `Calls` lines |
-| New cross-repo adoption guide | `write-adoption-guide` skill; file under `documentation/handoffs/*_ADOPTION_GUIDE.md` |
+| New cross-repo adoption guide | `meta-write-adoption-guide` skill; file under `documentation/handoffs/*_ADOPTION_GUIDE.md` |
 
 ## Related
 
 - Loop map: `.agents/skills/router/references/loop-map.md`
 - Skill registry: `.agents/skills/router/references/catalog.md`
-- Skill template: `.agents/skills/create-skill/references/skill-template.md`
-- Write adoption guides: `.agents/skills/write-adoption-guide/SKILL.md`
+- Skill template: `.agents/skills/meta-write-skill/references/skill-template.md`
+- Write adoption guides: `.agents/skills/meta-write-adoption-guide/SKILL.md`
+- Fork porting note for the skill loop (rename map): `documentation/handoffs/SKILL_LOOP_ADOPTION_GUIDE.md`
 - Doc hub: `documentation/DOC_INDEX.md`
 - Changesets: `documentation/DOC_CHANGESETS.md`
 - App vision: `documentation/DOC_APP_VISION.md`

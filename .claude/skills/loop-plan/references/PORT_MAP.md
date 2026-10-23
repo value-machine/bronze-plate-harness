@@ -1,6 +1,6 @@
 # Port map — loop-plan
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). Shared sources: `feature` (with `loop-refine`), `quick-piv` (with `loop-build`), `validate` (with `loop-check`). `optimize2` design levels arrive with `spec-optimize-performance` in batch 3.
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). Shared sources: `feature` (with `loop-refine`), `quick-piv` (with `loop-build`), `validate` (with `loop-check`). `optimize2` design levels arrive with `spec-optimize-performance` in batch 3.
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

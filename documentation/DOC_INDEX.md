@@ -14,10 +14,10 @@ Central navigation for plate-harness documentation. For authoritative rules and 
 | **Agent: plan, build, check (loop-plan, loop-build, loop-check)** | [`loop-plan`](../.agents/skills/loop-plan/SKILL.md), [`loop-build`](../.agents/skills/loop-build/SKILL.md), [`loop-check`](../.agents/skills/loop-check/SKILL.md) |
 | **Agent: ship and Stop 2 (loop-ship, loop-verdict)** | [`loop-ship`](../.agents/skills/loop-ship/SKILL.md), [`loop-verdict`](../.agents/skills/loop-verdict/SKILL.md) |
 | **Agent: skill registry** | [`.agents/skills/router/references/catalog.md`](../.agents/skills/router/references/catalog.md) |
-| **Agent: write adoption guides (write-adoption-guide)** | [`.agents/skills/write-adoption-guide/SKILL.md`](../.agents/skills/write-adoption-guide/SKILL.md) |
+| **Agent: write adoption guides** | [`.agents/skills/meta-write-adoption-guide/SKILL.md`](../.agents/skills/meta-write-adoption-guide/SKILL.md) |
 | **Agent workflow layers (skills vs rules)** | [DOC_AGENT_WORKFLOW_LAYERS.md](./DOC_AGENT_WORKFLOW_LAYERS.md) — includes **The product-owner loop** |
 | **Handoffs (portable notes)** | [handoffs/README.md](./handoffs/README.md) |
-| **Agent skill: persist lessons (learn)** | [`.agents/skills/learn/SKILL.md`](../.agents/skills/learn/SKILL.md) |
+| **Agent skill: persist lessons** | [`.agents/skills/meta-learn-lessons/SKILL.md`](../.agents/skills/meta-learn-lessons/SKILL.md) |
 | **Architecture** | [ARCHITECTURE.md](../ARCHITECTURE.md) |
 | **Architecture migration** | [DOC_ARCHITECTURE_MIGRATION_INSTRUCTIONS.md](./DOC_ARCHITECTURE_MIGRATION_INSTRUCTIONS.md) |
 | **Agent: human onboarding** | [`loop-backlog/references/onboarding.md`](../.agents/skills/loop-backlog/references/onboarding.md) |

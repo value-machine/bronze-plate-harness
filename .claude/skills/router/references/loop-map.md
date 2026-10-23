@@ -41,6 +41,6 @@ Find laps by listing `documentation/jobs/temp_job_*/BRIEF.md` on local and remot
 | Request | Where |
 |---|---|
 | Question with no repo change | Answer directly (D54) |
-| Harness maintenance (skills, rules, audits, intake, adoption guides) | `meta-*` skills, called directly (D36). Until batch 4 of the rework: [`create-skill`](../../create-skill/SKILL.md), [`align-harness`](../../align-harness/SKILL.md), [`tighten-harness`](../../tighten-harness/SKILL.md), [`update-harness`](../../update-harness/SKILL.md), [`rule-quality`](../../rule-quality/SKILL.md), [`learn`](../../learn/SKILL.md), [`write-adoption-guide`](../../write-adoption-guide/SKILL.md) |
+| Harness maintenance (skills, rules, audits, intake, adoption guides) | `meta-*` skills, called directly (D36): [`meta-write-skill`](../../meta-write-skill/SKILL.md), [`meta-audit-harness`](../../meta-audit-harness/SKILL.md), [`meta-intake-harness`](../../meta-intake-harness/SKILL.md), [`meta-write-adoption-guide`](../../meta-write-adoption-guide/SKILL.md), [`meta-learn-lessons`](../../meta-learn-lessons/SKILL.md), [`meta-grade-rule`](../../meta-grade-rule/SKILL.md) |
 | One-off specialist work, called directly (D57); a resulting repo change becomes a backlog task | [`spec-load-context`](../../spec-load-context/SKILL.md), [`spec-debug-runtime`](../../spec-debug-runtime/SKILL.md), [`spec-reuse-package`](../../spec-reuse-package/SKILL.md), [`spec-simplify-flow`](../../spec-simplify-flow/SKILL.md), [`spec-optimize-performance`](../../spec-optimize-performance/SKILL.md), [`spec-check-layer`](../../spec-check-layer/SKILL.md) |
-| Ultra-brief output | [`caveman`](../../caveman/SKILL.md) (overlay) |
+| Ultra-brief output | [`meta-compress-output`](../../meta-compress-output/SKILL.md) (overlay) |

@@ -1,6 +1,6 @@
 # Port map — loop-backlog
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). Base: TMI-apps/MILA `backlog-management` (not a v0.42.0 skill; its generic core is SKILL.md, its signal steps are references/signal-adapter.md, D15). The v0.42.0 `router` headings are mapped in [`router/references/PORT_MAP.md`](../../router/references/PORT_MAP.md).
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). Base: TMI-apps/MILA `backlog-management` (not a v0.42.0 skill; its generic core is SKILL.md, its signal steps are references/signal-adapter.md, D15). The v0.42.0 `router` headings are mapped in [`router/references/PORT_MAP.md`](../../router/references/PORT_MAP.md).
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

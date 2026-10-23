@@ -57,4 +57,4 @@ Debug: symptom <…> · chain <step → … → failure> · hypotheses H1 <statu
 |---|---|
 | Scoping how deep the fix goes | [`loop-refine`](../loop-refine/SKILL.md) |
 | Slow or heavy code without a defect | [`spec-optimize-performance`](../spec-optimize-performance/SKILL.md) |
-| Durable lessons after a struggle | [`learn`](../learn/SKILL.md) |
+| Durable lessons after a struggle | [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) |

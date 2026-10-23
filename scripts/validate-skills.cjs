@@ -4,7 +4,7 @@
  * and it follows the recurring structure.
  * Registry SSOT: .agents/skills/router/references/catalog.md
  * Baseline SSOT: .agents/skills/router/references/baseline-sections.md (v0.42.0 headings)
- * Structure SSOT: .agents/skills/create-skill/references/skill-template.md
+ * Structure SSOT: .agents/skills/meta-write-skill/references/skill-template.md
  *
  * Usage:
  *   node scripts/validate-skills.cjs                  → "validate-skills: OK (…)", exit 0 | errors, exit 1
@@ -290,7 +290,7 @@ function checkAdmission(folders, catalog, baseline) {
   const errors = [];
   for (const folder of folders) {
     const row = catalog.skills.get(folder);
-    if (!row && !baseline.has(folder)) errors.push(`${folder}: not in catalog — add it via create-skill (D37)`);
+    if (!row && !baseline.has(folder)) errors.push(`${folder}: not in catalog — add it via meta-write-skill (D37)`);
     if (row && row.status !== "built" && !baseline.has(folder)) errors.push(`${folder}: folder exists but catalog status is "${row.status}"`);
   }
   for (const [name, row] of catalog.skills) {

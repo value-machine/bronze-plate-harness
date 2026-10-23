@@ -97,7 +97,7 @@ Four linked layers (generic names):
 | Discovery | README lists runbook under documentation |
 | Agent debugging | Debug patterns require physical device + link runbook |
 | Feature work | Chat README links runbook + viewport files |
-| Cross-repo port | This guide + `write-adoption-guide` skill (optional) |
+| Cross-repo port | This guide + `meta-write-adoption-guide` skill (optional) |
 
 **Principle:** adb steps and redirect rules exist **once** in the runbook; every other doc **links** it.
 
@@ -195,7 +195,7 @@ flowchart TD
 | 6 | Add one line to root README documentation list |
 | 7 | Add debug/CONTRIBUTING or agent pattern: physical device required |
 | 8 | For each mobile-critical feature: README line → runbook + layout code paths |
-| 9 | Optional: copy this guide; copy `.agents/skills/write-adoption-guide/` and set `ADOPTION_GUIDE_OUTPUT_FOLDER` |
+| 9 | Optional: copy this guide; copy `.agents/skills/meta-write-adoption-guide/` and set `ADOPTION_GUIDE_OUTPUT_FOLDER` |
 
 ### 7.2 Minimum vs recommended
 
@@ -257,4 +257,4 @@ Replicate **one mobile local-dev runbook (SSOT)** plus **thin links** from setup
 
 Full step-by-step procedure, troubleshooting, and the optional console probe live in the **SSOT runbook** linked in the purpose block — not duplicated here.
 
-**To port to another repo:** draft your runbook from §2 and §7 using that SSOT as a reference; optionally copy this guide and the `write-adoption-guide` skill folder (`.agents/skills/write-adoption-guide/`).
+**To port to another repo:** draft your runbook from §2 and §7 using that SSOT as a reference; optionally copy this guide and the `meta-write-adoption-guide` skill folder (`.agents/skills/meta-write-adoption-guide/`).

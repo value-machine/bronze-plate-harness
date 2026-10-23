@@ -7,31 +7,30 @@ On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skill
 - **`spec-simplify-flow`:** Question whether the **feature or workflow** should exist or be simpler (remove/merge steps).
 - **`spec-optimize-performance`:** Improve existing code **without** necessarily changing product scope.
 
-### `spec-debug-runtime` vs `learn`
+### `spec-debug-runtime` vs `meta-learn-lessons`
 
 - **`spec-debug-runtime`:** Active incident; hypotheses; runtime evidence; possibly temporary instrumentation.
-- **`learn`:** Capture durable rule/skill/debug-pattern updates. **Proactive** learn waits until the struggle is resolved (not as primary beside active `spec-debug-runtime`). **Manual** `/learn` (user invoked or skill attached) runs **in that turn**, including on a still-red CI/incident message — do not defer behind the fix. Procedure: `.agents/skills/learn/SKILL.md` § Turn contract.
+- **`meta-learn-lessons`:** Capture durable rule/skill/debug-pattern updates. **Proactive** learn waits until the struggle is resolved (not as primary beside active `spec-debug-runtime`). **Manual** `/learn` (user invoked or skill attached) runs **in that turn**, including on a still-red CI/incident message — do not defer behind the fix. Procedure: `.agents/skills/meta-learn-lessons/SKILL.md` § Turn contract.
 
-### `rule-quality` vs `learn`
+### `meta-grade-rule` vs `meta-learn-lessons`
 
-- **`rule-quality`:** Score (Mode A) or rewrite (Mode B) **provided rule/command text**.
-- **`learn`:** Decide **where** lessons live (rules vs skills vs debug appendix) from incident context.
+- **`meta-grade-rule`:** Score (Mode A) or rewrite (Mode B) **provided rule/command text**.
+- **`meta-learn-lessons`:** Decide **where** lessons live (rules vs skills vs debug appendix) from incident context.
 
-### `align-harness` vs `update-harness` vs `learn`
+### `meta-audit-harness` vs `meta-intake-harness` vs `meta-learn-lessons`
 
-- **`align-harness`:** In-repo harness coherence (skills + rules + AGENTS + INDEX + layers).
-- **`update-harness`:** External drops in `.agents/harness-inbox/` — disposition report + confirmed apply.
-- **`learn`:** Session lesson from a mistake; removal-first; structural conflicts → `align-harness`.
+- **`meta-audit-harness`:** In-repo harness coherence and context cost (skills + rules + AGENTS + INDEX + layers).
+- **`meta-intake-harness`:** External drops in `.agents/harness-inbox/` — disposition report + confirmed apply.
+- **`meta-learn-lessons`:** Session lesson from a mistake; removal-first; structural conflicts → `meta-audit-harness`.
 
-### `align-harness` vs `rule-quality`
+### `meta-audit-harness` vs `meta-grade-rule`
 
-- **`align-harness`:** **Harness-wide** audit — separation of concerns, SSOT, conflicts, handoffs — via parallel lens subagents and a no-information-loss gate. Edits harness corpus + router/layers spine.
-- **`rule-quality`:** One **rule/command file's** grade or prose. Duplication in **`src/` application code** is `loop-plan/references/deepen-modules.md`, not a harness audit.
-- **`tighten-harness`:** Context **cost** — cut, merge, relocate, or enforce instructions with a per-cut ledger; behavior must not change. Contradictions it finds → `align-harness`.
+- **`meta-audit-harness`:** **Harness-wide** audit — separation of concerns, SSOT, conflicts, handoffs — via parallel lens subagents and a no-information-loss gate. Edits harness corpus + router/layers spine.
+- **`meta-grade-rule`:** One **rule/command file's** grade or prose. Duplication in **`src/` application code** is `loop-plan/references/deepen-modules.md`, not a harness audit.
 
-### `rule-quality` vs the component lens
+### `meta-grade-rule` vs the component lens
 
-- **`rule-quality`:** Grade or improve **rules/commands** (rubric + quality standards).
+- **`meta-grade-rule`:** Grade or improve **rules/commands** (rubric + quality standards).
 - **Component lens** (`loop-check/references/component-lens.md`): score **React/shadcn-ui components** with the component rubric.
 
 
@@ -96,11 +95,11 @@ On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skill
 **Order when both apply:** **`spec-check-layer` first** (one-beat check). If the structural path changes UX/API contracts, run precedent review before building.
 
 
-### `create-skill` vs `align-harness` vs `rule-quality`
+### `meta-write-skill` vs `meta-audit-harness` vs `meta-grade-rule`
 
-- **`create-skill`:** One new/refined `.agents/skills/<name>/SKILL.md` (this repo).
-- **`align-harness`:** Whole-corpus coherence audit.
-- **`rule-quality`:** Grade/rewrite one **rule/command** file (not skill authoring).
+- **`meta-write-skill`:** One new/refined `.agents/skills/<name>/SKILL.md` (this repo).
+- **`meta-audit-harness`:** Whole-corpus coherence audit.
+- **`meta-grade-rule`:** Grade/rewrite one **rule/command** file (not skill authoring).
 
 ### `spec-simplify-flow` vs precedent review
 

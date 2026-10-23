@@ -1,6 +1,6 @@
 # Port map — loop-verdict
 
-Format: [`create-skill/references/port-map-format.md`](../../create-skill/references/port-map-format.md). `finish` is shared with `loop-ship` and `loop-backlog`.
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). `finish` is shared with `loop-ship` and `loop-backlog`.
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

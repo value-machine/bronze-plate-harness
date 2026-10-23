@@ -2,7 +2,7 @@
 
 Registry for `scripts/validate-skills.cjs` (admission check, D37). Every skill folder in `.agents/skills/` must be either a v0.42.0 skill listed in [`baseline-sections.md`](baseline-sections.md) or a row below. A `built` row is fully checked; `planned` rows are the target of the skill-loop rework.
 
-Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG.md`, `DECISIONS.md`, `PHASE2.md`). Structure: [`create-skill/references/skill-template.md`](../../create-skill/references/skill-template.md).
+Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG.md`, `DECISIONS.md`, `PHASE2.md`). Structure: [`meta-write-skill/references/skill-template.md`](../../meta-write-skill/references/skill-template.md).
 
 ## Skills
 
@@ -22,13 +22,13 @@ Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG
 | `spec-simplify-flow` | built | `challenge`, `standards-align` |
 | `spec-optimize-performance` | built | `optimize2`, `react-perf-vite` |
 | `spec-check-layer` | built | `layer-consistency-check` |
-| `meta-write-skill` | planned | `create-skill` |
-| `meta-audit-harness` | planned | `align-harness`, `tighten-harness` |
-| `meta-intake-harness` | planned | `update-harness` |
-| `meta-write-adoption-guide` | planned | `write-adoption-guide` |
-| `meta-learn-lessons` | planned | `learn` |
-| `meta-grade-rule` | planned | `rule-quality` |
-| `meta-compress-output` | planned | `caveman` |
+| `meta-write-skill` | built | `create-skill` |
+| `meta-audit-harness` | built | `align-harness`, `tighten-harness` |
+| `meta-intake-harness` | built | `update-harness` |
+| `meta-write-adoption-guide` | built | `write-adoption-guide` |
+| `meta-learn-lessons` | built | `learn` |
+| `meta-grade-rule` | built | `rule-quality` |
+| `meta-compress-output` | built | `caveman` |
 
 ## Retired without a skill
 
