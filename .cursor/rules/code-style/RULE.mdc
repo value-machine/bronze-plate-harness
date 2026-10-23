@@ -57,7 +57,7 @@ The single statement of how to name shared code and when a copy must be extracte
 
 ## Styling scope
 
-Before implementing a styling change, **ask which scope** the user wants, recommending global tokens (the usual intent), and wait for the answer:
+Pick the scope of a styling change yourself — global tokens by default, since that is the usual intent — and state the scope you used when reporting the change. Ask only per `agent-behavior/RULE.mdc` § When to ask (for example, when it conflicts with a recorded design decision).
 
 | Scope | Where | Use for |
 |-------|-------|---------|

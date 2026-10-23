@@ -10,7 +10,7 @@ Quick reference guide to all rules and their relationships.
 - Documentation requirements
 - Code organization
 - **What tooling enforces** (Prettier, `eslint.config.js`, tsc, dependency-cruiser) — run the command
-- **Styling scope** (always ask scope before implementing styling changes)
+- **Styling scope** (agent picks the scope, global tokens by default, and reports it)
 - **Complexity thresholds** (SSOT `eslint.config.js`)
 - Reuse and extraction checks
 

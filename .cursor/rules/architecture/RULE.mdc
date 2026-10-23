@@ -25,7 +25,7 @@ When a step matches a heavy-operation trigger — N+1 / per-row queries, unbound
 
 1. Estimate the cost (rows, round-trips, render work).
 2. Design a cheaper option first (narrower query + index, pagination, server-side aggregation, caching via query keys, batching, virtualization, memoization, `startTransition`); prefer the reductive option (`debugging/RULE.mdc` § Reductive Strategy).
-3. Present the options, recommended first, and let the user pick before implementing (`agent-behavior/RULE.mdc` § When to ask (cost) and § How to ask). Do not silently ship the expensive path.
+3. Implement the cheaper option and record the trade-off in the plan or PR summary. Do not ship the expensive path silently. Ask only when the choice falls on `agent-behavior/RULE.mdc` § When to ask (for example, paid usage or a data or irreversible change).
 
 Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/optimize2/SKILL.md`; stack-native fixes → `.agents/skills/react-perf-vite/SKILL.md`; indexes → `database/RULE.mdc`.
 

@@ -69,6 +69,7 @@ Updated: 2026-10-23
 | D60 | Claude Code skill discovery | closed | Generated `.claude/skills/` mirror of `.agents/skills/`, vendored from MILA `scripts/sync-agent-config.mjs` (skills kind only); pre-commit refreshes it, CI `--check` fails on drift. | template review | Without it, descriptions never trigger in Claude Code. Updates the CLAUDE.md note. |
 | D61 | Batch 0 approval | closed | PO approved PHASE2 update + batch 0, including protected writes (`.agents/skills/**`, `.husky/pre-commit`, `.github/workflows/ci.yml`, `projectStructure.config.cjs`). | template review | |
 | D62 | Rule edits land with their destination | closed | A rule edit that hands content to a skill lands in the batch that builds that skill, so no rule ever points at a skill that doesn't exist yet: `git-workflow` commit timing C + Stop 2 per mode, `workflow` deletion and D50 Pass-as-consent → batch 2; `debugging` strategy split → batch 3. | batch 1 | clear-winner: the alternative (land them now) leaves rules pointing at missing skills. |
+| D63 | Styling-scope and heavy-operation asks vs the stop list | closed | The agent decides: styling defaults to global tokens and reports the scope used; heavy operations take the cheaper design, with the trade-off recorded in the plan or PR. Both rules keep their guidance and point to `agent-behavior` § When to ask for real stops. | conflict (D3) | Resolves the clash between D20/D40 and `code-style` § Styling scope + `architecture` § Performance cost risk. |
 
 ## Open
 
