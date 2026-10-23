@@ -64,6 +64,10 @@ Updated: 2026-10-23
 | D55 | No-loss port map | closed | In phase 2, every replacement skill carries a port map of each v0.42.0 section it absorbs: kept / moved to X / dropped because…. `meta-audit-harness` keeps `align-harness`'s no-information-loss gate and checks it against those maps. | weak-spot review | Covers lost content: grill-me non-goals + neighbor map, feature journey mapping, start gates, finish version / smoke / onboarding sync, learn reverse audit, depth of optimize2 / consolidate / review. |
 | D56 | Guard triggers live in rules | closed | Always-on rules keep the proactive triggers (`architecture`: industry precedent, reuse-before-custom, layer consistency; `code-style`: naming). The "if X → call Y" lines in loop skills point back to the rule; they are not the only trigger. | weak-spot review | Consistent with D1. Restores v0.42.0's proactive pattern-review trigger beyond size M. Amends D53. |
 | D57 | Owner may call specialists directly | closed | The owner may invoke any `spec-*` skill outside a lap (audit, cleanup, debug). If the result needs a repo change, the agent adds it to the backlog as a task. | weak-spot review | Softens D1 (specialists never the owner's entry point), approved by PO. |
+| D58 | Template vs write-a-skill / skill-creator | closed | Drop `category` (prefix carries it); triggers live only in the description (≤ 1024 chars, "Use when … Not for …"), so Edges has no Trigger row; add `## Examples` (input → output); writing rules: explain why over ALL-CAPS, consistent terms, references one level deep, TOC over 300 lines; body ≤ ~250 lines; `scripts/` for deterministic work. | template review | Compared with MILA `write-a-skill` and Anthropic `skill-creator`. |
+| D59 | Skill evals | closed | `evals/` in the skill-creator / `claude plugin eval` layout. Each `loop-*` skill gets 2–3 cases run against its v0.42.0 originals as the baseline during the port; skills with neighbors get trigger queries with near-misses. The admission check verifies `evals/` exists for `loop-*` skills; it does not run them. | template review | Behavioral no-loss check beside the D55 port map. |
+| D60 | Claude Code skill discovery | closed | Generated `.claude/skills/` mirror of `.agents/skills/`, vendored from MILA `scripts/sync-agent-config.mjs` (skills kind only); pre-commit refreshes it, CI `--check` fails on drift. | template review | Without it, descriptions never trigger in Claude Code. Updates the CLAUDE.md note. |
+| D61 | Batch 0 approval | closed | PO approved PHASE2 update + batch 0, including protected writes (`.agents/skills/**`, `.husky/pre-commit`, `.github/workflows/ci.yml`, `projectStructure.config.cjs`). | template review | |
 
 ## Open
 
@@ -97,4 +101,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D36, D37 closed via grill-me (asked); D38 clear-winner
 - D39–D54 closed via critique round (PO: adopt all); amended rows marked
 - D55–D57 closed via weak-spot review (PO: adopt); D1, D53 amended
+- D58–D61 closed via template review (PO: update PHASE2, build batch 0)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
