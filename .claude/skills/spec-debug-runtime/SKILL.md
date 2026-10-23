@@ -21,7 +21,7 @@ When this skill is done, the root cause is proven by evidence (not guessed), the
 | In | Error, stack trace, console or CI logs, the owner's description, the code path, `references/patterns.md` |
 | Out | Event chain, hypotheses with falsification conditions, instrumentation, the proven cause; new reusable bug classes added to `references/patterns.md` |
 | Calls | always → [`references/scientific-method.md`](references/scientific-method.md) · if a naive fix already failed or the owner asks for hypothesis mode → [`references/hypothesis-mode.md`](references/hypothesis-mode.md) · when narrowing scope or planning a test → [`references/strategy.md`](references/strategy.md) |
-| Called by | [`loop-refine`](../loop-refine/SKILL.md) (reproduce a bug), [`loop-build`](../loop-build/SKILL.md) (unexpected failure), [`loop-ship`](../loop-ship/SKILL.md) (red CI) · owner (D57) |
+| Called by | [`loop-refine`](../loop-refine/SKILL.md) (reproduce a bug), [`loop-build`](../loop-build/SKILL.md) (unexpected failure), [`loop-ship`](../loop-ship/SKILL.md) (red CI) · owner (skill-loop D57) |
 | Next | Back to the caller (owner-direct: the fix becomes a backlog task) |
 | Owner stops | Only when the owner must act or report evidence (run a step in the app, paste logs, check a dashboard) |
 

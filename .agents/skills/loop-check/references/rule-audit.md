@@ -8,7 +8,7 @@ How [`loop-check`](../SKILL.md) audits a built change, and how [`loop-plan/refer
 |---|---|---|---|---|
 | **plan-review** | Size-M plan before building | Every rule plausibly relevant to the plan, always `code-style` | no | no |
 | **impl** | A lap with a plan (`BRIEF.md` § Plan or `DEVELOPMENT_PLAN.md`) | Every rule plausibly relevant to the diff, always `code-style` | yes | yes |
-| **gate** | A diff with no governing plan (owner-direct check, D57) | `architecture` (incl. feature granularity), `file-placement`, `code-style`; plus `security`, `database`, `testing` when touched | yes | no |
+| **gate** | A diff with no governing plan (owner-direct check, skill-loop D57) | `architecture` (incl. feature granularity), `file-placement`, `code-style`; plus `security`, `database`, `testing` when touched | yes | no |
 
 Err toward inclusion — `applicable: false` is cheap. Fan-out runs on every invocation. State the mode in the summary's first line.
 
@@ -112,7 +112,7 @@ One additional read-only subagent compares the code against the **whole contract
 - Gates implied by the plan vs reality.
 - Feature `README.md` content alignment the plan required (`pnpm validate:feature-docs:strict` covers presence; this covers content).
 
-Same output schema, with `rule: "plan-compliance"`. It also checks that every Closed lap decision that governs future work was folded into its home (feature README, vision, rule — D48).
+Same output schema, with `rule: "plan-compliance"`. It also checks that every Closed lap decision that governs future work was folded into its home (feature README, vision, rule — skill-loop D48).
 
 Excluded from `gate` (there is no plan to compare against).
 

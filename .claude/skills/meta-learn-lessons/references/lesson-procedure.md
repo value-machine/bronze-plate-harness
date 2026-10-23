@@ -23,7 +23,7 @@ Durable, discoverable guidance that a blank capable model would **not** already 
 
 - **Manual:** User invokes learn, asks for a retrospective, or “sharpen rules.”
 - **Proactive:** After a loop (3+ failed attempts), a critical CI fix, or a non-obvious repo discovery — only when the user **confirms** debugging is resolved. **Never** run as primary in parallel with active **`spec-debug-runtime`**.
-- **Loop pipeline:** `loop-verdict` runs this skill on any non-Pass verdict (Change or Drop), feeding it the plan § Notes mistake signals; lessons commit to the same PR so the next Pass approves them (D50).
+- **Loop pipeline:** `loop-verdict` runs this skill on any non-Pass verdict (Change or Drop), feeding it the plan § Notes mistake signals; lessons commit to the same PR so the next Pass approves them (skill-loop D50).
 
 ### Turn contract (manual `/learn` — no deferral)
 

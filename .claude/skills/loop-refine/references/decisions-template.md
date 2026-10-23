@@ -31,7 +31,7 @@ Updated: <ISO date>
 
 ### Field rules
 
-- **id** — stable `D1`, `D2`, … never reuse.
+- **id** — stable `D1`, `D2`, … never reuse. Outside the lap, cite with the lap slug: `(<slug> D3)`; `loop-ship` copies the closed rows to `documentation/DOC_DECISION_LOG.md`.
 - **status** — `open` | `closed`.
 - **source** — which loop skill wrote the row (`loop-refine` | `loop-plan` | `loop-build`). With the away switch on (`agent-behavior` § When to ask), ties close as `agent-pick`; stop-list items park the lap as an Open row until the owner answers.
 - **Anti-dup** — before asking, scan **Closed** + **Open**; skip any topic already decided or currently open awaiting answer.

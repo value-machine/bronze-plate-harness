@@ -13,7 +13,7 @@ Every **Task** subagent uses `model` = slug above. Subagents are **self-containe
 
 ## Purpose
 
-Keep the **agent harness** one coherent system: SSOT enforced, no conflicting instructions, no silent context bloat. Evolves the former `improve-skill-library` scope to the full harness (D2).
+Keep the **agent harness** one coherent system: SSOT enforced, no conflicting instructions, no silent context bloat. Evolves the former `improve-skill-library` scope to the full harness (harness-skills D2).
 
 ## Scope
 
@@ -65,7 +65,7 @@ HARNESS_SCAN -> PHASE 0 LEDGER -> PARALLEL LENSES -> SYNTHESIS -> GATE -> EXECUT
 node .agents/skills/meta-audit-harness/scripts/harness_scan.cjs
 ```
 
-Manifest SSOT: `documentation/jobs/harness/entry-points.yaml`. Record facts (always-on bytes/lines, missing refs, orphans, frontmatter). **Advisory** over budget — never hard-block (D12).
+Manifest SSOT: `documentation/jobs/harness/entry-points.yaml`. Record facts (always-on bytes/lines, missing refs, orphans, frontmatter). **Advisory** over budget — never hard-block (harness-skills D12).
 
 ### Phase 0 — Registry + content ledger
 
@@ -107,7 +107,7 @@ Merge lens + scan outputs. Format:
 
 ### Phase 4 — Execute (approved only)
 
-One row at a time. **Supersede** don't silently delete. Protected paths need D18 scope or explicit OK.
+One row at a time. **Supersede** don't silently delete. Protected paths need harness-skills D18 scope or explicit OK.
 
 ### Phase 5 — No-information-loss pass
 
@@ -120,7 +120,7 @@ Router lists each harness skill once; registry updated; `loop-map.md` if stale.
 ## Escalation
 
 - Phase 7 cap (≤5 blocking rows) exceeded → `documentation/jobs/temp_job_harness-fixes/`
-- Big-bang restructure of always-on rules → separate plan (D12)
+- Big-bang restructure of always-on rules → separate plan (harness-skills D12)
 
 ## Related
 

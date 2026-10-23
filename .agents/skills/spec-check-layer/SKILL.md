@@ -13,7 +13,7 @@ description: >-
 
 # spec-check-layer
 
-When this skill is done, the request's assumption about the system is verified or corrected, and no workaround is built silently: either the structural path is planned, or the owner chose the workaround knowingly. The trigger and core reflex live in `architecture/RULE.mdc` § Layer consistency (D33, D56); this skill holds the rubric and the alert.
+When this skill is done, the request's assumption about the system is verified or corrected, and no workaround is built silently: either the structural path is planned, or the owner chose the workaround knowingly. The trigger and core reflex live in `architecture/RULE.mdc` § Layer consistency (skill-loop D33, D56); this skill holds the rubric and the alert.
 
 ## Edges
 
@@ -22,7 +22,7 @@ When this skill is done, the request's assumption about the system is verified o
 | In | The request or diff, the code path it touches, `architecture` rule § Layer consistency |
 | Out | A one-beat layer check; when a shape clears the severity filter, the **WARNING, WORKAROUND** alert ([`references/alert-template.md`](references/alert-template.md)) and the owner's pick |
 | Calls | always → [`references/procedure.md`](references/procedure.md) and [`references/workaround-shapes.md`](references/workaround-shapes.md) |
-| Called by | [`loop-refine`](../loop-refine/SKILL.md) (request changes existing behavior), [`loop-build`](../loop-build/SKILL.md) (diff looks like a workaround) · owner (D57) |
+| Called by | [`loop-refine`](../loop-refine/SKILL.md) (request changes existing behavior), [`loop-build`](../loop-build/SKILL.md) (diff looks like a workaround) · owner (skill-loop D57) |
 | Next | Back to the caller |
 | Owner stops | Patch on top vs structural fix (stop list) |
 

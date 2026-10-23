@@ -22,11 +22,11 @@ Where the version and changelog come from: § Mode behavior table → **version 
 | **daily branch** | `feature/*` / `fix/*` off `develop` | `develop` | any non-`main` branch (incl. Claude Code worktree branches) |
 | **branch gate** | stop on `main` and `develop` (create a feature branch); proceed on `feature/*` / `fix/*` | stop on `main`; proceed on `develop`; stop on `feature/*` (switch to `develop`) | stop on `main` (branch first); proceed anywhere else |
 | **how work lands** | squash PR → `develop` | direct push → `develop` | squash PR → `main`, opened the Claude Code default way (`gh pr create`, base = default branch) |
-| **commit timing** | `loop-ship` commits on its own once `loop-check` passes (D25) | same as A | same as A |
+| **commit timing** | `loop-ship` commits on its own once `loop-check` passes (skill-loop D25) | same as A | same as A |
 | **version source** | `loop-ship` bumps `package.json` + `CHANGELOG.md` per landing | same as A | release-please release PR built from conventional PR titles; no per-PR bump |
 | **CI watcher** | babysit the PR checks | report the commit URL and stop (no `gh run watch`) | Claude Code desktop PR monitor / Auto-fix (no `gh run watch`) |
 | **staging** | `develop` stable preview (+ per-PR previews) | `develop` preview (may deploy before `test` is green) | per-PR preview URL on a separate **staging Supabase project** (previews never touch production data; see `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) |
-| **Stop 2 surface** (owner test before production, D47) | the `develop` preview after the PR lands on `develop` | the `develop` preview | the PR preview, before merge |
+| **Stop 2 surface** (owner test before production, skill-loop D47) | the `develop` preview after the PR lands on `develop` | the `develop` preview | the PR preview, before merge |
 | **production** | the owner's Pass at Stop 2 → `loop-ship` runs Promote to production (ff `main` ← `develop`) | same as A | the owner's Pass at Stop 2 → `loop-ship` merges the PR (or the owner merges / uses the per-PR auto-merge toggle) |
 | **"land on main / promote / release" means** | run § Promote to production | same as A | merge the PR — **never** dispatch promote |
 | **`main` ruleset** | `deletion` + `non_fast_forward` only | same as A | `pull_request` (squash only) + required `test` and `pr-title` (source: GitHub Actions) + `non_fast_forward` + `deletion`; no bypass actors; no required approvals; branches need not be up to date |

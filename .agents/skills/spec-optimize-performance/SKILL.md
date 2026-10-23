@@ -21,7 +21,7 @@ When this skill is done, the hot path has a fix at the cheapest level that solve
 | In | The hot path (plan step or diff), measurements when available (CWV, query plans, render counts), `architecture` rule § Performance cost risk |
 | Out | The level and option chosen, plan steps or code changes, the trade-off recorded in the plan or PR |
 | Calls | always → [`references/optimization-levels.md`](references/optimization-levels.md) · if the fix is a React / Vite / TanStack pattern → [`references/react-perf-vite.md`](references/react-perf-vite.md) + [`rules/`](rules/) · if CWV / Lighthouse symptoms → the `web-perf` plugin skill ([`router/references/external-skills.md`](../router/references/external-skills.md)) |
-| Called by | [`loop-plan`](../loop-plan/SKILL.md) (heavy operation in the plan), [`loop-check`](../loop-check/SKILL.md) (heavy operation in the diff) · owner (D57) |
+| Called by | [`loop-plan`](../loop-plan/SKILL.md) (heavy operation in the plan), [`loop-check`](../loop-check/SKILL.md) (heavy operation in the diff) · owner (skill-loop D57) |
 | Next | Back to the caller (owner-direct: the fix becomes a backlog task) |
 | Owner stops | Stop list only |
 

@@ -1,6 +1,6 @@
 # Layer-consistency check — procedure
 
-Read by [`spec-check-layer`](../SKILL.md). Ported from `layer-consistency-check` (v0.42.0). The trigger and core reflex live in `architecture/RULE.mdc` § Layer consistency (D33, D56).
+Read by [`spec-check-layer`](../SKILL.md). Ported from `layer-consistency-check` (v0.42.0). The trigger and core reflex live in `architecture/RULE.mdc` § Layer consistency (skill-loop D33, D56).
 
 
 **Scope:** Catch requests or in-progress code that violate a deeper layer underneath what was literally asked for — physical/mathematical constraints, an existing abstraction or naming hierarchy, or system-architecture assumptions — **before** silently building a workaround on top.

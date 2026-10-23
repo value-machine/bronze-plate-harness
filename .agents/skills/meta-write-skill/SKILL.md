@@ -12,7 +12,7 @@ description: >-
 
 # meta-write-skill
 
-When this skill is done, the skill follows [`references/skill-template.md`](references/skill-template.md), has a `built` row in [`router/references/catalog.md`](../router/references/catalog.md), and `pnpm validate:skills` passes. Every skill change goes through here so the admission check, the edges and the mirror stay true (D37).
+When this skill is done, the skill follows [`references/skill-template.md`](references/skill-template.md), has a `built` row in [`router/references/catalog.md`](../router/references/catalog.md), and `pnpm validate:skills` passes. Every skill change goes through here so the admission check, the edges and the mirror stay true (skill-loop D37).
 
 ## Edges
 
@@ -28,11 +28,11 @@ When this skill is done, the skill follows [`references/skill-template.md`](refe
 ## Steps
 
 1. **Capture intent:** what the skill enables, when it triggers, its output, and whether to test. Check [`router/references/catalog.md`](../router/references/catalog.md) first and refine an existing skill instead of adding a near-duplicate.
-2. **Place it in a layer:** `router`, `loop-<verb>`, `spec-<verb>-<object>` (needs ≥ 2 loop callers, D53) or `meta-<verb>-<object>`. Name by role per `code-style` rule § Naming.
+2. **Place it in a layer:** `router`, `loop-<verb>`, `spec-<verb>-<object>` (needs ≥ 2 loop callers, skill-loop D53) or `meta-<verb>-<object>`. Name by role per `code-style` rule § Naming.
 3. **Draft from the template** ([`references/skill-template.md`](references/skill-template.md)): description as the trigger, Edges with relative links, imperative steps with the reason, examples, output format, Not for. Detail goes to `references/`.
 4. **Port map** when sources are replaced ([`references/port-map-format.md`](references/port-map-format.md)): every baseline heading is kept, moved or dropped with a reason.
 5. **Test and tune** when wanted: realistic prompts with and without the skill, then description queries (should-trigger vs near-miss). Procedure: [`references/authoring.md`](references/authoring.md) §§ 3–5.
-6. **Integrate:** catalog row, reciprocal Calls ⇄ Called by, `loop-map.md` or `tiebreaks.md` when routing changes, a rule pointer for a guard (D56). Run `node scripts/sync-agent-config.mjs`, `pnpm validate:skills`, `pnpm validate:docs`, `pnpm validate:structure`.
+6. **Integrate:** catalog row, reciprocal Calls ⇄ Called by, `loop-map.md` or `tiebreaks.md` when routing changes, a rule pointer for a guard (skill-loop D56). Run `node scripts/sync-agent-config.mjs`, `pnpm validate:skills`, `pnpm validate:docs`, `pnpm validate:structure`.
 
 ## Examples
 
@@ -42,7 +42,7 @@ Output: two loop callers found (`loop-plan`, `loop-check`) → `spec-check-acces
 
 **Example 2 — single caller**
 Input: "Add a skill for writing migration notes."
-Output: only `loop-ship` would call it → a reference `loop-ship/references/migration-notes.md` instead of a skill (D53), and the owner is told why.
+Output: only `loop-ship` would call it → a reference `loop-ship/references/migration-notes.md` instead of a skill (skill-loop D53), and the owner is told why.
 
 ## Output
 

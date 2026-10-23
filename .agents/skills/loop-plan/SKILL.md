@@ -37,7 +37,7 @@ First autonomous stage. When this skill is done, a failing test encodes the brie
 4. **Foundation validation.** When the approach rests on an unproven assumption (new API, untested algorithm, novel integration), make the first phase a minimal POC that proves or kills it before anything else is built.
 5. **Acceptance test first.** Turn the brief's success check into a failing test at the right level (unit, integration, or an e2e/manual script when the check is visual), following `testing/RULE.mdc`. Record its path in the plan.
 6. **Write the plan.** Conflict & compliance first (applicable rules, validated file placements against `projectStructure.config.cjs`, layers and imports, database / security / testing impact, feature README updates). Then phases in order, each with a goal, concrete steps and a gate citing the tooling gate list. At size M, fill the Review contract (pin rules with `git log -1 --format=%h -- .cursor/rules`) and Pattern & precedent when material design is involved.
-7. **Size check.** If the plan now touches feature areas missing from the brief's edges, or grows past M, update the brief: add the edges, or cut the extra into follow-up backlog tasks. Never widen the lap silently (D51).
+7. **Size check.** If the plan now touches feature areas missing from the brief's edges, or grows past M, update the brief: add the edges, or cut the extra into follow-up backlog tasks. Never widen the lap silently (skill-loop D51).
 8. **Review (M only)** per [`references/plan-review.md`](references/plan-review.md): parallel lenses plus rule audits, contract must-fixes applied as Amendments, no owner wait.
 9. **Hand off.** Post the footer and run [`loop-build`](../loop-build/SKILL.md).
 

@@ -7,9 +7,9 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `router` | ## `/router` — pick next action + skill | kept | SKILL.md § Steps |
 | `router` | ### Active thread work | moved | references/loop-map.md § Where a lap stands (evidence from git, PRs, lap folders) |
 | `router` | ### Thread → next skill (mid-task) | moved | references/loop-map.md § Where a lap stands |
-| `router` | ## Decision model: goals + requirements → skill | dropped | Gates 1–3 replaced by the fixed loop: loop-refine always scopes, size sets plan depth (D10, D13) |
+| `router` | ## Decision model: goals + requirements → skill | dropped | Gates 1–3 replaced by the fixed loop: loop-refine always scopes, size sets plan depth (skill-loop D10, D13) |
 | `router` | ### Gate 1 — Goal / outcome | moved | loop-refine (problem + success check; vision read first) |
-| `router` | ### Gate 2 — Scope / requirements | moved | loop-refine (in / out, edges); layer-consistency and naming gates now fire from the architecture and code-style rules (D56) |
+| `router` | ### Gate 2 — Scope / requirements | moved | loop-refine (in / out, edges); layer-consistency and naming gates now fire from the architecture and code-style rules (skill-loop D56) |
 | `router` | ### Gate 3 — Delivery shape (only after gates 1–2 pass) | moved | loop-refine size estimate → loop-plan depth (references/complexity-rubric.md) |
 | `router` | ### Clarification-first routing (gate 1 or 2 fails) | moved | loop-refine § Steps 5–6 (ask only per the stop list) |
 | `router` | ### Plan corridor flow (`grill-me` → ledger → `plan` + `plan-grill` rail) | moved | references/loop-map.md + loop-plan/references/fork-checklist.md |
@@ -22,6 +22,6 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `router` | ### User-level Cursor skills (`~/.cursor/skills-cursor/`) | moved | references/external-skills.md |
 | `router` | ### Plugin skills (paths vary by install; discover under `~/.cursor/plugins/`) | moved | references/external-skills.md |
 | `router` | ## When more than one skill seems relevant | moved | references/tiebreaks.md (pruned to skills outside the loop) |
-| `router` | ### Routing state rules | moved | loop-backlog (backlog SSOT, pick-up, thread-vs-backlog → request wins, D26) |
+| `router` | ### Routing state rules | moved | loop-backlog (backlog SSOT, pick-up, thread-vs-backlog → request wins, skill-loop D26) |
 | `router` | ## Router references (not skills) | moved | SKILL.md § Edges + § Not for (loop-map, tiebreaks, external-skills, catalog) |
-| `router` | ## Not present in this workspace | dropped | The catalog is the registry; the admission check rejects unknown skills (D37) |
+| `router` | ## Not present in this workspace | dropped | The catalog is the registry; the admission check rejects unknown skills (skill-loop D37) |

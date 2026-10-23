@@ -7,7 +7,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `finish` | ## Concurrent work / other agent threads (same branch, same checkout) | moved | references/concurrency.md |
 | `finish` | ### User choice (required when smoke is present) | moved | references/concurrency.md |
 | `finish` | ## Version and changelog gate | moved | references/commit-standards.md |
-| `finish` | ## Ready to commit? (required) | dropped | The loop commits on its own after loop-check (D25); the owner's control point is Stop 2 |
+| `finish` | ## Ready to commit? (required) | dropped | The loop commits on its own after loop-check (skill-loop D25); the owner's control point is Stop 2 |
 | `finish` | ## Semantic Versioning (SSOT) | moved | references/commit-standards.md |
 | `finish` | ## Commit Message Standards (SSOT) | moved | references/commit-standards.md |
 | `finish` | ## Faster commit (pre-commit light path + staged tests) | moved | references/commit-standards.md |
@@ -15,7 +15,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `finish` | ## Boundaries | kept | SKILL.md § Not for |
 | `push` | ## Preconditions (Mandatory) | moved | references/push-safety.md |
 | `push` | ## Hard Restrictions | moved | references/push-safety.md |
-| `push` | ## Push Safety Flow | moved | references/push-safety.md (no push confirmation inside the loop, D25) |
+| `push` | ## Push Safety Flow | moved | references/push-safety.md (no push confirmation inside the loop, skill-loop D25) |
 | `push` | ## Merge gate (tests) | moved | references/push-safety.md |
 | `push` | ## Relationship with `finish` | moved | references/push-safety.md § Commit vs push |
 | `push` | ## Production landing (promote) | moved | references/push-safety.md § Production landing |

@@ -1,6 +1,6 @@
 # Plan review (size M only)
 
-One merged review before building (D23): the critique lenses from `review-dev-plan` and the rule-compliance fan-out from `validate` plan-review, run **in parallel in one turn**. The agent applies the must-fixes itself; there is no owner sign-off (D2). XS / S plans skip this file.
+One merged review before building (skill-loop D23): the critique lenses from `review-dev-plan` and the rule-compliance fan-out from `validate` plan-review, run **in parallel in one turn**. The agent applies the must-fixes itself; there is no owner sign-off (skill-loop D2). XS / S plans skip this file.
 
 ## Fan-out (one turn, all read-only subagents)
 

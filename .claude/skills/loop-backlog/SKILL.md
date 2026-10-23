@@ -12,7 +12,7 @@ description: >-
 
 # loop-backlog
 
-First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate (landed work archived), ordered by priority, and its top task is `in-progress` and handed to `loop-refine`. File order is priority (D14). The agent proposes the order; the owner confirms it.
+First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate (landed work archived), ordered by priority, and its top task is `in-progress` and handed to `loop-refine`. File order is priority (skill-loop D14). The agent proposes the order; the owner confirms it.
 
 ## Edges
 
@@ -27,7 +27,7 @@ First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate 
 
 ## Steps
 
-1. **Direct request?** If the owner just pointed at something to do now (bug or not), insert it at the top as `in-progress` and go to step 6 (D26). A Change verdict counts as one; it stays linked to its lap branch and PR. A question with no repo change isn't a task: answer it (D54).
+1. **Direct request?** If the owner just pointed at something to do now (bug or not), insert it at the top as `in-progress` and go to step 6 (skill-loop D26). A Change verdict counts as one; it stays linked to its lap branch and PR. A question with no repo change isn't a task: answer it (skill-loop D54).
 2. **Read** the active and archive JSON, git history and changelog since the oldest active task, open PRs with previews, and signals when the adapter is on.
 3. **Catch up.** For each active task:
    - **Clearly landed** (code on the default branch, or the changelog / archive names it): archive it with a one-line reason.
@@ -35,10 +35,10 @@ First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate 
    - **Still in doubt:** update only the description to reflect the real state.
 
    An open PR whose preview the owner hasn't tested is **waiting on the owner**, not landed.
-4. **Rank** (order = priority, D16):
-   1. **Blockers and prerequisites**: untested previews (Stop 2 waiting, D45), seeded onboarding tasks a fork still needs (D41), and anything that blocks another task.
+4. **Rank** (order = priority, skill-loop D16):
+   1. **Blockers and prerequisites**: untested previews (Stop 2 waiting, skill-loop D45), seeded onboarding tasks a fork still needs (skill-loop D41), and anything that blocks another task.
    2. Then **value per size**: vision fit and the owner's past feedback, divided by a rough size (XS / S / M). With the adapter on, add impact × frequency.
-   3. Feedback tasks from Stop 2 (D17) and follow-up laps (D44) rank like any other task.
+   3. Feedback tasks from Stop 2 (skill-loop D17) and follow-up laps (skill-loop D44) rank like any other task.
 5. **Confirm.** Show the full proposed order with a one-line reason for each moved row, then ask once with the proposed top first, one or two contenders, and "keep the current order". Nothing moves before that answer. If a task is already `in-progress`, the default option is to continue it.
 6. **Start.** Write the JSON (keep `schemaVersion`; disk wins over a pending `/tasks` UI edit). Set the top task `in-progress` and run [`loop-refine`](../loop-refine/SKILL.md). For a seeded onboarding task, run its gate from [`references/onboarding.md`](references/onboarding.md) instead, and archive it when its check passes.
 

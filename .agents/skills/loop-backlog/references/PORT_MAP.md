@@ -1,12 +1,12 @@
 # Port map — loop-backlog
 
-Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). Base: TMI-apps/MILA `backlog-management` (not a v0.42.0 skill; its generic core is SKILL.md, its signal steps are references/signal-adapter.md, D15). The v0.42.0 `router` headings are mapped in [`router/references/PORT_MAP.md`](../../router/references/PORT_MAP.md).
+Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skill/references/port-map-format.md). Base: TMI-apps/MILA `backlog-management` (not a v0.42.0 skill; its generic core is SKILL.md, its signal steps are references/signal-adapter.md, skill-loop D15). The v0.42.0 `router` headings are mapped in [`router/references/PORT_MAP.md`](../../router/references/PORT_MAP.md).
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|
 | `start` | ## Core behavior | moved | references/onboarding.md |
 | `start` | ## Template repo vs fork (read first) | moved | references/onboarding.md |
-| `start` | ## Dev task backlog (onboarding SSOT) | kept | SKILL.md § Steps 4 (seeded tasks rank first, D41) + references/onboarding.md |
+| `start` | ## Dev task backlog (onboarding SSOT) | kept | SKILL.md § Steps 4 (seeded tasks rank first, skill-loop D41) + references/onboarding.md |
 | `start` | ## Flow (README-aligned) | moved | references/onboarding.md |
 | `start` | ### 1) Prerequisites gate | moved | references/onboarding.md |
 | `start` | ### 2) App vision & goals gate (mandatory before fork/clone and setup) | moved | references/onboarding.md |

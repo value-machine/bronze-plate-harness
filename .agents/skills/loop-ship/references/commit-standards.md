@@ -22,12 +22,12 @@ When skipping version/changelog: commit message uses `type: Subject` **without**
 - **MANDATORY:** If staged changes include `src/features/*` code, stage matching feature README updates (`src/features/*/README.md`)
 - **MANDATORY:** Run feature-doc validation for staged files (`pnpm validate:feature-docs:staged`)
 - **MANDATORY: Staging check before commit.** List staged (`git diff --name-only --cached`) and unstaged (`git diff --name-only`) files. Everything on the lap branch inside the brief's edges is the lap's and is committed. Changes **outside** the lap (another thread's work, unexplained files) are never auto-staged: treat them as a concurrency smoke signal ([`concurrency.md`](concurrency.md)).
-- Commit with the message format below — no "ready to commit?" question inside the loop (D25).
+- Commit with the message format below — no "ready to commit?" question inside the loop (skill-loop D25).
 - fix any issues found by pre-commit hook
 - **CRITICAL:** If fixing a hook failure requires modifying protected files, that's an owner stop (`agent-behavior` § Protected Files). Never `--no-verify`.
 - check if `ARCHITECTURE.md` needs update
 - No new deep docs at ship time unless the owner asked for them.
-- After a successful commit, continue with [`push-safety.md`](push-safety.md) in the same turn (D25).
+- After a successful commit, continue with [`push-safety.md`](push-safety.md) in the same turn (skill-loop D25).
 
 ## Semantic Versioning (SSOT)
 

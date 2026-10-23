@@ -24,19 +24,19 @@ When this skill is done, every planned phase is executed and gated, the acceptan
 | Calls | if a test or runtime fails unexpectedly → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) · if a new package seems needed → [`spec-reuse-package`](../spec-reuse-package/SKILL.md), then owner stop (new dependency) · if the diff starts to look like a workaround (`architecture` rule § Layer consistency) → [`spec-check-layer`](../spec-check-layer/SKILL.md) · if a phase removes a feature → [`loop-plan/references/remove-feature.md`](../loop-plan/references/remove-feature.md) § Phase 4 · when all phases pass → [`loop-check`](../loop-check/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-plan`](../loop-plan/SKILL.md), [`loop-check`](../loop-check/SKILL.md) |
 | Next | [`loop-check`](../loop-check/SKILL.md) |
-| Owner stops | Stop list ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)); edge overrun (D51); protected-file edits ([`agent-behavior` § Protected Files](../../../.cursor/rules/agent-behavior/RULE.mdc)) |
+| Owner stops | Stop list ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)); edge overrun (skill-loop D51); protected-file edits ([`agent-behavior` § Protected Files](../../../.cursor/rules/agent-behavior/RULE.mdc)) |
 
 ## Steps
 
-1. **Load.** Read the plan and the lap ledger. Open rows: resolve per the stop list, or note them if they can't block. Confirm the branch is the lap branch (`git-workflow` rule § Mode-aware branch gate). Protected files in the plan (`.cursor/rules/**`, `.agents/skills/**`, `.husky/**`, configs) need owner consent unless it's a naming-rename update (§ Protected Files exception) or listed rule changes the owner will see at Stop 2 (D50).
+1. **Load.** Read the plan and the lap ledger. Open rows: resolve per the stop list, or note them if they can't block. Confirm the branch is the lap branch (`git-workflow` rule § Mode-aware branch gate). Protected files in the plan (`.cursor/rules/**`, `.agents/skills/**`, `.husky/**`, configs) need owner consent unless it's a naming-rename update (§ Protected Files exception) or listed rule changes the owner will see at Stop 2 (skill-loop D50).
 2. **Per phase, in order:**
    1. Execute the steps in the layer and folder the plan names (`architecture` rule). New or copied identifiers follow `code-style/RULE.mdc` § Naming.
    2. Run the phase gate: the tooling gate list items the gate cites ([`loop-check/references/rule-audit.md`](../loop-check/references/rule-audit.md) § Tooling pass), plus the browser check for UI phases (browser MCP when available), migrations or RLS checks, or Edge Function invocations, as the plan says. Fix until green.
    3. Update the plan: phase status `Done`, **Notes during development** (debt, obstacles, gaps, and **mistake signals** — user corrections, reverts, repeat failures), **Decisions made** (impl-time choices).
-3. **Stay inside the brief.** Before touching a file outside the brief's edges, stop: that's an overrun (D51). Either it's absorbed (add the edge and say so in the Stop 2 summary, if it's small and within the size) or it's cut into a backlog task. Only a size change goes to the owner.
+3. **Stay inside the brief.** Before touching a file outside the brief's edges, stop: that's an overrun (skill-loop D51). Either it's absorbed (add the edge and say so in the Stop 2 summary, if it's small and within the size) or it's cut into a backlog task. Only a size change goes to the owner.
 4. **Unplanned obstacles.** Note them. If the way around one is a patch on top instead of the structural fix, that's a stop-list item. Otherwise decide, record it in **Decisions made**, and continue.
 5. **Staged-test infrastructure.** When adding or renaming `scripts/*staged*`, `scripts/*validator*`, `scripts/change-classify.cjs` or `scripts/test-staged.cjs`, update `TEST_INFRA_EXACT` / `TEST_INFRA_PREFIXES` in the same lap and run `pnpm test:classify`.
-6. **Fold decisions into their homes (D48).** For each Closed lap decision that governs future work, write one line into the feature `README.md` it concerns, or into the vision or a rule. Cite the decision, not the lap: `- <decision> (owner, v<version>)`. Update `ARCHITECTURE.md` after structural changes.
+6. **Fold decisions into their homes (skill-loop D48).** For each Closed lap decision that governs future work, write one line into the feature `README.md` it concerns, or into the vision or a rule. Cite the decision, not the lap: `- <decision> (owner, v<version>)`. Update `ARCHITECTURE.md` after structural changes.
 7. **Finish.** The acceptance test passes and every phase is `Done`. Hand to [`loop-check`](../loop-check/SKILL.md).
 
 ## Examples

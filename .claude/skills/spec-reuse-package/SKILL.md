@@ -21,7 +21,7 @@ When this skill is done, the plan holds a compact reuse recommendation — use a
 | In | The subsystem the plan or diff needs, `package.json`, existing `src/` coverage |
 | Out | Reuse recommendation in the plan's Conflict & compliance; a stop-list question when a new dependency is recommended |
 | Calls | always → [`references/reuse-search.md`](references/reuse-search.md) |
-| Called by | [`loop-plan`](../loop-plan/SKILL.md) (generic subsystem), [`loop-build`](../loop-build/SKILL.md) (new package seems needed) · owner (D57) |
+| Called by | [`loop-plan`](../loop-plan/SKILL.md) (generic subsystem), [`loop-build`](../loop-build/SKILL.md) (new package seems needed) · owner (skill-loop D57) |
 | Next | Back to the caller |
 | Owner stops | A new dependency (stop list — `agent-behavior` § When to ask) |
 

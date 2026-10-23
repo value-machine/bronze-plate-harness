@@ -29,7 +29,7 @@ Used by [`loop-ship`](../SKILL.md). Ported from `push` (v0.42.0). Mode behavior:
    - If behind, STOP and sync first (rebase or merge) before pushing
 5. **App-specific changes**: ensure remote points to app repo, not the plate-harness template repo
 6. **Fast local lint parity (mandatory, cheap — do not skip):** run the exact CI command `pnpm lint` (full repo, not staged-only). Pre-commit's `lint-staged` only lints files matched by its globs with their configured tasks — some file types (e.g. config `.cjs` files) may be routed through a non-lint task and never see `eslint --fix`, so a clean pre-commit does **not** guarantee `pnpm lint` is clean. If it fails, fix (protected files still need approval per `agent-behavior/RULE.mdc`) or stop — do not tell the user push succeeded/report the commit as done until this passes.
-7. Push (`git push -u origin <lap branch>`) — no confirmation question inside the loop (D25).
+7. Push (`git push -u origin <lap branch>`) — no confirmation question inside the loop (skill-loop D25).
 
 ## Merge gate (tests)
 

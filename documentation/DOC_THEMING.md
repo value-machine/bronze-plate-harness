@@ -73,7 +73,7 @@ Not themeable (by design): breakpoints (fixed at build time), z-index (app struc
 
 **Fonts.** Change `font.body-font` / `heading-font` / `mono-font` and load the font in `index.html`.
 
-**A component that should differ by brand.** Add a component token only when a real need appears (decision D5): add a `<component>-<property>` token to `base.tokens.json` (an alias to a shared token, or an optional override with a `var()` fallback in `@theme inline` like `card-radius`), map it in `@theme inline`, add it to `THEME_SHARED_TOKENS`, use the utility in the kit component, and teach `cn()` (`src/shared/utils/cn.ts`) the new class if it can conflict with built-ins. Structural differences (layout, markup) stay code: edit the kit component's variants.
+**A component that should differ by brand.** Add a component token only when a real need appears (decision runtime-theming D5): add a `<component>-<property>` token to `base.tokens.json` (an alias to a shared token, or an optional override with a `var()` fallback in `@theme inline` like `card-radius`), map it in `@theme inline`, add it to `THEME_SHARED_TOKENS`, use the utility in the kit component, and teach `cn()` (`src/shared/utils/cn.ts`) the new class if it can conflict with built-ins. Structural differences (layout, markup) stay code: edit the kit component's variants.
 
 **A new color.** Add it under `color` in both `light.tokens.json` and `dark.tokens.json`, run `pnpm tokens:build`, map `--color-<name>: var(--<name>)` in `@theme inline`, and add it to `THEME_COLOR_TOKENS`.
 
@@ -88,7 +88,7 @@ clearTheme(); // back to the token values
 
 - Overrides apply on top of the active light/dark palette (same value in both modes).
 - Unknown token names are a type error.
-- The boilerplate ships no policy for *who* gets which theme (org, user, role); apps decide where overrides come from (e.g. a profile or organization record) and call `applyTheme` after login. Per-mode brand palettes are a deferred extension (D7).
+- The boilerplate ships no policy for *who* gets which theme (org, user, role); apps decide where overrides come from (e.g. a profile or organization record) and call `applyTheme` after login. Per-mode brand palettes are a deferred extension (runtime-theming D7).
 
 ## Color mode in code
 

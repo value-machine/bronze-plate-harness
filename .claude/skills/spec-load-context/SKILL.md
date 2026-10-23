@@ -20,7 +20,7 @@ When this skill is done, the agent knows how the repo is laid out, which rules a
 | In | `AGENTS.md`, `ARCHITECTURE.md`, `.cursor/rules/INDEX.md`, `projectStructure.config.cjs`, `.dependency-cruiser.cjs`, `featureBudgets.config.cjs`, `src/config/git-workflow.json`, `documentation/DOC_APP_VISION.md`, `src/config/app-tasks.json`, `git status` / `git branch -a` / `gh pr list`, `documentation/jobs/temp_job_*/` |
 | Out | A short context report (§ Output) in chat |
 | Calls | always → [`references/context-checklist.md`](references/context-checklist.md) |
-| Called by | [`router`](../router/SKILL.md) (new chat), [`loop-refine`](../loop-refine/SKILL.md) (context missing) · owner (D57) |
+| Called by | [`router`](../router/SKILL.md) (new chat), [`loop-refine`](../loop-refine/SKILL.md) (context missing) · owner (skill-loop D57) |
 | Next | Back to the caller |
 | Owner stops | None |
 

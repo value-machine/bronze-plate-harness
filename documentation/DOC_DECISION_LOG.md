@@ -1,9 +1,14 @@
-# Decisions — skill loop
+# Decision log
 
-Job: `temp_job_skill_loop`
-Updated: 2026-10-23
+History of the decisions jobs made: what was chosen, what was rejected, and why. It is a record, not guidance — the rule, skill, feature README or vision that a decision governs states what applies now, and agents act on that file, never on this log.
 
-## Closed
+- **One heading per job:** `## <job-key> — <branch>`, newest first. The job key is the lap slug (`documentation/jobs/temp_job_<slug>/`). Find the PR from the branch (`gh pr list --head <branch> --state all`) and the first release from the merge commit (`git tag --contains <commit>`).
+- **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
+- **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
+
+## skill-loop — claude/peaceful-ride-b7sicx
+
+Rework of v0.42.0's 37 skills into one product-owner loop of 21 (`router`, `loop-*`, `spec-*`, `meta-*`). Design record (map, catalog, phase plan): `documentation/jobs/temp_job_skill_loop/` at commit `d45f0ff`.
 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
@@ -76,40 +81,48 @@ Updated: 2026-10-23
 | D67 | What the `debugging` rule keeps after the split | closed | The rule keeps Logs, API troubleshooting, filtering / pagination, the reductive strategy and user test instructions — always-on corrections (D1), also for features. Only scope reduction and test planning move to `spec-debug-runtime/references/strategy.md`; the scientific-method procedure and hypothesis mode live in that skill. Merged pairs (`debug` + `hypothesis`, `challenge` + `standards-align`, `optimize2` + `react-perf-vite`) lose their router tiebreaks; the skill picks the mode. | batch 3 | One home per instruction; no tiebreak between modes of one skill. |
 | D68 | Meta layer build | closed | The seven `meta-*` skills keep their source bodies verbatim as references; `meta-audit-harness` holds two lenses (`coherence-audit.md`, `context-cost.md`) and owns `harness_scan`. The skill template and port-map format move to `meta-write-skill`. Slash phrases the owner types (`/learn`, `/caveman`, `/create-skill`) stay in descriptions as triggers. The fork porting note with the full rename map is `documentation/handoffs/SKILL_LOOP_ADOPTION_GUIDE.md`. No v0.42.0 skill is left (legacy allowlist empty). | batch 4 | No aliases (D42); forks apply the map via `meta-intake-harness`. |
 
-## Open
+## runtime-theming — recovered from `a920c0d^`
 
-| id | topic | status | options briefly | blocked phase |
-|----|-------|--------|-----------------|---------------|
+Landed in `c4ce5c1` (#7).
 
-## Log
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | What drives per-login restyling | closed | Boilerplate provides the mechanism only; no specific policy. Org branding, user preference, and org-then-user must all be buildable on top. | grill-me | Owner: the three expectations (dark mode in a few lines, global radius via theme, restyle per login) illustrate flexibility needs of apps built on this boilerplate, not features to ship now. |
+| D2 | What the boilerplate ships as reference | closed | Mechanism (token contract, runtime `applyTheme` API, radius fully token-driven, docs) **plus** a light palette next to the dark one and a toggle that remembers the choice per device | grill-me | Owner picked both. Deferred non-goal: example that loads a theme from the logged-in user's profile (per-login path stays possible via the API, not demoed). Rejected: CSS-only `data-theme` blocks without a JS API (can't apply arbitrary per-org values). |
+| D3 | First-visit mode | closed | Follow the OS (`prefers-color-scheme`); toggle offers Light / Dark / System | grill-me | Rejected: dark by default; per-app configurable default; no visible toggle. |
+| D4 | What a theme may change | closed | Colors (incl. gradient), typography (font families: body, heading, mono), radius, spacing density (`--spacing`), shadows, motion (duration/easing). Not themeable: breakpoints, z-index, type scale (Tailwind default). | grill-me | Owner picked brand+density+effects, asked if complete vs MUI's theme; agent mapped every MUI section (palette, typography, spacing, shape, shadows, transitions themeable; breakpoints are build-time and z-index is structure). Per-component overrides decided separately (D5). |
+| D5 | Per-component restyling | closed | A few component tokens (e.g. `--button-radius`, `--card-radius`), each defaulting to the shared token; typed list, grows only when a real need appears | grill-me | Owner chose after shadcn research + pros/cons matrix. Rejected: global-only (no brand-specific shapes), full MUI-style overrides (against shadcn's own-the-source model), structure-as-code only (weak for per-login brands). |
+| D6 | Where a theme is authored | superseded by `temp_job_dtcg-tokens` D2 | CSS-first: built-in light/dark palettes in `src/index.css` (`:root` / `.dark`, shadcn convention); a typed token-name list in TS is the single contract; `applyTheme()` accepts only those names; a unit test checks every name is defined in both palettes | grill-me | Owner asked for agent recommendation. Rejected: TS-first theme file (needs anti-flash inline script, breaks shadcn preset paste), DTCG JSON + build step (tooling cost for a boilerplate). |
+| D7 | Runtime brand × light/dark | closed | Deferred. v1 `applyTheme(partialTokens)` overrides tokens on top of the active mode (covers accent-only brands). Per-mode brand palettes and mode-locking brands are deferred non-goals until a real app needs them; additive later, no API break. | grill-me | Owner: most apps (≈9/10) won't use per-login branding; per plan-grill § Generality no speculative machinery. |
+| D8 | Toggle placement | superseded by D11 | 'Appearance' item (Light / Dark / System) in the profile avatar menu; works signed in or out | grill-me | Rejected: top-bar icon button, both, no toggle (would reverse D2). |
+| D9 | Avoiding a wrong-theme flash on load | closed | Tiny inline script in `index.html` sets the `.dark` class from the stored choice / OS before first paint (next-themes pattern) | plan-grill | clear-winner. Lost: CSS-only `@media (prefers-color-scheme)` (duplicates the dark palette and cannot honor a stored manual choice); React effect only (visible flash for users whose choice differs from the OS). |
+| D10 | Which palette is the base | closed | `:root` = light, `.dark` = dark (shadcn convention); current brand palette moves to `.dark` unchanged; light palette keeps brand primary/secondary/gradient on light surfaces | plan-grill | clear-winner. Lost: dark as `:root` with a `.light` class (breaks shadcn presets and its `dark:` variant). Light values are agent-chosen starting values, tweakable in `index.css`. |
+| D11 | Mode control (replaces D8) | superseded by D12 | One icon button in the top bar that cycles Light → Dark → System; icon shows the current mode; hover text (tooltip + accessible name) says `Theme: <current> (click for <next>)`. No Appearance radios in the profile menu. | owner | Owner, mid-implementation: "way cleaner, just one icon that cycles, only hover text". Uses the kit's Radix `Tooltip`. Not on `/tasks` (no top bar there). |
+| D12 | Mode control placement (replaces D11 placement) | closed | The cycling icon (Light → Dark → System, tooltip naming current and next) lives in the profile menu, as the last item in a footer row at the bottom right; not in the top bar. It is a menu item (keyboard reachable) that keeps the menu open on click. | owner | Owner: "the toggle should still be within the profile menu, right bottom of that menu". |
 
-- 2026-10-23 — D1 closed via grill-me (asked)
-- 2026-10-23 — D2–D7 closed via grill-me (asked)
-- 2026-10-23 — D8 closed via grill-me (PO stated)
-- 2026-10-23 — D9 closed (clear-winner); D10, D11 opened (agent loop proposal, awaiting PO)
-- 2026-10-23 — D12 closed via grill-me (PO stated)
-- 2026-10-23 — D10, D11 closed via grill-me (asked)
-- 2026-10-23 — D13 closed via grill-me (asked)
-- 2026-10-23 — D14 closed via grill-me (PO stated)
-- 2026-10-23 — D15 closed via grill-me (asked)
-- 2026-10-23 — D16 closed via grill-me (asked); D17 clear-winner
-- 2026-10-23 — D18 closed via grill-me (asked)
-- 2026-10-23 — D19 closed via grill-me (asked)
-- 2026-10-23 — D20, D21 closed via grill-me (asked)
-- 2026-10-23 — D22 closed via grill-me (asked)
-- 2026-10-23 — D23 closed via grill-me (asked)
-- 2026-10-23 — D24 closed via grill-me (asked)
-- 2026-10-23 — D25 closed via grill-me (asked)
-- 2026-10-23 — D26–D31 closed via grill-me (PO stated)
-- 2026-10-23 — D32 closed via grill-me (asked)
-- 2026-10-23 — D33 closed via grill-me (asked)
-- 2026-10-23 — D34 closed via grill-me (asked)
-- 2026-10-23 — D35 closed via grill-me (asked)
-- 2026-10-23 — D36, D37 closed via grill-me (asked); D38 clear-winner
-- D39–D54 closed via critique round (PO: adopt all); amended rows marked
-- D55–D57 closed via weak-spot review (PO: adopt); D1, D53 amended
-- D58–D61 closed via template review (PO: update PHASE2, build batch 0)
-- D62–D66 closed (batches 1–2)
-- D67 closed (batch 3)
-- D68 closed (batch 4)
-- 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
+## harness-skills — recovered from `a920c0d^`
+
+Landed in `380afa0` (#52). Scope: `align-harness` (now `meta-audit-harness`), `update-harness` (now `meta-intake-harness`), and a broadened `learn` (now `meta-learn-lessons`).
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Fate of `improve-skill-library` | closed | Absorb — rename to `align-harness` and widen scope in place; keep lens-subagent engine + no-loss gate; domains split into `references/domain-*.md` | plan-grill | Asked. Supersedes BACKLOG "do not stretch in place" — this is the dedicated task that backlog reserved (D10 of `temp_job_agents-md-complete-ruleset`) |
+| D2 | Harness domains in scope | closed | `AGENTS.md`, `.cursor/rules/**` (bodies + YAML), `.cursor/rules/INDEX.md`, `.claude/rules/*`, `.agents/skills/**`, `ARCHITECTURE.md`, `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`, subagent brief files | plan-grill | clear-winner — user enumerated these; alternatives (skills-only, rules-only) are what we are leaving behind |
+| D3 | Ingest folder location | closed | `.agents/harness-inbox/**`, whitelisted in `projectStructure.config.cjs`, contents gitignored (tracked `README.md` only) | plan-grill | Asked. Rejected: `documentation/harness-inbox/*.md` (flat, no folder drops), tracked inbox (noisy diffs, vendored history) |
+| D4 | `learn` upgrade depth + pipeline hook | closed | Broaden `learn` harness-wide and bloat-aware; capture mistake signals in existing `DEVELOPMENT_PLAN.md` § Notes during development during `implement`/`debug`; `finish` reads them and offers `/learn` before the handoff card; `bundle-ship` + `push` point at the same block | plan-grill | Asked. Rejected: retrospective-memory-only prompt in three skills; `finish`-only (bundle-ship bypasses it) |
+| D5 | Job scope | closed | Author the skills + wire the spine, **then** run `align-harness` once; **apply** only capped trivial fixes in-job — structural fixes → follow-up job (D17) | plan-grill + review-dev-plan | Supersedes original "apply all approved fixes in this job". Phase 6 findings drive a separate `temp_job_harness-fixes` plan when blast radius is large |
+| D6 | AGENTS ↔ rules YAML drift enforcement | closed | Audit-only lens inside `align-harness`; no dedicated catalog validator script, no CI wiring. D13 `harness_scan` may compare rows vs frontmatter as facts-only output | plan-grill | Rejected: `scripts/validate-harness-catalog.cjs` + CI. D13 supersedes the "no script" half for deterministic facts only |
+| D7 | Skill names | closed | `align-harness` and `update-harness` | plan-grill | Asked. Rejected: `improve-harness` (backlog reservation; collides with `improve` facade), `harness-align`/`harness-update` pair |
+| D8 | `align-harness` vs `update-harness` boundary | closed | `align-harness` = coherence of what is already in-repo; `update-harness` = intake of external content into the harness. Foreign-skill alarm is raised by `align-harness` and hands off to `update-harness` | plan-grill | clear-winner after enumerating alternatives |
+| D9 | Persisted audit artifacts location | closed | Move live artifacts to `documentation/jobs/harness/` (registry, ledger, backlog, update reports); leave dated outputs in `documentation/jobs/skill-library/` as archive | plan-grill | clear-winner |
+| D10 | Authoring path for the two skills | closed | Use `create-skill` for drafting/description work inside the plan phases; do not fork a second authoring procedure | plan-grill | clear-winner |
+| D11 | Rule file extension (`.md` vs `.mdc`) | closed | Rename all 14 `.cursor/rules/*/RULE.md` → `RULE.mdc`; `AGENTS.md` stays the portable catalog | plan-grill | Evidence: cursor.com/docs/rules — plain `.md` in `.cursor/rules` is ignored |
+| D12 | Always-on line budget | closed | Measure and report only in this job; over-budget is **advisory warning**, never hard block. Restructure 2,044 always-on lines → follow-up job | plan-grill | Sets severity tier for budget lens |
+| D13 | Deterministic scan script | closed | `.agents/skills/align-harness/scripts/harness_scan.*` — light, structure-agnostic (D20); judgment lenses stay subagents; no CI/hook wiring | plan-grill | Whitelisted via `.agents/skills/*/scripts/*` |
+| D14 | `AGENTS.md` `@` imports after `.mdc` rename | closed | **Option C:** drop `@` imports for the five rules Cursor auto-loads (`architecture`, `file-placement`, `code-style`, `workflow`, `agent-behavior`); keep portable **catalog rows** (path + YAML description) for Claude/Codex on-demand; keep `@.cursor/rules/INDEX.md` only | user + review-dev-plan | Avoids ~1,200-line double-load in Cursor; aligns with D12. `testing` / `debugging` / `security` stay catalog-only (no `@` today) |
+| D15 | `update-harness` confirmation granularity | closed | Batch report confirm in one pass; per-item asks only for new-file creation, rejection, and protected-path writes | plan-grill | Batch = review; apply to `.cursor/**` still needs explicit approval per D18 |
+| D16 | Inbox provenance record | closed | Committed update report is provenance SSOT; required fields: `origin`, `source URL or path`, `license/attribution` (or `unknown`), `content summary`, disposition | plan-grill | One-line origin note at drop time still required |
+| D17 | Phase 7 scope | closed | Phase 6 = findings only (issue table, user picks). In-job apply cap: ≤5 **blocking** rows, no renames, no multi-file SSOT moves. Everything else → `documentation/jobs/temp_job_harness-fixes/` | review-dev-plan | Rebel + scale/mod consensus |
+| D18 | Job-level protected-file consent | closed | One upfront scoped approval covering: `projectStructure.config.cjs` (×2), `.gitignore`, 14× rule renames, `.agents/skills/**` rewrites, and Phase 7 capped apply set. Record in plan **Decisions made** at implement start | review-dev-plan security lens | Per-path re-ask only when scope expands beyond this list |
+| D19 | Concurrency policy | closed | Land or stash `feature/agents-md-portable-catalog` AGENTS work first; implement on dedicated `feature/harness-skills` branch; no parallel harness-maintenance agents on same checkout during Phases 1 and 6 | review-dev-plan | Thread continuation risk |
+| D20 | `harness_scan` contract | closed | **Light + structure-agnostic:** discover by glob/link-walk from manifest entry points; emit facts not verdicts; fail soft (`unknown shape`) not hard error; no hardcoded file inventory; no import of `projectStructure.config.cjs` | user + review-dev-plan | Prevents script rot when harness layout changes |

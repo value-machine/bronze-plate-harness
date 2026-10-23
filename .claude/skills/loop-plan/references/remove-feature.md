@@ -15,7 +15,7 @@ Four things this skill is deliberately built around, based on how it's meant to 
 
    Two constraints on this principle, because it widens what gets proposed:
 
-   - **It widens the plan, never the execution.** Residue items are line items in the Phase 3 plan like anything else, so principle 1 (targeted tool, no silent scope expansion) still holds. When the owner says "as clean as if we designed current from the start" (or equivalent), that changes the *default lean* for unresolved items — propose delete/rename rather than propose keep, no dead archives — but they stay inside the brief's edges (D51). Do not resolve them by widening the lap.
+   - **It widens the plan, never the execution.** Residue items are line items in the Phase 3 plan like anything else, so principle 1 (targeted tool, no silent scope expansion) still holds. When the owner says "as clean as if we designed current from the start" (or equivalent), that changes the *default lean* for unresolved items — propose delete/rename rather than propose keep, no dead archives — but they stay inside the brief's edges (skill-loop D51). Do not resolve them by widening the lap.
    - **Renames are part of execution.** A leftover filename that only exists because of the old name goes into the plan as a rename step. During Phase 4, the agent performs the rename, updates imports and non-import references in both directions, searches for stale names, and runs the verification required by `.cursor/rules/file-placement/RULE.mdc`. Don't keep a slim husk of `oldName.ts` merely to avoid a verified rename.
 
 ## Phase 0 — Resolve the target
@@ -51,7 +51,7 @@ Three specific traps to watch for while classifying, all easy to miss:
 
 ## Phase 3 — Write the removal plan
 
-Write the removal into the lap's plan, grouped by asset type (source files, tests, routes, types, flags/env, CI, docs, dependencies), each entry marked remove/keep/uncertain with a one-line reason. No owner review of the whole plan (D2): the owner sees the result at Stop 2. Items still **uncertain** after the Phase 2 investigation are the only ones that go to the owner — and only if they are on the stop list (data / irreversible, a conflict with a recorded decision); otherwise keep them (the safe side) and list them as follow-ups. Removing data (tables, migrations, stored rows) is always a stop-list item.
+Write the removal into the lap's plan, grouped by asset type (source files, tests, routes, types, flags/env, CI, docs, dependencies), each entry marked remove/keep/uncertain with a one-line reason. No owner review of the whole plan (skill-loop D2): the owner sees the result at Stop 2. Items still **uncertain** after the Phase 2 investigation are the only ones that go to the owner — and only if they are on the stop list (data / irreversible, a conflict with a recorded decision); otherwise keep them (the safe side) and list them as follow-ups. Removing data (tables, migrations, stored rows) is always a stop-list item.
 
 ## Phase 4 — Execute (in `loop-build`)
 

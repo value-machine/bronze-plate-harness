@@ -2,7 +2,7 @@
 /* global process, Buffer */
 // Node CJS, but outside the `scripts/` dir that eslint.ignores.js excludes.
 /**
- * Light harness facts scanner (D13/D20).
+ * Light harness facts scanner (harness-skills D13/D20).
  * Reads documentation/jobs/harness/entry-points.yaml.
  * Emits facts only — no verdicts. Fail soft on unknown shapes.
  */

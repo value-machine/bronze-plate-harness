@@ -21,7 +21,7 @@ When this skill is done, the flow has a smaller, clearer shape, or a recorded re
 | In | The flow or feature, its code surface, `documentation/DOC_APP_VISION.md`, the precedent rubric |
 | Out | Map of the current flow, findings, and options; the chosen option written into the brief or plan |
 | Calls | to simplify → [`references/challenge.md`](references/challenge.md) · to judge alignment with common practice → [`references/standards-align.md`](references/standards-align.md) (uses [`loop-plan/references/precedent-rubric.md`](../loop-plan/references/precedent-rubric.md)) |
-| Called by | [`loop-refine`](../loop-refine/SKILL.md) (flow in question), [`loop-plan`](../loop-plan/SKILL.md) (flow grows) · owner (D57) |
+| Called by | [`loop-refine`](../loop-refine/SKILL.md) (flow in question), [`loop-plan`](../loop-plan/SKILL.md) (flow grows) · owner (skill-loop D57) |
 | Next | Back to the caller (owner-direct: the chosen option becomes a backlog task) |
 | Owner stops | Inside the loop: stop list only. Owner-direct: the option pick |
 

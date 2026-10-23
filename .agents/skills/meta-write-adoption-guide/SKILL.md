@@ -11,7 +11,7 @@ description: >-
 
 # meta-write-adoption-guide
 
-When this skill is done, another repo's agent can install the same idea in its own layout from one guide that links the SSOT here instead of copying it, and forks have the rename map they need (D42).
+When this skill is done, another repo's agent can install the same idea in its own layout from one guide that links the SSOT here instead of copying it, and forks have the rename map they need (skill-loop D42).
 
 ## Edges
 

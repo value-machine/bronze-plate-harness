@@ -13,7 +13,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `validate` | ## Non-rule passes | moved | references/rule-audit.md § Tooling pass + § Plan-compliance |
 | `validate` | ### Tooling pass (impl-full and gate) | moved | references/rule-audit.md § Tooling pass |
 | `validate` | ### Plan-compliance subagent (impl-full only) | moved | references/rule-audit.md § Plan-compliance subagent (+ decision-fold check) |
-| `validate` | ## Flow | kept | SKILL.md § Steps; "ask the user what to fix" dropped — contract findings are fixed, advisory listed (D2) |
+| `validate` | ## Flow | kept | SKILL.md § Steps; "ask the user what to fix" dropped — contract findings are fixed, advisory listed (skill-loop D2) |
 | `validate` | ## Report format | moved | references/rule-audit.md § Report format (check summary) |
 | `validate` | ## Rules reference (subagent registry) | moved | loop-plan/references/rules-registry.md |
 | `validate` | ## Not in scope (use other skills) | kept | SKILL.md § Not for |

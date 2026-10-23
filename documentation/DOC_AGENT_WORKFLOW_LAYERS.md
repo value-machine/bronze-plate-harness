@@ -29,7 +29,7 @@ Between the stops the agent asks only per `.cursor/rules/agent-behavior/RULE.mdc
 
 ## Proactive guards (rule-triggered)
 
-Always-on rules fire the guards; the loop stages call the procedure when a rule fires (D56).
+Always-on rules fire the guards; the loop stages call the procedure when a rule fires (skill-loop D56).
 
 | Guard | Trigger (rule) | Procedure |
 |---|---|---|
@@ -45,7 +45,7 @@ On-demand, outside the loop: should-we-align with industry practice → [`spec-s
 
 ## Where decisions live
 
-- **Durable:** next to what they govern — the feature `README.md`, `documentation/DOC_APP_VISION.md`, or a rule (D48). `loop-refine` reads them before asking anything; a changed decision line shows in the PR diff, and `loop-verdict` lists it for the owner.
+- **Durable:** next to what they govern — the feature `README.md`, `documentation/DOC_APP_VISION.md`, or a rule (skill-loop D48). `loop-refine` reads them before asking anything; a changed decision line shows in the PR diff, and `loop-verdict` lists it for the owner.
 - **Per lap:** `documentation/jobs/temp_job_<slug>/DECISIONS.md` on the lap's branch ([template](../.agents/skills/loop-refine/references/decisions-template.md)), folded into the durable homes by `loop-build` before merge.
 - **Impl-time choices:** the plan's **Decisions made**.
 

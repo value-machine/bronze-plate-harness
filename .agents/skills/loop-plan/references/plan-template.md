@@ -14,8 +14,8 @@ Used by [`loop-plan`](../SKILL.md) at size **M**. XS / S plans live in `BRIEF.md
 - **Goal:**
 - **Why:**
 - **Brief:** `BRIEF.md` (problem, success check, in / out, edges)
-- **Size:** XS | S | M — <one-line reason> (larger work is cut into laps — D44)
-- **Acceptance test:** <path of the failing test written first — D49>
+- **Size:** XS | S | M — <one-line reason> (larger work is cut into laps — skill-loop D44)
+- **Acceptance test:** <path of the failing test written first — skill-loop D49>
 - **Plan review:** Not required (XS/S) | Done <YYYY-MM-DD> (`plan-review.md`)
 - **Scope / constraints:**
 
@@ -52,7 +52,7 @@ Every change to the bar after the plan is written: an applied must-fix, a promot
 
 ## Pattern & precedent
 
-Required when the plan introduces material UX / API / architecture design, at any size (`architecture` rule § Pattern risk, D56). Use [`review-precedent.md`](review-precedent.md) ([`precedent-rubric.md`](precedent-rubric.md) — agent picks relevant aspects).
+Required when the plan introduces material UX / API / architecture design, at any size (`architecture` rule § Pattern risk, skill-loop D56). Use [`review-precedent.md`](review-precedent.md) ([`precedent-rubric.md`](precedent-rubric.md) — agent picks relevant aspects).
 
 | Field | Value |
 |-------|--------|

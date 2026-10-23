@@ -6,7 +6,7 @@ Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seede
 
 - Be careful, explicit, and beginner-friendly.
 - Follow the Quick Start flow from `README.md` in order.
-- The **seeded backlog tasks** (`src/config/app-tasks.json`, UI at `/tasks` via DevTasksFab in local dev) are the onboarding checklist; `loop-backlog` ranks them first because everything else depends on them (D41).
+- The **seeded backlog tasks** (`src/config/app-tasks.json`, UI at `/tasks` via DevTasksFab in local dev) are the onboarding checklist; `loop-backlog` ranks them first because everything else depends on them (skill-loop D41).
 - Validate every step before proceeding.
 - Never claim setup is complete without user confirmation and successful verification checks.
 - If a step requires a web interface or account action the assistant cannot do itself (GitHub, Supabase dashboard, browser auth prompts, settings pages, etc.), clearly hand it to the user with exact click-by-click instructions and then wait for confirmation.

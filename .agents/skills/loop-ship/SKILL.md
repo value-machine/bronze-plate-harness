@@ -11,7 +11,7 @@ description: >-
 
 # loop-ship
 
-When this skill is done, the lap is committed, pushed, open as a PR with a working preview, and CI is green. Nothing reaches production until the owner's Pass at Stop 2 (D11, D47). Committing no longer waits for the owner (D25).
+When this skill is done, the lap is committed, pushed, open as a PR with a working preview, and CI is green. Nothing reaches production until the owner's Pass at Stop 2 (skill-loop D11, D47). Committing no longer waits for the owner (skill-loop D25).
 
 ## Edges
 
@@ -28,7 +28,7 @@ When this skill is done, the lap is committed, pushed, open as a PR with a worki
 
 1. **Clean up.** Remove temporary console logs, instrumentation and redundant code the lap left behind (debugging logs the owner asked to keep stay). If the lap fixed a bug through debugging and the insight is reusable at the level of a **bug class**, add it to `.agents/skills/spec-debug-runtime/references/patterns.md` (symptom class → likely causes → discriminator question → first diagnostic move; it must pass the pattern quality gate in [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md)).
 2. **Smoke check.** If `git status` or the diff shows files outside the lap, or changes between two fresh reads, follow [`references/concurrency.md`](references/concurrency.md).
-3. **Commit** per [`references/commit-standards.md`](references/commit-standards.md): version and changelog only where the mode's **version source** says so (A/B); the conventional `type: Subject` title plus a required body; feature READMEs staged with feature code; the backlog JSON files always included when changed. Fix hook failures, never `--no-verify`.
+3. **Commit** per [`references/commit-standards.md`](references/commit-standards.md): version and changelog only where the mode's **version source** says so (A/B); the conventional `type: Subject` title plus a required body; feature READMEs staged with feature code; the backlog JSON files always included when changed. Append the lap's closed `DECISIONS.md` rows to [`documentation/DOC_DECISION_LOG.md`](../../../documentation/DOC_DECISION_LOG.md) under `## <lap-slug> — <branch>` (newest first) in the same commit, so the lap folder can go without losing the why. Fix hook failures, never `--no-verify`.
 4. **Push** per [`references/push-safety.md`](references/push-safety.md): clean tree, up to date with the remote, full `pnpm lint`, then push the lap branch.
 5. **Open the PR** per the mode table's **how work lands** row:
    - **Model C:** PR to `main` (`gh pr create`, base = default branch) with a conventional title (it becomes the squash commit and the release-please entry).

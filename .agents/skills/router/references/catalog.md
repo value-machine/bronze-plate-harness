@@ -1,8 +1,8 @@
 # Skill catalog (registry)
 
-Registry for `scripts/validate-skills.cjs` (admission check, D37). Every skill folder in `.agents/skills/` must be either a v0.42.0 skill listed in [`baseline-sections.md`](baseline-sections.md) or a row below. A `built` row is fully checked; `planned` rows are the target of the skill-loop rework.
+Registry for `scripts/validate-skills.cjs` (admission check, skill-loop D37). Every skill folder in `.agents/skills/` must be either a v0.42.0 skill listed in [`baseline-sections.md`](baseline-sections.md) or a row below. A `built` row is fully checked; `planned` rows are the target of the skill-loop rework.
 
-Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG.md`, `DECISIONS.md`, `PHASE2.md`). Structure: [`meta-write-skill/references/skill-template.md`](../../meta-write-skill/references/skill-template.md).
+Decisions: [`DOC_DECISION_LOG.md`](../../../../documentation/DOC_DECISION_LOG.md) § skill-loop. Structure: [`meta-write-skill/references/skill-template.md`](../../meta-write-skill/references/skill-template.md).
 
 ## Skills
 
@@ -34,5 +34,5 @@ Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG
 
 | Source (v0.42.0) | Destination |
 |---|---|
-| `name-the-mechanism` | `code-style` rule § Naming (D33) |
-| `improve` | deleted — an owner front door to specialists (D35) |
+| `name-the-mechanism` | `code-style` rule § Naming (skill-loop D33) |
+| `improve` | deleted — an owner front door to specialists (skill-loop D35) |

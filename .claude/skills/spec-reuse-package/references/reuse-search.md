@@ -14,7 +14,7 @@ Procedure below is the SSOT. Callers **link and run** it — they do not copy St
 | Caller | When |
 |--------|------|
 | [`loop-plan`](../../loop-plan/SKILL.md) § Steps 2 (investigate) | After the internal reuse search, before locking a custom/greenfield build |
-| `architecture` rule § Don't reinvent the wheel | The always-on trigger (D56) — fires in any stage |
+| `architecture` rule § Don't reinvent the wheel | The always-on trigger (skill-loop D56) — fires in any stage |
 | [`loop-build`](../../loop-build/SKILL.md) / [`loop-plan`](../../loop-plan/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
 | Always-on reminder | `architecture/RULE.mdc` § Don't reinvent the wheel |
 

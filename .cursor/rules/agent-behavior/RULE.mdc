@@ -29,7 +29,7 @@ Ask the owner only when the choice can't be derived from the app vision (`docume
 
 Everything else: decide, record the choice where it applies, and continue.
 
-**Away switch.** When the owner says "don't ask me", "answer yourself", "I won't check, only test" (or `/plan-grill-auto`), the agent decides **true ties** itself (tie resolution: `.agents/skills/loop-plan/references/fork-checklist.md`) and logs each pick. Every other item on the list **parks the lap**: it waits as an Open row for the owner, like a lap at Stop 2, while the agent pulls the next task. Nothing is applied provisionally (D46). "Ask me" turns the switch off.
+**Away switch.** When the owner says "don't ask me", "answer yourself", "I won't check, only test" (or `/plan-grill-auto`), the agent decides **true ties** itself (tie resolution: `.agents/skills/loop-plan/references/fork-checklist.md`) and logs each pick. Every other item on the list **parks the lap**: it waits as an Open row for the owner, like a lap at Stop 2, while the agent pulls the next task. Nothing is applied provisionally (skill-loop D46). "Ask me" turns the switch off.
 
 **Where the loop asks:** Stop 1 (`loop-backlog`, `loop-refine`) and Stop 2 (`loop-verdict`). Everything between runs on its own and stops only for the list above (`.agents/skills/router/references/loop-map.md`).
 
@@ -88,7 +88,7 @@ When `code-style/RULE.mdc` § Naming requires a rename or extraction, updating r
    - Only proceed after user explicitly approves the specific change
    - After receiving explicit user approval, proceed to make the change yourself
 
-2. **Consent at Stop 2:** a rule or skill change that a lap carries (for example lessons from `meta-learn-lessons`) and that the `loop-verdict` handoff card **lists** is approved by the owner's **Pass**. An unlisted protected-file change is never covered (D50).
+2. **Consent at Stop 2:** a rule or skill change that a lap carries (for example lessons from `meta-learn-lessons`) and that the `loop-verdict` handoff card **lists** is approved by the owner's **Pass**. An unlisted protected-file change is never covered (skill-loop D50).
 
 3. **Never assume consent:**
    - Even if the fix seems obvious, always ask

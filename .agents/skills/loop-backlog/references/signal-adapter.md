@@ -1,6 +1,6 @@
 # Signal adapter (optional)
 
-Turn this on in an app that has user-signal tables, for example `error_logs` and `app_feedback` as in TMI-apps/MILA. Read by [`loop-backlog`](../SKILL.md) § Steps 2 when the adapter is on. Ported from MILA `backlog-management` (v0.42.0 of this harness has no such tables, so the adapter is off by default, D15). Adapt table and column names to the app. With the adapter on, ranking adds **impact × frequency** (D16).
+Turn this on in an app that has user-signal tables, for example `error_logs` and `app_feedback` as in TMI-apps/MILA. Read by [`loop-backlog`](../SKILL.md) § Steps 2 when the adapter is on. Ported from MILA `backlog-management` (v0.42.0 of this harness has no such tables, so the adapter is off by default, skill-loop D15). Adapt table and column names to the app. With the adapter on, ranking adds **impact × frequency** (skill-loop D16).
 
 ## Signals and statuses
 

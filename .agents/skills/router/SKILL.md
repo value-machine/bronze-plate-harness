@@ -26,9 +26,9 @@ When this skill is done, the right loop stage is running, and the owner never ha
 
 ## Steps
 
-1. **No repo change?** If the message is a question that changes nothing in the repo, answer it directly. It's not a lap (D54).
+1. **No repo change?** If the message is a question that changes nothing in the repo, answer it directly. It's not a lap (skill-loop D54).
 2. **Context.** On a new chat or an unfamiliar repo, run [`spec-load-context`](../spec-load-context/SKILL.md) once.
-3. **Locate.** Gather the evidence in § Edges In and apply [`references/loop-map.md`](references/loop-map.md) § Where a lap stands, top to bottom. An explicit request in the message wins over in-flight work (D26). That work keeps its branch and resumes later.
+3. **Locate.** Gather the evidence in § Edges In and apply [`references/loop-map.md`](references/loop-map.md) § Where a lap stands, top to bottom. An explicit request in the message wins over in-flight work (skill-loop D26). That work keeps its branch and resumes later.
 4. **Outside the loop?** Harness maintenance, one-off specialist work, and stack tools are listed in [`references/loop-map.md`](references/loop-map.md) § Outside the loop and [`references/external-skills.md`](references/external-skills.md). When two of them seem to apply, use [`references/tiebreaks.md`](references/tiebreaks.md).
 5. **Run it.** Post `Next: <stage> — <one-line evidence>`, then read that skill's `SKILL.md` and execute it in the same turn. Don't stop at naming the skill.
 

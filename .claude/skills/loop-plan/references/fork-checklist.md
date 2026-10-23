@@ -99,5 +99,5 @@ Question shape and axes follow [`asking.md`](../../loop-refine/references/asking
 **Challenge (internal):** for every fork, write the `[Challenge: <assumption>]` line too. If the assumption does not hold up against thread text, vision, or repo evidence, pick the challenge, reopen the row it overturns, and redo that step's checklist. Otherwise log it in notes as `challenge rejected: <one-line why>`.
 
 
-**Progress line per fork (away switch):** `Fork: <topic> · options: A / B / [Challenge] · Pick: <choice> — <why> · Logged D<n> agent-pick`. Stop-list items are not auto-picked: they park the lap until the owner answers (D46).
+**Progress line per fork (away switch):** `Fork: <topic> · options: A / B / [Challenge] · Pick: <choice> — <why> · Logged D<n> agent-pick`. Stop-list items are not auto-picked: they park the lap until the owner answers (skill-loop D46).
 

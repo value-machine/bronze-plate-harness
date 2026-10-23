@@ -23,7 +23,7 @@ When this skill is done, every inbox item has a disposition with its origin, the
 | Calls | always → [`references/intake.md`](references/intake.md) · classify → [`references/disposition-rubric.md`](references/disposition-rubric.md) · if an item becomes a new or changed skill → [`meta-write-skill`](../meta-write-skill/SKILL.md) · after apply → [`meta-audit-harness`](../meta-audit-harness/SKILL.md) |
 | Called by | owner |
 | Next | [`meta-audit-harness`](../meta-audit-harness/SKILL.md) |
-| Owner stops | The whole report in one pass (D15); per item only for a new file, a rejection or a protected-path write; a secret found in the inbox |
+| Owner stops | The whole report in one pass (harness-skills D15); per item only for a new file, a rejection or a protected-path write; a secret found in the inbox |
 
 ## Steps
 

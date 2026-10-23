@@ -1,10 +1,10 @@
 # Requirements depth
 
-Read when the brief needs more than problem / perimeter / edges: the work spans roles or user journeys, or touches an external API, the database, auth, or novel logic. Ported from `feature` (v0.42.0) Phases 1–2 and `plan` § Requirements depth. `feature`'s mandatory 🔴 stops are gone (D6, D8). Ask only per `agent-behavior` § When to ask, using [`asking.md`](asking.md). Otherwise infer from the codebase and log the choice.
+Read when the brief needs more than problem / perimeter / edges: the work spans roles or user journeys, or touches an external API, the database, auth, or novel logic. Ported from `feature` (v0.42.0) Phases 1–2 and `plan` § Requirements depth. `feature`'s mandatory 🔴 stops are gone (skill-loop D6, D8). Ask only per `agent-behavior` § When to ask, using [`asking.md`](asking.md). Otherwise infer from the codebase and log the choice.
 
 ## When to write user stories and journeys
 
-Write them into `BRIEF.md` § Requirements when **size ≥ M** and the work spans **roles or journeys** (D18). Below that, the success check and perimeter are enough.
+Write them into `BRIEF.md` § Requirements when **size ≥ M** and the work spans **roles or journeys** (skill-loop D18). Below that, the success check and perimeter are enough.
 
 ## User stories
 

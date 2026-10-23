@@ -41,14 +41,14 @@ One Task per non-trivial item using [`references/subagent-briefs.md`](subagent-b
 
 Write `documentation/jobs/harness/<YYYY-MM-DD>-UPDATE_REPORT.md` from [`references/report-template.md`](report-template.md).
 
-Required fields per row (D16): `origin | source | license | summary | overlap | disposition | target | decision | applied`
+Required fields per row (harness-skills D16): `origin | source | license | summary | overlap | disposition | target | decision | applied`
 
-**D15:** User confirms the **whole report** in one pass. Per-item asks only for: new file creation, rejections, protected-path writes.
+**harness-skills D15:** User confirms the **whole report** in one pass. Per-item asks only for: new file creation, rejections, protected-path writes.
 
 ### 5. Apply (confirmed only)
 
 - Prefer **housing in existing files** over new paths.
-- Protected files (`.cursor/**`, `projectStructure.config.cjs`, `.gitignore`) → STOP unless D18 scope or explicit per-path OK.
+- Protected files (`.cursor/**`, `projectStructure.config.cjs`, `.gitignore`) → STOP unless harness-skills D18 scope or explicit per-path OK.
 - Clear inbox after successful apply.
 
 ### 6. Handoff

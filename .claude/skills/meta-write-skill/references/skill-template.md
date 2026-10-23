@@ -1,6 +1,6 @@
 # Skill template (recurring structure)
 
-The one structure every new skill follows. [`scripts/validate-skills.cjs`](../../../../scripts/validate-skills.cjs) checks it, and admission requires a row in [`router/references/catalog.md`](../../router/references/catalog.md). Sources: D30, D31, D55, D58, D59 in `documentation/jobs/temp_job_skill_loop/DECISIONS.md`. The structure was checked against MILA `write-a-skill` and Anthropic `skill-creator`.
+The one structure every new skill follows. [`scripts/validate-skills.cjs`](../../../../scripts/validate-skills.cjs) checks it, and admission requires a row in [`router/references/catalog.md`](../../router/references/catalog.md). Sources: skill-loop D30, D31, D55, D58, D59 in [`DOC_DECISION_LOG.md`](../../../../documentation/DOC_DECISION_LOG.md) § skill-loop. The structure was checked against MILA `write-a-skill` and Anthropic `skill-creator`.
 
 ## Folder
 
@@ -18,7 +18,7 @@ The one structure every new skill follows. [`scripts/validate-skills.cjs`](../..
         └── graders/01-<few-words>.md
 ```
 
-`evals/` follows the `claude plugin eval` layout, so the same cases run from the CLI. During the port, the baseline for each case is the v0.42.0 skill(s) the new skill replaces (D59).
+`evals/` follows the `claude plugin eval` layout, so the same cases run from the CLI. During the port, the baseline for each case is the v0.42.0 skill(s) the new skill replaces (skill-loop D59).
 
 ## `SKILL.md`
 
@@ -74,11 +74,11 @@ Output: <what the skill produces>
 
 - **The description is the trigger.** Agents see only `name` and `description` when choosing a skill, so every "when to use" belongs there, never in the body. Keep it to 1024 characters or less, in third person, in this order: what it does, "Use when …", "Not for … (use …)".
 - **Only `name` and `description` in the frontmatter.** The name prefix carries the category.
-- **Link, don't name.** Every skill or rule mentioned is a relative link, so checks can follow it (D31). `Calls` and `Called by` must agree in both directions between built skills.
-- **Point at the rule that owns a topic; don't restate it.** Guards are fired by the always-on rules (D56). A `Calls` line for a guard names the rule section that fires it.
+- **Link, don't name.** Every skill or rule mentioned is a relative link, so checks can follow it (skill-loop D31). `Calls` and `Called by` must agree in both directions between built skills.
+- **Point at the rule that owns a topic; don't restate it.** Guards are fired by the always-on rules (skill-loop D56). A `Calls` line for a guard names the rule section that fires it.
 - **Explain why instead of ALL-CAPS MUSTs.** A model that knows the reason handles cases the steps don't list.
 - **Keep terms consistent** across the skill and its references.
 - **Keep it lean.** Body ≤ ~250 lines. Move detail to `references/`, say in the step when to read each file, and give references over 300 lines a table of contents.
 - **Bundle repeated work.** If every run writes the same helper, put it in `scripts/`.
-- **No relative time words** ("today", "current") for harness state. Cite the harness version or a commit (D28).
-- **Specialists** (`spec-*`) need at least two loop callers. A single-caller helper is a reference inside its caller (D53).
+- **No relative time words** ("today", "current") for harness state. Cite the harness version or a commit (skill-loop D28).
+- **Specialists** (`spec-*`) need at least two loop callers. A single-caller helper is a reference inside its caller (skill-loop D53).

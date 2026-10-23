@@ -1,6 +1,6 @@
 # Port map — spec-debug-runtime
 
-The source bodies moved verbatim into the references below; `SKILL.md` adds the template sections (Edges, Steps, Examples, Output, Not for) around them. Where a moved section conflicts with `SKILL.md` (asking the owner, Next step), `SKILL.md` wins (D20, D40).
+The source bodies moved verbatim into the references below; `SKILL.md` adds the template sections (Edges, Steps, Examples, Output, Not for) around them. Where a moved section conflicts with `SKILL.md` (asking the owner, Next step), `SKILL.md` wins (skill-loop D20, D40).
 
 | Source (v0.42.0) | Section | Status | Where / why |
 |---|---|---|---|

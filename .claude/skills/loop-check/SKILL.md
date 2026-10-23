@@ -26,7 +26,7 @@ When this skill is done, the change has passed every check the repo can run, and
 
 ## Steps
 
-1. **Scope.** Diff of the lap branch against its base, plus the plan and its Review contract. Pick the mode: `impl` with a plan, `gate` without one (an owner-direct check, D57).
+1. **Scope.** Diff of the lap branch against its base, plus the plan and its Review contract. Pick the mode: `impl` with a plan, `gate` without one (an owner-direct check, skill-loop D57).
 2. **Fan out in one turn** ([`references/rule-audit.md`](references/rule-audit.md)):
    - one read-only subagent per relevant rule, always including `code-style` with its naming sweep;
    - the tooling pass (contract gate list, including the acceptance test);

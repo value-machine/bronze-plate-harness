@@ -1,6 +1,6 @@
 # `BRIEF.md` template
 
-Path: `documentation/jobs/temp_job_<slug>/BRIEF.md` (on the lap's branch). Written by `loop-refine` and read by every later stage. The owner does not read it (D19), so write it for an agent: dense, concrete, no pedagogy.
+Path: `documentation/jobs/temp_job_<slug>/BRIEF.md` (on the lap's branch). Written by `loop-refine` and read by every later stage. The owner does not read it (skill-loop D19), so write it for an agent: dense, concrete, no pedagogy.
 
 ```markdown
 # Brief — <task title>
@@ -25,7 +25,7 @@ Task: <app-tasks.json title> · Lap: temp_job_<slug> · Harness: v<package.json 
 |---|---|---|---|
 | <feature or shared area> | <trigger → path → outcome, or Not found> | <where this attaches> | ride / new — <why> |
 
-Overrun rule (D51): a diff that touches a feature area **not** in this table stops the lap.
+Overrun rule (skill-loop D51): a diff that touches a feature area **not** in this table stops the lap.
 
 ## Size
 <XS | S | M> — <edges touched + cleanup a clean implementation needs>.
