@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generator": "cursor-migration inventory v0.1.1",
+  "generator": "cursor-migration inventory v0.2.0",
   "keepCursor": true,
   "excludes": [],
   "environment": {
