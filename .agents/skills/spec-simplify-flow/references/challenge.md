@@ -183,7 +183,7 @@ Do not implement until the user explicitly chooses.
 
 ### Phase 7: Execute Chosen Option
 
-**This skill owns execution** after the user picks A/B/C/D — do not hand off to `quick-piv`/`implement` solely to apply the chosen option (unless the option is M/L and needs a durable `DEVELOPMENT_PLAN.md`, then hand to `loop-plan` → `loop-build`).
+**This skill owns execution** after the user picks A/B/C/D — do not hand off to `loop-build` solely to apply the chosen option (unless the option is M/L and needs a durable `DEVELOPMENT_PLAN.md`, then hand to `loop-plan` → `loop-build`).
 
 Implementation rules:
 - Keep changes minimal and local

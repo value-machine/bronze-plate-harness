@@ -105,7 +105,7 @@ After writing the file:
 | Optional one-line pointer | `AGENTS.md` only if the capability is repo-wide important |
 | Catalog | `.agents/skills/router/references/catalog.md` — link **example** guide in Related if useful |
 
-Do **not** require `meta-learn-lessons`, `router`, or `finish` to run. No mandatory changeset for docs-only.
+Do **not** require `meta-learn-lessons`, `router`, or `loop-ship` to run. No mandatory changeset for docs-only.
 
 ### 5. Report to user
 
@@ -135,7 +135,7 @@ Then in the target project’s `SKILL.md`:
 3. Add slug to that repo’s router skill index / meta list (here: `.agents/skills/router/SKILL.md`)
 4. Point `layer-mapping.md` “source example” column at the new home repo
 
-**No dependency** on `meta-learn-lessons`, `pattern-review`, or other plate-harness-specific skills.
+**No dependency** on `meta-learn-lessons`, `loop-plan`, or other plate-harness-specific skills.
 
 ---
 
