@@ -69,6 +69,12 @@ jobs:
       - name: Git workflow mode config
         run: pnpm validate:git-workflow
 
+      - name: Skill admission check
+        run: pnpm validate:skills
+
+      - name: Agent-config mirror (.claude/skills)
+        run: node scripts/sync-agent-config.mjs --check
+
       - name: Structure validation
         run: pnpm validate:structure
 

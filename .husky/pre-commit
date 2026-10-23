@@ -10,6 +10,11 @@ pnpm lint-staged || exit 1
 echo "Running feature documentation validation for staged files..."
 pnpm validate:feature-docs:staged || exit 1
 
+# Agent skills: refresh the generated .claude/skills mirror (fails open; CI --check is strict),
+# then the skill admission check on every path (SSOT: scripts/validate-skills.cjs)
+node scripts/sync-agent-config.mjs --staged || true
+pnpm validate:skills || exit 1
+
 # Light path: docs, migrations, or tooling-only — skip tests, type-check, structure, feature-size, arch
 # SSOT: scripts/change-classify.cjs
 LIGHT_KIND=$(node scripts/is-staged-precommit-light.js --echo-kind 2>/dev/null) || true

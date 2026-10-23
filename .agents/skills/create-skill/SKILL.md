@@ -29,6 +29,8 @@ Then ask about edge cases, inputs/outputs, example files, success criteria, and 
 
 ## 2. Write the SKILL.md
 
+**New skills follow [`references/skill-template.md`](references/skill-template.md)**: the recurring structure, plus a port map in [`references/port-map-format.md`](references/port-map-format.md) when the skill replaces v0.42.0 skills. They also need a row in [`router/references/catalog.md`](../router/references/catalog.md); `pnpm validate:skills` rejects a skill folder that has neither. The tree and bullets below still apply to edits of v0.42.0 skills until each one is replaced.
+
 ```
 .agents/skills/<name>/
 ├── SKILL.md        # YAML frontmatter (name, description) + instructions
@@ -68,6 +70,7 @@ Re-run the tests after each revision; stop when the user is happy, the feedback 
 ## 6. Integrate
 
 - `.agents/skills/**` is protected: get explicit user approval before writing (`.cursor/rules/agent-behavior/RULE.mdc` § Protected Files).
+- Add or update the skill's row in [`router/references/catalog.md`](../router/references/catalog.md) and run `pnpm validate:skills` (admission check).
 - Add the skill to `.agents/skills/router/SKILL.md` § Skill index (situation → skill) and, if it competes with another, to `router/references/tiebreaks.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
 - A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see `pattern-review` / `dont-reinvent-the-wheel` in `architecture/RULE.mdc`).
 - Run `pnpm validate:docs` and `pnpm validate:structure`.

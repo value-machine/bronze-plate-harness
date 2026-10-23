@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "mirrors": [
+    {"kind": "skills", "source": ".agents/skills", "target": ".claude/skills"}
+  ]
+}
