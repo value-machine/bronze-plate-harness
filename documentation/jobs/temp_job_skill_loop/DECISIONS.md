@@ -29,6 +29,7 @@ Updated: 2026-10-23
 | D20 | Which design decisions are "impactful" (always ask) | closed | Always ask: data / irreversible changes (schema, migrations, deleting or transforming stored data, auth / permission models); cost or external services (paid usage, quotas, third-party calls, privacy). Everything else: agent decides intuitively. | grill-me | Rejected as always-ask: visible behavior / defaults, new feature coupling (agent judgment). |
 | D21 | Building on an unclean foundation | closed | When the change would patch onto code that is not a clean, deep, well-named module, `plan` includes the cleanup and routes it to a foundation specialist during planning; cleanup counts toward the size (D12). Not a PO stop unless it becomes a D7(b) patch-on-top choice. | grill-me | PO: "target an expert on that during the plan". Which specialist → D22. |
 | D22 | Foundation cleanup specialist | closed | Port TMI-apps/MILA `.agents/skills/improve-codebase-architecture` (deep-module lens: depth, seams, deletion test, LANGUAGE.md glossary) as the specialist `plan` calls under D21, scoped to modules the change touches. `consolidate` / `optimize2` become its sub-lenses later (C8). | grill-me | Rejected: consolidate as-is, new merged foundation-review now, always-on rule only. |
+| D23 | Pre-build plan gates (M/L) | closed | One merged plan-review step: critique lenses (`review-dev-plan`) + rule-compliance lens (`validate` plan-review) run in parallel; agent applies contract must-fixes as Amendments, then `implement`. | grill-me | Replaces two sequential gates. `validate` keeps impl-review after build. Rejected: keep both, critique only, size-scaled gates. |
 
 ## Open
 
@@ -51,4 +52,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D19 closed via grill-me (asked)
 - 2026-10-23 — D20, D21 closed via grill-me (asked)
 - 2026-10-23 — D22 closed via grill-me (asked)
+- 2026-10-23 — D23 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
