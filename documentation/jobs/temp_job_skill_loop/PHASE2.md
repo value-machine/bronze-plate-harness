@@ -1,125 +1,89 @@
 # Phase 2 — recurring skill structure, admission check, build batches
 
-Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Inputs: [`CATALOG.md`](CATALOG.md), [`DECISIONS.md`](DECISIONS.md) (D1–D57)
+Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Inputs: [`CATALOG.md`](CATALOG.md), [`DECISIONS.md`](DECISIONS.md) (D1–D61)
 
-## 1. Recurring skill structure (D30, D31, D55)
+Checked against MILA `write-a-skill` and Anthropic `skill-creator` (D58–D60).
 
-Every skill folder:
+## 1. Recurring skill structure (D30, D31, D55, D58, D59)
 
 ```text
 .agents/skills/<name>/
-├── SKILL.md               # the structure below; body ≤ ~250 lines
-└── references/
-    ├── PORT_MAP.md        # D55 — required while any v0.42.0 skill feeds this one
-    └── <topic>.md         # loaded on demand; SKILL.md says when to read each
+├── SKILL.md               # template below; body ≤ ~250 lines
+├── references/
+│   ├── PORT_MAP.md        # D55 — while any v0.42.0 skill feeds this one
+│   └── <topic>.md         # loaded on demand; SKILL.md says when to read each; one level deep
+├── scripts/               # deterministic, repeated work (validation, formatting)
+└── evals/                 # D59 — skill-creator / `claude plugin eval` layout
+    └── <case-name>/
+        ├── prompt.md      # settings block, then the user's prompt
+        ├── case.yaml      # schema_version "1.1", name, expected_outcome
+        └── graders/NN-<few-words>.md
 ```
 
-### `SKILL.md` template
+Template: `.agents/skills/create-skill/references/skill-template.md` (moves to `meta-write-skill` in batch 4). It holds:
 
-```markdown
----
-name: <category>-<verb>[-<object>]        # router | loop-* | spec-* | meta-* (D32, D39)
-category: router | loop | spec | meta
-description: >-
-  <What it does, one sentence.> Use when <triggers — conditions and phrases>.
-  Not for <neighbor case> (use <skill>).
----
+- **Frontmatter:** `name` + `description` only. The prefix carries the category. The description is the only place for triggers: one sentence on what it does, then "Use when …", then "Not for … (use …)". At most 1024 characters, a little pushy, in third person.
+- **Body sections, in order:** Purpose, `## Edges` (In, Out, Calls, Called by, Next, Owner stops), `## Steps`, `## Examples`, `## Output`, `## Not for`.
+- **Writing rules:**
+  - Every skill or rule mentioned is a relative link.
+  - Point at the rule that owns a topic; never restate it. Guards come from rules (D56).
+  - Use the imperative and explain why instead of ALL-CAPS MUSTs.
+  - Keep terms consistent.
+  - References over 300 lines get a table of contents.
+  - No relative time words (D28).
 
-# <name>
+Port map format: `.agents/skills/create-skill/references/port-map-format.md`.
 
-<Purpose: 2–3 sentences. What is true when this skill is done.>
+## 2. Registry and admission check (D37)
 
-## Edges
+**Registry:** `.agents/skills/router/references/catalog.md`. One row per replacement skill (`planned` / `built`, plus the v0.42.0 sources it replaces), and one table of sources retired into rules or deleted. The baseline headings live in `.agents/skills/router/references/baseline-sections.md`, a snapshot of every v0.42.0 skill heading generated from `a920c0d`. Port-map completeness is checked against it, so the check keeps working after the old skills are deleted.
 
-| Field | Value |
-|---|---|
-| Trigger | <when it runs> |
-| In | <files / state it reads> |
-| Out | <files / state it writes> |
-| Calls | if <condition> → <link: ../<skill>/SKILL.md> · if <condition> → <link: references/<x>.md> |
-| Called by | <link: ../<skill>/SKILL.md>, … · owner (meta, spec — D36, D57) |
-| Next | <link: ../<skill>/SKILL.md> |
-| Owner stops | none · stop list (`agent-behavior` rule § When to ask) · <stage-specific> |
-
-## Steps
-
-1. <imperative step; why in one clause when not obvious>
-2. …
-
-## Output
-
-<exact format of what it writes or posts — template or short example>
-
-## Not for
-
-| Case | Use |
-|---|---|
-| <neighbor case> | <link: ../<skill>/SKILL.md> |
-```
-
-Rules for the body:
-
-- **`<link: …>` placeholders** above stand for relative markdown links (name in brackets, path in parentheses); they are written out as placeholders here only because the repo link validator checks this file.
-
-- **Links, not prose names.** Every skill or rule mentioned is a relative link, so the admission check can verify it (D31).
-- **Point at SSOT.** Rules are linked, never restated. Loop skills link the stop list in the `agent-behavior` rule and the shared asking reference; they do not copy them (D40).
-- **Guards come from rules (D56).** A `Calls` line for a guard names the rule section that fires it.
-- **No relative time words** for harness state; cite the harness version (D28).
-
-### `references/PORT_MAP.md` format (D55)
-
-```markdown
-# Port map — <name>
-
-| Source (v0.42.0) | Section | Status | Where / why |
-|---|---|---|---|
-| `grill-me` | § Non-goals are first-class | kept | SKILL.md § Steps 3 |
-| `grill-me` | § Codebase grounding | moved | references/grounding.md |
-| `feature` | § 1.1 Branch & Workflow Check | dropped | `loop-ship` owns branch mode (D34) |
-```
-
-Status is one of `kept` / `moved` / `dropped`. `dropped` needs a reason. Every `##` and `###` heading of each source skill appears once across all port maps.
-
-## 2. Admission check (D37)
-
-`scripts/validate-skills.cjs` (+ `scripts/validate-skills.test.cjs`), run by `pnpm validate:skills`.
+**Check:** `scripts/validate-skills.cjs` + `scripts/validate-skills.test.cjs`, run by `pnpm validate:skills`.
 
 | # | Check | Fails when |
 |---|---|---|
-| 1 | Name | Folder ≠ `name`, or `name` does not match `router` / `loop-*` / `spec-*` / `meta-*` |
-| 2 | Frontmatter | `description` or `category` missing; `category` ≠ prefix |
-| 3 | Structure | `## Edges`, `## Steps`, `## Output`, `## Not for` missing or out of order; an edge field missing |
-| 4 | Links | A linked skill, reference or rule path does not exist |
-| 5 | Reciprocity | A `Calls` link to skill B without A in B's `Called by` (and the reverse) |
-| 6 | Catalog | Skill not in `.agents/skills/router/references/catalog.md`, or catalog lists a missing skill |
-| 7 | Port map | Missing while the catalog lists v0.42.0 sources; a status outside the three; `dropped` with no reason; a source heading missing across all port maps |
-| 8 | Threshold (D53) | A `spec-*` skill with fewer than two loop callers |
+| 1 | Admission | A skill folder is neither a v0.42.0 skill (baseline) nor in the catalog |
+| 2 | Name | A `built` skill's folder ≠ `name`, or `name` doesn't match `router` / `loop-*` / `spec-*` / `meta-*` |
+| 3 | Frontmatter | `description` missing, over 1024 characters, or without "Use when" |
+| 4 | Structure | Body sections missing or out of order; an edge field missing |
+| 5 | Reciprocity | A `Calls` link to a built skill B without A in B's `Called by` (and the reverse) |
+| 6 | Catalog | A `built` row whose folder is missing |
+| 7 | Port map | Missing while the row lists sources; a status other than kept / moved / dropped; `dropped` with no reason; once every skill replacing a source is built, any baseline heading of that source left uncovered |
+| 8 | Threshold (D53) | A `spec-*` skill with fewer than two `loop-*` / `router` callers |
+| 9 | Evals (D59) | A `loop-*` skill with no `evals/<case>/prompt.md` |
 
-Wiring:
+Link resolution is already enforced repo-wide by `pnpm validate:docs:links`; the check does not repeat it.
 
-- **Pre-commit:** runs when any `.agents/skills/**` path is staged (the docs-only light path included).
-- **CI:** runs in the `test` job.
-- **Transition:** v0.42.0 skills sit on an allowlist inside the script. Each batch removes its entries. The allowlist must be empty at the end of batch 4, and from then on the check blocks.
+**Legacy:** v0.42.0 skills whose catalog row is not `built` are skipped. The allowlist shrinks by itself as each batch marks rows `built` and deletes the old folders. There's no separate list.
 
-The catalog moves from this job folder to `.agents/skills/router/references/catalog.md`, because `projectStructure.config.cjs` allows no loose files in `.agents/skills/`. It replaces router § Skill index.
+**Wiring:**
+- `pre-commit` runs it on every path, including the docs-only light path.
+- CI runs it in the `test` job.
 
-## 3. Build batches
+## 3. Claude Code discovery (D60)
 
-Breadth-first by layer (D30). Each batch is one PR. Old skills are deleted in the batch that replaces them; there are no aliases (D42).
+`scripts/sync-agent-config.mjs`, vendored from MILA with its test, mirrors `.agents/skills/` into `.claude/skills/`. It is driven by `agent-sync.config.json` (skills kind only), and `.claude/skills/.generated.json` lists the files it owns.
 
-| Batch | Content | Protected paths touched |
-|---|---|---|
-| **0 — Scaffolding** | Template + PORT_MAP format as `meta-write-skill/references/`; `validate-skills.cjs` + test (allowlist mode); catalog → `router/references/catalog.md`; pre-commit + CI wiring | `.agents/skills/**`, `.husky/pre-commit`, `.github/workflows/**` |
-| **1 — Rules** | `agent-behavior`: § When to ask (choice definition + stop list) replaces the Decision Questioning Protocol (D40). `code-style`: naming core (D33). `architecture`: guard triggers + assumption check (D33, D56). `git-workflow`: commit timing C (D25), Stop 2 per mode (D47); PR / CI / promote steps marked for `loop-ship`. `debugging`: strategy marked for `spec-debug-runtime` (D34). `workflow`: deleted (D34). Relative-time line (D28). `AGENTS.md` + `.cursor/rules/INDEX.md` catalog rows | `.cursor/rules/**` |
-| **2 — Loop** | `router`, `loop-backlog` (MILA port), `loop-refine`, `loop-plan` (+ `deepen-modules`, `research-api`, `review-precedent`, `remove-feature` references), `loop-build`, `loop-check` (+ `component-lens`), `loop-ship`, `loop-verdict`; delete the replaced skills; update `DOC_AGENT_WORKFLOW_LAYERS.md`, `router/references/*`, `CLAUDE.md` | `.agents/skills/**` |
-| **3 — Specialists** | The 6 `spec-*` skills; delete the replaced skills | `.agents/skills/**` |
-| **4 — Meta** | The 7 `meta-*` skills; fork adoption note with the rename map (D42); allowlist emptied, so the check blocks | `.agents/skills/**`, `scripts/` |
+- `pre-commit` runs `--staged`, which writes and stages the mirror and fails open.
+- CI runs `--check`, which fails on drift.
 
-Between batches the harness keeps working. Not-yet-replaced v0.42.0 skills stay on the allowlist, and batch 2 links them where a loop skill still calls one (for example `debug` until batch 3).
+`CLAUDE.md`'s "Claude Code does not auto-list them" note changes accordingly.
 
-## 4. What needs owner approval
+## 4. Build batches
 
-| Item | Why |
+Breadth-first by layer (D30). Each batch is one PR. Old skills are deleted in the batch that replaces them, with no aliases (D42).
+
+| Batch | Content |
 |---|---|
-| Writing to `.agents/skills/**`, `.cursor/rules/**`, `.husky/**`, `.github/workflows/**` | Protected files (`agent-behavior` rule § Protected Files) |
-| Deleting 30 v0.42.0 skills over batches 2–4 | Irreversible for forks (D42 adoption note covers migration) |
+| **0 — Scaffolding** | Template + port-map format; catalog + baseline snapshot; `validate-skills.cjs` + test; `.claude/skills` mirror; `projectStructure.config.cjs` allows `evals/`, `.claude/skills/`, `agent-sync.config.json`; pre-commit + CI wiring; `CLAUDE.md` note |
+| **1 — Rules** | `agent-behavior`: § When to ask (D40). `code-style`: naming core (D33). `architecture`: guard triggers + assumption check (D33, D56). `git-workflow`: commit timing C (D25), Stop 2 per mode (D47). `debugging`: strategy marked for `spec-debug-runtime` (D34). `workflow`: deleted (D34). Relative-time line (D28). `AGENTS.md` + `.cursor/rules/INDEX.md` |
+| **2 — Loop** | `router` + 7 `loop-*` with references, port maps and evals (baseline = v0.42.0 originals); delete the replaced skills; update `DOC_AGENT_WORKFLOW_LAYERS.md`, `router/references/*` |
+| **3 — Specialists** | 6 `spec-*`; delete the replaced skills |
+| **4 — Meta** | 7 `meta-*`; template moves to `meta-write-skill`; fork adoption note with the rename map (D42) |
+
+## 5. Owner approval
+
+| Item | Status |
+|---|---|
+| Batch 0 protected writes | Approved (D61) |
+| Batches 1–4 (protected writes; deleting 30 v0.42.0 skills) | Pending, per batch |
