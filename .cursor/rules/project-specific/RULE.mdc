@@ -10,7 +10,7 @@ globs: ["**/supabase/functions/**/*.ts"]
 
 This rule is the rate-limit mechanism for Supabase Edge Functions: a Postgres `rate_limits` table and the service role. The helper lives in `supabase/functions/_shared/` and is named for the rate-limit role. That path is an example of this fork's helper, not a template prefix for other hosts. Other hosts are a different rule. Do not copy or extend this helper so this rule will load.
 
-Rate limiting patterns for Supabase Edge Functions. See Legacy section for deprecated Firebase implementation.
+Rate limiting patterns for Supabase Edge Functions.
 
 ## When to Implement Rate Limiting
 
@@ -191,14 +191,6 @@ Without:
 - Third-party tracking
 - User privacy concerns
 - Complex external dependencies
-
-## Legacy: Firebase Cloud Functions (Deprecated)
-
-> **Note:** Legacy Firebase Cloud Functions rate limiting implementation. Project migrated to Supabase Edge Functions. Kept for reference during migration period.
-
-Previously used Firestore collection with document ID format `{uid}_{functionName}` containing `count`, `windowStart`, and `lastRequest` fields.
-
-Migration: Replaced with Supabase PostgreSQL table and Edge Function implementation (see above).
 
 ## Related Rules
 
