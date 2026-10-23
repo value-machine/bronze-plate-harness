@@ -199,9 +199,9 @@ Harness maintenance, onboarding and overlays — outside the product loop.
 | Name | Replaces | Description (draft) | Called by | Status |
 |---|---|---|---|---|
 | `meta-learn-lessons` | `learn` | Turns a troubled lap's failures into rule or skill updates. | `loop-review-preview` | ✅ |
-| `meta-audit-harness` | `align-harness`, `tighten-harness` | Coherence and context-cost audit of rules, skills and indexes. | Owner | ❓ C11 |
-| `meta-intake-harness` | `update-harness` | Takes in external harness content from the inbox. | Owner | ❓ C11 |
-| `meta-write-skill` | `create-skill` | Authors one skill on the recurring structure (phase 2 template). | Owner, `meta-learn-lessons` | ✅ |
+| `meta-audit-harness` | `align-harness`, `tighten-harness` (D36) | One harness audit with two lenses: coherence and context cost. | Owner; `meta-write-skill` after a skill change | ✅ |
+| `meta-intake-harness` | `update-harness` | Takes in external harness content from the inbox and feeds findings into `meta-audit-harness`. | Owner | ✅ |
+| `meta-write-skill` | `create-skill` | Sole path for adding or changing a skill: recurring structure, naming, edges, catalog entry; then `meta-audit-harness`. Backed by a commit / CI admission check (D37). | Owner, `meta-learn-lessons`, any agent editing a skill | ✅ |
 | `meta-grade-rule` | `rule-quality` | Grades or rewrites one rule file. | Owner, `meta-audit-harness` | ✅ |
 | `meta-write-adoption-guide` | `write-adoption-guide` | Writes a cross-repo adoption guide for an implemented pattern. | Owner | ✅ |
 | `meta-onboard-app` | `start` | First-time setup and app vision, before the first loop lap. | Owner | ✅ |
@@ -209,9 +209,6 @@ Harness maintenance, onboarding and overlays — outside the product loop.
 
 ---
 
-## Open edges (to settle before phase 2)
+## Open edges
 
-| Cluster | Question |
-|---|---|
-| C11 | Do meta skills keep owner entry points (they sit outside the product loop), and do `align-harness` + `tighten-harness` merge? |
-| C12 | Covered by `loop-route-next` above — confirm. |
+None — C7–C12 closed (D33–D38). Phase 1 ready for owner sign-off.
