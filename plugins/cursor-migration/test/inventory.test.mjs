@@ -74,8 +74,8 @@ test('every fixture has a snapshot', () => {
   }
 });
 
-test('mila-shaped: classification, precedence, demotion, stubs, migrated command', () => {
-  const {inventory} = inventoryOf(FIXTURES['mila-shaped']());
+test('folder-rules: classification, precedence, demotion, stubs, migrated command', () => {
+  const {inventory} = inventoryOf(FIXTURES['folder-rules']());
   const rule = name => inventory.rules.find(row => row.name === name);
   assert.equal(rule('database').type, 'always');
   assert.ok(
@@ -111,8 +111,8 @@ test('mila-shaped: classification, precedence, demotion, stubs, migrated command
   );
 });
 
-test('mila-shaped: references are auto, manual, stale or kept', () => {
-  const {inventory} = inventoryOf(FIXTURES['mila-shaped']());
+test('folder-rules: references are auto, manual, stale or kept', () => {
+  const {inventory} = inventoryOf(FIXTURES['folder-rules']());
   const find = (file, ref) =>
     inventory.references.find(row => row.file === file && row.ref === ref);
   assert.equal(
@@ -200,7 +200,7 @@ test('report never prints MCP secret values', () => {
 });
 
 test('report contains the required sections and judgment ids', () => {
-  const {inventory} = inventoryOf(FIXTURES['mila-shaped']());
+  const {inventory} = inventoryOf(FIXTURES['folder-rules']());
   const report = renderReport(inventory);
   for (const heading of [
     '## How Cursor rule types map to Claude Code',
@@ -344,6 +344,26 @@ test('rewriteText: a bare old folder in a sentence about stubs stays for review'
   assert.equal(
     rewriteText('Skills live in `.cursor/skills/`.', ctx),
     'Skills live in `.agents/skills/`.',
+  );
+});
+
+test('rewriteText: paths in the user home folder and longer folder names stay', async () => {
+  const {rewriteText} = await import('../scripts/inventory/references.mjs');
+  const ctx = {
+    ruleTargets: new Map(),
+    commandTargets: new Map(),
+    agentsSkillNames: new Set(['plan']),
+  };
+  for (const line of [
+    'Built-ins: `~/.cursor/skills-cursor/create-rule/SKILL.md`',
+    'Plugins: $HOME/.cursor/skills/x and ~/.cursor/rules/',
+    'Fixture: `.cursor/skills-cursor/` and `.cursor/rulesets/`',
+  ]) {
+    assert.equal(rewriteText(line, ctx), line);
+  }
+  assert.equal(
+    rewriteText('Repo: `.cursor/skills/plan/SKILL.md`, home: `~/.cursor/skills/plan`', ctx),
+    'Repo: `.agents/skills/plan/SKILL.md`, home: `~/.cursor/skills/plan`',
   );
 });
 

@@ -13,10 +13,15 @@ export const DEFAULT_EXCLUDES = [
   '.cursor/plans/**',
   '.claude/skills/**',
   'plugins/*/test/**',
-  'documentation/boilerplate-rules-commands/**',
 ];
 const CODE_EXT = /\.(c?js|mjs|ts|tsx|py|ps1|sh|json|ya?ml|toml)$/i;
-const REF = /\.cursor\/(?:rules|skills|commands|config|plans|mcp\.json)(?:\/[^\s`'"()<>[\]{},;|*]*)?/g;
+/**
+ * A repo-relative .cursor/ path. Paths in the user's home folder (~/.cursor/skills-cursor/,
+ * $HOME/.cursor/plugins/) are Cursor's own and never move, and a folder name must end at a
+ * boundary so `.cursor/skills-cursor` is not read as `.cursor/skills` + "-cursor".
+ */
+const REF =
+  /(?<!~[\\/]|HOME[\\/]|USERPROFILE%?[\\/])\.cursor\/(?:rules|skills|commands|config|plans|mcp\.json)(?![\w-])(?:\/[^\s`'"()<>[\]{},;|*]*)?/g;
 const GENERATED_MARKER = '@generated-by cursor-migration';
 const MAX_BYTES = 1024 * 1024;
 

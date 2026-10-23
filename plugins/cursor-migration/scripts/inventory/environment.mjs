@@ -25,7 +25,6 @@ const EXCLUSIONS = [
   {path: '.cursor/commands/archive', reason: 'archived commands'},
   {path: '.cursor/hooks.json', reason: 'Cursor hooks; port by hand to .claude/settings.json hooks'},
   {path: '.cursorignore', reason: 'Cursor ignore file; Claude Code uses permissions.deny'},
-  {path: 'documentation/boilerplate-rules-commands', reason: 'reference copies, not live config'},
 ];
 
 const NESTED_SKIP = new Set(['documentation', 'plugins', '.claude', '.agents', '.cursor']);

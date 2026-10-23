@@ -64,8 +64,8 @@ export function mdcRepo() {
   };
 }
 
-/** MILA-shaped: RULE.md folders, index files, redirect stubs, diverged references, migrated command. */
-export function milaShapedRepo() {
+/** Folder rules: RULE.md folders, index files, redirect stubs, diverged references, migrated command. */
+export function folderRulesRepo() {
   const stub = name =>
     `---\nname: ${name}\ndescription: Redirect\n---\nSSOT moved: use [.agents/skills/${name}/SKILL.md](../../.agents/skills/${name}/SKILL.md).\n`;
   return {
@@ -115,6 +115,6 @@ export function nestedRepo() {
 export const FIXTURES = {
   cursorrules: cursorrulesRepo,
   mdc: mdcRepo,
-  'mila-shaped': milaShapedRepo,
+  'folder-rules': folderRulesRepo,
   nested: nestedRepo,
 };

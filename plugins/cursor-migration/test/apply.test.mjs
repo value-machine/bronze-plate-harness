@@ -72,7 +72,7 @@ function commitAll(repo) {
 
 const CASES = [
   {name: 'mdc', keepCursor: false},
-  {name: 'mila-shaped', keepCursor: true},
+  {name: 'folder-rules', keepCursor: true},
   {name: 'cursorrules', keepCursor: false},
 ];
 
@@ -115,8 +115,8 @@ for (const {name, keepCursor} of CASES) {
   });
 }
 
-test('mila-shaped: rules, generated Cursor rules, stubs and pending items', () => {
-  const repo = prepared(FIXTURES['mila-shaped'](), true);
+test('folder-rules: rules, generated Cursor rules, stubs and pending items', () => {
+  const repo = prepared(FIXTURES['folder-rules'](), true);
   try {
     const result = apply(repo);
     const tree = treeText(repo.dir);
@@ -151,8 +151,8 @@ test('mila-shaped: rules, generated Cursor rules, stubs and pending items', () =
   }
 });
 
-test('mila-shaped: stubs, kept judgment items and hook', () => {
-  const repo = prepared(FIXTURES['mila-shaped'](), true);
+test('folder-rules: stubs, kept judgment items and hook', () => {
+  const repo = prepared(FIXTURES['folder-rules'](), true);
   try {
     const result = apply(repo);
     const tree = treeText(repo.dir);
@@ -193,7 +193,7 @@ test('mila-shaped: stubs, kept judgment items and hook', () => {
 });
 
 test('--scope-rules gives an approved always-on rule its proposed paths', () => {
-  const repo = prepared(FIXTURES['mila-shaped'](), true);
+  const repo = prepared(FIXTURES['folder-rules'](), true);
   try {
     apply(repo, {scopeRules: ['database']});
     const rule = readFileSync(

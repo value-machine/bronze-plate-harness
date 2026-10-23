@@ -12,25 +12,32 @@ It migrates `.cursor/rules`, `.cursor/commands`, `.cursor/skills`, `.cursor/mcp.
 
 ## Install
 
-The marketplace lives in the private repo `TMI-apps/MILA`, so installing from GitHub needs read access to that repo (your normal git credentials).
-
-Recommended: fetch only the plugin folders, not all of MILA.
+The plugin is published from the public repo [`value-machine/bronze-plate-harness`](https://github.com/value-machine/bronze-plate-harness) (marketplace name `plate-harness`). Fetch only the plugin folders, not the whole repo:
 
 ```bash
-claude plugin marketplace add TMI-apps/MILA --sparse .claude-plugin plugins
+claude plugin marketplace add value-machine/bronze-plate-harness --sparse .claude-plugin plugins
 ```
 
 ```bash
-claude plugin install cursor-migration@tmi-apps
+claude plugin install cursor-migration@plate-harness
 ```
 
-In a Claude Code session, the same two steps are `/plugin marketplace add TMI-apps/MILA` (full checkout) and `/plugin install cursor-migration@tmi-apps`. Claude Code 2.1.275 or later can also do both at once:
+In a Claude Code session the same two steps are `/plugin marketplace add value-machine/bronze-plate-harness` and `/plugin install cursor-migration@plate-harness`.
 
-```
-/plugin install cursor-migration --marketplace TMI-apps/MILA
+To share it with a team, commit this to the target repo's `.claude/settings.json`; Claude Code offers the install when the folder is trusted:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "plate-harness": {"source": {"source": "github", "repo": "value-machine/bronze-plate-harness"}}
+  },
+  "enabledPlugins": {"cursor-migration@plate-harness": true}
+}
 ```
 
 To try a local checkout without installing, start Claude Code with `claude --plugin-dir <path-to>/plugins/cursor-migration`.
+
+Cloud sessions (Claude Code on the web) do not load plugins. There, run the scripts straight from a checkout of this folder: `node <path-to>/plugins/cursor-migration/scripts/inventory.mjs --keep-cursor=yes`, then `apply.mjs`; the skill's steps in `skills/migrate/SKILL.md` still apply.
 
 ## Use
 
@@ -85,7 +92,7 @@ The skill prints the exact command. It restores every path the last apply change
 
 ## Development
 
-From the MILA repo root:
+From the root of the repo that publishes the plugin (`value-machine/bronze-plate-harness`):
 
 ```bash
 pnpm test:plugin
@@ -114,4 +121,4 @@ Two versions, each bumped in the same change that needs it:
 - **Plugin:** `version` in `.claude-plugin/plugin.json`. Bump it on every user-visible change (skill text, script behavior, report). Installed copies only update when it changes. The inventory reads it from there.
 - **Vendored sync script:** the `v` stamp in the header of `templates/sync-agent-config.mjs` and its `VERSION` constant. Bump both whenever the template changes. The dry run compares a repo's copy with the template: an older stamp is upgraded on apply, and a copy with the current stamp but different bytes is flagged as locally edited.
 
-MILA carries its own vendored copy at `scripts/sync-agent-config.mjs`; a test fails if it differs from the template. These versions are not part of MILA's changesets.
+A migrated repo carries a vendored copy at `scripts/sync-agent-config.mjs`. The dry run reports it as `outdated` (older stamp, upgraded on apply) or `edited` (same stamp, different bytes). These versions are separate from the publishing repo's own release version.
