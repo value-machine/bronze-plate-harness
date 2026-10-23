@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.43.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.42.0...v0.43.0) (2026-10-23)
+
+
+### Features
+
+* migrate agent config to Claude Code and publish cursor-migration plugin ([#17](https://github.com/value-machine/bronze-plate-harness/issues/17)) ([55ddccb](https://github.com/value-machine/bronze-plate-harness/commit/55ddccbb53ef1d0ec03a730b6bd065acc79f0e19))
+
+
+### Bug Fixes
+
+* **cursor-migration:** clear plugin directory policy holds ([#19](https://github.com/value-machine/bronze-plate-harness/issues/19)) ([e4ac289](https://github.com/value-machine/bronze-plate-harness/commit/e4ac289573afa9ab63c14d3c60afbb81a03fd87f))
+
 ## [0.42.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.41.0...v0.42.0) (2026-10-22)
 
 
