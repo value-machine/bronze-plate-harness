@@ -32,6 +32,12 @@ Updated: 2026-10-23
 | D23 | Pre-build plan gates (M/L) | closed | One merged plan-review step: critique lenses (`review-dev-plan`) + rule-compliance lens (`validate` plan-review) run in parallel; agent applies contract must-fixes as Amendments, then `implement`. | grill-me | Replaces two sequential gates. `validate` keeps impl-review after build. Rejected: keep both, critique only, size-scaled gates. |
 | D24 | "Don't ask me" mode | closed | Delete `plan-grill-auto`. The shared `ask-protocol` gets an "away" switch ("don't ask me"): agent decides true ties itself and logs them; D3 / D7 / D20 items do not block — the agent proceeds provisionally and queues them for the PO at Stop 2 (preview, before landing per D11, so nothing irreversible ships unreviewed). | grill-me | Rejected: no auto mode, switch overrides everything, always-queue-never-block. |
 | D25 | Commit timing vs Model C rule | closed | The `ship` stage commits, pushes and opens the PR on its own after `validate` passes; the PO's Stop 2 pass is what merges. Update `git-workflow` § Mode behavior table → **commit timing** (Model C) accordingly. | grill-me | D3 conflict with the existing rule ("commit when the user asks") resolved by PO. Agents still never write to `main` directly. A/B rows to re-check in plan. Rejected: ask before every commit, local preview without commit, draft PR. |
+| D26 | Direct requests and the backlog | closed | Anything the PO points the agent at now goes to the top of the backlog and starts — bug or not. backlog-management's reorder proposal applies to the rest. | grill-me | Supersedes the open bug-entry question. |
+| D27 | Bugs in refine | closed | Bugs run through `/refine-request` like any request; the depth of the required (and wished) fix decides if and how much plan is needed, via the same size estimate (D12). No separate bug lane; `debug` is a specialist called inside the loop. | grill-me | PO stated. |
+| D28 | Time words in harness docs | closed | No relative time words ("today", "current", "now") for harness state in docs; cite the harness version (`package.json` version, e.g. v0.42.0) or a commit instead. | grill-me | PO flagged MAP.md "Skills today". Candidate rule line for `code-style` / doc conventions in plan. |
+| D29 | Skill names | closed | Rename the replacement skills to agent-intuitive, self-explaining names. | grill-me | Naming convention → D32. |
+| D30 | Rework phasing | closed | Phased, breadth-first: phase 1 = descriptions and edges (triggers, in / out, calls, called-by) for **all** replacement skills; phase 2 = build each skill on one recurring structure (template). Not one skill per phase. | grill-me | PO: too big for one pass; existing skills are too messy to patch. |
+| D31 | Cross-referencing between skills | closed | Skills must reference the skills they call and hand off to (and who calls them) explicitly, from inside the skill. Part of the recurring structure (D30) and checked in phase 1 edges. | grill-me | PO: not enough referencing in v0.42.0. |
 
 ## Open
 
@@ -57,4 +63,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D23 closed via grill-me (asked)
 - 2026-10-23 — D24 closed via grill-me (asked)
 - 2026-10-23 — D25 closed via grill-me (asked)
+- 2026-10-23 — D26–D31 closed via grill-me (PO stated)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)

@@ -1,6 +1,6 @@
-# Current-state map — skills and rules vs the three categories
+# Harness v0.42.0 map — skills and rules vs the three categories
 
-Job: `temp_job_skill_loop` · Snapshot: 2026-10-23 · Decisions: [`DECISIONS.md`](DECISIONS.md)
+Job: `temp_job_skill_loop` · Snapshot: harness v0.42.0 (`a920c0d`) · Decisions: [`DECISIONS.md`](DECISIONS.md)
 
 Categories (D1): **Rule** = always-on coding fundamentals / corrections · **Loop stage** = one step of the product-owner loop · **Specialist** = called by a stage when needed, never the PO's entry point.
 
@@ -8,7 +8,7 @@ Fit: ✅ fits as-is · ⚠️ fits but overlaps or is mis-shaped · ❌ in the w
 
 ## 1. Rules (`.cursor/rules/**/RULE.mdc`)
 
-| Rule | Lines | Current content | Fit | Issue |
+| Rule | Lines | Content (v0.42.0) | Fit | Issue |
 |------|------:|-----------------|-----|-------|
 | `code-style` | 67 | Naming, TS, reuse, complexity | ✅ | — |
 | `file-placement` | 53 | Structure whitelist, doc placement | ✅ | — |
@@ -25,11 +25,11 @@ Fit: ✅ fits as-is · ⚠️ fits but overlaps or is mis-shaped · ❌ in the w
 | `debugging` | 76 | Logs, API troubleshooting **+ debugging strategy, scientific method, user test instructions** | ⚠️ | Half duplicates `debug` / `hypothesis` skills |
 | `workflow` | 46 | "Where things live", branch gate, during-dev, hand-off checklist | ❌ | A process hub, not coding knowledge |
 
-## 2. Loop stages (skills that are, or act as, steps in the loop today)
+## 2. Loop stages (v0.42.0 skills that are, or act as, steps in the loop)
 
-Loop shape today (dev-cycle-matrix): direction → plan → review → implement → validate → finish → push → CI → user test.
+v0.42.0 loop shape (dev-cycle-matrix): direction → plan → review → implement → validate → finish → push → CI → user test.
 
-| Stage | Skill(s) today | Lines | Fit | Issue |
+| Stage | v0.42.0 skill(s) | Lines | Fit | Issue |
 |-------|----------------|------:|-----|-------|
 | Dispatch | `router` | 333 | ⚠️ | Holds the loop *and* the skill catalog *and* backlog intake; specialist entry rows contradict D1 |
 | Context | `prime` | 100 | ⚠️ | Sub-step of Direction or Plan, not its own stage |
@@ -51,15 +51,15 @@ Loop shape today (dev-cycle-matrix): direction → plan → review → implement
 
 ## 3. Specialists (called by a stage)
 
-| Specialist | Lines | Called by today | Fit | Issue |
+| Specialist | Lines | Called by (v0.42.0) | Fit | Issue |
 |------------|------:|-----------------|-----|-------|
-| `debug` | 255 | router (bug intake) | ⚠️ | Entry point today; overlaps `debugging` rule + `hypothesis` |
+| `debug` | 255 | router (bug intake) | ⚠️ | Entry point in v0.42.0; overlaps `debugging` rule + `hypothesis` |
 | `hypothesis` | 95 | debug / direct | ⚠️ | Sub-method of `debug` |
 | `pattern-review` | 128 | plan, feature, review-dev-plan, rule trigger | ✅ | — |
 | `dont-reinvent-the-wheel` | 122 | plan Investigate, implement, rule trigger | ⚠️ | Must raise the D7 new-dependency stop |
 | `api-integrate` | 100 | plan, rule | ✅ | — |
 | `modularity-review` | 44 | router | ✅ | — |
-| `review` (component rubric) | 274 | router | ⚠️ | Overlaps `validate`; entry point today |
+| `review` (component rubric) | 274 | router | ⚠️ | Overlaps `validate`; entry point in v0.42.0 |
 | `consolidate` | 451 | router, improve | ⚠️ | "Make better" cluster ↓ |
 | `challenge` | 281 | router, improve | ⚠️ | "Make better" cluster |
 | `standards-align` | 217 | router, improve | ⚠️ | "Make better" cluster |
