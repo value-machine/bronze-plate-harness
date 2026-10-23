@@ -41,6 +41,7 @@ Updated: 2026-10-23
 | D32 | Skill naming convention | closed | `<category>-<verb>-<object>`: `loop-*` (loop stages + shared ask protocol), `spec-*` (specialists), `meta-*` (harness maintenance, onboarding, overlays). | grill-me | Rejected: plain verb-object, numbered stages, category folders. |
 | D33 | C9 corrections as skills | closed | Always-on correction cores move into rule bodies: naming (role names, mark 2nd copy, extract 3rd+) → `code-style`; assumption check before changing behavior → `architecture`. The workaround-shape rubric + alert template stay as `spec-check-layer`, called when the rule fires. `name-the-mechanism` is deleted (no `spec-name-mechanism`). | grill-me | Rejected: both fully into rules, both stay specialists, enforce in tooling. |
 | D34 | C10 + C7 process inside rules | closed | Delete `workflow` rule (hand-off checklist → `loop-check-change`; "where things live" → `AGENTS.md`). `agent-behavior` keeps role, success-without-PO-test ban, protected files; Decision Questioning Protocol → `loop-ask-owner`. `git-workflow` keeps branch models, mode table, protection; PR / CI watch / promote → `loop-ship-change`. `debugging` keeps logs, API troubleshooting, pagination; strategy + scientific method → `spec-debug-runtime` (absorbs `hypothesis`). Moved parts link back to their rule. | grill-me | Rejected: workflow as thin index, keep debugging whole, rules-only-point. |
+| D35 | C8 "make better" group | closed | Three specialists by question: `spec-deepen-modules` (structure: MILA deep-module skill + `consolidate` + `modularity-review` + `optimize2` design/approach levels); `spec-simplify-flow` (`challenge` + `standards-align`); `spec-optimize-performance` (`optimize2` efficiency/complexity + `react-perf-vite`). `review` becomes a UI lens inside `loop-check-change`. `improve` deleted (D1). | grill-me | Rejected: separate component rubric, one specialist with lenses, keep improve as PO entry. |
 
 ## Open
 
@@ -70,4 +71,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D32 closed via grill-me (asked)
 - 2026-10-23 — D33 closed via grill-me (asked)
 - 2026-10-23 — D34 closed via grill-me (asked)
+- 2026-10-23 — D35 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)

@@ -134,7 +134,7 @@ Replaces: `validate` (impl-review half).
 | Trigger | After `loop-build-change` |
 | In | Diff, plan, rules |
 | Out | Findings → fixes; check summary for Stop 2 |
-| Calls | Rule lenses; `spec-score-component` (UI changes) ❓ |
+| Calls | Rule lenses; UI component lens (from `review`, D35) on UI changes; `spec-optimize-performance` when perf-sensitive |
 | Called by | `loop-build-change` |
 | Next | `loop-ship-change`; back to `loop-build-change` on blocking findings |
 | PO stops | None |
@@ -179,18 +179,16 @@ Called by loop stages, never the owner's entry point (D1).
 |---|---|---|---|---|
 | `spec-load-context` | `prime` | Loads repo structure, rules, git mode and active jobs for a new or unfamiliar session. | `loop-route-next`, `loop-refine-request` | ✅ |
 | `spec-debug-runtime` | `debug`, `hypothesis`, `debugging` rule strategy (D34) | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | refine (reproduce), build, ship | ✅ |
-| `spec-deepen-modules` | MILA `improve-codebase-architecture` (D22); later `consolidate`, `optimize2` design lens | Finds shallow, badly named or misplaced modules on the change's path and proposes the cleanup. | `loop-plan-change` | ❓ C8 |
+| `spec-deepen-modules` | MILA `improve-codebase-architecture` (D22), `consolidate`, `modularity-review`, `optimize2` design/approach levels (D35) | Finds shallow, duplicated, badly named, misplaced or hard-to-replace modules on the change's path and proposes the cleanup. | `loop-plan-change` | ✅ |
 | `spec-reuse-package` | `dont-reinvent-the-wheel` | Checks for a maintained package or known pattern before custom generic code; a new dependency goes to the owner (D7). | plan, build | ✅ |
 | `spec-research-api` | `api-integrate` | Researches an external API or vendor (MCP first, schema then sample) before integration code. | plan | ✅ |
 | `spec-review-precedent` | `pattern-review` | Compares a plan or proposal to industry practice. | plan (M/L, material design) | ✅ |
-| `spec-review-modularity` | `modularity-review` | Checks the replaceability of features and stack slots. | plan (new feature folder or vendor) | ❓ C8 |
-| `spec-simplify-flow` | `challenge`, `standards-align` | Cuts steps and complexity from one flow; aligns with common practice. | refine, plan | ❓ C8 |
-| `spec-optimize-performance` | `optimize2` (efficiency levels), `react-perf-vite` | Finds performance hotspots and fixes them at the right level. | plan, check | ❓ C8 |
-| `spec-score-component` | `review` | Scores one UI component against the quality rubric. | check | ❓ C8 |
+| `spec-simplify-flow` | `challenge`, `standards-align` | Cuts steps and complexity from one flow; aligns with common practice. | refine, plan | ✅ |
+| `spec-optimize-performance` | `optimize2` (efficiency levels), `react-perf-vite` | Finds performance hotspots and fixes them at the right level. | plan, check | ✅ |
 | `spec-remove-feature` | `purge-skill` | Fully removes a feature or module and its trailing references. | plan (removal work) | ✅ |
 | `spec-check-layer` | `layer-consistency-check` (rubric + alert only; core → `architecture` rule, D33) | Workaround-shape rubric and alert, called when the `architecture` rule's assumption check fires; flags patch-on-top → D7(b). | `architecture` rule trigger in refine, build | ✅ |
 
-Removed without replacement: `improve` (an owner-facing front door to specialists breaks D1) ❓ C8.
+Removed without replacement: `improve` (an owner-facing front door to specialists breaks D1, D35). `review` → UI lens inside `loop-check-change` (D35).
 
 Moved into rules (D33): `name-the-mechanism` → `code-style` rule body.
 
@@ -215,6 +213,5 @@ Harness maintenance, onboarding and overlays — outside the product loop.
 
 | Cluster | Question |
 |---|---|
-| C8 | Is the "make better" group one specialist with lenses (`spec-deepen-modules`) or several; does `spec-score-component` survive? |
 | C11 | Do meta skills keep owner entry points (they sit outside the product loop), and do `align-harness` + `tighten-harness` merge? |
 | C12 | Covered by `loop-route-next` above — confirm. |
