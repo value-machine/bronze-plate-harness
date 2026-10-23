@@ -1,12 +1,16 @@
 # Phase 1 catalog — replacement skills: names, descriptions, edges
 
-Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Decisions: [`DECISIONS.md`](DECISIONS.md) (D1–D54) · v0.42.0 map: [`MAP.md`](MAP.md)
+Job: `temp_job_skill_loop` · Baseline: harness v0.42.0 (`a920c0d`) · Decisions: [`DECISIONS.md`](DECISIONS.md) (D1–D57) · v0.42.0 map: [`MAP.md`](MAP.md)
 
 **Phase 1 scope (D30):** every replacement skill gets a name (D32, D39), a draft `description`, and its edges. No skill bodies yet — phase 2 builds them on one recurring structure.
 
 **Edge fields (D31):** **Trigger** · **In** (reads) · **Out** (writes) · **Calls** (`if <condition> → <skill or reference>`, D53) · **Called by** · **Next** · **Owner stops**.
 
 **Specialist threshold (D53):** a specialist is its own skill only when ≥ 2 stages call it; otherwise it is a reference file inside its single caller.
+
+**Guard triggers live in rules (D56):** the always-on rules fire the guards — `architecture` (industry precedent, reuse-before-custom, layer consistency) and `code-style` (naming). The `if X → call Y` lines below mirror those triggers and point back to the rule; they are never the only trigger.
+
+**No-loss port (D55):** in phase 2, every skill below carries a port map of each v0.42.0 section it absorbs — *kept* / *moved to X* / *dropped because…* — and `meta-audit-harness` checks the maps (no-information-loss gate). The "Replaces" lines are the port-map inputs.
 
 ---
 
@@ -92,7 +96,7 @@ Replaces: `plan`, `feature`, `plan-grill`, `plan-grill-auto`, `quick-piv`, `revi
 | Trigger | After `loop-refine` |
 | In | `BRIEF.md`, lap `DECISIONS.md`, rules, code |
 | Out | Failing acceptance test; plan (in `BRIEF.md` or `DEVELOPMENT_PLAN.md`) |
-| Calls | if touched modules are shallow, duplicated, badly named or misplaced → `references/deepen-modules.md` (port of MILA `improve-codebase-architecture`, D22); if an external API or vendor is involved → `references/research-api.md`; if material UX / API / architecture design at size M → `references/review-precedent.md`; if work removes a feature or module → `references/remove-feature.md`; if generic subsystem → `spec-reuse-package`; if the user flow grows → `spec-simplify-flow`; if perf-sensitive → `spec-optimize-performance` |
+| Calls | if touched modules are shallow, duplicated, badly named or misplaced → `references/deepen-modules.md` (port of MILA `improve-codebase-architecture`, D22); if an external API or vendor is involved → `references/research-api.md`; if material UX / API / architecture design (any size, per `architecture` rule § Pattern risk) → `references/review-precedent.md`; if work removes a feature or module → `references/remove-feature.md`; if generic subsystem (per `architecture` rule § Don't reinvent the wheel) → `spec-reuse-package`; if the user flow grows → `spec-simplify-flow`; if perf-sensitive → `spec-optimize-performance` |
 | Called by | `loop-refine` |
 | Next | `loop-build` |
 | Owner stops | Stop list only |
@@ -161,14 +165,16 @@ Replaces: `finish` § User test; close duties.
 
 ## 2. Specialists (`spec-*`) — each called by ≥ 2 stages
 
-| Name | Replaces | Description (draft) | Called by (condition) |
+The owner may also call any specialist directly, outside a lap (D57). If the result needs a repo change, the agent adds it to the backlog as a task instead of editing directly.
+
+| Name | Replaces | Description (draft) | Called by (condition) · always also: owner (D57) |
 |---|---|---|---|
 | `spec-load-context` | `prime` | Loads repo structure, rules, git mode and open laps for a new or unfamiliar session. | `router` (new chat), `loop-refine` (context missing) |
 | `spec-debug-runtime` | `debug`, `hypothesis`, `debugging` rule strategy (D34) | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | `loop-refine` (bug: reproduce), `loop-build` (unexpected failure), `loop-ship` (CI red) |
 | `spec-reuse-package` | `dont-reinvent-the-wheel` | Checks for a maintained package or known pattern before custom generic code; a new dependency is an owner stop. | `loop-plan` (generic subsystem), `loop-build` (new package) |
 | `spec-simplify-flow` | `challenge`, `standards-align` (D35) | Cuts steps and complexity from one user flow, aligned with common practice. | `loop-refine` (flow in question), `loop-plan` (flow grows) |
 | `spec-optimize-performance` | `optimize2` efficiency levels, `react-perf-vite` (D35) | Finds performance hotspots and fixes them at the right level. | `loop-plan`, `loop-check` (perf-sensitive) |
-| `spec-check-layer` | `layer-consistency-check` rubric + alert (core → `architecture` rule, D33) | Workaround-shape rubric and alert; a confirmed patch-on-top is an owner stop. | `architecture` rule trigger in `loop-refine` and `loop-build` |
+| `spec-check-layer` | `layer-consistency-check` rubric + alert (core → `architecture` rule, D33) | Workaround-shape rubric and alert; a confirmed patch-on-top is an owner stop. | `architecture` rule trigger (D56) in `loop-refine` and `loop-build` |
 
 **Became references inside `loop-plan` (D53):** `deepen-modules` (MILA `improve-codebase-architecture` + `consolidate` + `modularity-review` + `optimize2` design levels), `research-api` (`api-integrate`), `review-precedent` (`pattern-review`), `remove-feature` (`purge-skill`). **Inside `loop-check`:** `component-lens` (`review`).
 
@@ -180,8 +186,8 @@ Replaces: `finish` § User test; close duties.
 
 | Name | Replaces | Description (draft) | Called by |
 |---|---|---|---|
-| `meta-write-skill` | `create-skill` | Sole path for adding or changing a skill: recurring structure, naming, edges, catalog entry; backed by a commit / CI admission check (D37). Ends with `meta-audit-harness` and `meta-write-adoption-guide`. | Owner, `meta-learn-lessons`, any agent editing a skill |
-| `meta-audit-harness` | `align-harness`, `tighten-harness` (D36) | One harness audit, two lenses: coherence and context cost. | Owner, `meta-write-skill`, `meta-intake-harness` |
+| `meta-write-skill` | `create-skill` | Sole path for adding or changing a skill: recurring structure, naming, edges, port map (D55), catalog entry; backed by a commit / CI admission check (D37). Ends with `meta-audit-harness` and `meta-write-adoption-guide`. | Owner, `meta-learn-lessons`, any agent editing a skill |
+| `meta-audit-harness` | `align-harness`, `tighten-harness` (D36) | One harness audit, two lenses: coherence and context cost; keeps the no-information-loss gate and checks every skill's port map (D55). | Owner, `meta-write-skill`, `meta-intake-harness` |
 | `meta-intake-harness` | `update-harness` | Takes in external harness content (including fork adoption notes) and feeds findings into `meta-audit-harness`. | Owner |
 | `meta-write-adoption-guide` | `write-adoption-guide` | Writes the fork-facing porting note for a landed harness change, including any rename map (D42). | `meta-write-skill`, `meta-audit-harness` |
 | `meta-learn-lessons` | `learn` | Turns a non-Pass lap's failures into rule or skill updates on the same PR. | `loop-verdict` (non-Pass) |

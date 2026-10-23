@@ -7,7 +7,7 @@ Updated: 2026-10-23
 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
-| D1 | Instruction taxonomy | closed | Three kinds: rules, loop stages, specialists | grill-me | Rules = always-on coding fundamentals and corrections. Loop stages = one product-owner loop. Specialists = invoked by stages when needed, never the user's entry point. Rejected: two kinds (fold specialists away), three with direct entry, corrections moved into skills. |
+| D1 | Instruction taxonomy | closed | Three kinds: rules, loop stages, specialists | grill-me | Rules = always-on coding fundamentals and corrections. Loop stages = one product-owner loop. Specialists = invoked by stages when needed, never the user's entry point. Rejected: two kinds (fold specialists away), three with direct entry, corrections moved into skills. **Amended by D57.** |
 | D2 | Product owner stops in the loop | closed | Two planned stops: (1) direction + short scope-edge grill, (2) test the shipped update and pick the next direction. Everything between runs autonomously (plan-grill-auto style). | grill-me | Stop 2 timing amended by D11. Rejected: plan sign-off stop, risk-scaled stops, backlog-driven steering. |
 | D3 | Conflict escalation | closed | Unplanned stop: when a new choice counters an earlier choice, the agent must flag it, propose resolutions, and the PO picks. Flagging conflicts is the agent's job. | grill-me | User-added. Product owner's most important role in the loop. Scope of "earlier choice" → D4. |
 | D4 | What counts as an "earlier choice" for D3 | closed | Mainly recorded product decisions (DECISIONS ledger + app vision). Self-resolved conflict handling (layer-consistency, name-the-mechanism, rule compliance) stays and is not exempted. | grill-me | User: recorded decisions are less churn to work through. Rejected: every rule clash stops. |
@@ -59,8 +59,11 @@ Updated: 2026-10-23
 | D50 | Stop 2 answers and lessons | closed | Pass / Change / Drop. Change = PO feedback becomes a new top request through `loop-refine` (depth and size re-estimated; merges Fix and Rethink). Drop closes the PR; its decisions vanish with the branch. Any non-Pass verdict triggers `meta-learn-lessons` before merge; lessons ride on the same PR, and Pass (with rule changes listed) counts as protected-file consent. | critique | Supersedes D10 exits and the "troubled lap" trigger. |
 | D51 | Size overrun trigger | closed | Overrun = the diff touches a feature area outside the brief's listed edges. | critique | Makes D12's overrun stop measurable. |
 | D52 | Rollback and post-release | closed | Rollback = revert PR raised as a Change request (top of backlog, D26); Cloudflare keeps earlier deploys. Post-release watch = next Stop 1 backlog catch-up (+ signal adapter). | critique | No new stage. |
-| D53 | Specialist triggers and threshold | closed | Triggers live in the caller's Calls list as "if X → call Y". A specialist is a skill only with ≥2 calling stages; otherwise it is a reference inside its caller. `spec-research-api`, `spec-review-precedent`, `spec-deepen-modules`, `spec-remove-feature` → `loop-plan` references. | critique | Name-the-mechanism threshold applied to skills. Amends D22 placement. |
+| D53 | Specialist triggers and threshold | closed | Triggers live in the caller's Calls list as "if X → call Y". A specialist is a skill only with ≥2 calling stages; otherwise it is a reference inside its caller. `spec-research-api`, `spec-review-precedent`, `spec-deepen-modules`, `spec-remove-feature` → `loop-plan` references. | critique | Name-the-mechanism threshold applied to skills. Amends D22 placement. **Amended by D56.** |
 | D54 | Non-repo work | closed | No repo change → not a lap: answer directly, no ledger. A spike is a normal lap ending in Drop or Change. | critique | |
+| D55 | No-loss port map | closed | In phase 2, every replacement skill carries a port map of each v0.42.0 section it absorbs: kept / moved to X / dropped because…. `meta-audit-harness` keeps `align-harness`'s no-information-loss gate and checks it against those maps. | weak-spot review | Covers lost content: grill-me non-goals + neighbor map, feature journey mapping, start gates, finish version / smoke / onboarding sync, learn reverse audit, depth of optimize2 / consolidate / review. |
+| D56 | Guard triggers live in rules | closed | Always-on rules keep the proactive triggers (`architecture`: industry precedent, reuse-before-custom, layer consistency; `code-style`: naming). The "if X → call Y" lines in loop skills point back to the rule; they are not the only trigger. | weak-spot review | Consistent with D1. Restores v0.42.0's proactive pattern-review trigger beyond size M. Amends D53. |
+| D57 | Owner may call specialists directly | closed | The owner may invoke any `spec-*` skill outside a lap (audit, cleanup, debug). If the result needs a repo change, the agent adds it to the backlog as a task. | weak-spot review | Softens D1 (specialists never the owner's entry point), approved by PO. |
 
 ## Open
 
@@ -93,4 +96,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D35 closed via grill-me (asked)
 - 2026-10-23 — D36, D37 closed via grill-me (asked); D38 clear-winner
 - D39–D54 closed via critique round (PO: adopt all); amended rows marked
+- D55–D57 closed via weak-spot review (PO: adopt); D1, D53 amended
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
