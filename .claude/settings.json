@@ -137,15 +137,15 @@
     ]
   },
   "extraKnownMarketplaces": {
-    "tmi-apps": {
+    "plate-harness": {
       "source": {
         "source": "github",
-        "repo": "TMI-apps/MILA"
+        "repo": "value-machine/bronze-plate-harness"
       }
     }
   },
   "enabledPlugins": {
-    "cursor-migration@tmi-apps": true
+    "cursor-migration@plate-harness": true
   },
   "outputStyle": "default",
   "plansDirectory": "./documentation/jobs"

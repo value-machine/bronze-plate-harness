@@ -241,7 +241,7 @@ Every project skill is listed below with its trigger situation; open `.agents/sk
 | Retro from failures/diffs; persist lessons into rules or skills | `.agents/skills/learn/SKILL.md` |
 | Audit/improve the **agent harness** (AGENTS, rules, skills, INDEX, layers); subagent lenses + no-loss pass | `.agents/skills/align-harness/SKILL.md` |
 | Intake **external** harness content from `.agents/harness-inbox/` | `.agents/skills/update-harness/SKILL.md` |
-| Migrate Cursor config → Claude Code (rules, skills, MCP) while Cursor keeps working | `/cursor-migration:migrate` — plugin from `TMI-apps/MILA`, enabled in `.claude/settings.json` (not vendored) |
+| Migrate Cursor config → Claude Code (rules, skills, MCP) while Cursor keeps working | `/cursor-migration:migrate` — plugin vendored at `plugins/cursor-migration/` (upstream `TMI-apps/MILA`); scripts run directly with `node plugins/cursor-migration/scripts/*.mjs` |
 | Tighten / prune / de-bloat harness context (CLAUDE.md, AGENTS.md, rules, skills); token cost of always-loaded instructions | `.agents/skills/tighten-harness/SKILL.md` |
 | Grade **or** improve an attached rule/command file (rubric score and/or quality rewrite) | `.agents/skills/rule-quality/SKILL.md` |
 

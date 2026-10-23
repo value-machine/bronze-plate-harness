@@ -1,0 +1,10 @@
+{
+  "name": "cursor-migration",
+  "version": "0.1.1",
+  "description": "Migrate a repo's Cursor setup (rules, commands, skills, MCP, .cursorrules) to Claude Code while Cursor, Copilot and Codex keep working. Plan first, one approval, exact undo.",
+  "author": {
+    "name": "TMI-apps"
+  },
+  "repository": "https://github.com/TMI-apps/MILA",
+  "keywords": ["cursor", "migration", "rules", "skills", "agents-md"]
+}

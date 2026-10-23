@@ -10,6 +10,7 @@ export default [
   '*.config.ts',
   'eslint.ignores.js',
   'scripts/',
+  'plugins/', // vendored Claude Code plugins (upstream style; own tests)
   'pnpm-lock.yaml',
   'public/',
   'documentation/',
