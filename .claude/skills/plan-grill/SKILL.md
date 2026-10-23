@@ -66,13 +66,13 @@ A **fork** exists when **any** of these is true for a topic **not** already in `
 | Package/pattern reuse vs custom (library search) | `dont-reinvent-the-wheel` |
 | Helper extract / Rule of Three | `optimize2` — not this cue |
 | Stack/feature replaceability scores after a folder exists | `modularity-review` |
-| Pure code mechanism with **no** product/scope/boundary effect (local refactor shape) | Agent decides — still prefer a one-line note in plan Notes if non-obvious. **Names** are not a product fork: `.agents/skills/name-the-mechanism/SKILL.md` |
+| Pure code mechanism with **no** product/scope/boundary effect (local refactor shape) | Agent decides — still prefer a one-line note in plan Notes if non-obvious. **Names** are not a product fork: `code-style/RULE.mdc` § Naming |
 
 ### Generality (composition vs rewirable)
 
 **SSOT for this fork.** Run the mandatory checklist on this topic before phases/steps assume a platform or a one-off. Do not silently over-build or under-build.
 
-**Modularity is the default; speculative platforms are not.** Every level below uses composition and a narrow replaceable boundary from the first implementation. Identifier names and copy counts: `.agents/skills/name-the-mechanism/SKILL.md`. The fork decides how much product-specific extension machinery to build, not whether the code is modular.
+**Modularity is the default; speculative platforms are not.** Every level below uses composition and a narrow replaceable boundary from the first implementation. Identifier names and copy counts: `code-style/RULE.mdc` § Naming. The fork decides how much product-specific extension machinery to build, not whether the code is modular.
 
 **Three levels** (later options add stronger product extension machinery):
 

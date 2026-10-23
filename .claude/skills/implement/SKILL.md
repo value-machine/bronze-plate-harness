@@ -55,7 +55,7 @@ Execute a development plan phase by phase. Use `DEVELOPMENT_PLAN.md` as the guid
 For each phase **in order** (one phase at a time unless the plan explicitly allows parallel work):
 
 1. **Read** the phase: Goal, Steps, Gate.
-2. **Execute** the steps; match the layer and the folder in `.cursor/rules/architecture/RULE.mdc` and `ARCHITECTURE.md`. Do not copy a neighbor's feature prefix onto a shared mechanism. **New or copied identifiers** (function, hook, component, type, file, feature folder): `.agents/skills/name-the-mechanism/SKILL.md`.
+2. **Execute** the steps; match the layer and the folder in `.cursor/rules/architecture/RULE.mdc` and `ARCHITECTURE.md`. Do not copy a neighbor's feature prefix onto a shared mechanism. **New or copied identifiers** (function, hook, component, type, file, feature folder): `code-style/RULE.mdc` § Naming.
 3. **Run** the gate (see below). It must pass before continuing.
 4. **Update** `DEVELOPMENT_PLAN.md`:
    - **Phase overview:** set this phase’s status to `Done` or `✅` (use the wording/style already used in the table).

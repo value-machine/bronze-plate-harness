@@ -242,7 +242,7 @@ supabase/functions/
 └── _shared/          # Helpers used by more than one capability
 ```
 
-Non-Supabase hosts use `cloud-functions/<service-name>/` instead. The folder name follows `.agents/skills/name-the-mechanism/SKILL.md`.
+Non-Supabase hosts use `cloud-functions/<service-name>/` instead. The folder name follows `code-style/RULE.mdc` § Naming.
 
 ## Why This Approach?
 

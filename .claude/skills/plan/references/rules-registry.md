@@ -13,7 +13,7 @@ Canonical paths for `.cursor/rules/` when skills need a rules table. Full descri
 | Testing | `.cursor/rules/testing/RULE.mdc` |
 | Workflow hub | `.cursor/rules/workflow/RULE.mdc` — code review, dev process, routing |
 | Git workflow | `.cursor/rules/git-workflow/RULE.mdc` — mode config `src/config/git-workflow.json`; § Mode behavior table (SSOT per mode); § Mode-aware branch gate; PRs; promote (A/B) |
-| Agent behavior | `.cursor/rules/agent-behavior/RULE.mdc` — protected files, decision protocol |
+| Agent behavior | `.cursor/rules/agent-behavior/RULE.mdc` — protected files, when to ask the owner |
 | Platform | `.cursor/rules/platform/RULE.mdc` — PowerShell, env vars |
 | Cloud / Edge | `.cursor/rules/cloud-functions/RULE.mdc` — when applicable |
 | External API integration | `.cursor/rules/api-integration/RULE.mdc` — MCP-first, doc research, POC before code |

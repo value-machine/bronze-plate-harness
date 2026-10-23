@@ -2,7 +2,7 @@
 name: review-dev-plan
 description: >-
   Runs seven parallel Task subagents to critique a development plan (feedback only).
-  One fixed lens checks name-the-mechanism.
+  One fixed lens checks naming (`code-style` § Naming).
   IF DEVELOPMENT_PLAN.md exists AND Summary says Plan review: Required: pending (M/L)
   THEN use this skill. Not for repo-rule compliance (validate plan-review mode).
   Grades against the plan's Review contract; findings outside it are advisory.
@@ -50,7 +50,7 @@ The **Industry precedent** agent must read [`.agents/skills/pattern-review/refer
 
 ### Naming generality (fixed lens)
 
-The prompt must tell this agent to read `.agents/skills/name-the-mechanism/SKILL.md`, then scan the plan for violations of that skill. Do not apply a stricter test than the skill states.
+The prompt must tell this agent to read `code-style/RULE.mdc` § Naming, then scan the plan for violations of that section. Do not apply a stricter test than it states.
 
 Flag a **must-fix** for each violation: a name the skill forbids, a second copy with no marker, a third or later copy, a placement line that names one concrete file as the home, or a glob or trigger keyed only to an instance name.
 

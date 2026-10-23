@@ -5,7 +5,7 @@ Quick reference guide to all rules and their relationships.
 ## Rule Categories
 
 ### Code Style (`code-style/RULE.mdc`)
-- Naming conventions (category, not first instance/SKU/page)
+- **Naming** (SSOT, F1–F6): name by role, mark the 2nd copy, extract the 3rd+; guidance updates in the same change
 - Formatting standards
 - Documentation requirements
 - Code organization
@@ -19,7 +19,7 @@ Quick reference guide to all rules and their relationships.
 ---
 
 ### Architecture (`architecture/RULE.mdc`)
-- **Proactive design checks:** pattern risk (`pattern-review`), don't reinvent the wheel, performance cost risk, layer consistency (workaround guard; naming via `name-the-mechanism`)
+- **Proactive design checks:** pattern risk (`pattern-review`), don't reinvent the wheel, performance cost risk, layer consistency (workaround guard; naming via `code-style` § Naming)
 - **Code placement**, edge-case placement, import direction
 - **Folder structure** and **path aliases** (SSOT: `@/*` → `src/*` only)
 - **Feature granularity / bounded context** (budgets in `featureBudgets.config.cjs`, cross-feature imports)
@@ -75,7 +75,7 @@ Quick reference guide to all rules and their relationships.
 
 ### Agent behavior (`agent-behavior/RULE.mdc`)
 - Protected files manifest (single SSOT)
-- Decision questioning protocol
+- **When to ask** (SSOT): what counts as a choice + the owner stop list; how to ask
 - Success reporting (verified vs unverified)
 - Agent role and control
 

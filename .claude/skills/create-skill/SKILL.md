@@ -41,7 +41,7 @@ Then ask about edge cases, inputs/outputs, example files, success criteria, and 
 - **Description = the trigger.** Say what it does *and* when to use it, including the phrases users actually type; agents tend to under-trigger, so be a little pushy ("use whenever the user mentions X, even if they don't say Y"). Add a short "Not for … (use Z)" when a neighbor skill competes. All "when to use" belongs in the description, not the body.
 - **Progressive disclosure:** the description is always listed; the body loads on trigger (keep it under ~500 lines); `references/` load only when pointed to — say *when* to read each. Large references get a table of contents. Multi-variant skills put one variant per reference file.
 - **Style:** imperative; explain *why* instead of stacking ALL-CAPS MUSTs (a model that knows the reason generalizes); keep it general rather than fitted to the examples; give exact templates for required output formats and short input → output examples.
-- **Repo fit:** follow `.agents/skills/name-the-mechanism/SKILL.md` for the skill name; point at SSOT rules instead of restating them; end with what it is *not* for and the **Next** step.
+- **Repo fit:** follow `code-style/RULE.mdc` § Naming for the skill name; point at SSOT rules instead of restating them; end with what it is *not* for and the **Next** step.
 - **No surprises:** nothing whose intent the user wouldn't expect if described (no malware, exfiltration, deceptive behavior).
 
 ## 3. Test (optional)

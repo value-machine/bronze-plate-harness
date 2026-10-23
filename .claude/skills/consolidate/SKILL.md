@@ -42,12 +42,12 @@ If the ask is only “what warrants consolidation / make a rubric,” read [`ref
 
 ### Rule of Three (pointer)
 
-Copy counts and naming: **`.agents/skills/name-the-mechanism/SKILL.md`**. Do not restate them here. Speculative extracts that the skill does not require stay deferred. Full exceptions for wrong-layer and complexity extracts: **`.agents/skills/optimize2/SKILL.md`** § Rule of Three.
+Copy counts and naming: **`code-style/RULE.mdc` § Naming**. Do not restate them here. Speculative extracts that the rule does not require stay deferred. Full exceptions for wrong-layer and complexity extracts: **`.agents/skills/optimize2/SKILL.md`** § Rule of Three.
 
 ### Consolidation != Abstraction
 
 Not every repeated pattern needs a shared abstraction. Sometimes the right answer is:
-- **Accept duplication** — only when `.agents/skills/name-the-mechanism/SKILL.md` allows the copies to remain
+- **Accept duplication** — only when `code-style/RULE.mdc` § Naming allows the copies to remain
 - **Standardize the pattern** - document it as a convention without extracting
 - **Extract a utility** - simple shared function
 - **Create a configurable abstraction** - parameterized hook/component (highest cost)
@@ -256,7 +256,7 @@ If a recommendation would preserve or introduce a standards diversion, ask wheth
 
 **SSOT:** [`references/warrant-rubric.md`](references/warrant-rubric.md) — wrong-tool routing, hard gates, scoring, do-not list.
 
-Always apply **hard gates** from that file before scoring. Also apply `.agents/skills/name-the-mechanism/SKILL.md` before scoring: if that skill forbids the copies, the verdict is extract, not accept. Fail a rubric gate → accepted duplication only when that skill allows the copies to remain. Do not invent a chat-only rubric.
+Always apply **hard gates** from that file before scoring. Also apply `code-style/RULE.mdc` § Naming before scoring: if that rule forbids the copies, the verdict is extract, not accept. Fail a rubric gate → accepted duplication only when that rule allows the copies to remain. Do not invent a chat-only rubric.
 
 ```
 Score = 2×Frequency + 2×Stability + 2×Simplicity + 3×Sameness + 2×SharedBoundary

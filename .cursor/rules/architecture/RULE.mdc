@@ -25,7 +25,7 @@ When a step matches a heavy-operation trigger — N+1 / per-row queries, unbound
 
 1. Estimate the cost (rows, round-trips, render work).
 2. Design a cheaper option first (narrower query + index, pagination, server-side aggregation, caching via query keys, batching, virtualization, memoization, `startTransition`); prefer the reductive option (`debugging/RULE.mdc` § Reductive Strategy).
-3. Present the options, recommended first, and let the user pick before implementing (`agent-behavior/RULE.mdc` § Decision Questioning Protocol). Do not silently ship the expensive path.
+3. Present the options, recommended first, and let the user pick before implementing (`agent-behavior/RULE.mdc` § When to ask (cost) and § How to ask). Do not silently ship the expensive path.
 
 Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/optimize2/SKILL.md`; stack-native fixes → `.agents/skills/react-perf-vite/SKILL.md`; indexes → `database/RULE.mdc`.
 
@@ -35,7 +35,7 @@ Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/ski
 
 **Proactively** on any request to change existing behavior ("add a color to the gradient", "just add a field/button/flag"), minimizer/exception language, a first-of-a-kind instance without a category, or behavior-by-analogy. **Reactively** when the diff takes a workaround shape (special-case flag, parallel path, symptom tuning, disconnected patch, instance-encoded naming, growing scope, "for now" comment).
 
-Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `.agents/skills/name-the-mechanism/SKILL.md` — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the user picks workaround vs structural fix. When pattern-review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
+Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `code-style/RULE.mdc` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the user picks workaround vs structural fix. When pattern-review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
 
 ## Code placement
 
@@ -69,7 +69,7 @@ Backend: Supabase Edge Functions in `supabase/functions/<name>/index.ts` (shared
 
 ### Edge-case placement
 
-Name any new symbol per `.agents/skills/name-the-mechanism/SKILL.md`.
+Name any new symbol per `code-style/RULE.mdc` § Naming.
 
 - Layout state hooks (sidebar, scroll) → `shared/hooks/`; layouts consume, not own, them.
 - A page that needs its own hooks/services → promote it to a feature; pages stay thin.

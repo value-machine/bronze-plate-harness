@@ -68,6 +68,7 @@ Updated: 2026-10-23
 | D59 | Skill evals | closed | `evals/` in the skill-creator / `claude plugin eval` layout. Each `loop-*` skill gets 2–3 cases run against its v0.42.0 originals as the baseline during the port; skills with neighbors get trigger queries with near-misses. The admission check verifies `evals/` exists for `loop-*` skills; it does not run them. | template review | Behavioral no-loss check beside the D55 port map. |
 | D60 | Claude Code skill discovery | closed | Generated `.claude/skills/` mirror of `.agents/skills/`, vendored from MILA `scripts/sync-agent-config.mjs` (skills kind only); pre-commit refreshes it, CI `--check` fails on drift. | template review | Without it, descriptions never trigger in Claude Code. Updates the CLAUDE.md note. |
 | D61 | Batch 0 approval | closed | PO approved PHASE2 update + batch 0, including protected writes (`.agents/skills/**`, `.husky/pre-commit`, `.github/workflows/ci.yml`, `projectStructure.config.cjs`). | template review | |
+| D62 | Rule edits land with their destination | closed | A rule edit that hands content to a skill lands in the batch that builds that skill, so no rule ever points at a skill that doesn't exist yet: `git-workflow` commit timing C + Stop 2 per mode, `workflow` deletion and D50 Pass-as-consent → batch 2; `debugging` strategy split → batch 3. | batch 1 | clear-winner: the alternative (land them now) leaves rules pointing at missing skills. |
 
 ## Open
 

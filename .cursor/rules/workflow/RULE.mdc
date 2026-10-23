@@ -13,7 +13,7 @@ Thin hub: domain detail lives in the linked rules and docs. Never re-grow this f
 |---------|------|
 | Branch model, PRs, production, commit timing | `git-workflow/RULE.mdc` § Mode behavior table (mode: `src/config/git-workflow.json`) |
 | Semver, changelog, commit format | same table → **version source** (A/B: `.agents/skills/finish/SKILL.md`; C: release-please) |
-| Protected files, decision protocol, success reporting | `agent-behavior/RULE.mdc` |
+| Protected files, when to ask the owner, success reporting | `agent-behavior/RULE.mdc` |
 | Shell rules, env vars | `platform/RULE.mdc` |
 | Architecture, code placement | `architecture/RULE.mdc`; whitelist `projectStructure.config.cjs`; layers `.dependency-cruiser.cjs` |
 | Reductive strategy, debugging | `debugging/RULE.mdc` |

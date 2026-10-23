@@ -26,6 +26,7 @@ Every file and folder must be allowed by the whitelist in `projectStructure.conf
 - **Temporary / job docs:** `documentation/jobs/temp_job_<name>/` (e.g. `DEVELOPMENT_PLAN.md`, `DECISIONS.md` — the `grill-me` / `plan-grill` ledger) or `documentation/temp/`.
 - **Permanent docs:** files directly in `documentation/` must be `DOC_<NAME>.md` (validator-enforced). **Ask** the user before creating one; when in doubt, place it in `documentation/temp/` — it can be promoted later.
 - **Subfolders** of `documentation/` (e.g. `handoffs/`) group reference material and don't need the `DOC_` prefix.
+- **No relative time words for harness or app state** ("today", "current", "now", "the latest"). They go stale the moment the doc is read later. Cite the version (`package.json` `version`, e.g. v0.42.0) or a commit instead. Calendar dates are fine for logs and changelogs.
 
 ## File moves and renames
 

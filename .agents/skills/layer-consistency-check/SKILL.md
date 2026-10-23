@@ -24,7 +24,7 @@ disable-model-invocation: false
 
 Apply **without being asked** during any implementation task when request-side cues or implementation-side shapes appear (see [`references/workaround-shapes.md`](references/workaround-shapes.md)). Obligation is also stated in `.cursor/rules/architecture/RULE.mdc` § Layer consistency (workaround guard).
 
-**Do:** one-beat layer check → **shape #5 first** (read `.agents/skills/name-the-mechanism/SKILL.md` for any new or copied symbol; the one-off skip does not suppress that skill or the second-copy marker) → for every other shape, severity filter (skip a genuinely one-off exception with no recurring cost) → if that shape still clears the bar, post alert from [`references/alert-template.md`](references/alert-template.md) → **stop** until owner picks workaround vs structural path.
+**Do:** one-beat layer check → **shape #5 first** (read `code-style/RULE.mdc` § Naming for any new or copied symbol; the one-off skip does not suppress that rule or the second-copy marker) → for every other shape, severity filter (skip a genuinely one-off exception with no recurring cost) → if that shape still clears the bar, post alert from [`references/alert-template.md`](references/alert-template.md) → **stop** until owner picks workaround vs structural path.
 
 **Do not:** treat local compliance within the request's phrasing as sufficient without checking the layer beneath.
 
@@ -58,7 +58,7 @@ Per [`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`](../../../documentation/DOC_AG
 1. Read [`references/workaround-shapes.md`](references/workaround-shapes.md).
 2. **Proactive:** on request-side cues, run the one-beat layer check before writing code.
 3. **Reactive:** while implementing, stop when the diff matches a workaround shape.
-4. **Naming first (shape #5).** Read `.agents/skills/name-the-mechanism/SKILL.md` and apply it before writing the name. The one-off skip does not apply. If the name or copy count still violates that skill, stop with WARNING.
+4. **Naming first (shape #5).** Read `code-style/RULE.mdc` § Naming and apply it before writing the name. The one-off skip does not apply. If the name or copy count still violates that rule, stop with WARNING.
 5. **Other shapes.** Skip a genuinely one-off exception with no recurring cost.
 6. If a non-naming shape still clears that filter → post **WARNING, WORKAROUND** from [`references/alert-template.md`](references/alert-template.md) → **stop** until the user chooses.
 7. If the user picks the **structural alternative**: IF scope is XS/S THEN `quick-piv`; IF multi-phase/migration/contracts THEN `plan` (cite `router/references/tiebreaks.md` § `implement` vs `quick-piv`). If they pick the workaround → implement as asked.
@@ -72,7 +72,7 @@ Full domain variety is in the shapes rubric. Illustrative cases:
 
 - **Fluid sim:** "can waves just splash over that wall?" on a shallow-water solver → disconnected particle burst vs different representation.
 - **Game design:** double-jump in one level → level-specific ability flag vs reach invariant redesign.
-- **TypeScript UI:** `BreadBuyButton` is an example of encoding the first product. Judge it with `.agents/skills/name-the-mechanism/SKILL.md`. Do not skip the check as a one-off.
+- **TypeScript UI:** `BreadBuyButton` is an example of encoding the first product. Judge it with `code-style/RULE.mdc` § Naming. Do not skip the check as a one-off.
 - **Design systems:** one-off modal corners → inline override vs token change.
 - **Backend/schema:** `discount_percent` for one promo → UI subtraction vs pricing-engine extension.
 
@@ -91,7 +91,7 @@ Full domain variety is in the shapes rubric. Illustrative cases:
 | Simplify an overbuilt feature workflow | [`challenge`](../challenge/SKILL.md) |
 | Should we / how to align existing scope with industry standards | [`standards-align`](../standards-align/SKILL.md) |
 | Hotspot refactor / Rule of Three | [`optimize2`](../optimize2/SKILL.md) |
-| How to name new symbols, and when a copy must be extracted | `.agents/skills/name-the-mechanism/SKILL.md` — this skill only **stops** if that skill is violated |
+| How to name new symbols, and when a copy must be extracted | `code-style/RULE.mdc` § Naming — this skill only **stops** if that rule is violated |
 
 **When both `pattern-review` and this skill apply:** run **layer-consistency-check first** (cheaper one-beat check). If the user picks a structural path that changes UX/API contracts, run `pattern-review` before implementing.
 

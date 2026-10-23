@@ -1,5 +1,5 @@
 ---
-description: "Agent decision protocol, success reporting, and protected-file consent"
+description: "When to ask the owner (choice definition + stop list), success reporting, and protected-file consent"
 alwaysApply: true
 ---
 
@@ -14,14 +14,27 @@ Agent-specific behaviors and corrections to compensate for default agent behavio
 - The agent turns user stories into architecture, logic, and code implementation
 - Always respect user decisions; report outcomes per § Success Validation
 
-## Decision Questioning Protocol
+## When to ask
 
-When asking the user to choose between implementation, product, architecture, or UX options:
-- First inspect the relevant codebase patterns, rules, and existing UX behavior to identify which option is most consistent with the current application.
-- Then ask the multiple-choice question (at most 4 options — the question tool's limit).
-- Put the recommended option first and label it; it is the one most consistent with the current codebase.
-- After the recommended option, order the alternatives from lightest to strongest when presenting implementation approaches.
-- Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the user picks it, research the consequences, explain them, then ask the same decision again.
+A **choice** is a point where two or more options leave different results that outlast the change: what users see, stored data, cost, or code structure. Details the agent can swap freely within the same change (an internal name, a loop shape, how a function is split) are not choices — decide them.
+
+Ask the owner only when the choice can't be derived from the app vision (`documentation/DOC_APP_VISION.md`), the recorded decisions (feature READMEs, the vision, rules), or the code, **and** it is one of:
+
+- **Conflict** with a recorded decision — flag it, propose resolutions, and let the owner pick. Spotting these is the agent's job.
+- **True tie** — two or more real options remain after enumerating them, and none dominates.
+- **New dependency** — a package or an external service the project doesn't use yet.
+- **Patch on top** — a workaround instead of the structural fix (`architecture/RULE.mdc` § Layer consistency).
+- **Data or irreversible change** — schema or migration shape, deleting or transforming stored data, auth or permission models.
+- **Cost or external service** — paid usage, quotas, third-party calls, privacy.
+
+Everything else: decide, record the choice where it applies, and continue.
+
+### How to ask
+
+- First inspect the relevant codebase patterns, rules, and existing UX so the options are grounded in what the app already does.
+- One question at a time, multiple choice, at most 4 options (the question tool's limit).
+- Put the recommended option first and label it — usually the one most consistent with the current codebase. Order the rest from lightest to strongest when they are implementation approaches.
+- Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the owner picks it, research, explain, then ask the same question again.
 
 ## Success Validation
 
@@ -59,7 +72,7 @@ The agent must STOP and ASK the user before modifying any of the following file 
 
 ### Exception: mechanism-rename references
 
-When `.agents/skills/name-the-mechanism/SKILL.md` requires a rename or extraction, updating references to the old name in `.cursor/rules/**`, `.agents/skills/**`, and `AGENTS.md` in that same change does not need a separate approval. Any other edit to those files still stops for approval. This exception does not allow weakening an unrelated rule.
+When `code-style/RULE.mdc` § Naming requires a rename or extraction, updating references to the old name in `.cursor/rules/**`, `.agents/skills/**`, and `AGENTS.md` in that same change does not need a separate approval. Any other edit to those files still stops for approval. This exception does not allow weakening an unrelated rule.
 
 **Required Behavior:**
 
@@ -90,10 +103,9 @@ When `.agents/skills/name-the-mechanism/SKILL.md` requires a rename or extractio
 **When modifying this rule, check these rules for consistency:**
 
 - `git-workflow/RULE.mdc` — branch protection and when edits are allowed
-- `workflow/RULE.mdc` — development process hub
 - `debugging/RULE.mdc` — reductive strategy for bugs and features
 
 **Rules that reference this rule:**
 
-- `architecture/RULE.mdc` — decision questioning and performance-cost asks
+- `architecture/RULE.mdc` — layer-consistency stop and performance-cost asks
 - `finish/SKILL.md`, `implement/SKILL.md` — protected-file gates

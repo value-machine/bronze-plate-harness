@@ -76,9 +76,9 @@ Breadth-first by layer (D30). Each batch is one PR. Old skills are deleted in th
 | Batch | Content |
 |---|---|
 | **0 — Scaffolding** | Template + port-map format; catalog + baseline snapshot; `validate-skills.cjs` + test; `.claude/skills` mirror; `projectStructure.config.cjs` allows `evals/`, `.claude/skills/`, `agent-sync.config.json`; pre-commit + CI wiring; `CLAUDE.md` note |
-| **1 — Rules** | `agent-behavior`: § When to ask (D40). `code-style`: naming core (D33). `architecture`: guard triggers + assumption check (D33, D56). `git-workflow`: commit timing C (D25), Stop 2 per mode (D47). `debugging`: strategy marked for `spec-debug-runtime` (D34). `workflow`: deleted (D34). Relative-time line (D28). `AGENTS.md` + `.cursor/rules/INDEX.md` |
-| **2 — Loop** | `router` + 7 `loop-*` with references, port maps and evals (baseline = v0.42.0 originals); delete the replaced skills; update `DOC_AGENT_WORKFLOW_LAYERS.md`, `router/references/*` |
-| **3 — Specialists** | 6 `spec-*`; delete the replaced skills |
+| **1 — Rules** | `code-style`: naming core F1–F6 (D33) — `name-the-mechanism` deleted, 48 references repointed. `agent-behavior`: § When to ask (choice definition + stop list) + § How to ask replace the Decision Questioning Protocol (D40). `architecture`: guard triggers stay in the rule (D56); references updated. `file-placement`: no relative time words (D28). `AGENTS.md` + `.cursor/rules/INDEX.md` rows. **Moved to the batch that builds their destination (D62):** `git-workflow` commit timing C + Stop 2 per mode → batch 2 (`loop-ship`, `loop-verdict`); `workflow` deletion → batch 2 (checklist → `loop-check`, SSOT table → `AGENTS.md`); `debugging` strategy split → batch 3 (`spec-debug-runtime`); Pass-as-consent for listed rule changes (D50) → batch 2 (`loop-verdict`) |
+| **2 — Loop** | Deferred rule edits from batch 1 (D62); `router` + 7 `loop-*` with references, port maps and evals (baseline = v0.42.0 originals); delete the replaced skills; update `DOC_AGENT_WORKFLOW_LAYERS.md`, `router/references/*` |
+| **3 — Specialists** | `debugging` rule strategy split (D62); 6 `spec-*`; delete the replaced skills |
 | **4 — Meta** | 7 `meta-*`; template moves to `meta-write-skill`; fork adoption note with the rename map (D42) |
 
 ## 5. Owner approval
@@ -86,4 +86,5 @@ Breadth-first by layer (D30). Each batch is one PR. Old skills are deleted in th
 | Item | Status |
 |---|---|
 | Batch 0 protected writes | Approved (D61) · built in `19da0a8` |
-| Batches 1–4 (protected writes; deleting 30 v0.42.0 skills) | Pending, per batch |
+| Batch 1 protected writes | Approved ("proceed") |
+| Batches 2–4 (protected writes; deleting the remaining v0.42.0 skills) | Pending, per batch |
