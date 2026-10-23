@@ -31,6 +31,7 @@ Updated: 2026-10-23
 | D22 | Foundation cleanup specialist | closed | Port TMI-apps/MILA `.agents/skills/improve-codebase-architecture` (deep-module lens: depth, seams, deletion test, LANGUAGE.md glossary) as the specialist `plan` calls under D21, scoped to modules the change touches. `consolidate` / `optimize2` become its sub-lenses later (C8). | grill-me | Rejected: consolidate as-is, new merged foundation-review now, always-on rule only. |
 | D23 | Pre-build plan gates (M/L) | closed | One merged plan-review step: critique lenses (`review-dev-plan`) + rule-compliance lens (`validate` plan-review) run in parallel; agent applies contract must-fixes as Amendments, then `implement`. | grill-me | Replaces two sequential gates. `validate` keeps impl-review after build. Rejected: keep both, critique only, size-scaled gates. |
 | D24 | "Don't ask me" mode | closed | Delete `plan-grill-auto`. The shared `ask-protocol` gets an "away" switch ("don't ask me"): agent decides true ties itself and logs them; D3 / D7 / D20 items do not block — the agent proceeds provisionally and queues them for the PO at Stop 2 (preview, before landing per D11, so nothing irreversible ships unreviewed). | grill-me | Rejected: no auto mode, switch overrides everything, always-queue-never-block. |
+| D25 | Commit timing vs Model C rule | closed | The `ship` stage commits, pushes and opens the PR on its own after `validate` passes; the PO's Stop 2 pass is what merges. Update `git-workflow` § Mode behavior table → **commit timing** (Model C) accordingly. | grill-me | D3 conflict with the existing rule ("commit when the user asks") resolved by PO. Agents still never write to `main` directly. A/B rows to re-check in plan. Rejected: ask before every commit, local preview without commit, draft PR. |
 
 ## Open
 
@@ -55,4 +56,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D22 closed via grill-me (asked)
 - 2026-10-23 — D23 closed via grill-me (asked)
 - 2026-10-23 — D24 closed via grill-me (asked)
+- 2026-10-23 — D25 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
