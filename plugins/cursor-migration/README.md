@@ -122,3 +122,7 @@ Two versions, each bumped in the same change that needs it:
 - **Vendored sync script:** the `v` stamp in the header of `templates/sync-agent-config.mjs` and its `VERSION` constant. Bump both whenever the template changes. The dry run compares a repo's copy with the template: an older stamp is upgraded on apply, and a copy with the current stamp but different bytes is flagged as locally edited.
 
 A migrated repo carries a vendored copy at `scripts/sync-agent-config.mjs`. The dry run reports it as `outdated` (older stamp, upgraded on apply) or `edited` (same stamp, different bytes). These versions are separate from the publishing repo's own release version.
+
+## License
+
+MIT — see [`LICENSE`](LICENSE).

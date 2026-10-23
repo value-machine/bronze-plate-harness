@@ -737,9 +737,10 @@ module.exports = {
           name: "*",
           children: [
             { name: "README.md" },
+            { name: "LICENSE" },
             {
               name: ".claude-plugin",
-              children: [{ name: "plugin.json" }],
+              children: [{ name: "plugin.json" }, { name: "icon.png" }],
             },
             {
               name: "skills",
