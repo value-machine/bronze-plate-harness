@@ -20,7 +20,7 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 |---|---|
 | In | Top task in `src/config/app-tasks.json`; `documentation/DOC_APP_VISION.md`; feature READMEs and code of the touched areas; rules; owner feedback (Change verdict) |
 | Out | `documentation/jobs/temp_job_<slug>/BRIEF.md` ([`references/brief-template.md`](references/brief-template.md)); lap `DECISIONS.md` ([`references/decisions-template.md`](references/decisions-template.md)); follow-up backlog tasks when the work is cut into laps |
-| Calls | if repo context is missing → [`prime`](../prime/SKILL.md) · if the task is a bug → [`debug`](../debug/SKILL.md) (reproduce only) · if the request changes existing behavior → [`layer-consistency-check`](../layer-consistency-check/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`challenge`](../challenge/SKILL.md) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
+| Calls | if repo context is missing → [`spec-load-context`](../spec-load-context/SKILL.md) · if the task is a bug → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) (reproduce only) · if the request changes existing behavior → [`spec-check-layer`](../spec-check-layer/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Next | [`loop-plan`](../loop-plan/SKILL.md) |
 | Owner stops | Stop list only ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)), asked per [`references/asking.md`](references/asking.md) |
@@ -29,7 +29,7 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 
 1. **Open the lap.** Derive `<slug>` (kebab-case) from the task title. Create the lap branch per [`git-workflow` rule § Mode-aware branch gate](../../../.cursor/rules/git-workflow/RULE.mdc) (one lap = one branch, D45), then `documentation/jobs/temp_job_<slug>/` on it. Read the task. For a Change verdict, the feedback is the task.
 2. **Read before asking.** Read the vision, then the `README.md` of every feature the task plausibly touches, then those features' code paths ([`references/grounding.md`](references/grounding.md)). Recorded decisions live in those READMEs, the vision and the rules (D48). If the vision is still `DRAFT` and the task changes product meaning, note `vision-deferred` and keep the perimeter minimal.
-3. **Bugs:** call [`debug`](../debug/SKILL.md) to reproduce and pin the failing behavior only. The fix depth (patch, refactor, redesign) sets the size like any other work (D27).
+3. **Bugs:** call [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) to reproduce and pin the failing behavior only. The fix depth (patch, refactor, redesign) sets the size like any other work (D27).
 4. **Draft `BRIEF.md` silently:** problem, success check, in scope, out of scope (will NOT do / will NOT touch), the edges table, generality (clear winner unless a second consumer is named), and requirements when size ≥ M spans roles or journeys ([`references/requirements.md`](references/requirements.md)).
 5. **Find the open questions.** For each choice in the draft, check it against the stop list. Conflicts with a recorded decision are the most important ones to catch: flag them with proposed resolutions (D3). Log clear winners in `DECISIONS.md` after naming the alternatives.
 6. **Ask, one at a time,** only what remains (gaps, true ties, data / irreversible, cost / external service, new dependency, patch-on-top), per [`references/asking.md`](references/asking.md). Update the brief and the ledger after each answer.
@@ -60,5 +60,5 @@ Building: <in scope>. Not: <top non-goal>. Size: <XS|S|M>.
 |---|---|
 | Choosing or reordering the next task | [`loop-backlog`](../loop-backlog/SKILL.md) |
 | How to build it: phases, files, tests | [`loop-plan`](../loop-plan/SKILL.md) |
-| Root-causing a bug beyond reproduction | [`debug`](../debug/SKILL.md) |
+| Root-causing a bug beyond reproduction | [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) |
 | Questions with no repo change ("how does X work?") | Answer directly; not a lap (D54) |

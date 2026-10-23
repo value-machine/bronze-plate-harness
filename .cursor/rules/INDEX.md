@@ -118,7 +118,7 @@ Quick reference guide to all rules and their relationships.
 
 ### Debugging (`debugging/RULE.mdc`)
 - Debugging strategies and logging practices
-- Pointers to `debug` and `hypothesis` skills for scientific-method procedure
+- Pointer to the `spec-debug-runtime` skill for the scientific-method procedure
 - Reductive strategy for bugs and new features
 
 **Related to:** testing, architecture

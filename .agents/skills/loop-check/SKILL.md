@@ -19,7 +19,7 @@ When this skill is done, the change has passed every check the repo can run, and
 |---|---|
 | In | Lap branch diff against its base, plan + Review contract + Amendments, lap `DECISIONS.md`, rules |
 | Out | Fixes (via `loop-build`); check summary for Stop 2 ([`references/rule-audit.md`](references/rule-audit.md) § Report format) |
-| Calls | always → [`references/rule-audit.md`](references/rule-audit.md) (mode `impl`, or `gate` when there's no plan) · if UI components were added or changed → [`references/component-lens.md`](references/component-lens.md) · if a heavy operation is involved (`architecture` rule § Performance cost risk) → [`optimize2`](../optimize2/SKILL.md) · if blocking findings → [`loop-build`](../loop-build/SKILL.md) · if clean → [`loop-ship`](../loop-ship/SKILL.md) |
+| Calls | always → [`references/rule-audit.md`](references/rule-audit.md) (mode `impl`, or `gate` when there's no plan) · if UI components were added or changed → [`references/component-lens.md`](references/component-lens.md) · if a heavy operation is involved (`architecture` rule § Performance cost risk) → [`spec-optimize-performance`](../spec-optimize-performance/SKILL.md) · if blocking findings → [`loop-build`](../loop-build/SKILL.md) · if clean → [`loop-ship`](../loop-ship/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-build`](../loop-build/SKILL.md) |
 | Next | [`loop-ship`](../loop-ship/SKILL.md) |
 | Owner stops | None, unless resolving a finding hits the stop list ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)) |

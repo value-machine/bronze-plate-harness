@@ -44,7 +44,7 @@ Domain lenses: [`references/domain-*.md`](references/).
 | [`rule-quality`](../rule-quality/SKILL.md) | Grading **one** rule/command file |
 | [`tighten-harness`](../tighten-harness/SKILL.md) | Cutting harness **context cost** (prune, merge, relocate) without behavior change |
 | [`learn`](../learn/SKILL.md) | Capturing a **lesson** from a session |
-| [`standards-align`](../standards-align/SKILL.md) | Product vs repo standards decision |
+| [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) | Product vs repo standards decision |
 | [`loop-plan → deepen-modules`](../loop-plan/references/deepen-modules.md) | `src/` application code duplication |
 | [`loop-check`](../loop-check/SKILL.md) | Plan/impl **compliance** audit |
 

@@ -19,14 +19,14 @@ When this skill is done, the lap is committed, pushed, open as a PR with a worki
 |---|---|
 | In | Lap branch working tree, check summary, `src/config/git-workflow.json` mode, `git-workflow` rule § Mode behavior table |
 | Out | Commits, pushed branch, PR (title + body with the check summary), preview link, green CI; merge or promote on Pass |
-| Calls | always → [`references/commit-standards.md`](references/commit-standards.md), then [`references/push-safety.md`](references/push-safety.md) · if the tree shows another thread's work → [`references/concurrency.md`](references/concurrency.md) · if CI fails → [`debug`](../debug/SKILL.md) · when CI is green → [`loop-verdict`](../loop-verdict/SKILL.md) |
+| Calls | always → [`references/commit-standards.md`](references/commit-standards.md), then [`references/push-safety.md`](references/push-safety.md) · if the tree shows another thread's work → [`references/concurrency.md`](references/concurrency.md) · if CI fails → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) · when CI is green → [`loop-verdict`](../loop-verdict/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-check`](../loop-check/SKILL.md), [`loop-verdict`](../loop-verdict/SKILL.md) |
 | Next | [`loop-verdict`](../loop-verdict/SKILL.md) |
 | Owner stops | None, except concurrency smoke ([`references/concurrency.md`](references/concurrency.md)), protected-file fixes for a failing hook, and an unplanned MAJOR bump |
 
 ## Steps
 
-1. **Clean up.** Remove temporary console logs, instrumentation and redundant code the lap left behind (debugging logs the owner asked to keep stay). If the lap fixed a bug through debugging and the insight is reusable at the level of a **bug class**, add it to `.agents/skills/debug/patterns.md` (symptom class → likely causes → discriminator question → first diagnostic move; it must pass the pattern quality gate in [`debug`](../debug/SKILL.md)).
+1. **Clean up.** Remove temporary console logs, instrumentation and redundant code the lap left behind (debugging logs the owner asked to keep stay). If the lap fixed a bug through debugging and the insight is reusable at the level of a **bug class**, add it to `.agents/skills/spec-debug-runtime/references/patterns.md` (symptom class → likely causes → discriminator question → first diagnostic move; it must pass the pattern quality gate in [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md)).
 2. **Smoke check.** If `git status` or the diff shows files outside the lap, or changes between two fresh reads, follow [`references/concurrency.md`](references/concurrency.md).
 3. **Commit** per [`references/commit-standards.md`](references/commit-standards.md): version and changelog only where the mode's **version source** says so (A/B); the conventional `type: Subject` title plus a required body; feature READMEs staged with feature code; the backlog JSON files always included when changed. Fix hook failures, never `--no-verify`.
 4. **Push** per [`references/push-safety.md`](references/push-safety.md): clean tree, up to date with the remote, full `pnpm lint`, then push the lap branch.
@@ -52,7 +52,7 @@ Output: commit `feat: Export tasks as CSV` with a body; push `feat/tasks-csv-exp
 
 **Example 2 — red CI**
 Input: CI `test` fails on a timezone-dependent assertion.
-Output: [`debug`](../debug/SKILL.md) finds that the test assumes local time. Fix the test setup (no skip, no quarantine), push, CI green → loop-verdict.
+Output: [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) finds that the test assumes local time. Fix the test setup (no skip, no quarantine), push, CI green → loop-verdict.
 
 ## Output
 
@@ -66,4 +66,4 @@ Shipped: <PR link | commit link (Model B)> · preview: <url> · CI: green · Nex
 |---|---|
 | Auditing the change | [`loop-check`](../loop-check/SKILL.md) |
 | Owner test, Pass / Change / Drop | [`loop-verdict`](../loop-verdict/SKILL.md) |
-| Fixing a red check whose cause is unknown | [`debug`](../debug/SKILL.md) |
+| Fixing a red check whose cause is unknown | [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) |

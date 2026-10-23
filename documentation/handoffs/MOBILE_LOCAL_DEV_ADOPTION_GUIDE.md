@@ -83,7 +83,7 @@ Four linked layers (generic names):
 | **Runbook (SSOT)** | `documentation/DOC_MOBILE_LOCAL_DEV.md` |
 | Setup cross-link | `documentation/SETUP_GUIDE.md` — § *Testing on a physical phone (optional)* |
 | README index | `README.md` — *Mobile development (physical device)* |
-| Agent debug pattern | `.cursor/skills/debug/patterns.md` — *Mobile layout OK in DevTools but broken on a real phone* |
+| Agent debug pattern | `.agents/skills/spec-debug-runtime/references/patterns.md` — *Mobile layout OK in DevTools but broken on a real phone* |
 | Chat layout code (one surface) | `src/features/chat/components/ChatContent/`, `src/shared/hooks/useMobileComposerBottomOffset.ts` |
 | Chat feature pointer | `src/features/chat/README.md` |
 | Job context (one instance) | `documentation/jobs/agent_job_mobile_friendly/` |
@@ -227,7 +227,7 @@ flowchart TD
 | `DOC_MOBILE_LOCAL_DEV.md` | Your runbook path |
 | `adb reverse tcp:5173 tcp:5173` | Same command, your **N** |
 | Chat composer console probe | Your fixed-bottom control + selector |
-| `.cursor/skills/debug/patterns.md` | `CONTRIBUTING.md`, `docs/debugging.md`, agent skill |
+| `.agents/skills/spec-debug-runtime/references/patterns.md` | `CONTRIBUTING.md`, `docs/debugging.md`, agent skill |
 
 ### 7.5 Adoption anti-patterns
 

@@ -38,7 +38,7 @@ Pick the assumption most likely to be wrong for *this* question. Common targets:
 
 - **Right thing?** — does the stated problem need this capability at all, or a smaller or different one?
 - **Right home?** — should this live in another feature, an existing flow, or a different surface (dialog vs page, setting vs default)?
-- **Build vs borrow?** — search open-source or shipped examples first and base the work on one ([`dont-reinvent-the-wheel`](../../dont-reinvent-the-wheel/SKILL.md)).
+- **Build vs borrow?** — search open-source or shipped examples first and base the work on one ([`spec-reuse-package`](../../spec-reuse-package/SKILL.md)).
 - **Right time?** — defer until a prerequisite or a real second consumer exists.
 - **Build at all?** — a config, content, or process change solves it without code.
 
@@ -46,7 +46,7 @@ Pick the assumption most likely to be wrong for *this* question. Common targets:
 
 Make it concrete and grounded in what you know about the repo or the problem. A generic "reconsider the approach" is forbidden. If, after honest thought, every underlying assumption is already Closed in `DECISIONS.md`, challenge the strongest remaining one and cite the row it would reopen.
 
-**When the user picks the challenge:** do not log it as a normal answer and move on. Treat it as reopening the assumption: say which earlier decision or perimeter line it overturns, update or reopen that row in `DECISIONS.md`, and re-ground from that level (perimeter, neighbor map, or a hand-off such as `dont-reinvent-the-wheel`) before the next question.
+**When the user picks the challenge:** do not log it as a normal answer and move on. Treat it as reopening the assumption: say which earlier decision or perimeter line it overturns, update or reopen that row in `DECISIONS.md`, and re-ground from that level (perimeter, neighbor map, or a hand-off such as `spec-reuse-package`) before the next question.
 
 ### Boundary-question template (required)
 

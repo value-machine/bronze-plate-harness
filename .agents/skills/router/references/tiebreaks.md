@@ -2,21 +2,15 @@
 
 On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skills outside the loop seem to apply. Loop stages need no tiebreak: [`loop-map.md`](loop-map.md) fixes their order. Choose by **primary outcome** (what must be true when done).
 
-### `challenge` vs `optimize2`
+### `spec-simplify-flow` vs `spec-optimize-performance`
 
-- **`challenge`:** Question whether the **feature or workflow** should exist or be simpler (remove/merge steps).
-- **`optimize2`:** Improve existing code **without** necessarily changing product scope.
+- **`spec-simplify-flow`:** Question whether the **feature or workflow** should exist or be simpler (remove/merge steps).
+- **`spec-optimize-performance`:** Improve existing code **without** necessarily changing product scope.
 
-### `debug` vs `hypothesis`
+### `spec-debug-runtime` vs `learn`
 
-- **`debug`:** Default for runtime incidents — event chains, user-supplied evidence, iterative narrowing (`.agents/skills/debug/SKILL.md`).
-- **`hypothesis`:** Pre-registered root-cause experiment when naive fixes already failed or the user invokes hypothesis mode (`.agents/skills/hypothesis/SKILL.md`).
-- **Tiebreak:** User asks for hypothesis / repeated failed fixes → `hypothesis`; otherwise → `debug`. Cross-link both skills; do not run both as equal primaries in one pass.
-
-### `debug` vs `learn`
-
-- **`debug`:** Active incident; hypotheses; runtime evidence; possibly temporary instrumentation.
-- **`learn`:** Capture durable rule/skill/debug-pattern updates. **Proactive** learn waits until the struggle is resolved (not as primary beside active `debug`). **Manual** `/learn` (user invoked or skill attached) runs **in that turn**, including on a still-red CI/incident message — do not defer behind the fix. Procedure: `.agents/skills/learn/SKILL.md` § Turn contract.
+- **`spec-debug-runtime`:** Active incident; hypotheses; runtime evidence; possibly temporary instrumentation.
+- **`learn`:** Capture durable rule/skill/debug-pattern updates. **Proactive** learn waits until the struggle is resolved (not as primary beside active `spec-debug-runtime`). **Manual** `/learn` (user invoked or skill attached) runs **in that turn**, including on a still-red CI/incident message — do not defer behind the fix. Procedure: `.agents/skills/learn/SKILL.md` § Turn contract.
 
 ### `rule-quality` vs `learn`
 
@@ -75,32 +69,31 @@ On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skill
 - **`building-mcp-server-on-cloudflare`:** **Expose** tools as remote MCP with OAuth/deploy.
 - **`agents-sdk`:** **Consume** or embed MCP patterns inside Agents SDK — use when agent wiring dominates.
 
-### `web-perf` vs `optimize2` vs `react-perf-vite`
+### `web-perf` vs `spec-optimize-performance`
 
 - **`web-perf`:** **Browser-measured** performance (CWVs, network, traces via DevTools MCP).
-- **`optimize2`:** **Code-level** structure and complexity optimization (may include perf but not Lighthouse-centric); Rule of Three for extractions.
-- **`react-perf-vite`:** **Pattern lookup** for stack-native React perf (lazy routes, TanStack dedup, re-render rules) — read `rules/` on demand; does not replace hotspot refactor.
+- **`spec-optimize-performance`:** **Code-level** fixes — design / approach / efficiency / complexity levels (Rule of Three for extractions) and stack-native React patterns from its `rules/` folder.
 
-**Order when multiple apply:** measure with **`web-perf`** if symptoms are CWV/Lighthouse → structural fix with **`optimize2`** → cite specific **`react-perf-vite`** rules while implementing.
+**Order when both apply:** measure with **`web-perf`** if symptoms are CWV/Lighthouse → fix with **`spec-optimize-performance`**.
 
 
-### `dont-reinvent-the-wheel` vs precedent review vs API research
+### `spec-reuse-package` vs precedent review vs API research
 
-- **`dont-reinvent-the-wheel`:** Should we **depend on a package** or **model a verified public implementation** instead of writing custom code for a generic subsystem? Live search; stops at a recommendation.
+- **`spec-reuse-package`:** Should we **depend on a package** or **model a verified public implementation** instead of writing custom code for a generic subsystem? Live search; stops at a recommendation.
 - **Precedent review** (`loop-plan/references/review-precedent.md`): does this **design** match **external industry / product precedent** for the capability?
 - **API research** (`loop-plan/references/research-api.md`): how do we **research this vendor’s contract** (MCP → schema → sample) once we are integrating an API?
 
-**Order when both apply:** **`dont-reinvent-the-wheel` first** (may pick an SDK and skip raw API work). If still integrating a vendor API → API research. Then precedent review on the chosen approach (material design). A new package is an owner stop (`agent-behavior` § When to ask).
+**Order when both apply:** **`spec-reuse-package` first** (may pick an SDK and skip raw API work). If still integrating a vendor API → API research. Then precedent review on the chosen approach (material design). A new package is an owner stop (`agent-behavior` § When to ask).
 
-**Tiebreak:** User asks “which library / don’t build this ourselves” → **`dont-reinvent-the-wheel`**. “Is this how products usually do it?” → precedent review. “How does this vendor’s API work?” → API research.
+**Tiebreak:** User asks “which library / don’t build this ourselves” → **`spec-reuse-package`**. “Is this how products usually do it?” → precedent review. “How does this vendor’s API work?” → API research.
 
 
-### Precedent review vs `layer-consistency-check`
+### Precedent review vs `spec-check-layer`
 
 - **Precedent review:** does this design match **external industry / product precedent** for the capability?
-- **`layer-consistency-check`:** Does this request fit the **internal** layer beneath it (abstraction hierarchy, architecture, physics/math) — or are we about to ship a workaround?
+- **`spec-check-layer`:** Does this request fit the **internal** layer beneath it (abstraction hierarchy, architecture, physics/math) — or are we about to ship a workaround?
 
-**Order when both apply:** **`layer-consistency-check` first** (one-beat check). If the structural path changes UX/API contracts, run precedent review before building.
+**Order when both apply:** **`spec-check-layer` first** (one-beat check). If the structural path changes UX/API contracts, run precedent review before building.
 
 
 ### `create-skill` vs `align-harness` vs `rule-quality`
@@ -109,11 +102,10 @@ On-demand companion to [`../SKILL.md`](../SKILL.md). Read when two or more skill
 - **`align-harness`:** Whole-corpus coherence audit.
 - **`rule-quality`:** Grade/rewrite one **rule/command** file (not skill authoring).
 
-### `standards-align` vs precedent review vs `challenge`
+### `spec-simplify-flow` vs precedent review
 
-- **Precedent review:** proactive **evaluation** of a plan or proposal vs industry — verdict + Pattern risk options. Does **not** own the full “should we realign this existing scope + how to simplify toward standards” loop.
-- **`standards-align`:** On-demand loop for an **existing** product/feature/component: **should we align?** → gap score → how A/B/C → hand off. Reuses `loop-plan/references/precedent-rubric.md`; does not replace proactive plan gates.
-- **`challenge`:** Simplify **one** named feature/workflow (fewer steps/code) when the question is overbuilt — not primarily “vs market.”
+- **Precedent review** (`loop-plan/references/review-precedent.md`): proactive **evaluation** of a plan or proposal vs industry — verdict + Pattern risk options.
+- **`spec-simplify-flow`:** On-demand for an **existing** feature or flow — the simplify lens (fewer steps or code when it is overbuilt) and the align lens (should we move toward common practice, then how). Reuses `loop-plan/references/precedent-rubric.md`; does not replace the plan gate.
 
-**Tiebreak:** User asks should/how **align with industry** on existing scope → **`standards-align`**. Novel plan/proposal gate → precedent review. “This flow is overbuilt” without industry framing → **`challenge`**.
+**Tiebreak:** novel plan or proposal → precedent review. Existing scope that is overbuilt or unlike other apps → **`spec-simplify-flow`**.
 

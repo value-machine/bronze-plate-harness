@@ -7,7 +7,7 @@ Central navigation for plate-harness documentation. For authoritative rules and 
 | Topic | Document |
 |-------|----------|
 | **How to contribute safely** | [DOC_CONTRIBUTING.md](./DOC_CONTRIBUTING.md) |
-| **Agent: session context (prime)** | [`.agents/skills/prime/SKILL.md`](../.agents/skills/prime/SKILL.md) |
+| **Agent: session context** | [`.agents/skills/spec-load-context/SKILL.md`](../.agents/skills/spec-load-context/SKILL.md) |
 | **Agent: entry point (router)** | [`.agents/skills/router/SKILL.md`](../.agents/skills/router/SKILL.md) — finds the loop stage |
 | **Agent: the product-owner loop (map)** | [`.agents/skills/router/references/loop-map.md`](../.agents/skills/router/references/loop-map.md) |
 | **Agent: backlog and Stop 1 (loop-backlog, loop-refine)** | [`loop-backlog`](../.agents/skills/loop-backlog/SKILL.md), [`loop-refine`](../.agents/skills/loop-refine/SKILL.md) |

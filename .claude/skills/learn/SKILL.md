@@ -29,7 +29,7 @@ Durable, discoverable guidance that a blank capable model would **not** already 
 ## Triggers
 
 - **Manual:** User invokes learn, asks for a retrospective, or “sharpen rules.”
-- **Proactive:** After a loop (3+ failed attempts), a critical CI fix, or a non-obvious repo discovery — only when the user **confirms** debugging is resolved. **Never** run as primary in parallel with active **`debug`**.
+- **Proactive:** After a loop (3+ failed attempts), a critical CI fix, or a non-obvious repo discovery — only when the user **confirms** debugging is resolved. **Never** run as primary in parallel with active **`spec-debug-runtime`**.
 - **Loop pipeline:** `loop-verdict` runs this skill on any non-Pass verdict (Change or Drop), feeding it the plan § Notes mistake signals; lessons commit to the same PR so the next Pass approves them (D50).
 
 ### Turn contract (manual `/learn` — no deferral)
@@ -38,10 +38,10 @@ Durable, discoverable guidance that a blank capable model would **not** already 
 
 - **Same turn:** Run Steps 0–5 in this turn (audit → lesson → persist → report).
 - **Before commit:** If a commit or push is also in flight, persist the lesson **before** `git commit`. Repair may continue after the Report (or after the skill/rule edit is on disk).
-- **Do not misread Proactive:** “Never as primary in parallel with `debug`” and “only when debugging is resolved” apply to **proactive** learn only. They do **not** override a **manual** `/learn` on an incident message.
+- **Do not misread Proactive:** “Never as primary in parallel with `spec-debug-runtime`” and “only when debugging is resolved” apply to **proactive** learn only. They do **not** override a **manual** `/learn` on an incident message.
 - **Salience:** A long CI log or red check in the same message is **not** a reason to skip this skill. Fixing the check does not complete `/learn`.
 
-### Mistake shape (capture in plan § Notes during `loop-build` / `debug`)
+### Mistake shape (capture in plan § Notes during `loop-build` / `spec-debug-runtime`)
 
 `request → wrong action → fix → lesson → add | narrow | delete | enforce`
 
@@ -124,7 +124,7 @@ Pick **one primary** location. Cross-link elsewhere in one line if needed — ne
 | Protected files, when to ask the owner, success reporting (verified vs unverified) | `.cursor/rules/agent-behavior/RULE.mdc` |
 | Dev process, loop stages | `.agents/skills/router/references/loop-map.md` + the `loop-*` skills |
 | Changelog, version, commit / PR flow | `.agents/skills/loop-ship/SKILL.md` |
-| Known symptom → fix pattern (repeatable) | `.agents/skills/debug/patterns.md` |
+| Known symptom → fix pattern (repeatable) | `.agents/skills/spec-debug-runtime/references/patterns.md` |
 | Edge Functions vs frontend | `.cursor/rules/cloud-functions/RULE.mdc` |
 | TanStack Query, server state | `ARCHITECTURE.md`, `documentation/DOC_TANSTACK_QUERY.md`, or feature `api/` keys patterns (one primary) |
 | Long procedural workflow | Relevant `.agents/skills/<name>/SKILL.md` |

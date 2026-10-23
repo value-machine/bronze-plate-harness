@@ -34,14 +34,14 @@ Always-on rules fire the guards; the loop stages call the procedure when a rule 
 | Guard | Trigger (rule) | Procedure |
 |---|---|---|
 | Naming / copy counts | `code-style` § Naming | The rule itself (F1–F6) |
-| Layer consistency / workaround | `architecture` § Layer consistency | [`layer-consistency-check`](../.agents/skills/layer-consistency-check/SKILL.md) |
+| Layer consistency / workaround | `architecture` § Layer consistency | [`spec-check-layer`](../.agents/skills/spec-check-layer/SKILL.md) |
 | Industry precedent | `architecture` § Pattern risk | [`loop-plan/references/review-precedent.md`](../.agents/skills/loop-plan/references/review-precedent.md) |
-| Package / pattern reuse | `architecture` § Don't reinvent the wheel | [`dont-reinvent-the-wheel`](../.agents/skills/dont-reinvent-the-wheel/SKILL.md) |
-| Heavy DB / UI operations | `architecture` § Performance cost risk | [`optimize2`](../.agents/skills/optimize2/SKILL.md), [`react-perf-vite`](../.agents/skills/react-perf-vite/SKILL.md) |
+| Package / pattern reuse | `architecture` § Don't reinvent the wheel | [`spec-reuse-package`](../.agents/skills/spec-reuse-package/SKILL.md) |
+| Heavy DB / UI operations | `architecture` § Performance cost risk | [`spec-optimize-performance`](../.agents/skills/spec-optimize-performance/SKILL.md), [`spec-optimize-performance`](../.agents/skills/spec-optimize-performance/SKILL.md) |
 | External API research | `api-integration` rule | [`loop-plan/references/research-api.md`](../.agents/skills/loop-plan/references/research-api.md) |
 | Foundation cleanup (deep modules, duplication, placement) | `loop-plan` § Steps 2 | [`loop-plan/references/deepen-modules.md`](../.agents/skills/loop-plan/references/deepen-modules.md) |
 
-On-demand, outside the loop: should-we-align with industry practice → [`standards-align`](../.agents/skills/standards-align/SKILL.md); simplify one flow → [`challenge`](../.agents/skills/challenge/SKILL.md).
+On-demand, outside the loop: should-we-align with industry practice → [`spec-simplify-flow`](../.agents/skills/spec-simplify-flow/SKILL.md); simplify one flow → [`spec-simplify-flow`](../.agents/skills/spec-simplify-flow/SKILL.md).
 
 ## Where decisions live
 

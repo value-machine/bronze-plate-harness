@@ -29,7 +29,7 @@ Used by [`loop-plan`](../SKILL.md) at size **M**. XS / S plans live in `BRIEF.md
 
 - Applicable rules:
 - File placements:
-- Reuse / packages: <`dont-reinvent-the-wheel` rec, or skipped — reason>
+- Reuse / packages: <`spec-reuse-package` rec, or skipped — reason>
 - Foundation cleanup: <`deepen-modules.md` candidates in the plan, or none — reason>
 - Risks / open questions:
 - Standards diversions (repo / industry):

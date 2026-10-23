@@ -22,7 +22,7 @@ A **fork** exists when **any** of these is true for a topic **not** already deci
 |-----|--------|
 | Concrete API example, schema field list, RLS policy text | Plan detail — write it; data / irreversible shapes are stop-list items |
 | Industry “is this standard?” | [`review-precedent.md`](review-precedent.md) |
-| Package/pattern reuse vs custom (library search) | [`dont-reinvent-the-wheel`](../../dont-reinvent-the-wheel/SKILL.md) — a new dependency is a stop-list item |
+| Package/pattern reuse vs custom (library search) | [`spec-reuse-package`](../../spec-reuse-package/SKILL.md) — a new dependency is a stop-list item |
 | Helper extract / copy counts | `code-style/RULE.mdc` § Naming — not this cue |
 | Stack/feature replaceability scores after a folder exists | [`deepen-modules.md`](deepen-modules.md) § Replaceability |
 | Pure code mechanism with **no** product/scope/boundary effect (local refactor shape) | Agent decides — still prefer a one-line note in plan Notes if non-obvious. **Names** are not a product fork: `code-style/RULE.mdc` § Naming |
@@ -52,7 +52,7 @@ A **fork** exists when **any** of these is true for a topic **not** already deci
 
 Guessed future use stays a **deferred non-goal** in `DECISIONS.md`. Do not code the unused hook.
 
-**Not this cue:** npm/package reuse (`dont-reinvent-the-wheel`); extracting a shared helper from repeated business logic (`code-style` § Naming, [`deepen-modules.md`](deepen-modules.md)); scoring how hard a shipped feature is to swap ([`deepen-modules.md`](deepen-modules.md) § Replaceability).
+**Not this cue:** npm/package reuse (`spec-reuse-package`); extracting a shared helper from repeated business logic (`code-style` § Naming, [`deepen-modules.md`](deepen-modules.md)); scoring how hard a shipped feature is to swap ([`deepen-modules.md`](deepen-modules.md) § Replaceability).
 
 ### Mandatory fork checklist (before locking)
 
@@ -79,7 +79,7 @@ Before treating an approach as decided in `loop-refine` or `loop-plan`, run this
 | Clear winner after enumeration | Log Closed `clear-winner`; no question |
 | Already in Closed / Open | Skip (anti-dup) |
 | Industry/precedent only | [`review-precedent.md`](review-precedent.md) |
-| Package/pattern reuse vs custom | `dont-reinvent-the-wheel` |
+| Package/pattern reuse vs custom | `spec-reuse-package` |
 | Helper extract / copy counts | `code-style` § Naming |
 | Pure mechanism, no product/boundary edge | Agent decides (see “Not a fork”) |
 

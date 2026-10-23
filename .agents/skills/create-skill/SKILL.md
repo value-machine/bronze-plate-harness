@@ -72,7 +72,7 @@ Re-run the tests after each revision; stop when the user is happy, the feedback 
 - `.agents/skills/**` is protected: get explicit user approval before writing (`.cursor/rules/agent-behavior/RULE.mdc` § Protected Files).
 - Add or update the skill's row in [`router/references/catalog.md`](../router/references/catalog.md) and run `pnpm validate:skills` (admission check).
 - If it competes with another skill outside the loop, add a row to `router/references/tiebreaks.md`; if it is a loop stage, update `router/references/loop-map.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
-- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see precedent review (`loop-plan`) / `dont-reinvent-the-wheel` in `architecture/RULE.mdc`).
+- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see precedent review (`loop-plan`) / `spec-reuse-package` in `architecture/RULE.mdc`).
 - Run `pnpm validate:docs` and `pnpm validate:structure`.
 
 ## What this is NOT

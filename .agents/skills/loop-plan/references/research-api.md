@@ -1,6 +1,6 @@
 # Research an external API or vendor
 
-Read in [`loop-plan`](../SKILL.md) when the work integrates an unfamiliar vendor, API or backend. Ported from `api-integrate` (v0.42.0). Principles: `api-integration/RULE.mdc` (MCP-first, doc freshness, POC before code). If a maintained client or SDK might already cover the work, run [`dont-reinvent-the-wheel`](../../dont-reinvent-the-wheel/SKILL.md) first; adding it is a stop-list item (new dependency). For a stack the repo already runs on, use that stack's plugin skill (`supabase`, `cloudflare`, `wrangler`) instead. New paid usage or a new external service is a stop-list item (cost / external service).
+Read in [`loop-plan`](../SKILL.md) when the work integrates an unfamiliar vendor, API or backend. Ported from `api-integrate` (v0.42.0). Principles: `api-integration/RULE.mdc` (MCP-first, doc freshness, POC before code). If a maintained client or SDK might already cover the work, run [`spec-reuse-package`](../../spec-reuse-package/SKILL.md) first; adding it is a stop-list item (new dependency). For a stack the repo already runs on, use that stack's plugin skill (`supabase`, `cloudflare`, `wrangler`) instead. New paid usage or a new external service is a stop-list item (cost / external service).
 
 **Always do Phase 1 (schema / contract) before Phase 2 (sample / wire shape):** you need to know what exists before you fetch real values. The result goes into the plan's Conflict & compliance. A risky assumption becomes the plan's first phase, a minimal POC (foundation validation).
 

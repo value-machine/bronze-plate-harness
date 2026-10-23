@@ -1,6 +1,6 @@
 # Review against industry precedent
 
-Read in [`loop-plan`](../SKILL.md) whenever a plan or proposal introduces material UX, API or architecture design, at any size. The trigger is the `architecture` rule § Pattern risk (D56). Ported from `pattern-review` (v0.42.0). This compares against **external** precedent, not "how this repo already does it". Repo-rule compliance is `loop-check`'s job; internal workaround shapes belong to [`layer-consistency-check`](../../layer-consistency-check/SKILL.md), which runs first when both apply.
+Read in [`loop-plan`](../SKILL.md) whenever a plan or proposal introduces material UX, API or architecture design, at any size. The trigger is the `architecture` rule § Pattern risk (D56). Ported from `pattern-review` (v0.42.0). This compares against **external** precedent, not "how this repo already does it". Repo-rule compliance is `loop-check`'s job; internal workaround shapes belong to [`spec-check-layer`](../../spec-check-layer/SKILL.md), which runs first when both apply.
 
 ## Procedure
 

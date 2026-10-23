@@ -16,12 +16,12 @@ Design, edges and decisions: `documentation/jobs/temp_job_skill_loop/` (`CATALOG
 | `loop-check` | built | `validate`, `review` |
 | `loop-ship` | built | `finish`, `push`, `bundle-ship` |
 | `loop-verdict` | built | `finish` |
-| `spec-load-context` | planned | `prime` |
-| `spec-debug-runtime` | planned | `debug`, `hypothesis` |
-| `spec-reuse-package` | planned | `dont-reinvent-the-wheel` |
-| `spec-simplify-flow` | planned | `challenge`, `standards-align` |
-| `spec-optimize-performance` | planned | `optimize2`, `react-perf-vite` |
-| `spec-check-layer` | planned | `layer-consistency-check` |
+| `spec-load-context` | built | `prime` |
+| `spec-debug-runtime` | built | `debug`, `hypothesis` |
+| `spec-reuse-package` | built | `dont-reinvent-the-wheel` |
+| `spec-simplify-flow` | built | `challenge`, `standards-align` |
+| `spec-optimize-performance` | built | `optimize2`, `react-perf-vite` |
+| `spec-check-layer` | built | `layer-consistency-check` |
 | `meta-write-skill` | planned | `create-skill` |
 | `meta-audit-harness` | planned | `align-harness`, `tighten-harness` |
 | `meta-intake-harness` | planned | `update-harness` |

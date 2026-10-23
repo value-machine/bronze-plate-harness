@@ -23,7 +23,7 @@ For each neighbor, surface a **hook map** in plain language (user-visible names 
 
 Use exploration to make boundary questions **evidence-based**. Keep mechanism choices with the agent; ask the user about scope, behavior, and edges. File-level paths, migrations, and API contracts belong in [`loop-plan`](../../loop-plan/SKILL.md) — grill still learns what exists so alignment isn't abstract.
 
-Run [`prime`](../../prime/SKILL.md) once at step 4 if the repo is unfamiliar, then trace each neighbor — a single prime pass supplements, not replaces, per-neighbor grounding.
+Run [`spec-load-context`](../../spec-load-context/SKILL.md) once at step 4 if the repo is unfamiliar, then trace each neighbor — a single context pass supplements, not replaces, per-neighbor grounding.
 
 ## Interrogation priority (edges before interior)
 

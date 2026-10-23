@@ -17,7 +17,7 @@ When a design may diverge from common industry practice for the capability — a
 
 ### Don't reinvent the wheel (package / pattern reuse)
 
-Before the first line of custom code for a generic subsystem (auth, webhooks, parsers, queues, rate limits, protocol clients, complex UI widgets, …), or before a plan locks a from-scratch approach, run [`.agents/skills/dont-reinvent-the-wheel/SKILL.md`](../../../.agents/skills/dont-reinvent-the-wheel/SKILL.md). Skip for small, bespoke business logic. It recommends only: record the result in the plan (Conflict & compliance); do not install packages from it.
+Before the first line of custom code for a generic subsystem (auth, webhooks, parsers, queues, rate limits, protocol clients, complex UI widgets, …), or before a plan locks a from-scratch approach, run [`.agents/skills/spec-reuse-package/SKILL.md`](../../../.agents/skills/spec-reuse-package/SKILL.md). Skip for small, bespoke business logic. It recommends only: record the result in the plan (Conflict & compliance); do not install packages from it.
 
 ### Performance cost risk (heavy DB / UI operations)
 
@@ -27,7 +27,7 @@ When a step matches a heavy-operation trigger — N+1 / per-row queries, unbound
 2. Design a cheaper option first (narrower query + index, pagination, server-side aggregation, caching via query keys, batching, virtualization, memoization, `startTransition`); prefer the reductive option (`debugging/RULE.mdc` § Reductive Strategy).
 3. Implement the cheaper option and record the trade-off in the plan or PR summary. Do not ship the expensive path silently. Ask only when the choice falls on `agent-behavior/RULE.mdc` § When to ask (for example, paid usage or a data or irreversible change).
 
-Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/optimize2/SKILL.md`; stack-native fixes → `.agents/skills/react-perf-vite/SKILL.md`; indexes → `database/RULE.mdc`.
+Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/spec-optimize-performance/SKILL.md`; stack-native fixes → `.agents/skills/spec-optimize-performance/SKILL.md`; indexes → `database/RULE.mdc`.
 
 ### Layer consistency (workaround guard)
 
@@ -35,7 +35,7 @@ Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/ski
 
 **Proactively** on any request to change existing behavior ("add a color to the gradient", "just add a field/button/flag"), minimizer/exception language, a first-of-a-kind instance without a category, or behavior-by-analogy. **Reactively** when the diff takes a workaround shape (special-case flag, parallel path, symptom tuning, disconnected patch, instance-encoded naming, growing scope, "for now" comment).
 
-Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `code-style/RULE.mdc` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the owner picks workaround vs structural fix (stop list: patch on top, `agent-behavior` § When to ask). When the precedent review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
+Run [`.agents/skills/spec-check-layer/SKILL.md`](../../../.agents/skills/spec-check-layer/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../../.agents/skills/spec-check-layer/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `code-style/RULE.mdc` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the owner picks workaround vs structural fix (stop list: patch on top, `agent-behavior` § When to ask). When the precedent review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
 
 ## Code placement
 
@@ -113,4 +113,4 @@ Legitimate cross-layer exception (rare): regenerate the dependency-cruiser basel
 
 ## Related Rules
 
-When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/optimize2/SKILL.md` (refactors must respect these placements).
+When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/spec-optimize-performance/SKILL.md` (refactors must respect these placements).

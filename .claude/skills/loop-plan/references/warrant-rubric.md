@@ -12,10 +12,10 @@ Never invent a parallel chat-only rubric. Read this file, then score.
 
 | Symptom | Use instead |
 |---------|-------------|
-| One feature bloated / too many paths | `challenge` |
-| One function slow or too complex | `optimize2` |
+| One feature bloated / too many paths | `spec-simplify-flow` |
+| One function slow or too complex | `spec-optimize-performance` |
 | Code in wrong layer/feature | [`semantic-placement.md`](semantic-placement.md) (after lint/structure green) |
-| Request would add a flag / parallel path / “for now” | `layer-consistency-check` |
+| Request would add a flag / parallel path / “for now” | `spec-check-layer` |
 | Two similar copies of the same logic | `code-style/RULE.mdc` § Naming — do not score a forbidden copy as "keep" |
 
 Consolidate = **cross-file / cross-feature same concern**, not “make this file prettier.” **Focus** = Target ∪ 1-hop import neighborhood. **Frequency / gates** count **all** same-pattern hits from the `src/` sweep (including out-of-focus). Execute only in-focus files unless the user expands Target.
@@ -27,7 +27,7 @@ Consolidate = **cross-file / cross-feature same concern**, not “make this file
 Always apply before scoring.
 
 1. **Same job** for the same user journey — not coincidental similar code. If product intent is unclear, ask; do not merge.
-2. **Copy count allows the extract:** `code-style/RULE.mdc` § Naming. Do not restate it. Established primitives and existing repo patterns are outside this gate. Other exceptions (document why): wrong layer even if one use; extract required for tests; cognitive >25 **and** cyclomatic >15 **and** >150 lines. Those exceptions: `optimize2` § Rule of Three.
+2. **Copy count allows the extract:** `code-style/RULE.mdc` § Naming. Do not restate it. Established primitives and existing repo patterns are outside this gate. Other exceptions (document why): wrong layer even if one use; extract required for tests; cognitive >25 **and** cyclomatic >15 **and** >150 lines. Those exceptions: `spec-optimize-performance` § Rule of Three.
 3. **Indirection still cheaper:** trace the feature in ≤5 files; shared code deletes more than it adds; a newcomer reads the share faster than the copies.
 4. **<5 knobs.** More flags means gluing different things. Keep copies or write a convention; do not build a factory.
 5. **Home is a real shared layer** (`shared/utils`, `components/common`, `lib`) — not a new coupling between independent features.

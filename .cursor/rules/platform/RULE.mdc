@@ -65,7 +65,7 @@ command 2>&1; if ($LASTEXITCODE -ne 0) { exit 1 }
 **Applies when the shell is Git Bash** (Claude Code Bash tool on Windows).
 
 - `&&` chaining and heredocs are fine.
-- Fail explicitly: `command || exit 1`; check `$?` for the last exit code (same form as `.agents/skills/debug/patterns.md`).
+- Fail explicitly: `command || exit 1`; check `$?` for the last exit code (same form as `.agents/skills/spec-debug-runtime/references/patterns.md`).
 - Use forward slashes and POSIX paths (`/c/Users/...`); `/dev/null`, not `NUL`.
 
 ## Environment Variables and Configuration
@@ -108,4 +108,4 @@ command 2>&1; if ($LASTEXITCODE -ne 0) { exit 1 }
 
 **Rules that reference this rule:**
 
-- `.agents/skills/debug/patterns.md` — platform command SSOT
+- `.agents/skills/spec-debug-runtime/references/patterns.md` — platform command SSOT

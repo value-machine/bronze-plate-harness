@@ -149,5 +149,5 @@ Run in the phone browser console on a page with a fixed bottom control:
 
 - [DOC_SUPABASE_GOOGLE_OAUTH.md](./DOC_SUPABASE_GOOGLE_OAUTH.md) — Google Cloud + Supabase dashboard setup
 - [src/features/auth/README.md](../src/features/auth/README.md) — auth feature; mobile OAuth testing
-- [.agents/skills/debug/patterns.md](../.agents/skills/debug/patterns.md) — mobile layout / DevTools mismatch pattern
+- [.agents/skills/spec-debug-runtime/references/patterns.md](../.agents/skills/spec-debug-runtime/references/patterns.md) — mobile layout / DevTools mismatch pattern
 - [MOBILE_LOCAL_DEV_ADOPTION_GUIDE.md](./handoffs/MOBILE_LOCAL_DEV_ADOPTION_GUIDE.md) — port this pattern to other repos

@@ -1,6 +1,6 @@
 # React performance — Vite SPA
 
-Stack-native performance guidance for agents and humans. **Procedure SSOT:** `.agents/skills/react-perf-vite/SKILL.md` and `rules/`.
+Stack-native performance guidance for agents and humans. **Procedure SSOT:** `.agents/skills/spec-optimize-performance/SKILL.md` and `rules/`.
 
 ## Stack context
 
@@ -24,12 +24,12 @@ Stack-native performance guidance for agents and humans. **Procedure SSOT:** `.a
 
 | Goal | Skill |
 |------|--------|
-| Named hotspot — redesign vs memo vs delete | `optimize2` |
-| Lookup a specific React perf pattern | `react-perf-vite` → `rules/` |
+| Named hotspot — redesign vs memo vs delete | `spec-optimize-performance` |
+| Lookup a specific React perf pattern | `spec-optimize-performance` → `rules/` |
 | Lighthouse / CWV measurement | `web-perf` (plugin) |
 | TanStack cache, keys, mutations | `DOC_TANSTACK_QUERY.md` |
 
-**Tiebreak:** `optimize2` owns structural refactors; `react-perf-vite` owns pattern lookup; `web-perf` owns measurement.
+**Tiebreak:** `spec-optimize-performance` owns structural refactors; `spec-optimize-performance` owns pattern lookup; `web-perf` owns measurement.
 
 ## High-impact patterns (quick reference)
 

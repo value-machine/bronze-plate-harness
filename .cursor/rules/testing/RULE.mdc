@@ -15,7 +15,7 @@ A failing test proves only that code and test disagree. Decide which one is wron
 - **Red-flag loop detector:** swapping implementation approach twice for the same failing test → suspect the test.
 - **Expected values** in tests must derive from the shipped SSOT implementation or data, never from an independent re-derivation.
 
-Cross-link: `.agents/skills/debug/patterns.md` § "Failing test loop".
+Cross-link: `.agents/skills/spec-debug-runtime/references/patterns.md` § "Failing test loop".
 
 ## Local test authority (commit vs merge)
 

@@ -34,7 +34,7 @@ The single statement of how to name shared code and when a copy must be extracte
 
 **When an extract or rename is required:** (1) extract the shared logic; (2) rename it to the role, with a deprecated alias only if needed and a removal note; (3) search all guidance and routing patterns for the old name and update them; (4) remove the second-copy markers the extraction resolved.
 
-**Unchanged by this section:** layer rules, complexity limits, and the ban on speculative extracts it doesn't require. `optimize2` owns hotspot design, not these thresholds.
+**Unchanged by this section:** layer rules, complexity limits, and the ban on speculative extracts it doesn't require. `spec-optimize-performance` owns hotspot design, not these thresholds.
 
 **Syntax:**
 
@@ -80,8 +80,8 @@ Thresholds (SSOT `eslint.config.js`, warnings in `pnpm lint`):
 | Parameters | ≤ 3 (use an options object) |
 | Statements | ≤ 15 |
 
-Reduce with early returns/guard clauses, helper extraction, and options objects; full workflow in `.agents/skills/optimize2/SKILL.md`.
+Reduce with early returns/guard clauses, helper extraction, and options objects; full workflow in `.agents/skills/spec-optimize-performance/SKILL.md`.
 
 ## Related Rules
 
-When modifying this rule, check `architecture`, `testing`, `.agents/skills/optimize2/SKILL.md`, and `.agents/skills/layer-consistency-check/SKILL.md`.
+When modifying this rule, check `architecture`, `testing`, `.agents/skills/spec-optimize-performance/SKILL.md`, and `.agents/skills/spec-check-layer/SKILL.md`.

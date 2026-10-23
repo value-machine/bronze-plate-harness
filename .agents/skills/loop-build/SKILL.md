@@ -21,7 +21,7 @@ When this skill is done, every planned phase is executed and gated, the acceptan
 |---|---|
 | In | Plan (`BRIEF.md` § Plan or `DEVELOPMENT_PLAN.md`), acceptance test, lap `DECISIONS.md`, rules ([`loop-plan/references/rules-registry.md`](../loop-plan/references/rules-registry.md)) |
 | Out | Code and tests; plan phase status, **Notes during development**, **Decisions made**; updated feature READMEs / vision / rules carrying the lap's decisions |
-| Calls | if a test or runtime fails unexpectedly → [`debug`](../debug/SKILL.md) · if a new package seems needed → [`dont-reinvent-the-wheel`](../dont-reinvent-the-wheel/SKILL.md), then owner stop (new dependency) · if the diff starts to look like a workaround (`architecture` rule § Layer consistency) → [`layer-consistency-check`](../layer-consistency-check/SKILL.md) · if a phase removes a feature → [`loop-plan/references/remove-feature.md`](../loop-plan/references/remove-feature.md) § Phase 4 · when all phases pass → [`loop-check`](../loop-check/SKILL.md) |
+| Calls | if a test or runtime fails unexpectedly → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) · if a new package seems needed → [`spec-reuse-package`](../spec-reuse-package/SKILL.md), then owner stop (new dependency) · if the diff starts to look like a workaround (`architecture` rule § Layer consistency) → [`spec-check-layer`](../spec-check-layer/SKILL.md) · if a phase removes a feature → [`loop-plan/references/remove-feature.md`](../loop-plan/references/remove-feature.md) § Phase 4 · when all phases pass → [`loop-check`](../loop-check/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-plan`](../loop-plan/SKILL.md), [`loop-check`](../loop-check/SKILL.md) |
 | Next | [`loop-check`](../loop-check/SKILL.md) |
 | Owner stops | Stop list ([`agent-behavior` rule § When to ask](../../../.cursor/rules/agent-behavior/RULE.mdc)); edge overrun (D51); protected-file edits ([`agent-behavior` § Protected Files](../../../.cursor/rules/agent-behavior/RULE.mdc)) |
@@ -47,7 +47,7 @@ Output: stop. It's a one-line read through auth's public API, inside size M, so 
 
 **Example 2 — dependency**
 Input: phase 2 wants `papaparse` for CSV.
-Output: [`dont-reinvent-the-wheel`](../dont-reinvent-the-wheel/SKILL.md) compares `papaparse` against a 20-line serializer. A new dependency is a stop-list item, so one question goes to the owner; with the away switch on, the lap parks while the next task starts.
+Output: [`spec-reuse-package`](../spec-reuse-package/SKILL.md) compares `papaparse` against a 20-line serializer. A new dependency is a stop-list item, so one question goes to the owner; with the away switch on, the lap parks while the next task starts.
 
 ## Output
 
@@ -63,5 +63,5 @@ Build: phases <n>/<n> done · acceptance test passing · decisions folded: <file
 |---|---|
 | Writing or rewriting the plan | [`loop-plan`](../loop-plan/SKILL.md) |
 | Full rule audit before shipping | [`loop-check`](../loop-check/SKILL.md) |
-| Unknown-root-cause bug | [`debug`](../debug/SKILL.md) |
+| Unknown-root-cause bug | [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) |
 | Commit, PR, CI | [`loop-ship`](../loop-ship/SKILL.md) |

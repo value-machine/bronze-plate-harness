@@ -15,7 +15,7 @@ Orient (above). Then produce a markdown table, one row per **editable** skill:
 `name | one-sentence outcome ("done") | lifecycle phase | mutates? (read-only / writes code / commits / pushes) | scope (repo-wide / targeted / single-component / single-feature) | inputs (artifacts consumed) | outputs (artifacts produced) | owns-concepts (SSOT it claims) | links-to (skills/docs referenced)`
 
 Concern-space axes to populate consistently:
-- **Lifecycle:** prime → clarify (grill-me / plan §Refine) → plan → review-dev-plan → pattern-review → implement → validate / check → review → finish → push; plus meta (learn, rule-quality) and integrations.
+- **Lifecycle:** the product-owner loop in `router/references/loop-map.md` (`router` → `loop-backlog` → `loop-refine` → `loop-plan` → `loop-build` → `loop-check` → `loop-ship` → `loop-verdict`); plus `spec-*` specialists, meta skills (learn, rule-quality) and integrations.
 - **Mutation:** read-only vs writes vs commits vs pushes.
 - **Domain:** product/vision · engineering · meta/rules · integrations.
 - **Scope:** repo-wide · targeted · single-component · single-feature.

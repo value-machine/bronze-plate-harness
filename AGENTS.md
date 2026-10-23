@@ -19,7 +19,7 @@ Project agent workflows live under **`.agents/skills/<name>/SKILL.md`**. **Regis
 
 Layer model: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
 
-**Package / pattern reuse:** `.agents/skills/dont-reinvent-the-wheel/SKILL.md` (before custom generic subsystems).
+**Package / pattern reuse:** `.agents/skills/spec-reuse-package/SKILL.md` (before custom generic subsystems).
 
 **Harness maintenance:** Coherence audit → `.agents/skills/align-harness/SKILL.md`. Context-cost pruning → `.agents/skills/tighten-harness/SKILL.md`. External intake → drop in `.agents/harness-inbox/` then `.agents/skills/update-harness/SKILL.md`.
 
@@ -51,7 +51,7 @@ Grouped by YAML `alwaysApply`. Include `globs` when present.
 | `.cursor/rules/code-style/RULE.mdc` | Global code style and formatting standards for all projects · `alwaysApply: true` |
 | `.cursor/rules/agent-behavior/RULE.mdc` | When to ask the owner (choice definition + stop list), success reporting, and protected-file consent · `alwaysApply: true` |
 | `.cursor/rules/testing/RULE.mdc` | Testing standards, patterns, and quality requirements · `alwaysApply: true` |
-| `.cursor/rules/debugging/RULE.mdc` | Debugging strategy, logging, issue analysis, and scientific method debugging · `alwaysApply: true` |
+| `.cursor/rules/debugging/RULE.mdc` | Logging, API troubleshooting, reductive strategy, and user test instructions (debugging procedure: spec-debug-runtime) · `alwaysApply: true` |
 | `.cursor/rules/security/RULE.mdc` | Security best practices and vulnerability prevention · `alwaysApply: true` |
 
 #### `alwaysApply: false`
@@ -90,6 +90,6 @@ Deploy functions yourself when a change requires it, and verify the deploy succe
 - **Always read before edit.** Run `pnpm validate:structure` if creating new files in unfamiliar locations.
 - **Git workflow mode:** Read `src/config/git-workflow.json`, then apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. What each mode does: § Mode behavior table (Model C default; A/B selectable).
 - **Name the mechanism before code.** Before adding or copying a function, hook, component, type, file, or feature folder — including a one-line edit — read `code-style/RULE.mdc` § Naming and follow it.
-- **Layer consistency before code.** Every request to change existing behavior carries an assumption about how the system works — verify it before acting (user can't see the impl). Cues: `.agents/skills/layer-consistency-check/references/workaround-shapes.md` § Request-side cues → run `.agents/skills/layer-consistency-check/SKILL.md` and stop for user choice before writing code.
+- **Layer consistency before code.** Every request to change existing behavior carries an assumption about how the system works — verify it before acting (user can't see the impl). Cues: `.agents/skills/spec-check-layer/references/workaround-shapes.md` § Request-side cues → run `.agents/skills/spec-check-layer/SKILL.md` and stop for user choice before writing code.
 - **Work through the loop.** Any repo change runs as a lap: `router` → `loop-backlog` → `loop-refine` → `loop-plan` → `loop-build` → `loop-check` → `loop-ship` → `loop-verdict` (`.agents/skills/router/references/loop-map.md`). The size estimate sets how much plan a lap needs.
 - **Lean output.** Don't restate skill content — point to the file and follow it.
