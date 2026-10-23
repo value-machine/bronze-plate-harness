@@ -20,6 +20,8 @@ Updated: 2026-10-23
 | D10 | Loop shape | closed | STOP 1 Bet: agent proposes 2–3 ranked next directions → PO picks → `/refine-request` (refine, scope) → size estimate (D12). Autonomous: Plan → Build → Check → PR with preview; interrupts only D3, D6, D7, estimate overrun. STOP 2 Review on preview: pass → land / fix → inner loop (Build → Check → preview, no re-bet) / rethink → back to refine. Autonomous close: land, promote decisions to DOC_PRODUCT_DECISIONS.md, `learn` only on troubled laps, propose next bets. | grill-me | Agent proposal at PO's request ("improve this using all your wisdom"); PO engaged and amended via D11/D12. Prioritize moved to the front of Stop 1. |
 | D11 | Stop 2 timing | closed | PO tests the PR preview before landing; only a pass merges. Amends D2 ("test the shipped update" → "test the preview"). | grill-me | Rejected: test after landing, size-dependent, feature flags. |
 | D13 | Target loop skill set | closed | 8 loop skills: `refine-request` (Stop 1: grill-me + router backlog intake + feature reqs + prime-on-demand + size estimate), `plan` (absorbs feature, plan-grill, plan-grill-auto, quick-piv as XS/S depth, review-dev-plan as M/L step), `implement` (+D7 dependency stop), `validate`, `ship` (finish + push + bundle-ship + git-workflow PR/CI steps), `review-preview` (Stop 2 + close), `ask-protocol` (D9 shared), slim `router` (locate position in loop, resume). | grill-me | Rejected: ~5-skill merge, separate quick-piv fast path, no router. Specialists, rules and meta skills sorted later. |
+| D14 | Where next directions come from | closed | A `backlog-management` stage runs at the start of Stop 1, before `/refine-request`: agent reviews the backlog order and suggests priority changes; PO confirms. Base: TMI-apps/MILA `.agents/skills/backlog-management/SKILL.md`. | grill-me | Backlog file order stays the priority SSOT; agent proposes, PO confirms (no silent reorder). Integrate before refine-request. |
+| D15 | backlog-management port shape | closed | Port the generic core from MILA: catch-up (archive landed tasks via git log + changelog + archive evidence), prioritize (full proposed order, one-line reason per move, PO confirms top), hand off to `/refine-request`. Signal steps (error/feedback read, status write-back, link/orphan tasks) become an optional adapter section an app enables once it has such tables. | grill-me | Rejected: port whole + add tables, tasks-only, Stop-2-feedback-only. |
 
 ## Open
 
@@ -35,4 +37,6 @@ Updated: 2026-10-23
 - 2026-10-23 — D12 closed via grill-me (PO stated)
 - 2026-10-23 — D10, D11 closed via grill-me (asked)
 - 2026-10-23 — D13 closed via grill-me (asked)
+- 2026-10-23 — D14 closed via grill-me (PO stated)
+- 2026-10-23 — D15 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
