@@ -309,48 +309,6 @@ When Edge Functions are required, organize them by business capability for bette
 
 ---
 
-## Legacy: Firebase Cloud Functions (Deprecated)
-
-> **Note:** This section documents the legacy Firebase Cloud Functions architecture. The project has migrated to Supabase Edge Functions. This content is kept for reference during migration period.
-
-### Legacy Deployment Model
-
-**This project previously used Firebase Cloud Functions that shared ONE Firebase project.**
-
-- Frontend code deployed separately per branch (develop vs main)
-- Cloud Functions deployed ONCE and affected BOTH branches
-- No staging environment for Cloud Functions
-- No automated testing or rollback for functions
-- Bugs in Cloud Functions impacted the entire app across all branches
-
-### Legacy Cloud Functions
-
-**Previously used Cloud Functions:**
-- `gammaGenerate` / `gammaStatus` - Presentation generation (server-side API) → Migrated to `gamma-generate` / `gamma-status` Edge Functions
-- `listUsers` / `setUserRole` / `setUserDeveloperStatus` - Admin operations → Migrated to `list-users` / `set-user-role` Edge Functions
-- `onAuthUserCreate` / `onAuthUserDelete` - Auth lifecycle → Replaced by Supabase database triggers
-- `testAuth` / `backfillUsersFromAuth` - Utility functions → Migrated or deprecated
-
-### Legacy Pattern: Frontend with Firestore Atomic Operations
-
-**Previous approach for user-initiated operations:**
-
-```typescript
-// ❌ LEGACY: Firestore operations (no longer used)
-import {doc, updateDoc, increment, serverTimestamp} from 'firebase/firestore';
-
-await updateDoc(userRef, {
-  totalMessages: increment(1),
-  totalTokens: increment(tokens),
-  totalCost: increment(cost),
-  lastUpdate: serverTimestamp()
-});
-```
-
-**Migration:** This pattern has been replaced with Supabase client operations using PostgreSQL atomic updates.
-
----
-
 ## Related Rules
 
 **When modifying this rule, check these rules for consistency:**
