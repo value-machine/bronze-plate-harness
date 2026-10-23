@@ -21,7 +21,7 @@
   },
   {
     "title": "Run the loop skill evals against the v0.42.0 baseline",
-    "description": "Deferred from the skill-loop rework (skill-loop D59) to save usage. Run the eval cases under .agents/skills/router/evals/ and .agents/skills/loop-*/evals/ (15 cases), once with the new skill and once with the v0.42.0 skills it replaced (baseline = commit a920c0d), using the skill-creator workflow or `claude plugin eval`. Report pass rates per skill, and fix the skills where the new version loses behavior. Context: documentation/jobs/temp_job_skill_loop/PHASE2.md.",
+    "description": "Deferred from the skill-loop rework (skill-loop D59) to save usage. Run the eval cases under .agents/skills/router/evals/ and .agents/skills/loop-*/evals/ (15 cases), once with the new skill and once with the v0.42.0 skills it replaced (baseline = commit a920c0d), using the skill-creator workflow or `claude plugin eval`. Report pass rates per skill, and fix the skills where the new version loses behavior. Context: documentation/DOC_DECISION_LOG.md § skill-loop.",
     "status": "to-do"
   }
 ]
