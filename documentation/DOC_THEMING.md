@@ -1,6 +1,6 @@
 # Theming
 
-How to restyle the whole app: light/dark mode, brand colors, corner radius, density, fonts, shadows and motion. Product decisions behind this: `documentation/jobs/temp_job_runtime-theming/DECISIONS.md` and, for the token format, `documentation/jobs/temp_job_dtcg-tokens/DECISIONS.md`.
+How to restyle the whole app: light/dark mode, brand colors, corner radius, density, fonts, shadows and motion. The decision logs behind this (jobs `temp_job_runtime-theming`, `temp_job_dtcg-tokens`, `temp_job_bronze-theme`) were removed after landing; read them in git history at `6079e24`.
 
 ## How it works
 
@@ -34,10 +34,11 @@ Components never use raw colors or one-off values for themeable aspects; they us
 
 ## Default theme: bronze plate
 
-The shipped tokens are the "Engraved plate" bronze identity (`documentation/jobs/temp_job_bronze-theme/DECISIONS.md` D5):
+The shipped tokens are the "Engraved plate" bronze identity, chosen by the owner from live previews (2026-10-20) over "Classic foundry" and "Modern metal":
 - **Type:** Cinzel headings (engraved Roman capitals) and Inter body.
 - **Shape:** 0.25rem plate corners; buttons follow `radius`.
 - **Primary:** bronze, with a bevelled metallic gradient button (`elevation-brand` uses inset highlight and shade).
+  Dark mode uses the lighter bronze `#d4a05e` (gradient start `#a87238`) on purpose: the darker first pick failed WCAG AA for button text (2.49:1 → 4.52:1). Keep button text at AA when changing these.
 - **Secondary:** verdigris.
 - **Surfaces:** warm paper in light mode, warm charcoal in dark mode.
 
