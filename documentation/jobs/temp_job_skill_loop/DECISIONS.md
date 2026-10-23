@@ -30,6 +30,7 @@ Updated: 2026-10-23
 | D21 | Building on an unclean foundation | closed | When the change would patch onto code that is not a clean, deep, well-named module, `plan` includes the cleanup and routes it to a foundation specialist during planning; cleanup counts toward the size (D12). Not a PO stop unless it becomes a D7(b) patch-on-top choice. | grill-me | PO: "target an expert on that during the plan". Which specialist → D22. |
 | D22 | Foundation cleanup specialist | closed | Port TMI-apps/MILA `.agents/skills/improve-codebase-architecture` (deep-module lens: depth, seams, deletion test, LANGUAGE.md glossary) as the specialist `plan` calls under D21, scoped to modules the change touches. `consolidate` / `optimize2` become its sub-lenses later (C8). | grill-me | Rejected: consolidate as-is, new merged foundation-review now, always-on rule only. |
 | D23 | Pre-build plan gates (M/L) | closed | One merged plan-review step: critique lenses (`review-dev-plan`) + rule-compliance lens (`validate` plan-review) run in parallel; agent applies contract must-fixes as Amendments, then `implement`. | grill-me | Replaces two sequential gates. `validate` keeps impl-review after build. Rejected: keep both, critique only, size-scaled gates. |
+| D24 | "Don't ask me" mode | closed | Delete `plan-grill-auto`. The shared `ask-protocol` gets an "away" switch ("don't ask me"): agent decides true ties itself and logs them; D3 / D7 / D20 items do not block — the agent proceeds provisionally and queues them for the PO at Stop 2 (preview, before landing per D11, so nothing irreversible ships unreviewed). | grill-me | Rejected: no auto mode, switch overrides everything, always-queue-never-block. |
 
 ## Open
 
@@ -53,4 +54,5 @@ Updated: 2026-10-23
 - 2026-10-23 — D20, D21 closed via grill-me (asked)
 - 2026-10-23 — D22 closed via grill-me (asked)
 - 2026-10-23 — D23 closed via grill-me (asked)
+- 2026-10-23 — D24 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
