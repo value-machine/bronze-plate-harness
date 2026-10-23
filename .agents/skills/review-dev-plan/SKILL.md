@@ -34,7 +34,7 @@ Resolve in order:
 
 ## Run: seven parallel Task agents (one turn)
 
-Self-contained prompts each; they do not see this chat. Each: **orient** (e.g. `ARCHITECTURE.md`, `documentation/DOC_INDEX.md`, `documentation/DOC_APP_VISION.md`, relevant `.cursor/rules/`, paths/READMEs the plan touches) → **read the plan** (path or pasted text) → **structured feedback** (gaps, risks, sequencing, validation, boundaries, checklist quality).
+Self-contained prompts each; they do not see this chat. Each: **orient** (e.g. `ARCHITECTURE.md`, `documentation/DOC_INDEX.md`, `documentation/DOC_APP_VISION.md`, relevant `.claude/rules/`, paths/READMEs the plan touches) → **read the plan** (path or pasted text) → **structured feedback** (gaps, risks, sequencing, validation, boundaries, checklist quality).
 
 The **Industry precedent** agent must read [`.agents/skills/pattern-review/references/rubric.md`](../pattern-review/references/rubric.md) and [`alert-template.md`](../pattern-review/references/alert-template.md) (same as [`pattern-review`](../pattern-review/SKILL.md)).
 
@@ -93,7 +93,7 @@ IF `plan-grill-auto` is active: do not ask. The agent applies every `contract` m
 | Skill | Role |
 |-------|------|
 | **`review-dev-plan`** | Qualitative multi-lens plan critique (includes industry precedent) |
-| **`validate`** | Parallel **repo rule** subagents (`.cursor/rules/`) — JSON findings |
+| **`validate`** | Parallel **repo rule** subagents (`.claude/rules/`) — JSON findings |
 
 For Complexity **M/L** OR plans that touch security/DB/workflow rules, run **`review-dev-plan` AND `validate` (plan-review)**. IF only qualitative critique is requested THEN `review-dev-plan` alone.
 

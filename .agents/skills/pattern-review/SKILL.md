@@ -31,7 +31,7 @@ Apply **without being asked** when you are about to propose or write a plan, RFC
 | Internal abstraction / architecture layer fit; workaround shapes | [`layer-consistency-check`](../layer-consistency-check/SKILL.md) |
 | Package / pattern reuse vs writing custom code | [`dont-reinvent-the-wheel`](../dont-reinvent-the-wheel/SKILL.md) |
 | Should we / how to align an **existing** product/feature/component | [`standards-align`](../standards-align/SKILL.md) |
-| Heavy DB/UI operation cost | `architecture/RULE.mdc` § Performance cost risk |
+| Heavy DB/UI operation cost | `.claude/rules/architecture.md` § Performance cost risk |
 | Repo rule compliance on plan or diff | [`validate`](../validate/SKILL.md) |
 
 **When both this skill and `layer-consistency-check` apply:** run **layer-consistency-check first** (`router/references/tiebreaks.md` § `pattern-review` vs `layer-consistency-check`).

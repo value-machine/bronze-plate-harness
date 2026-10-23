@@ -67,9 +67,9 @@ Re-run the tests after each revision; stop when the user is happy, the feedback 
 
 ## 6. Integrate
 
-- `.agents/skills/**` is protected: get explicit user approval before writing (`.cursor/rules/agent-behavior/RULE.mdc` § Protected Files).
+- `.agents/skills/**` is protected: get explicit user approval before writing (`.claude/rules/agent-behavior.md` § Protected Files).
 - Add the skill to `.agents/skills/router/SKILL.md` § Skill index (situation → skill) and, if it competes with another, to `router/references/tiebreaks.md`. Update `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` if it changes a workflow layer.
-- A **proactive guard** skill also gets a thin always-on pointer in the matching `RULE.mdc` (see `pattern-review` / `dont-reinvent-the-wheel` in `architecture/RULE.mdc`).
+- A **proactive guard** skill also gets a thin always-on pointer in the matching `.claude/rules/<name>.md` (see `pattern-review` / `dont-reinvent-the-wheel` in `.claude/rules/architecture.md`).
 - Run `pnpm validate:docs` and `pnpm validate:structure`.
 
 ## What this is NOT

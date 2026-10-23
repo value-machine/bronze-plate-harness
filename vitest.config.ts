@@ -8,8 +8,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./tests/setup.ts",
-    // Node test runner files under scripts/ (e.g. change-classify.test.cjs via pnpm test:classify)
-    exclude: ["**/node_modules/**", "**/dist/**", "scripts/**"],
+    // Node test runner files under scripts/ (pnpm test:classify) and plugins/ (pnpm test:plugin)
+    exclude: ["**/node_modules/**", "**/dist/**", "scripts/**", "plugins/**"],
     // Default 5000ms is too tight when the full suite warms JSDOM on slower hosts (Windows).
     testTimeout: 10_000,
     hookTimeout: 10_000,

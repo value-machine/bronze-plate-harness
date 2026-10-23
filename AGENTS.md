@@ -25,51 +25,56 @@ Layer model: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md`.
 
 ## Rules
 
-**Bodies (SSOT):** `.cursor/rules/**/RULE.mdc` — open the file for full guidance; do not treat this catalog as the rule text.
+**Bodies (SSOT):** `.claude/rules/<name>.md` — open the file for full guidance; do not treat this catalog as the rule text. A rule without `paths:` frontmatter is always on; with `paths:` it loads only for matching files. Claude Code reads `.claude/rules/` directly; Cursor reads the generated `.cursor/rules/<name>.mdc` copies.
 
-**Short "what for" (SSOT):** YAML `description` on each `RULE.mdc`. Rows below are a portable copy for tools that load `AGENTS.md` only (e.g. Claude Code). When editing a description, update the YAML first, then this catalog.
+**Short "what for" (SSOT):** the Description column below — rule files carry no `description` frontmatter.
 
-**Topic map + consistency matrix** (open when editing a rule): `.cursor/rules/INDEX.md`.
+**Topic map + consistency matrix** (open when editing a rule): `documentation/DOC_RULES_INDEX.md`.
 
-### `@` imports (Claude/Codex)
+### Where to edit agent config
 
-No rule body is imported here: Cursor loads `alwaysApply: true` rules from frontmatter, so importing them would double-load. Cursor injects this file verbatim without expanding `@` lines (verified 2026-08-12) — open these paths yourself there; Claude Code inlines them.
+| Edit | Never edit (generated) |
+|------|------------------------|
+| Rules: `.claude/rules/<name>.md` | `.cursor/rules/*.mdc` |
+| Skills: `.agents/skills/<name>/SKILL.md` | `.claude/skills/` |
 
-@.claude/rules/file-placement.md
-@.claude/rules/git-workflow.md
+The pre-commit hook rebuilds both mirrors from staged sources (`agent-sync.config.json`). Sync by hand: `node scripts/sync-agent-config.mjs`; CI fails on drift (`--check`).
 
-### Portable catalog (all `RULE.mdc`)
+### Catalog
 
-Grouped by YAML `alwaysApply`. Include `globs` when present.
-
-#### `alwaysApply: true`
-
-| Path | Description |
-|------|-------------|
-| `.cursor/rules/architecture/RULE.mdc` | Architectural patterns and structural organization standards · `alwaysApply: true` |
-| `.cursor/rules/file-placement/RULE.mdc` | CRITICAL: Before creating any new file or folder, validate placement against projectStructure.config.cjs and architecture rules. Check structure whitelist, verify allowed file patterns, and suggest correct locations if invalid. Applies when user requests file/folder creation or assistant needs to create files. · `alwaysApply: true` |
-| `.cursor/rules/code-style/RULE.mdc` | Global code style and formatting standards for all projects · `alwaysApply: true` |
-| `.cursor/rules/workflow/RULE.mdc` | Development workflow hub — code review, dev process, deployment pointers · `alwaysApply: true` |
-| `.cursor/rules/agent-behavior/RULE.mdc` | Agent decision protocol, success reporting, and protected-file consent · `alwaysApply: true` |
-| `.cursor/rules/testing/RULE.mdc` | Testing standards, patterns, and quality requirements · `alwaysApply: true` |
-| `.cursor/rules/debugging/RULE.mdc` | Debugging strategy, logging, issue analysis, and scientific method debugging · `alwaysApply: true` |
-| `.cursor/rules/security/RULE.mdc` | Security best practices and vulnerability prevention · `alwaysApply: true` |
-
-#### `alwaysApply: false`
+#### Always on (no `paths:`)
 
 | Path | Description |
 |------|-------------|
-| `.cursor/rules/git-workflow/RULE.mdc` | Git branch models (Model A / B / C), PRs, and production promotion · `alwaysApply: false` |
-| `.cursor/rules/platform/RULE.mdc` | Windows shell rules (PowerShell + Git Bash) and local environment configuration · `alwaysApply: false` |
-| `.cursor/rules/database/RULE.mdc` | SQL migration best practices for the configured relational database (this fork: Supabase/PostgreSQL; not client queries or TanStack) · `alwaysApply: false` · `globs: ["**/migrations/**/*.sql"]` |
-| `.cursor/rules/cloud-functions/RULE.mdc` | When to use Edge Functions vs frontend, function organization, and architecture guidelines · `alwaysApply: false` · `globs: ["**/supabase/functions/**", "cloud-functions/**"]` |
-| `.cursor/rules/project-specific/RULE.mdc` | Supabase Edge Function rate limiting (Postgres rate_limits). Not a home for other hosts. · `alwaysApply: false` · `globs: ["**/supabase/functions/**/*.ts"]` |
-| `.cursor/rules/api-integration/RULE.mdc` | Principles for researching an external API, vendor, or backend before writing integration code (MCP-first, doc-freshness, POC-before-code) · `alwaysApply: false` · `globs: ["**/services/**", "**/lib/**", "**/supabase/functions/**", "cloud-functions/**"]` |
+| `.claude/rules/architecture.md` | Architectural patterns and structural organization standards |
+| `.claude/rules/file-placement.md` | CRITICAL: Before creating any new file or folder, validate placement against projectStructure.config.cjs and architecture rules. Check structure whitelist, verify allowed file patterns, and suggest correct locations if invalid. Applies when user requests file/folder creation or assistant needs to create files. |
+| `.claude/rules/code-style.md` | Global code style and formatting standards for all projects |
+| `.claude/rules/workflow.md` | Development workflow hub — code review, dev process, deployment pointers |
+| `.claude/rules/agent-behavior.md` | Agent decision protocol, success reporting, and protected-file consent |
+| `.claude/rules/testing.md` | Testing standards, patterns, and quality requirements |
+| `.claude/rules/debugging.md` | Debugging strategy, logging, issue analysis, and scientific method debugging |
+| `.claude/rules/security.md` | Security best practices and vulnerability prevention |
+| `.claude/rules/git-workflow.md` | Git branch models (Model A / B / C), PRs, and production promotion |
+
+#### Path-scoped (`paths:`)
+
+| Path | Description |
+|------|-------------|
+| `.claude/rules/database.md` | SQL migration best practices for the configured relational database (this fork: Supabase/PostgreSQL; not client queries or TanStack) · `paths: ["**/migrations/**/*.sql"]` |
+| `.claude/rules/cloud-functions.md` | When to use Edge Functions vs frontend, function organization, and architecture guidelines · `paths: ["**/supabase/functions/**", "cloud-functions/**"]` |
+| `.claude/rules/project-specific.md` | Supabase Edge Function rate limiting (Postgres rate_limits). Not a home for other hosts. · `paths: ["**/supabase/functions/**/*.ts"]` |
+| `.claude/rules/api-integration.md` | Principles for researching an external API, vendor, or backend before writing integration code (MCP-first, doc-freshness, POC-before-code) · `paths: ["**/services/**", "**/lib/**", "**/supabase/functions/**", "cloud-functions/**"]` |
+
+#### On demand (skill)
+
+| Path | Description |
+|------|-------------|
+| `.agents/skills/platform/SKILL.md` | Windows shell rules (PowerShell + Git Bash) and local environment configuration |
 
 ## Defaults
 
 - **Always read before edit.** Run `pnpm validate:structure` if creating new files in unfamiliar locations.
-- **Git workflow mode:** Read `src/config/git-workflow.json`, then apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. What each mode does: § Mode behavior table (Model C default; A/B selectable).
+- **Git workflow mode:** Read `src/config/git-workflow.json`, then apply `.claude/rules/git-workflow.md` § Mode-aware branch gate. What each mode does: § Mode behavior table (Model C default; A/B selectable).
 - **Name the mechanism before code.** Before adding or copying a function, hook, component, type, file, or feature folder — including a one-line edit — read `.agents/skills/name-the-mechanism/SKILL.md` and follow it.
 - **Layer consistency before code.** Every request to change existing behavior carries an assumption about how the system works — verify it before acting (user can't see the impl). Cues: `.agents/skills/layer-consistency-check/references/workaround-shapes.md` § Request-side cues → run `.agents/skills/layer-consistency-check/SKILL.md` and stop for user choice before writing code.
 - **Plan before non-trivial work.** Anything beyond a one-line fix should start with the `plan` skill (`.agents/skills/plan/SKILL.md`).

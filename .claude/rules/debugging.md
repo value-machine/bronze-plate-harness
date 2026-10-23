@@ -1,0 +1,72 @@
+
+# Debugging and Logging
+
+## Logs
+
+- Do not remove debugging logs until the user confirms they are no longer needed.
+- Logs must pass lint.
+- For production builds, prefer:
+  - A small logger or condition like:
+    - `if (import.meta.env.VITE_DEBUG_API) { console.log(...) }`
+  - So logs can be disabled in production.
+
+## API Troubleshooting
+
+- For request errors:
+  - Log the request configuration before sending:
+    - Method
+    - URL
+    - Query params
+    - Headers (excluding auth)
+    - Body (redacted when needed)
+- For data processing issues:
+  - Log the full raw response object, with tokens and obvious PII redacted.
+- Ask the user to provide these logs during debugging.
+
+## Filtering and Pagination
+
+- If API responses always contain a round number of records (25, 50, 100, …) regardless of filters:
+  - Suspect pagination limits first.
+  - Only then dig into filter logic.
+
+## Debugging Strategy
+
+### Reductive Strategy (Bugs and New Features)
+
+**Always simplify first**: When fixing bugs, implementing new features, or refactoring, always first simplify and reduce code.
+
+- Default approach: Try to achieve the result by removing or simplifying existing code
+- Only add code when: Simplification failed OR user explicitly gave permission to add code
+- Prefer removing code over adding code
+- Applies to: Bug fixes, feature requests, refactoring, and performance improvements
+
+### Scope Reduction
+
+- Reduce scope when something fails:
+  - Start from the smallest testable piece (function, hook, component, API call).
+  - Avoid changing multiple layers at once.
+
+### Test Planning
+
+- For every test you introduce (unit test, manual step, or log-based check), think ahead:
+  - Define what you will conclude if the test fails.
+  - Define what you will conclude if the test succeeds.
+  - Define the next step for each outcome before you run the test.
+
+### User Testing Instructions
+
+When asking the user to test something, give the next step for **both** outcomes — "If SUCCESS → X", "If FAILURE → Y" — including what to check or report.
+
+## Scientific Method Debugging
+
+**Procedure SSOT:** `.agents/skills/debug/SKILL.md` — run that skill for incidents (event chains, hypotheses, unified steps, iterative narrowing). **Say what was verified and what was not; the user confirms the fix.**
+
+**Pre-registered hypothesis loop (optional):** `.agents/skills/hypothesis/SKILL.md` — when naive fixes failed or the user invokes hypothesis mode. Router tiebreak: `.agents/skills/router/SKILL.md` (runtime incident → `debug`; pre-registered experiment loop → `hypothesis`).
+
+**Pattern library SSOT:** `.agents/skills/debug/patterns.md` — updated from `finish` or `learn` when a reusable bug class is proved.
+
+Do not duplicate the full scientific-method checklist in this rule. This file owns **logging**, **API troubleshooting**, **scope reduction**, and **user test instructions** above.
+
+## Related Rules
+
+When modifying this rule, check `agent-behavior`, `testing`, `architecture`, and `.agents/skills/debug/SKILL.md`.

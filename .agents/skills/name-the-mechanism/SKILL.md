@@ -38,7 +38,7 @@ When logic moves to a shared module, re-evaluate its name at the new reuse level
 
 ## F4 — Guidance is in the blast radius
 
-A rename or extraction is not done until every reference in `AGENTS.md`, the router, skills, rules, placement tables, examples, and match or route patterns is updated in the same change. Those reference updates are allowed without a separate approval. See `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files. Any other edit to those files still stops for approval.
+A rename or extraction is not done until every reference in `AGENTS.md`, the router, skills, rules, placement tables, examples, and match or route patterns is updated in the same change. Those reference updates are allowed without a separate approval. See `.claude/rules/agent-behavior.md` § Protected Files. Any other edit to those files still stops for approval.
 
 ## F5 — Guidance cites roles and locations
 

@@ -3,7 +3,7 @@
 # Files the scanner walks first; link-walk expands from here.
 roots:
   - AGENTS.md
-  - .cursor/rules/INDEX.md
+  - documentation/DOC_RULES_INDEX.md
   - .agents/skills/router/SKILL.md
   - documentation/DOC_AGENT_WORKFLOW_LAYERS.md
   - ARCHITECTURE.md
@@ -11,7 +11,6 @@ roots:
 # Optional glob roots (relative to repo root) for orphan mark-and-sweep.
 domain_globs:
   - .agents/skills/**/SKILL.md
-  - .cursor/rules/**/RULE.mdc
   - .claude/rules/*.md
 
 # Advisory budget (bytes) for always-on rule payload reporting.

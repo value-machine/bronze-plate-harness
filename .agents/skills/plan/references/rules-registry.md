@@ -1,23 +1,23 @@
 # Rules registry (SSOT for skill cross-links)
 
-Canonical paths for `.cursor/rules/` when skills need a rules table. Full descriptions: [`.cursor/rules/INDEX.md`](../../../../.cursor/rules/INDEX.md).
+Canonical paths for `.claude/rules/` when skills need a rules table. Full descriptions: [`documentation/DOC_RULES_INDEX.md`](../../../../documentation/DOC_RULES_INDEX.md).
 
 | Topic | Rule file |
 |-------|-----------|
-| Overview / index | `.cursor/rules/INDEX.md` |
-| Architecture | `.cursor/rules/architecture/RULE.mdc` — layers, import direction, path aliases, structure whitelist |
-| File placement | `.cursor/rules/file-placement/RULE.mdc` and `projectStructure.config.cjs` |
-| Code style | `.cursor/rules/code-style/RULE.mdc` — naming (category, not first instance), complexity limits |
-| Database | `.cursor/rules/database/RULE.mdc` — migrations, idempotent patterns |
-| Security | `.cursor/rules/security/RULE.mdc` — auth, RLS, validation, secrets |
-| Testing | `.cursor/rules/testing/RULE.mdc` |
-| Workflow hub | `.cursor/rules/workflow/RULE.mdc` — code review, dev process, routing |
-| Git workflow | `.cursor/rules/git-workflow/RULE.mdc` — mode config `src/config/git-workflow.json`; § Mode behavior table (SSOT per mode); § Mode-aware branch gate; PRs; promote (A/B) |
-| Agent behavior | `.cursor/rules/agent-behavior/RULE.mdc` — protected files, decision protocol |
-| Platform | `.cursor/rules/platform/RULE.mdc` — PowerShell, env vars |
-| Cloud / Edge | `.cursor/rules/cloud-functions/RULE.mdc` — when applicable |
-| External API integration | `.cursor/rules/api-integration/RULE.mdc` — MCP-first, doc research, POC before code |
-| Debugging | `.cursor/rules/debugging/RULE.mdc` — when diagnosing complex issues |
-| Project-specific | `.cursor/rules/project-specific/RULE.mdc` — when applicable |
+| Overview / index | `documentation/DOC_RULES_INDEX.md` |
+| Architecture | `.claude/rules/architecture.md` — layers, import direction, path aliases, structure whitelist |
+| File placement | `.claude/rules/file-placement.md` and `projectStructure.config.cjs` |
+| Code style | `.claude/rules/code-style.md` — naming (category, not first instance), complexity limits |
+| Database | `.claude/rules/database.md` — migrations, idempotent patterns |
+| Security | `.claude/rules/security.md` — auth, RLS, validation, secrets |
+| Testing | `.claude/rules/testing.md` |
+| Workflow hub | `.claude/rules/workflow.md` — code review, dev process, routing |
+| Git workflow | `.claude/rules/git-workflow.md` — mode config `src/config/git-workflow.json`; § Mode behavior table (SSOT per mode); § Mode-aware branch gate; PRs; promote (A/B) |
+| Agent behavior | `.claude/rules/agent-behavior.md` — protected files, decision protocol |
+| Platform | `.agents/skills/platform/SKILL.md` — PowerShell, env vars |
+| Cloud / Edge | `.claude/rules/cloud-functions.md` — when applicable |
+| External API integration | `.claude/rules/api-integration.md` — MCP-first, doc research, POC before code |
+| Debugging | `.claude/rules/debugging.md` — when diagnosing complex issues |
+| Project-specific | `.claude/rules/project-specific.md` — when applicable |
 
 **Callers:** `plan`, `implement`, `quick-piv`, `validate` — link here; do not copy this table into skill bodies.

@@ -30,7 +30,7 @@ Procedure below is the SSOT. Callers **link and run** it — they do not copy St
 | [`plan`](../plan/SKILL.md) § Investigate | After the internal reuse search, before locking a custom/greenfield build |
 | [`feature`](../feature/SKILL.md) § 3.1a | Before § 3.1b `pattern-review` |
 | [`implement`](../implement/SKILL.md) / [`quick-piv`](../quick-piv/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
-| Always-on reminder | `architecture/RULE.mdc` § Don't reinvent the wheel |
+| Always-on reminder | `.claude/rules/architecture.md` § Don't reinvent the wheel |
 
 **Order when several apply:** this skill (reuse vs custom) → [`api-integrate`](../api-integrate/SKILL.md) if still researching a vendor contract → [`pattern-review`](../pattern-review/SKILL.md) on the chosen approach (M/L or new contracts).
 

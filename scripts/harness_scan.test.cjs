@@ -18,7 +18,7 @@ describe("harness_scan", () => {
     });
     const report = JSON.parse(out);
     assert.ok(Array.isArray(report.rules));
-    assert.ok(report.rules.length >= 14);
+    assert.ok(report.rules.length >= 13);
     assert.equal(typeof report.alwaysOn.lineCount, "number");
     assert.ok(report.alwaysOn.lineCount > 0);
     assert.equal(typeof report.reachableCount, "number");

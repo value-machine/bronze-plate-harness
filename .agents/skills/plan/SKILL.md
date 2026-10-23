@@ -27,8 +27,8 @@ Create a development plan for a feature or job. Research how best to implement i
 
 ### 0. Branch gate
 
-- [ ] **Plan file:** `DEVELOPMENT_PLAN.md` may be created on any branch per `.cursor/rules/git-workflow/RULE.mdc` § Exceptions (Safe to Edit on Any Branch).
-- [ ] **Implementation:** App-code work follows `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate (read `src/config/git-workflow.json` first). Route to `implement` from a branch the **branch gate** row of `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table allows.
+- [ ] **Plan file:** `DEVELOPMENT_PLAN.md` may be created on any branch per `.claude/rules/git-workflow.md` § Exceptions (Safe to Edit on Any Branch).
+- [ ] **Implementation:** App-code work follows `.claude/rules/git-workflow.md` § Mode-aware branch gate (read `src/config/git-workflow.json` first). Route to `implement` from a branch the **branch gate** row of `.claude/rules/git-workflow.md` § Mode behavior table allows.
 
 ### 1. Input
 
@@ -69,12 +69,12 @@ For features involving external APIs, database changes, auth, or novel logic, ga
 - [ ] Search the codebase for existing functionality to reuse (features under `src/features/`, shared under `src/shared/`, `src/components/common/`).
 - [ ] **Reuse vs custom:** If the remaining work is a generic subsystem (auth, webhooks, parsers, queues, protocol clients, complex widgets, …) and current deps do not obviously cover it, run [`.agents/skills/dont-reinvent-the-wheel/SKILL.md`](../dont-reinvent-the-wheel/SKILL.md) **before** locking a from-scratch approach. Record the compact rec in Conflict & compliance. Skip when the work is bespoke/business-specific.
 - [ ] **Replaceability:** If this work adds a `src/features/` module or a new UI/data vendor, schedule [`.agents/skills/modularity-review/SKILL.md`](../modularity-review/SKILL.md) after implement (or run now if the folder already exists). After a package is added, ask whether a `stack-port-*` cruiser rule is needed.
-- [ ] Identify relevant rules from `.cursor/rules/` (start at `.cursor/rules/INDEX.md`).
+- [ ] Identify relevant rules from `.claude/rules/` (start at `documentation/DOC_RULES_INDEX.md`).
 - [ ] Align narrative with **`documentation/DOC_APP_VISION.md`** when the plan changes user-facing behavior (problem, persona, app role); if **`DRAFT`**, pause for fill or explicit deferral. IF `plan-grill-auto` active: log `vision-deferred` and continue.
 - [ ] For server-cached data, check `documentation/DOC_TANSTACK_QUERY.md` and existing `api/keys.ts` patterns in features.
 - [ ] Determine scope and boundaries (in-scope vs out-of-scope).
 - [ ] **plan-grill rail:** Before locking ride-vs-new, neighbor absorption, greenfield, architecture-boundary, or **generality** (instance vs feature vs rewirable — SSOT `plan-grill` § Generality) — run [`.agents/skills/plan-grill/SKILL.md`](../plan-grill/SKILL.md) **mandatory fork checklist** (enumerate ≥2 options or justify sole option; ask on ties; log clear-winners; anti-dup). Loop: ask → `DECISIONS.md` → **continue Investigate**. IF `plan-grill-auto` active: agent-pick, no ask. Industry/precedent → `pattern-review`. Package/pattern reuse vs custom → `dont-reinvent-the-wheel` (already run above when Step 1 applies).
-- [ ] **Feature decomposition self-check (mandatory):** Enumerate distinct domain concepts this work introduces. If more than one cohesive bounded context applies, or projected file count exceeds `featureBudgets.config.cjs` defaults, plan multiple features under `src/features/` before writing steps. Do not wait for the user to request architecture. See `.cursor/rules/architecture/RULE.mdc` § Feature granularity.
+- [ ] **Feature decomposition self-check (mandatory):** Enumerate distinct domain concepts this work introduces. If more than one cohesive bounded context applies, or projected file count exceeds `featureBudgets.config.cjs` defaults, plan multiple features under `src/features/` before writing steps. Do not wait for the user to request architecture. See `.claude/rules/architecture.md` § Feature granularity.
 
 #### Optional: Foundation validation (high-risk features)
 
@@ -96,7 +96,7 @@ Do **not** invest in full planning until the foundation is proven.
 - [ ] Add a gate for each phase.
 - [ ] Write `DEVELOPMENT_PLAN.md` to `documentation/jobs/temp_job_<name>/` using [`references/implementation-plan-template.md`](references/implementation-plan-template.md). If `DECISIONS.md` already exists in that folder (from `grill-me` / `plan-grill` / `plan-grill-auto`), keep it; do not overwrite.
 - [ ] Set **Complexity** (`XS` | `S` | `M` | `L`) in Summary per [`references/complexity-rubric.md`](references/complexity-rubric.md).
-- [ ] Fill **Review contract**: pin rules with `git log -1 --format=%h -- .cursor/rules`, copy the applicable rules from Conflict & compliance, mark required lenses (or skipped + reason). Phase gates cite the contract tooling gate instead of restating commands. Reviewers grade only against this section; leave **Amendments** empty.
+- [ ] Fill **Review contract**: pin rules with `git log -1 --format=%h -- .claude/rules`, copy the applicable rules from Conflict & compliance, mark required lenses (or skipped + reason). Phase gates cite the contract tooling gate instead of restating commands. Reviewers grade only against this section; leave **Amendments** empty.
 
 ### 5. Pattern & precedent
 
@@ -131,7 +131,7 @@ Next: <review-dev-plan | implement | blocked> — <one-line gate>
 
 **Path:** `documentation/jobs/temp_job_<name>/DEVELOPMENT_PLAN.md`
 
-**Naming:** Follow `.cursor/rules/file-placement/RULE.mdc`: folder `temp_job_<descriptive-name>/` (kebab-case, descriptive). Allowed by `projectStructure.config.cjs` under `documentation/jobs/` (nested `*.md` files).
+**Naming:** Follow `.claude/rules/file-placement.md`: folder `temp_job_<descriptive-name>/` (kebab-case, descriptive). Allowed by `projectStructure.config.cjs` under `documentation/jobs/` (nested `*.md` files).
 
 **Note:** Older jobs in this repo may use other filenames (e.g. `IMPLEMENTATION_PLAN.md`); new plans from this command should standardize on **`DEVELOPMENT_PLAN.md`**.
 
@@ -172,7 +172,7 @@ Phases must be in logical order and split into workable chunks. **Each phase mus
 
 ## Rules reference (research before writing steps)
 
-See [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`references/rules-registry.md`](references/rules-registry.md) — do not duplicate the full table here.
+See [`documentation/DOC_RULES_INDEX.md`](../../../documentation/DOC_RULES_INDEX.md) and [`references/rules-registry.md`](references/rules-registry.md) — do not duplicate the full table here.
 
 **Boilerplate docs:** `ARCHITECTURE.md`, `documentation/DOC_INDEX.md`, and for query-based data `documentation/DOC_TANSTACK_QUERY.md`.
 
@@ -191,12 +191,12 @@ During planning, work through (using the rules reference above):
 - [ ] Check architecture compliance: feature vs `src/shared/` vs `src/components/common/`, layer boundaries, import direction (pages → hooks → services).
 - [ ] **Feature decomposition self-check:** List planned feature folder(s). If a single feature spans multiple domain concepts or exceeds `featureBudgets.config.cjs` budgets, split into separate features in the plan with narrow public APIs before listing file paths.
 - [ ] Identify any planned diversion from industry standards, framework best practices, or established repo conventions. If found, ask the user whether the diversion is intentional or whether the plan should align with best practices.
-- [ ] Estimate complexity (cyclomatic ≤10, cognitive ≤15, functions ≤100 lines per `.cursor/rules/code-style/RULE.mdc`); plan extractions if needed (see `.agents/skills/optimize2/SKILL.md` for refactoring workflow).
+- [ ] Estimate complexity (cyclomatic ≤10, cognitive ≤15, functions ≤100 lines per `.claude/rules/code-style.md`); plan extractions if needed (see `.agents/skills/optimize2/SKILL.md` for refactoring workflow).
 - [ ] Note database impact if applicable (migrations under `supabase/migrations/`, idempotent, safe for fresh and existing DB).
 - [ ] Note security impact if applicable (auth, RLS, validation, secrets in `.env` only).
 - [ ] Document conflicts with existing code (pattern mismatches, breaking changes).
-- [ ] Consider testing: new or changed logic should have tests per `.cursor/rules/testing/RULE.mdc`.
-- [ ] Workflow: branch strategy and changelog timing per `.cursor/rules/git-workflow/RULE.mdc` and **finish** (changelog in **finish**, not while planning).
+- [ ] Consider testing: new or changed logic should have tests per `.claude/rules/testing.md`.
+- [ ] Workflow: branch strategy and changelog timing per `.claude/rules/git-workflow.md` and **finish** (changelog in **finish**, not while planning).
 - [ ] If a feature’s behavior changes: plan updates to `src/features/<feature>/README.md` in the same work as code (see file-placement rule).
 
 **Output inside `DEVELOPMENT_PLAN.md`:** A **Conflict & compliance** section with:
@@ -222,7 +222,7 @@ Each phase must have a gate.
 
 | Type | Gate |
 |------|------|
-| **Edge Functions** | Invoke locally or deployed; verify response (see `cloud-functions/RULE.mdc`). |
+| **Edge Functions** | Invoke locally or deployed; verify response (see `.claude/rules/cloud-functions.md`). |
 | **Database** | Apply migration to a test DB; verify schema; test RLS with representative roles if applicable. |
 
 ### Repo quality

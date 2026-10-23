@@ -20,8 +20,8 @@ This repo enforces a **whitelist** of allowed folders and files. Anything not de
 |-------|----------|
 | Allowed paths and naming patterns | `projectStructure.config.cjs` |
 | Validator implementation | `scripts/project-structure-validator.js` |
-| Where to put new files (workflow) | `.cursor/rules/file-placement/RULE.mdc` |
-| Layer boundaries and feature budgets | `.cursor/rules/architecture/RULE.mdc` |
+| Where to put new files (workflow) | `.claude/rules/file-placement.md` |
+| Layer boundaries and feature budgets | `.claude/rules/architecture.md` |
 | Feature README contract | `documentation/DOC_FEATURE_LOCAL_README.md` |
 | Architecture overview (root doc) | `ARCHITECTURE.md` |
 
@@ -39,7 +39,7 @@ Humans: pre-commit runs `validate:structure:staged` on relevant staged files; ru
 
 ### "File not allowed" / unknown path
 
-- **Wrong folder:** Move the file to an allowed location per `.cursor/rules/file-placement/RULE.mdc` (e.g. pages under `src/pages/<Name>/<Name>Page.tsx`, feature code under `src/features/<feature>/`).
+- **Wrong folder:** Move the file to an allowed location per `.claude/rules/file-placement.md` (e.g. pages under `src/pages/<Name>/<Name>Page.tsx`, feature code under `src/features/<feature>/`).
 - **Missing whitelist entry:** Legitimate new structure requires updating `projectStructure.config.cjs` — **protected**; get user approval first.
 - **Stray build artifact:** Add it to the tracked `.gitignore` — the validator skips untracked paths the repo's `.gitignore` files ignore (personal excludes do not count). `DEFAULT_IGNORE_PATTERNS` in `scripts/project-structure-validator.js` is only the fallback when git is unavailable (see file-placement rule § Tooling artifacts).
 
@@ -64,5 +64,5 @@ Humans: pre-commit runs `validate:structure:staged` on relevant staged files; ru
 ## See also
 
 - `documentation/DOC_CONTRIBUTING.md` — contributor workflow and git mode
-- `.cursor/rules/file-placement/RULE.mdc` — STOP → CHECK → VALIDATE → CREATE workflow
-- `.cursor/rules/architecture/RULE.mdc` — directory map and import direction
+- `.claude/rules/file-placement.md` — STOP → CHECK → VALIDATE → CREATE workflow
+- `.claude/rules/architecture.md` — directory map and import direction

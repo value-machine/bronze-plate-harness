@@ -65,7 +65,7 @@ Pick **one** primary by the **most blocking** row that applies (top wins). Then 
 | No plan file; quick plan in chat; implement/validate incomplete | `quick-piv` |
 | All planned phases done; full audit not yet run | `validate` |
 | Validated; user/thread signaled landing | `finish` (only when wrap-up is the clear next step — not the default for bare `/router` on new work) |
-| Pushed; CI status unknown | Per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **CI watcher** (A: babysit the PR; B: report the commit URL and stop; C: desktop app PR monitor). Do not `gh run watch`. CI is GitHub Actions after the push |
+| Pushed; CI status unknown | Per `.claude/rules/git-workflow.md` § Mode behavior table → **CI watcher** (A: babysit the PR; B: report the commit URL and stop; C: desktop app PR monitor). Do not `gh run watch`. CI is GitHub Actions after the push |
 
 Align with [dev-cycle matrix](references/dev-cycle-matrix.md). IF active job AND repo/branch context unknown THEN run **`prime`** once, then continue with the chosen skill — do not replace thread continuation with backlog intake.
 
@@ -207,8 +207,8 @@ Every project skill is listed below with its trigger situation; open `.agents/sk
 | Should we align [existing product/feature/component] with industry standards? / how to align? | `.agents/skills/standards-align/SKILL.md` |
 | Delete / remove / rip out / `/purge` a named feature/module/path/engine with multi-asset cleanup; leftover engine after a flag-off or replacement phase; "is the old path gone?" | `.agents/skills/purge-skill/SKILL.md` |
 | Author or refine one project skill under `.agents/skills/` (`/create-skill`) | `.agents/skills/create-skill/SKILL.md` |
-| Add or copy a function, hook, component, type, file, or feature folder; second copy; third or later copy; menu, timer, queue, or layout primitive; placement line, glob, or trigger for that kind of code | `.agents/skills/name-the-mechanism/SKILL.md` **before** the delivery skill (also always-on via `code-style/RULE.mdc` § Naming) |
-| Change existing behavior / unverified system assumption / workaround / “just this one” exception during implementation | `.agents/skills/layer-consistency-check/SKILL.md` (also always-on via `architecture/RULE.mdc` § Layer consistency). Naming still follows `name-the-mechanism`. |
+| Add or copy a function, hook, component, type, file, or feature folder; second copy; third or later copy; menu, timer, queue, or layout primitive; placement line, glob, or trigger for that kind of code | `.agents/skills/name-the-mechanism/SKILL.md` **before** the delivery skill (also always-on via `.claude/rules/code-style.md` § Naming) |
+| Change existing behavior / unverified system assumption / workaround / “just this one” exception during implementation | `.agents/skills/layer-consistency-check/SKILL.md` (also always-on via `.claude/rules/architecture.md` § Layer consistency). Naming still follows `name-the-mechanism`. |
 | Write a cross-repo adoption guide from an implemented pattern | `.agents/skills/write-adoption-guide/SKILL.md` |
 | Goal or scope **not** ready — clarify only (no `DEVELOPMENT_PLAN.md` yet); **one** primary by missing dimension (see **Clarification-first routing**) | Product/vision → `grill-me`; user forbids questions → `plan-grill-auto`; acceptance/APIs → `plan` **§ Refine** only |
 | Execute an existing `DEVELOPMENT_PLAN.md` phase by phase | `.agents/skills/implement/SKILL.md` |
@@ -219,7 +219,7 @@ Every project skill is listed below with its trigger situation; open `.agents/sk
 | Bundle **all** uncommitted work from multiple agent threads (same checkout), then push | `.agents/skills/bundle-ship/SKILL.md` |
 | Push already committed work (after `finish`) | `.agents/skills/push/SKILL.md` |
 | Bug / error / broken / regression (not a new feature) | `.agents/skills/debug/SKILL.md` — § Chat intake before code |
-| Promote `develop` staging to production (`main`) | Pre-promote check + `gh workflow run promote-to-production.yml` — `.cursor/rules/git-workflow/RULE.mdc` § Promote to production (not `finish`, not a squash PR). On ancestor failure → reconcile on `develop` there, then re-run |
+| Promote `develop` staging to production (`main`) | Pre-promote check + `gh workflow run promote-to-production.yml` — `.claude/rules/git-workflow.md` § Promote to production (not `finish`, not a squash PR). On ancestor failure → reconcile on `develop` there, then re-run |
 | User asks to PR / merge `develop` → `main`, **land on main**, or "release to production" (colloquial) | **Same as promote** — pre-promote check, then workflow; **never** `gh pr create --base main --head develop` |
 | Human onboarding; README quick start + dev task backlog | `.agents/skills/start/SKILL.md` (includes **App vision** gate → `documentation/DOC_APP_VISION.md`) |
 
@@ -241,6 +241,7 @@ Every project skill is listed below with its trigger situation; open `.agents/sk
 | Retro from failures/diffs; persist lessons into rules or skills | `.agents/skills/learn/SKILL.md` |
 | Audit/improve the **agent harness** (AGENTS, rules, skills, INDEX, layers); subagent lenses + no-loss pass | `.agents/skills/align-harness/SKILL.md` |
 | Intake **external** harness content from `.agents/harness-inbox/` | `.agents/skills/update-harness/SKILL.md` |
+| Migrate Cursor config → Claude Code (rules, skills, MCP) while Cursor keeps working | `/cursor-migration:migrate` — plugin published from this repo (`plugins/cursor-migration/`, marketplace `plate-harness`; install steps in its `README.md`); cloud sessions run `node plugins/cursor-migration/scripts/*.mjs` directly |
 | Tighten / prune / de-bloat harness context (CLAUDE.md, AGENTS.md, rules, skills); token cost of always-loaded instructions | `.agents/skills/tighten-harness/SKILL.md` |
 | Grade **or** improve an attached rule/command file (rubric score and/or quality rewrite) | `.agents/skills/rule-quality/SKILL.md` |
 
@@ -256,7 +257,7 @@ Every project skill is listed below with its trigger situation; open `.agents/sk
 |-----------|--------|
 | Author or refine a project skill under `.agents/skills/` | `.agents/skills/create-skill/SKILL.md` (this repo SSOT; `~/.cursor/skills-cursor/create-skill` is reference-only here) |
 | Migrate `.mdc` rules / slash commands → skills | `~/.cursor/skills-cursor/migrate-to-skills/SKILL.md` |
-| Create `.cursor/rules` `.mdc` guidance | `~/.cursor/skills-cursor/create-rule/SKILL.md` |
+| Create `.claude/rules` `.mdc` guidance | `~/.cursor/skills-cursor/create-rule/SKILL.md` |
 | Cursor hooks (`hooks.json`, hook scripts) | `~/.cursor/skills-cursor/create-hook/SKILL.md` |
 | Custom subagents | `~/.cursor/skills-cursor/create-subagent/SKILL.md` |
 | PR merge-ready loop (comments, conflicts, CI) | `~/.cursor/skills-cursor/babysit/SKILL.md` |
@@ -291,7 +292,7 @@ Choose by **primary outcome** (what must be true when done). If two outcomes are
 
 Pairwise tiebreaks and ordered pipelines (plan review stack, `dont-reinvent-the-wheel` → `api-integrate` → `pattern-review`, `layer-consistency-check` before `pattern-review`, `web-perf` → `optimize2` → `react-perf-vite`, …): [`references/tiebreaks.md`](references/tiebreaks.md).
 
-**Always-on:** name-the-mechanism is enforced during implementation via `code-style/RULE.mdc` § Naming and the pre-implementation gate above; layer-consistency via `architecture/RULE.mdc` § Layer consistency — not only when the user names those skills.
+**Always-on:** name-the-mechanism is enforced during implementation via `.claude/rules/code-style.md` § Naming and the pre-implementation gate above; layer-consistency via `.claude/rules/architecture.md` § Layer consistency — not only when the user names those skills.
 
 ### Routing state rules
 

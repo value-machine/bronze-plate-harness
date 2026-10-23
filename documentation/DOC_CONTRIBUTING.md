@@ -8,14 +8,14 @@ This guide points you to the canonical process documents. Follow these links for
    - Commit format, versioning, changelog sync  
    - Run this command before committing
 
-2. **Branch strategy** – [`.cursor/rules/git-workflow/RULE.mdc`](../.cursor/rules/git-workflow/RULE.mdc)  
+2. **Branch strategy** – [`.claude/rules/git-workflow.md`](../.claude/rules/git-workflow.md)  
    - Mode: [`src/config/git-workflow.json`](../src/config/git-workflow.json) (Model C default; A/B selectable)  
    - § Mode behavior table (SSOT for every mode-dependent behavior); § Mode-aware branch gate
 
-3. **Protected files** – [`.cursor/rules/agent-behavior/RULE.mdc`](../.cursor/rules/agent-behavior/RULE.mdc)  
+3. **Protected files** – [`.claude/rules/agent-behavior.md`](../.claude/rules/agent-behavior.md)  
    - Files requiring explicit user approval before agent edits
 
-4. **Architecture SSOT** – [`.cursor/rules/architecture/RULE.mdc`](../.cursor/rules/architecture/RULE.mdc)  
+4. **Architecture SSOT** – [`.claude/rules/architecture.md`](../.claude/rules/architecture.md)  
    - Layer rules, code placement, import patterns  
    - See also: [ARCHITECTURE.md](../ARCHITECTURE.md), [projectStructure.config.cjs](../projectStructure.config.cjs), [.dependency-cruiser.cjs](../.dependency-cruiser.cjs)
 
@@ -49,7 +49,7 @@ See **[DOC_TESTING.md](./DOC_TESTING.md)** — runner choice, colocated file pla
 
 ## Release Direction
 
-Read mode from `src/config/git-workflow.json`; behavior per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table (rows **how work lands**, **staging**, **production**):
+Read mode from `src/config/git-workflow.json`; behavior per `.claude/rules/git-workflow.md` § Mode behavior table (rows **how work lands**, **staging**, **production**):
 
 - **Model C:** per-task branch → squash PR → `main`; each PR has a preview URL; the user merging the PR ships production; release-please handles versions
 - **Model A:** `feature/*` → `develop` via squash PR; **Promote to production** ff `main` ← `develop`
@@ -83,4 +83,4 @@ No automated migrator. Manual steps:
 ## Finding Authoritative Rules
 
 - **≤3 clicks**: Start at [documentation/DOC_INDEX.md](./DOC_INDEX.md) → DOC_CONTRIBUTING → SSOT links above.
-- **Protected files** (e.g. `.cursor/**`, `.husky/**`, `projectStructure.config.cjs`) require explicit approval before changes.
+- **Protected files** (e.g. `.claude/rules/**`, `.husky/**`, `projectStructure.config.cjs`) require explicit approval before changes.

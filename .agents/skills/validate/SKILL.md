@@ -10,7 +10,7 @@ description: >-
 
 # validate
 
-Validate either (1) a **plan document**, (2) the **implementation** of an executed plan, or (3) the **structural health** of a scope/diff before merge — via a **parallel rule-shaped audit**: one read-only subagent per relevant rule in `.cursor/rules/`, plus tooling and plan-compliance passes when an implementation is in scope. Synthesize findings, surface unresolved ambiguity, then report.
+Validate either (1) a **plan document**, (2) the **implementation** of an executed plan, or (3) the **structural health** of a scope/diff before merge — via a **parallel rule-shaped audit**: one read-only subagent per relevant rule in `.claude/rules/`, plus tooling and plan-compliance passes when an implementation is in scope. Synthesize findings, surface unresolved ambiguity, then report.
 
 **Critical:** Validation does **not** edit anything in the audit/report steps. First synthesize and report, ask the user, then optionally act.
 
@@ -57,7 +57,7 @@ When the governing plan has a **Review contract** (plan-review, impl-full), the 
 | Basis | When | Max severity |
 |-------|------|--------------|
 | `contract` | Rule is pinned in the contract and the finding holds under the **pinned** text (`git show <pin>:<rule path>`) | Blocker |
-| `drift` | Finding holds only under rule text changed after the pin (`git diff --name-only <pin>..HEAD -- .cursor/rules`) | Warning |
+| `drift` | Finding holds only under rule text changed after the pin (`git diff --name-only <pin>..HEAD -- .claude/rules`) | Warning |
 | `advisory` | Rule is not pinned in the contract, but plausibly relevant | Warning |
 | `repo-current` | No governing contract (gate mode, legacy plan without one) — current rule text is the bar | Blocker |
 
@@ -79,7 +79,7 @@ When the governing plan has a **Review contract** (plan-review, impl-full), the 
 
 ### Branch verification (impl-full / gate)
 
-Read `src/config/git-workflow.json`. Apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate before impl-full / gate.
+Read `src/config/git-workflow.json`. Apply `.claude/rules/git-workflow.md` § Mode-aware branch gate before impl-full / gate.
 
 ---
 
@@ -89,7 +89,7 @@ Every rule subagent is invoked the same way. The parent calls `Task` with `subag
 
 - **Mode** — `plan-review`, `impl-full`, or `gate`.
 - **Scope** — plan path for plan review; changed paths or unified diff otherwise.
-- **Rule file** — exactly one (e.g. `.cursor/rules/architecture/RULE.mdc`).
+- **Rule file** — exactly one (e.g. `.claude/rules/architecture.md`).
 - **Contract** — the plan's Review contract, the pin SHA, whether this rule is pinned, and the paths of `DECISIONS.md` / Amendments (or `none` in gate mode).
 - **Output schema** — every subagent returns the structure below.
 
@@ -99,7 +99,7 @@ Every rule subagent is invoked the same way. The parent calls `Task` with `subag
 
 ```json
 {
-  "rule": ".cursor/rules/<name>/RULE.mdc",
+  "rule": ".claude/rules/<name>.md",
   "applicable": true,
   "findings": [
     {
@@ -125,7 +125,7 @@ If the rule does not apply to the scope, return `{ "applicable": false, "finding
 
 ### Category naming (code-style subagent, every mode)
 
-The parent prompt for `.cursor/rules/code-style/RULE.mdc` must require a naming sweep of the scope. The subagent reads `.agents/skills/name-the-mechanism/SKILL.md` and reports a finding for each violation. Do not apply a stricter test than that skill. Do not return `applicable: false` just because quotes and imports look fine.
+The parent prompt for `.claude/rules/code-style.md` must require a naming sweep of the scope. The subagent reads `.agents/skills/name-the-mechanism/SKILL.md` and reports a finding for each violation. Do not apply a stricter test than that skill. Do not return `applicable: false` just because quotes and imports look fine.
 
 Do not flag test titles (`should … when …`), an example explicitly marked as the wrong name, or a path labeled as one shipped instance rather than the template.
 
@@ -175,7 +175,7 @@ Same output schema, with `rule: "plan-compliance"`.
 1. **Determine mode** (§ Mode auto-selection) and state it in the report header.
 2. **Compute scope** — plan path for plan review; `git diff` paths / unified diff otherwise. Run branch verification for impl-full / gate.
 3. **Fan out in parallel:**
-   - One subagent per applicable rule in `.cursor/rules/` (rule set per § Mode rule sets).
+   - One subagent per applicable rule in `.claude/rules/` (rule set per § Mode rule sets).
    - impl-full / gate: also run the tooling pass. impl-full: also run the plan-compliance subagent.
 4. **Aggregate** when everything returns.
 5. **Synthesize:**
@@ -185,7 +185,7 @@ Same output schema, with `rule: "plan-compliance"`.
 6. **Ambiguity gate** — collect every finding with `ambiguity: "user-question-needed"` and ask all questions in **one batch** before the report. Record answers alongside the affected findings.
 7. **Report** — see format below. No edits in this step.
 8. **Ask:** "What should I do with these findings — fix all, specific items, or nothing?" Wait for the user.
-9. **Optionally act** — only if the user requests fixes; apply changes (plan markdown and/or source) while still following `.cursor/rules/` and the structure whitelist. Changelog remains the responsibility of `.agents/skills/finish/SKILL.md` unless the user explicitly includes it.
+9. **Optionally act** — only if the user requests fixes; apply changes (plan markdown and/or source) while still following `.claude/rules/` and the structure whitelist. Changelog remains the responsibility of `.agents/skills/finish/SKILL.md` unless the user explicitly includes it.
 10. **plan-review closes with an amended plan** — before setting Summary **Plan validate** to `Done <date>`, each fixed or waived `contract` finding and each promoted `drift` / `advisory` finding gets one plan **Amendments** row (`source: validate`). IF `plan-grill-auto` is active: fix `contract` Blockers yourself, log the rows, promote nothing, then set `Done`.
 
 **Next:**
@@ -205,7 +205,7 @@ Group findings by category (Architecture, File placement, Code style, … — pl
 
 - **Finding** — what is wrong, missing, or risky
 - **Suggestion** — concrete improvement
-- **Rule** — `.cursor/rules/<name>/RULE.mdc` § section
+- **Rule** — `.claude/rules/<name>.md` § section
 - **Severity** — Blocker | Warning | Suggestion
 - **Source** — `file:line` for impl/gate, plan section for plan review
 - **Ambiguity answer** — when the finding had a `user-question-needed` flag, include the user's batched answer
@@ -222,7 +222,7 @@ Severity meaning:
 
 ## Rules reference (subagent registry)
 
-Spawn one subagent per applicable rule. Registry SSOT: [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md). Other rule files in `.cursor/rules/` (e.g. `debugging/`, `cloud-functions/`, `project-specific/`) are spawned when the scope touches them.
+Spawn one subagent per applicable rule. Registry SSOT: [`documentation/DOC_RULES_INDEX.md`](../../../documentation/DOC_RULES_INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md). Other rule files in `.claude/rules/` (e.g. `debugging/`, `cloud-functions/`, `project-specific/`) are spawned when the scope touches them.
 
 ---
 
