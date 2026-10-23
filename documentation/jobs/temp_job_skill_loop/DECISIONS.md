@@ -24,6 +24,8 @@ Updated: 2026-10-23
 | D15 | backlog-management port shape | closed | Port the generic core from MILA: catch-up (archive landed tasks via git log + changelog + archive evidence), prioritize (full proposed order, one-line reason per move, PO confirms top), hand off to `/refine-request`. Signal steps (error/feedback read, status write-back, link/orphan tasks) become an optional adapter section an app enables once it has such tables. | grill-me | Rejected: port whole + add tables, tasks-only, Stop-2-feedback-only. |
 | D16 | Backlog ranking criteria | closed | Blockers/prerequisites first; then value (vision fit + PO feedback) ÷ size estimate (D12), cheapest high-value first. With the signal adapter on, add impact × frequency. | grill-me | Rejected: vision-only, keep-PO-order-flag-only, PO value tags. |
 | D17 | Stop 2 feedback → backlog | closed | Non-blocking Stop 2 feedback ("later", nice-to-have, newly noticed gaps) is written as backlog tasks; Stop 2's "propose next bets" runs backlog-management's prioritize step. | grill-me | clear-winner: keeps one priority SSOT (app-tasks.json) and makes PO test feedback the default signal. |
+| D18 | `/refine-request` output | closed | One-page `BRIEF.md` in the job folder (problem, success check, in / out of scope, touched edges, size estimate) + `DECISIONS.md` rows. User stories / journeys only when the work spans roles or journeys and size ≥ M. | grill-me | Replaces `feature` requirements artifacts (D8). Rejected: decision rows only, full requirements always, brief inside backlog task. |
+| D19 | `/refine-request` interview style | closed | Draft first: agent reads backlog task, vision, DOC_PRODUCT_DECISIONS / DECISIONS, and code, drafts `BRIEF.md` silently (**not shown** — PO doesn't read it). Asks only: gaps it couldn't infer, true ties, and impactful design decisions. Zero-question runs are possible but rare. | grill-me | PO: brief is for the agent, not the PO. Adds "impactful design decisions" as an ask category beside D6 ties (definition → D20). Rejected: interview from scratch, draft-and-go, grill against preview. |
 
 ## Open
 
@@ -42,4 +44,6 @@ Updated: 2026-10-23
 - 2026-10-23 — D14 closed via grill-me (PO stated)
 - 2026-10-23 — D15 closed via grill-me (asked)
 - 2026-10-23 — D16 closed via grill-me (asked); D17 clear-winner
+- 2026-10-23 — D18 closed via grill-me (asked)
+- 2026-10-23 — D19 closed via grill-me (asked)
 - 2026-10-23 — Stop-2 handoff contents: question withdrawn; PO asked to map all skills/rules first (see MAP.md)
