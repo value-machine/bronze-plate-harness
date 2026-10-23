@@ -19,7 +19,7 @@ Steps 4, 5, and 7 grade against the plan's **Review contract** (pinned rules, le
 7. **Validate** — repo rules and/or architecture gate when warranted (auto-selects impl-full / gate depth).
 8. **Finish** — local commit, version, changelog.
 9. **Push** — remote sync after commits exist.
-10. **Babysit / post-push CI** — per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **CI watcher** (A: babysit the PR to `develop` — Cursor `~/.cursor/skills-cursor/babysit/SKILL.md`, Claude Code app PR monitor; B: report the commit URL and stop; C: app PR monitor on the PR to `main`). Do not `gh run watch`. Skip the Model A babysit only when waived in **Decisions made**.
+10. **Babysit / post-push CI** — per `.claude/rules/git-workflow.md` § Mode behavior table → **CI watcher** (A: babysit the PR to `develop` — Cursor `~/.cursor/skills-cursor/babysit/SKILL.md`, Claude Code app PR monitor; B: report the commit URL and stop; C: app PR monitor on the PR to `main`). Do not `gh run watch`. Skip the Model A babysit only when waived in **Decisions made**.
 11. **User app test** — agent emits **Ready for you to test** handoff (`finish` § User test); user pass/fail closes the loop.
 
 Optional: `prime` when codebase or branch context is unfamiliar.

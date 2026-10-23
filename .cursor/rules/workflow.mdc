@@ -1,0 +1,45 @@
+---
+alwaysApply: true
+---
+
+# Workflow Standards
+
+Thin hub: domain detail lives in the linked rules and docs. Never re-grow this file with domain bodies — add a sibling `.claude/rules/<category>.md` and one row below.
+
+## Where things live (SSOT)
+
+| Concern | SSOT |
+|---------|------|
+| Branch model, PRs, production, commit timing | `.claude/rules/git-workflow.md` § Mode behavior table (mode: `src/config/git-workflow.json`) |
+| Semver, changelog, commit format | same table → **version source** (A/B: `.agents/skills/finish/SKILL.md`; C: release-please) |
+| Protected files, decision protocol, success reporting | `.claude/rules/agent-behavior.md` |
+| Shell rules, env vars | `.agents/skills/platform/SKILL.md` |
+| Architecture, code placement | `.claude/rules/architecture.md`; whitelist `projectStructure.config.cjs`; layers `.dependency-cruiser.cjs` |
+| Reductive strategy, debugging | `.claude/rules/debugging.md` |
+| API / vendor research | `.claude/rules/api-integration.md` |
+| Dev task backlog / onboarding | `src/config/app-tasks.json` + `src/features/tasks/README.md` |
+| App vision | `documentation/DOC_APP_VISION.md` |
+| Agent workflow layers | `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` |
+| Frontend hosting (Cloudflare Workers) | `documentation/DOC_CLOUDFLARE_WORKERS.md` + `wrangler.jsonc` |
+| Edge / cloud functions deploys | `.claude/rules/cloud-functions.md` |
+
+## Branch gate
+
+Read `src/config/git-workflow.json`, then apply `.claude/rules/git-workflow.md` § Mode-aware branch gate. Do not infer the mode from the current branch.
+
+## During development
+
+- **Agents:** commit only per the table's **commit timing** row (A/B: only in `finish`, never during `plan`/`implement`; C: when the user asks, directly or via `finish`). Humans may commit freely on the branch their mode allows.
+- Write tests per `.claude/rules/testing.md` § When to use TDD / What to test and how.
+- Deploy functions yourself when a change requires it, and verify the deploy succeeded.
+
+## Before handing off / review checklist
+
+- [ ] Version + changelog per the **version source** row (A/B: `[VERSION]`-first commit via `finish`; C: conventional PR title)
+- [ ] `code-style`, `architecture`, `testing`, `security` rules followed; lint, type-check, tests pass
+- [ ] Only required docs touched: `ARCHITECTURE.md` (structural changes), `src/features/*/README.md` (staged with feature code), `CHANGELOG.md` when the version-source row says `finish`. New deep docs need explicit user approval.
+- [ ] No leftover debug code (but keep debugging logs until the user confirms — `.claude/rules/debugging.md`)
+
+## Related Rules
+
+When modifying this rule, check `git-workflow`, `agent-behavior`, `platform`, `code-style`, `architecture`, `testing`, `security`, `cloud-functions`, and `api-integration`.

@@ -55,7 +55,7 @@ Required fields per row (D16): `origin | source | license | summary | overlap | 
 ### 5. Apply (confirmed only)
 
 - Prefer **housing in existing files** over new paths.
-- Protected files (`.cursor/**`, `projectStructure.config.cjs`, `.gitignore`) → STOP unless D18 scope or explicit per-path OK.
+- Protected files (`.claude/rules/**`, `projectStructure.config.cjs`, `.gitignore`) → STOP unless D18 scope or explicit per-path OK.
 - Clear inbox after successful apply.
 
 ### 6. Handoff

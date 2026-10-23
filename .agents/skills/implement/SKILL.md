@@ -32,8 +32,8 @@ Execute a development plan phase by phase. Use `DEVELOPMENT_PLAN.md` as the guid
 
 ### 0. Branch gate
 
-- [ ] Per `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate — verify branch before code edits; stop where the **branch gate** row says stop.
-- [ ] **CRITICAL:** If the plan touches protected files (`.husky/**`, `tsconfig*.json`, `.cursor/rules/**`, `.agents/skills/**`, etc.), **stop** and get explicit user approval before editing them. Full manifest: `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files. Exception: mechanism-rename reference updates in that section. Record consent in **Decisions made** when granted.
+- [ ] Per `.claude/rules/git-workflow.md` § Mode-aware branch gate — verify branch before code edits; stop where the **branch gate** row says stop.
+- [ ] **CRITICAL:** If the plan touches protected files (`.husky/**`, `tsconfig*.json`, `.claude/rules/**`, `.agents/skills/**`, etc.), **stop** and get explicit user approval before editing them. Full manifest: `.claude/rules/agent-behavior.md` § Protected Files. Exception: mechanism-rename reference updates in that section. Record consent in **Decisions made** when granted.
 
 ### 1. Load plan
 
@@ -55,7 +55,7 @@ Execute a development plan phase by phase. Use `DEVELOPMENT_PLAN.md` as the guid
 For each phase **in order** (one phase at a time unless the plan explicitly allows parallel work):
 
 1. **Read** the phase: Goal, Steps, Gate.
-2. **Execute** the steps; match the layer and the folder in `.cursor/rules/architecture/RULE.mdc` and `ARCHITECTURE.md`. Do not copy a neighbor's feature prefix onto a shared mechanism. **New or copied identifiers** (function, hook, component, type, file, feature folder): `.agents/skills/name-the-mechanism/SKILL.md`.
+2. **Execute** the steps; match the layer and the folder in `.claude/rules/architecture.md` and `ARCHITECTURE.md`. Do not copy a neighbor's feature prefix onto a shared mechanism. **New or copied identifiers** (function, hook, component, type, file, feature folder): `.agents/skills/name-the-mechanism/SKILL.md`.
 3. **Run** the gate (see below). It must pass before continuing.
 4. **Update** `DEVELOPMENT_PLAN.md`:
    - **Phase overview:** set this phase’s status to `Done` or `✅` (use the wording/style already used in the table).
@@ -79,7 +79,7 @@ For each phase **in order** (one phase at a time unless the plan explicitly allo
 
 ## Rules reference (follow while coding)
 
-See [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md).
+See [`documentation/DOC_RULES_INDEX.md`](../../../documentation/DOC_RULES_INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md).
 
 **Also:** `.dependency-cruiser.cjs` / `pnpm arch:check` for layer violations; `documentation/DOC_TANSTACK_QUERY.md` when changing server state or queries.
 
@@ -147,7 +147,7 @@ If something is not covered by the plan:
 
 ## Documentation
 
-If the plan requires doc updates (e.g. `src/features/<feature>/README.md`, `ARCHITECTURE.md`), do them in the phase that introduces the behavior. Follow the plan and `.cursor/rules/file-placement/RULE.mdc`.
+If the plan requires doc updates (e.g. `src/features/<feature>/README.md`, `ARCHITECTURE.md`), do them in the phase that introduces the behavior. Follow the plan and `.claude/rules/file-placement.md`.
 
 ---
 

@@ -8,7 +8,7 @@ Deploy this Vite + React SPA to **Cloudflare Workers** with static assets, using
 
 | System | Responsibility |
 |--------|----------------|
-| **GitHub (this repo)** | Source + `wrangler.jsonc`. `ci.yml` runs type-check / lint / tests / build on every PR + push to `main` and `develop`. Rulesets depend on git-workflow mode (`src/config/git-workflow.json`) — see ruleset table below. **No deploy workflow. No `CLOUDFLARE_API_TOKEN` secret.** Production per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **production** (C: merging the PR; A/B: Promote workflow fast-forwards `main` to `develop`). |
+| **GitHub (this repo)** | Source + `wrangler.jsonc`. `ci.yml` runs type-check / lint / tests / build on every PR + push to `main` and `develop`. Rulesets depend on git-workflow mode (`src/config/git-workflow.json`) — see ruleset table below. **No deploy workflow. No `CLOUDFLARE_API_TOKEN` secret.** Production per `.claude/rules/git-workflow.md` § Mode behavior table → **production** (C: merging the PR; A/B: Promote workflow fast-forwards `main` to `develop`). |
 | **Cloudflare Workers Builds** | Builds and deploys on push. `main` → production; every other branch → its own preview (Model C relies on these per-PR previews; A/B also use `develop` as the stable staging preview). Account, build command, and `VITE_*`/`CLOUDFLARE_ACCOUNT_ID` env live in the dashboard connection. |
 | **Supabase** | Two projects: **production** (`main` build) and **staging** (every non-production branch build/preview). Previews never read or write production data; Edge Functions deploy to staging first. Auth URLs for each project include its deployed origin(s). See § Staging backend. |
 
@@ -16,7 +16,7 @@ Push → Cloudflare builds & deploys. GitHub blocks bad merges. There is no GitH
 
 ## Agent one-shot brief (fork setup)
 
-For coding agents completing the **"Put your app online (Cloudflare hosting)"** task from `src/config/app-tasks.json`. Run it after the user's Supabase env vars exist. Use `.agents/skills/quick-piv/SKILL.md` for the change, or `plan` + `implement` if rulesets/dashboard need research. Branch model: read `src/config/git-workflow.json`; apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate. The **user** confirms success — do not claim done without their test.
+For coding agents completing the **"Put your app online (Cloudflare hosting)"** task from `src/config/app-tasks.json`. Run it after the user's Supabase env vars exist. Use `.agents/skills/quick-piv/SKILL.md` for the change, or `plan` + `implement` if rulesets/dashboard need research. Branch model: read `src/config/git-workflow.json`; apply `.claude/rules/git-workflow.md` § Mode-aware branch gate. The **user** confirms success — do not claim done without their test.
 
 **Target:** GitHub = CI gate only (`ci.yml` on every PR + push to `main` and `develop`; rulesets per mode table below; **no** deploy workflow; **no** `CLOUDFLARE_API_TOKEN` secret). Cloudflare Workers Builds = sole deploy path (`main` → production; per-branch previews — required for Model C, optional in A; `develop` → stable staging preview in A/B). Same Supabase project for preview and production.
 
@@ -32,7 +32,7 @@ For coding agents completing the **"Put your app online (Cloudflare hosting)"** 
 **Implement (fork commits):**
 
 1. `wrangler.jsonc` — set `name`; `compatibility_date` today; `workers_dev: true`; `preview_urls: true`; `assets.directory: "./dist"`; `assets.not_found_handling: "single-page-application"`; add `account_id`; add `routes: [{ "pattern": "<domain>", "custom_domain": true }]` only when using a custom domain. Do **not** set `pages_build_output_dir`. Remove a `public/_redirects` SPA rule if present (conflicts with `not_found_handling` → `Infinite loop detected`).
-2. GitHub — delete any `deploy-cloudflare-*.yml`; keep `ci.yml` with `main` + `develop` triggers. Configure rulesets per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table (rows **`main` ruleset** / **`develop` ruleset**); summary:
+2. GitHub — delete any `deploy-cloudflare-*.yml`; keep `ci.yml` with `main` + `develop` triggers. Configure rulesets per `.claude/rules/git-workflow.md` § Mode behavior table (rows **`main` ruleset** / **`develop` ruleset**); summary:
 
 | Branch / rule | Model A (`model-a`) | Model B (`model-b`) | Model C (`model-c`, default) |
 |---------------|---------------------|---------------------|------------------------------|
@@ -176,7 +176,7 @@ After validating production on Workers, delete the old Pages project (dashboard 
 | Routes 404 in production | Confirm `not_found_handling: "single-page-application"` |
 | Empty app / missing config in production | `VITE_*` not set as Workers Builds **build** variables |
 
-**Agents:** after changing Wrangler/Cloudflare setup, keep `.wrangler/` in the tracked `.gitignore` (the structure validator skips git-ignored paths — `.cursor/rules/file-placement/RULE.mdc` § Tooling artifacts), and whitelist new root files in `projectStructure.config.cjs`.
+**Agents:** after changing Wrangler/Cloudflare setup, keep `.wrangler/` in the tracked `.gitignore` (the structure validator skips git-ignored paths — `.claude/rules/file-placement.md` § Tooling artifacts), and whitelist new root files in `projectStructure.config.cjs`.
 
 ## Related docs
 

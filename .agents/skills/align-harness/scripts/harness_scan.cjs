@@ -21,7 +21,8 @@ const FRONTMATTER_REGEX = /^---\r?\n([\s\S]*?)\r?\n---/;
  * pairs: a single stray backtick anywhere in a file skews every later pair
  * and silently hides real refs.
  */
-const PATH_TOKEN_REGEX = /(?:\.cursor|\.agents|documentation|src)\/[A-Za-z0-9._<>[\]{}*@/-]+/g;
+const PATH_TOKEN_REGEX =
+  /(?:\.cursor|\.claude|\.agents|documentation|src)\/[A-Za-z0-9._<>[\]{}*@/-]+/g;
 const RULE_SHORTHAND_REGEX = /\b[a-z0-9-]+\/RULE\.mdc\b/gi;
 const RULE_SHORTHAND_EXACT = /^[a-z0-9-]+\/RULE\.mdc$/i;
 
@@ -108,20 +109,12 @@ function loadManifest(manifestPath) {
   return out;
 }
 
+/** Claude Code rule: loads at every launch unless its frontmatter scopes it with `paths:`. */
 function parseFrontmatter(filePath) {
   const content = fs.readFileSync(filePath, "utf8");
   const match = content.match(FRONTMATTER_REGEX);
-  if (!match) {
-    return { ok: false, error: "missing frontmatter", alwaysApply: null };
-  }
-  const body = match[1];
-  const always = body.match(/alwaysApply:\s*(true|false)/i);
-  const desc = body.match(/description:\s*["']?([^"'\n]+)["']?/);
-  return {
-    ok: true,
-    alwaysApply: always ? always[1].toLowerCase() === "true" : null,
-    description: desc ? desc[1].trim() : null,
-  };
+  const scoped = Boolean(match && /^paths:/m.test(match[1]));
+  return { ok: true, alwaysOn: !scoped };
 }
 
 function lineCount(filePath) {
@@ -129,24 +122,17 @@ function lineCount(filePath) {
 }
 
 function collectRuleFiles() {
-  const rulesDir = path.join(ROOT, ".cursor", "rules");
-  const files = [];
+  const rulesDir = path.join(ROOT, ".claude", "rules");
   if (!fs.existsSync(rulesDir)) {
-    return files;
+    return [];
   }
-  for (const entry of fs.readdirSync(rulesDir, { withFileTypes: true })) {
-    if (!entry.isDirectory()) {
-      continue;
-    }
-    const mdc = path.join(rulesDir, entry.name, "RULE.mdc");
-    if (fs.existsSync(mdc)) {
-      files.push(mdc);
-    }
-  }
-  return files;
+  return fs
+    .readdirSync(rulesDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => path.join(rulesDir, entry.name));
 }
 
-const REPO_PREFIXES = [".cursor/", ".agents/", "documentation/", "src/"];
+const REPO_PREFIXES = [".cursor/", ".claude/", ".agents/", "documentation/", "src/"];
 const REJECT_PREFIXES = ["http://", "https://", ...NON_REPO_PREFIXES];
 
 function looksLikeRepoPath(value) {
@@ -168,6 +154,7 @@ function resolveRef(ref, sourceFile) {
   }
   if (
     normalized.startsWith(".cursor/") ||
+    normalized.startsWith(".claude/") ||
     normalized.startsWith(".agents/") ||
     normalized.startsWith("documentation/") ||
     normalized.startsWith("src/")
@@ -270,17 +257,13 @@ function main() {
   const ruleFacts = [];
   let alwaysOnLines = 0;
   let alwaysOnBytes = 0;
-  const frontmatterIssues = [];
 
   for (const rulePath of ruleFiles) {
     const rel = toPosix(path.relative(ROOT, rulePath));
     const fm = parseFrontmatter(rulePath);
     const lines = lineCount(rulePath);
     const bytes = Buffer.byteLength(fs.readFileSync(rulePath, "utf8"), "utf8");
-    if (!fm.ok) {
-      frontmatterIssues.push({ file: rel, error: fm.error });
-    }
-    if (fm.alwaysApply === true) {
+    if (fm.alwaysOn) {
       alwaysOnLines += lines;
       alwaysOnBytes += bytes;
     }
@@ -288,8 +271,7 @@ function main() {
       file: rel,
       lines,
       bytes,
-      alwaysApply: fm.alwaysApply,
-      description: fm.description,
+      alwaysOn: fm.alwaysOn,
     });
   }
 
@@ -318,7 +300,6 @@ function main() {
       budgetBytes: manifest.always_on_budget_bytes,
       overBudget: alwaysOnBytes > manifest.always_on_budget_bytes,
     },
-    frontmatterIssues,
     missingRefs,
     reachableCount: reachable.size,
     orphanCandidates: orphans.sort(),

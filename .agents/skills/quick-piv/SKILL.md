@@ -26,7 +26,7 @@ Lightweight Plan → Implement → Validate in one workflow. **Primary outcome:*
 
 ## Branch gate
 
-- [ ] Before any code edit: read `src/config/git-workflow.json`. Apply `.cursor/rules/git-workflow/RULE.mdc` § Mode-aware branch gate.
+- [ ] Before any code edit: read `src/config/git-workflow.json`. Apply `.claude/rules/git-workflow.md` § Mode-aware branch gate.
 
 ## Hard stops (M/L and gates)
 
@@ -75,8 +75,8 @@ If unclear, **ask** which branch applies.
 **IF `plan-grill-auto` is active:** skip user questions in steps 1 and 4 and the DRAFT-vision pause in the Goal line. Fill from repo + `DOC_APP_VISION.md`. If vision is `DRAFT`, log `vision-deferred` in chat and continue. Precedent diversions: pick one, one line in chat, continue. Still print the quick plan in chat before code.
 
 1. If the request is vague, or ambiguity appears during quick investigation, stop and ask 1–2 clarifying questions about the user's vision for how the app will be used. Do not choose between plausible interpretations silently.
-2. Quick investigation: search codebase; skim `.cursor/rules/INDEX.md` for applicable rules; use `documentation/DOC_TANSTACK_QUERY.md` if server state / queries are involved. If the change is a generic subsystem not obviously covered by current deps, run `.agents/skills/dont-reinvent-the-wheel/SKILL.md` (skip when bespoke / tiny).
-3. Sanity-check file placement against `.cursor/rules/file-placement/RULE.mdc` and `projectStructure.config.cjs`.
+2. Quick investigation: search codebase; skim `documentation/DOC_RULES_INDEX.md` for applicable rules; use `documentation/DOC_TANSTACK_QUERY.md` if server state / queries are involved. If the change is a generic subsystem not obviously covered by current deps, run `.agents/skills/dont-reinvent-the-wheel/SKILL.md` (skip when bespoke / tiny).
+3. Sanity-check file placement against `.claude/rules/file-placement.md` and `projectStructure.config.cjs`.
 4. Check whether the quick plan would diverge from industry standards, framework best practices, or established repo conventions. If yes, ask whether the diversion is intentional or whether to align with best practices before implementing.
 5. **Branch B:** Output the quick plan in chat (vital). **Branch A:** Optionally extend the plan document.
 6. Proceed to implementation (no separate approval wait unless the user stops you).
@@ -87,7 +87,7 @@ If unclear, **ask** which branch applies.
 
 1. **Branch A:** Run the extension (new phase/steps) or the next pending phase from the loaded plan.
 2. **Branch B:** Execute the quick plan already shown in chat.
-3. Follow `.cursor/rules/architecture/RULE.mdc`, `.cursor/rules/file-placement/RULE.mdc`, `.cursor/rules/code-style/RULE.mdc`, and `.cursor/rules/security/RULE.mdc` when relevant.
+3. Follow `.claude/rules/architecture.md`, `.claude/rules/file-placement.md`, `.claude/rules/code-style.md`, and `.claude/rules/security.md` when relevant.
 4. Run the **gate** from the quick plan (browser MCP when UI is involved; tests or manual checks as appropriate).
 5. **Branch A:** Update the plan (phase status, Notes, Decisions) as you go.
 6. Before `finish`, if this pass created a `src/features/` folder or added a UI/data vendor: run [`.agents/skills/modularity-review/SKILL.md`](../modularity-review/SKILL.md).
@@ -111,7 +111,7 @@ After implementation, run **inline tooling** only (subset of `.agents/skills/val
 
 ## Rules reference (follow during implementation)
 
-See [`.cursor/rules/INDEX.md`](../../../.cursor/rules/INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md).
+See [`documentation/DOC_RULES_INDEX.md`](../../../documentation/DOC_RULES_INDEX.md) and [`.agents/skills/plan/references/rules-registry.md`](../plan/references/rules-registry.md).
 
 **Also when applicable:** `ARCHITECTURE.md`, `documentation/DOC_TANSTACK_QUERY.md`.
 

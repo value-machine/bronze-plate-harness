@@ -11,9 +11,36 @@
  * - package.json - Scripts that run validation (validate:structure)
  * - documentation/PROJECT-STRUCTURE-VALIDATION.md - User documentation
  * - ARCHITECTURE.md - Architecture documentation
- * - .cursor/rules/file-placement/RULE.mdc - File placement rules
- * - .cursor/rules/architecture/RULE.mdc - Architecture rules
+ * - .claude/rules/file-placement.md - File placement rules
+ * - .claude/rules/architecture.md - Architecture rules
  */
+/**
+ * One agent skill folder. Shared by the source (.agents/skills/<name>/) and its generated
+ * Claude Code mirror (.claude/skills/<name>/, see agent-sync.config.json).
+ */
+const AGENT_SKILL_FOLDER = {
+  name: "*",
+  children: [
+    { name: "SKILL.md" },
+    { name: "patterns.md" },
+    { name: "AGENTS.md" },
+    { name: "README.md" },
+    { name: "metadata.json" },
+    { name: "references", children: [{ name: "*.md" }] },
+    { name: "rules", children: [{ name: "*.md" }] },
+    {
+      name: "scripts",
+      children: [
+        { name: "*.py" },
+        { name: "*.cjs" },
+        { name: "*.js" },
+        { name: "*.sh" },
+        { name: "*.mjs" },
+      ],
+    },
+  ],
+};
+
 /** @type {import('./scripts/project-structure-validator').ProjectStructureConfig} */
 module.exports = {
   structure: [
@@ -602,6 +629,7 @@ module.exports = {
       children: [
         { name: "*.js" },
         { name: "*.cjs" }, // CommonJS modules (e.g. change-classify SSOT)
+        { name: "*.mjs" }, // ES modules (e.g. vendored sync-agent-config)
         { name: "*.json" },
         { name: "*.ps1" }, // PowerShell scripts
       ],
@@ -622,15 +650,9 @@ module.exports = {
       name: ".cursor",
       children: [
         {
+          // Generated from .claude/rules by scripts/sync-agent-config.mjs — do not edit
           name: "rules",
-          children: [
-            {
-              name: "*",
-              children: [{ name: "RULE.mdc" }],
-            },
-            { name: "README.md" },
-            { name: "INDEX.md" },
-          ],
+          children: [{ name: "*.mdc" }, { name: ".generated.json" }],
         },
         {
           name: "plans",
@@ -682,46 +704,21 @@ module.exports = {
         },
         {
           name: "skills",
-          children: [
-            {
-              name: "*",
-              children: [
-                { name: "SKILL.md" },
-                { name: "patterns.md" },
-                { name: "AGENTS.md" },
-                { name: "README.md" },
-                { name: "metadata.json" },
-                {
-                  name: "references",
-                  children: [{ name: "*.md" }],
-                },
-                {
-                  name: "rules",
-                  children: [{ name: "*.md" }],
-                },
-                {
-                  name: "scripts",
-                  children: [
-                    { name: "*.py" },
-                    { name: "*.cjs" },
-                    { name: "*.js" },
-                    { name: "*.sh" },
-                    { name: "*.mjs" },
-                  ],
-                },
-              ],
-            },
-          ],
+          children: [AGENT_SKILL_FOLDER],
         },
       ],
     },
-    // Claude Code project config (thin rule pointers + settings)
+    // Claude Code project config: rules (SSOT), generated skills mirror, settings
     {
       name: ".claude",
       children: [
         {
           name: "rules",
           children: [{ name: "*.md" }],
+        },
+        {
+          name: "skills",
+          children: [{ name: ".generated.json" }, AGENT_SKILL_FOLDER],
         },
         { name: "settings.json" },
         { name: "settings.local.json" },
@@ -815,6 +812,7 @@ module.exports = {
     { name: "release-please-config.json" },
     { name: ".release-please-manifest.json" },
     { name: "skills-lock.json" },
+    { name: "agent-sync.config.json" },
     { name: "projectStructure.cache.json" },
     { name: "saml-attribute-mapping.json" },
     { name: "tsconfig.json" },

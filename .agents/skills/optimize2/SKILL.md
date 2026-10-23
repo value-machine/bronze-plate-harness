@@ -14,7 +14,7 @@ Systematically analyze code for optimization opportunities across four levels: D
 
 **Key Insight:** Fixing at the wrong level wastes effort. A complex function might need a design change (Level 1), not refactoring (Level 4). Always assess all levels before acting.
 
-**SSOT:** `eslint.config.js` complexity rules (table: `code-style/RULE.mdc` § Complexity).
+**SSOT:** `eslint.config.js` complexity rules (table: `.claude/rules/code-style.md` § Complexity).
 
 ## Workflow Overview
 
@@ -82,7 +82,7 @@ When NOT to refactor (accept complexity instead):
 
 ### Complexity Metrics
 
-Thresholds: `.cursor/rules/code-style/RULE.mdc` § Complexity (SSOT `eslint.config.js`).
+Thresholds: `.claude/rules/code-style.md` § Complexity (SSOT `eslint.config.js`).
 
 ---
 
@@ -532,7 +532,7 @@ Please choose options for each level (e.g., "1D 2D 3A 4B"):
 
 ## Phase 5: Architecture Compliance (For Refactoring)
 
-Extracted code follows `.cursor/rules/architecture/RULE.mdc` § Code placement and § Folder structure (layer choice, downward imports, `@/` alias only). Use existing folders; a new folder needs the whitelist in `projectStructure.config.cjs` (protected — ask first).
+Extracted code follows `.claude/rules/architecture.md` § Code placement and § Folder structure (layer choice, downward imports, `@/` alias only). Use existing folders; a new folder needs the whitelist in `projectStructure.config.cjs` (protected — ask first).
 
 ### Architecture Checklist
 

@@ -29,7 +29,7 @@ Push previously finished work to remote. This command is push-only.
 
 ## Push Safety Flow
 
-1. Branch/push targets: `.cursor/rules/git-workflow/RULE.mdc` § Commit and Push Workflow.
+1. Branch/push targets: `.claude/rules/git-workflow.md` § Commit and Push Workflow.
 2. Verify clean working tree.
 3. Verify commits exist to push.
 4. Verify remote freshness before push:
@@ -37,14 +37,14 @@ Push previously finished work to remote. This command is push-only.
    - Check whether local branch is behind its remote counterpart
    - If behind, STOP and sync first (rebase or merge) before pushing
 5. **App-specific changes**: ensure remote points to app repo, not the plate-harness template repo
-6. **Fast local lint parity (mandatory, cheap — do not skip):** run the exact CI command `pnpm lint` (full repo, not staged-only). Pre-commit's `lint-staged` only lints files matched by its globs with their configured tasks — some file types (e.g. config `.cjs` files) may be routed through a non-lint task and never see `eslint --fix`, so a clean pre-commit does **not** guarantee `pnpm lint` is clean. If it fails, fix (protected files still need approval per `agent-behavior/RULE.mdc`) or stop — do not tell the user push succeeded/report the commit as done until this passes.
+6. **Fast local lint parity (mandatory, cheap — do not skip):** run the exact CI command `pnpm lint` (full repo, not staged-only). Pre-commit's `lint-staged` only lints files matched by its globs with their configured tasks — some file types (e.g. config `.cjs` files) may be routed through a non-lint task and never see `eslint --fix`, so a clean pre-commit does **not** guarantee `pnpm lint` is clean. If it fails, fix (protected files still need approval per `.claude/rules/agent-behavior.md`) or stop — do not tell the user push succeeded/report the commit as done until this passes.
 7. Ask user for explicit confirmation: "Ready to push these already-committed changes?"
 8. Execute push only after confirmation.
 
 ## Merge gate (tests)
 
 - **Pre-push does not run Vitest or type-check** — see `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Local git.
-- **Authoritative merge gate:** green CI `test` job where work lands — `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands** (full `pnpm test:classify`, `pnpm test:run`, `pnpm type-check`).
+- **Authoritative merge gate:** green CI `test` job where work lands — `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** (full `pnpm test:classify`, `pnpm test:run`, `pnpm type-check`).
 - Local pre-commit may run **related** tests only — related green is **not** sufficient to skip waiting for CI.
 - **Lint is the exception:** unlike the full test suite, `pnpm lint` is cheap (seconds) — run it locally before push (§ Push Safety Flow step 6) rather than deferring to CI. Deferring the *expensive* suite to CI does not license deferring the *cheap* one; conflating the two caused a push that reported success but broke CI lint.
 
@@ -62,7 +62,7 @@ Push previously finished work to remote. This command is push-only.
 When the user asks to **land on `main`**, **promote**, or **release to production** after commits exist on `develop`:
 
 1. **Do not** `git push origin main`, open a `develop` → `main` PR, or squash-merge.
-2. Run **pre-promote check** and, if needed, **ancestor failure reconcile** — SSOT `.cursor/rules/git-workflow/RULE.mdc` § Promote to production.
+2. Run **pre-promote check** and, if needed, **ancestor failure reconcile** — SSOT `.claude/rules/git-workflow.md` § Promote to production.
 3. `gh workflow run promote-to-production.yml`; report the run URL; do not `gh run watch`.
 
 If promote already failed with `main is not an ancestor of develop`, reconcile on `develop` per that section before re-running the workflow.
@@ -74,10 +74,10 @@ You have explicit access to use console commands for this task.
 | Not `push` | Use instead |
 |------------|-------------|
 | Stage, commit, version, changelog | `finish` |
-| First push of a new branch | Per `.cursor/rules/git-workflow/RULE.mdc` § Commit and Push Workflow |
+| First push of a new branch | Per `.claude/rules/git-workflow.md` § Commit and Push Workflow |
 
-**Next:** post-push per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands** and **CI watcher**:
+**Next:** post-push per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** and **CI watcher**:
 
-- **Model A:** create/update the PR per `.cursor/rules/git-workflow/RULE.mdc` § Pull Requests (`gh pr create --base develop`, Summary + Test plan body, verify `baseRefName`, never bare `pull/new/<branch>`), end the turn with the markdown PR link (step 5), then babysit checks — Cursor: `~/.cursor/skills-cursor/babysit/SKILL.md`; Claude Code: the desktop app's PR monitor. Skip only if the user waived CI wait in **Decisions made**.
+- **Model A:** create/update the PR per `.claude/rules/git-workflow.md` § Pull Requests (`gh pr create --base develop`, Summary + Test plan body, verify `baseRefName`, never bare `pull/new/<branch>`), end the turn with the markdown PR link (step 5), then babysit checks — Cursor: `~/.cursor/skills-cursor/babysit/SKILL.md`; Claude Code: the desktop app's PR monitor. Skip only if the user waived CI wait in **Decisions made**.
 - **Model B:** report the commit URL and stop.
 - **Model C:** open the PR to `main` the Claude Code default way (`gh pr create`, base = default branch) with a conventional `type: Subject` title; the desktop app's PR monitor watches CI. The user merges.

@@ -98,7 +98,7 @@ onError: (_err, _vars, context) => {
 
 ## Plain optimistic + server-canonical response (playbook)
 
-**SSOT** for mutation UX (summary + trigger: `.cursor/rules/architecture/RULE.mdc` § Plain optimistic + server-canonical response). Goal: one optimistic render, then one committed render that matches persisted data — no third render from a refetch that disagrees with the patch. Same model in other libraries: Apollo `optimisticResponse`, RTK Query `updateQueryData`, SWR `mutate` with `optimisticData` + `populateCache`.
+**SSOT** for mutation UX (summary + trigger: `.claude/rules/architecture.md` § Plain optimistic + server-canonical response). Goal: one optimistic render, then one committed render that matches persisted data — no third render from a refetch that disagrees with the patch. Same model in other libraries: Apollo `optimisticResponse`, RTK Query `updateQueryData`, SWR `mutate` with `optimisticData` + `populateCache`.
 
 ### Playbook steps (in order)
 
@@ -283,7 +283,7 @@ export const useProjectDetail = (id: string | null) => {
 
 ## Plain optimistic + server-canonical response
 
-**SSOT** for mutation UX and cache merge vs. invalidation on success. Trigger line lives in `.cursor/rules/architecture/RULE.mdc` § Plain optimistic + server-canonical response.
+**SSOT** for mutation UX and cache merge vs. invalidation on success. Trigger line lives in `.claude/rules/architecture.md` § Plain optimistic + server-canonical response.
 
 **Default pattern** for mutations that must feel instant without stutters, flashes, or snapbacks: one optimistic render, then one committed render that matches persisted data. Avoid a third render from refetch that disagrees with the optimistic patch.
 

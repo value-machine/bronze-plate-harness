@@ -80,7 +80,7 @@
       "Edit(./.prettierrc.json)",
       "Edit(./.editorconfig)",
       "Edit(./tsconfig*.json)",
-      "Edit(./.cursor/rules/**)",
+      "Edit(./.claude/rules/**)",
       "Edit(./.agents/skills/**)",
       "Edit(./.husky/**)",
       "Edit(./.github/workflows/**)",

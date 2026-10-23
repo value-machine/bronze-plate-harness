@@ -5,7 +5,7 @@
  * Scope:
  * - documentation markdown files
  * - src/features README and docs markdown files
- * - .cursor/rules and .cursor/skills markdown files
+ * - .claude/rules markdown files (generated .cursor/rules/*.mdc and .claude/skills mirrors are skipped)
  * - .agents/skills markdown files
  *
  * Checks only relative links:
@@ -27,8 +27,7 @@ const ROOT = process.cwd();
 const SEARCH_DIRS = [
   "documentation",
   path.join("src", "features"),
-  path.join(".cursor", "rules"),
-  path.join(".cursor", "skills"),
+  path.join(".claude", "rules"),
   path.join(".agents", "skills"),
 ];
 
@@ -72,10 +71,7 @@ function collectMarkdownFiles(dirPath, output) {
     if (!entry.isFile()) {
       continue;
     }
-    if (
-      entry.name.endsWith(MARKDOWN_EXT) ||
-      (entry.name.endsWith(".mdc") && toPosix(fullPath).includes("/.cursor/rules/"))
-    ) {
+    if (entry.name.endsWith(MARKDOWN_EXT)) {
       output.push(fullPath);
     }
   }

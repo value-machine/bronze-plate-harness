@@ -16,7 +16,7 @@ description: >-
 
 Discover, classify, and prioritize opportunities to unify repeated code patterns **around a named Target**. This skill owns the **discovery** phase - systematically finding what is duplicated - and produces an actionable consolidation plan. Default outcome is an **audit report** (Phase 5). Execute (Phase 6) only after the user chooses candidates.
 
-**Scope:** **Broad sweep** of `src/` for copies; **focus** = Target ∪ 1-hop import neighborhood (not whole `src/` as the Target unless asked). For per-hotspot optimization use `optimize2`. For single-feature simplification use `challenge`. For **semantic placement / wrong-layer repair** (after tooling is green), use this skill's **Semantic placement mode** below. For **proactive workaround detection during implementation**, use [`layer-consistency-check`](../layer-consistency-check/SKILL.md) (always-on via `architecture/RULE.mdc` § Layer consistency).
+**Scope:** **Broad sweep** of `src/` for copies; **focus** = Target ∪ 1-hop import neighborhood (not whole `src/` as the Target unless asked). For per-hotspot optimization use `optimize2`. For single-feature simplification use `challenge`. For **semantic placement / wrong-layer repair** (after tooling is green), use this skill's **Semantic placement mode** below. For **proactive workaround detection during implementation**, use [`layer-consistency-check`](../layer-consistency-check/SKILL.md) (always-on via `.claude/rules/architecture.md` § Layer consistency).
 
 ## Modes
 
@@ -320,7 +320,7 @@ STRONG CANDIDATES (Score ≥12)
     - Standards alignment: [Aligned / confirmed intentional diversion / should realign]
 
     Architecture compliance:
-    - Layer: [utils/services/hooks/components per architecture/RULE.mdc]
+    - Layer: [utils/services/hooks/components per .claude/rules/architecture.md]
     - Path alias: [the @/ import path]
 
 ---------------------------------------------------------------
@@ -357,11 +357,11 @@ Skip this phase on audit-only invocations. For each **user-approved** consolidat
 
 #### 6.1 Pre-flight
 
-- [ ] Verify target location against `architecture/RULE.mdc` layer rules
+- [ ] Verify target location against `.claude/rules/architecture.md` layer rules
 - [ ] Check `projectStructure.config.cjs` whitelist for target folder
 - [ ] Verify no circular dependencies would be created
 - [ ] All imports will use path aliases (`@/` prefix)
-- [ ] If any protected file must be changed (`.cursor/**`, `projectStructure.config.cjs`, lint/ts config, etc.), stop and get explicit user approval first. Exception: mechanism-rename reference updates in `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files.
+- [ ] If any protected file must be changed (`.claude/rules/**`, `projectStructure.config.cjs`, lint/ts config, etc.), stop and get explicit user approval first. Exception: mechanism-rename reference updates in `.claude/rules/agent-behavior.md` § Protected Files.
 
 #### 6.2 Implementation
 

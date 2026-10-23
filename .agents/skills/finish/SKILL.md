@@ -74,7 +74,7 @@ Call **AskQuestion** once with **exactly** these four options (you may shorten l
 
 ## Version and changelog gate
 
-**Applies when** `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **version source** says `finish` (Model A/B). **Model C:** skip this whole section — no `package.json` / `CHANGELOG.md` edits and no `[VERSION]` prefix; release-please builds the release from the PR title.
+**Applies when** `.claude/rules/git-workflow.md` § Mode behavior table → **version source** says `finish` (Model A/B). **Model C:** skip this whole section — no `package.json` / `CHANGELOG.md` edits and no `[VERSION]` prefix; release-please builds the release from the PR title.
 
 Before editing `package.json` or `CHANGELOG.md`, classify staged changes per **`scripts/change-classify.cjs`** (matrix SSOT: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Local git).
 
@@ -104,11 +104,11 @@ When skipping version/changelog: commit message uses `type: Subject` **without**
   - Never stage all changes automatically when unrelated unstaged work exists without explicit user confirmation.
 - commit with proper message format (see commit message standards below)
 - fix any issues found by pre-commit hook
-- **CRITICAL:** If fixing requires modifying protected files, STOP and ASK the user first. Full manifest: `.cursor/rules/agent-behavior/RULE.mdc` § Protected Files. Exception: mechanism-rename reference updates in that section. NEVER modify other protected files without explicit user approval.
+- **CRITICAL:** If fixing requires modifying protected files, STOP and ASK the user first. Full manifest: `.claude/rules/agent-behavior.md` § Protected Files. Exception: mechanism-rename reference updates in that section. NEVER modify other protected files without explicit user approval.
 - check if `ARCHITECTURE.md` needs update
 - do not create new deep docs during finish unless user explicitly requests it
 - **Do NOT push in this command.** `finish` is local-only and ends at a successful commit.
-- **After a successful commit:** Tell the user the commit succeeded and offer **`.agents/skills/push/SKILL.md`** — do **not** invoke `push` in the same turn unless the user explicitly asks to push. Push requires its own confirmation (see `push` skill and `.cursor/rules/git-workflow/RULE.mdc`).
+- **After a successful commit:** Tell the user the commit succeeded and offer **`.agents/skills/push/SKILL.md`** — do **not** invoke `push` in the same turn unless the user explicitly asks to push. Push requires its own confirmation (see `push` skill and `.claude/rules/git-workflow.md`).
 
 ## Ready to commit? (required)
 
@@ -164,7 +164,7 @@ Closes #123
 After `git add`, expect hook behavior per **`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`** § Local git (classifier SSOT: `scripts/change-classify.cjs`). Do not duplicate the matrix here.
 
 - **Preview hook test selection:** `pnpm test:staged` (dry-run — does not run tests). **Run hook tests without committing:** `pnpm test:staged:live`. Classifier reads staged files only — `git add` before preview.
-- **CI / merge parity:** `pnpm test:classify && pnpm test:run`. Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands** / **CI watcher**).
+- **CI / merge parity:** `pnpm test:classify && pnpm test:run`. Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** / **CI watcher**).
 - **Model B concurrency:** Prefer one active agent per checkout on `develop` (`src/config/git-workflow.json`). Shared-branch contention is higher than feature branches — treat `finish` smoke signals seriously.
 - **Force full locally:** `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (PowerShell: `$env:PRECOMMIT_TEST_FULL=1; pnpm test:staged`).
 - Do **not** use `--no-verify` to avoid slow hooks on app-code commits; fix tests or split commits (docs/migrations separate from `src/`).
@@ -172,7 +172,7 @@ After `git add`, expect hook behavior per **`documentation/DOC_AGENT_WORKFLOW_LA
 
 ## Production promotion (separate from finish)
 
-Per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **production** (A/B: § Promote to production, never a squash PR to `main`; C: the user merges the PR). Not part of `finish`.
+Per `.claude/rules/git-workflow.md` § Mode behavior table → **production** (A/B: § Promote to production, never a squash PR to `main`; C: the user merges the PR). Not part of `finish`.
 
 ## User test handoff (mandatory before closure)
 
@@ -193,7 +193,7 @@ After commit (and after push/PR when applicable), output a **handoff card** for 
 - **CI:** <pending | green on PR (markdown link per git-workflow § Pull Requests step 5) | not pushed yet>
 ```
 
-**Report faithfully** (`.cursor/rules/agent-behavior/RULE.mdc` § Success Validation): say what was verified and what still needs the user's test in the app; the card above lists exactly that.
+**Report faithfully** (`.claude/rules/agent-behavior.md` § Success Validation): say what was verified and what still needs the user's test in the app; the card above lists exactly that.
 
 Squash merge / production: point to § Production promotion above; the user tests on **staging** (table → **staging**: `develop` for A/B, the PR preview for C) before production. For preview URL discovery after hosting work, see `documentation/DOC_CLOUDFLARE_WORKERS.md`.
 

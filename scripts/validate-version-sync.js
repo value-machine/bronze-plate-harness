@@ -2,7 +2,7 @@
 /**
  * Validates that package.json version matches the latest release entry in CHANGELOG.md.
  * Used by CI to enforce version/changelog consistency. Works for both version sources
- * (git-workflow/RULE.mdc § Mode behavior table): `finish` headings (`## [x.y.z] - date`)
+ * (.claude/rules/git-workflow.md § Mode behavior table): `finish` headings (`## [x.y.z] - date`)
  * and release-please headings (`## [x.y.z](compare-url) (date)`). `## [Unreleased]` is skipped.
  *
  * Exit 0 if consistent, 1 if mismatch.

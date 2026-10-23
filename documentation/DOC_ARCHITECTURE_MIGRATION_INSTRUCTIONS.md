@@ -238,10 +238,10 @@ module.exports = {
 ## Step 9: Copy Documentation Files (Optional but Recommended)
 
 ### 9.1 Architecture Rules Documentation
-**Source:** `[PROJECT_ROOT]plate-harness/.cursor/rules/architecture/RULE.mdc`  
-**Destination:** `[PROJECT_ROOT][TARGET_REPO_NAME]/.cursor/rules/architecture/RULE.mdc`
+**Source:** `[PROJECT_ROOT]plate-harness/.claude/rules/architecture.md`  
+**Destination:** `[PROJECT_ROOT][TARGET_REPO_NAME]/.claude/rules/architecture.md`
 
-**Action:** Create `.cursor/rules/architecture/` directory if it doesn't exist.
+**Action:** Create `.claude/rules/architecture.md` directory if it doesn't exist.
 
 ### 9.2 Architecture Guide
 **Source:** `[PROJECT_ROOT]plate-harness/ARCHITECTURE.md`  
@@ -250,8 +250,8 @@ module.exports = {
 **Action:** Keep `ARCHITECTURE.md` in project root (required by architecture rules).
 
 ### 9.3 Complexity Reduction Guide (Optional)
-**Source:** `[PROJECT_ROOT]plate-harness/.cursor/rules/architecture/RULE.mdc` (complexity section)  
-**Destination:** `[PROJECT_ROOT][TARGET_REPO_NAME]/.cursor/rules/architecture/RULE.mdc`
+**Source:** `[PROJECT_ROOT]plate-harness/.claude/rules/architecture.md` (complexity section)  
+**Destination:** `[PROJECT_ROOT][TARGET_REPO_NAME]/.claude/rules/architecture.md`
 
 ---
 
@@ -394,7 +394,7 @@ Before considering migration complete:
 ├── .dependency-cruiser.cjs
 ├── projectStructure.config.cjs
 ├── tsconfig.json
-├── .cursor/rules/architecture/RULE.mdc
+├── .claude/rules/architecture.md
 └── ARCHITECTURE.md
 ```
 
@@ -406,7 +406,7 @@ Before considering migration complete:
 ├── projectStructure.config.cjs     ← Copy & customize
 ├── tsconfig.json                   ← Merge path aliases
 ├── package.json                    ← Add scripts & deps
-├── .cursor/rules/architecture/RULE.mdc  ← Copy (optional)
+├── .claude/rules/architecture.md  ← Copy (optional)
 └── ARCHITECTURE.md                 ← Copy (optional)
 ```
 
@@ -428,7 +428,7 @@ When executing this migration:
 ## Support
 
 If issues arise during migration:
-1. Check `ARCHITECTURE.md` and `.cursor/rules/architecture/RULE.mdc` for detailed explanations
+1. Check `ARCHITECTURE.md` and `.claude/rules/architecture.md` for detailed explanations
 2. Review source repository's working configuration
 3. Verify all paths match target repository structure
 4. Ensure all dependencies are installed correctly

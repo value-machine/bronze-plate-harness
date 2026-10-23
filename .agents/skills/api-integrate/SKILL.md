@@ -96,5 +96,5 @@ Add a new vendor by adding a new `references/vendor-<slug>.md` file — do not g
 
 - [`.agents/skills/plan/SKILL.md`](../plan/SKILL.md) § Optional: Foundation validation — POC gate after this skill's research is done
 - [`.agents/skills/router/references/tiebreaks.md`](../router/references/tiebreaks.md) § External API research
-- [`.cursor/rules/api-integration/RULE.mdc`](../../../.cursor/rules/api-integration/RULE.mdc) — globs-scoped principles this skill implements (`alwaysApply: false`)
+- [`.claude/rules/api-integration.md`](../../../.claude/rules/api-integration.md) — globs-scoped principles this skill implements (`alwaysApply: false`)
 - `README.md` — env vars for currently configured vendors (Supabase)

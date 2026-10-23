@@ -103,7 +103,7 @@ After a **successful** commit:
 | Stash other threads’ work and restore after push | *excluded* — use plain `finish` Option 3 if needed |
 | Auto-poll or wait for other threads | *excluded* — user pauses them |
 | Replace `finish` or `push` rules | *excluded* — delegates SSOT |
-| Open PRs or promote to production | *deferred* — after push, follow `push` § Next (per `.cursor/rules/git-workflow/RULE.mdc` § Mode behavior table → **how work lands**) |
+| Open PRs or promote to production | *deferred* — after push, follow `push` § Next (per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands**) |
 
 ## Boundaries
 
