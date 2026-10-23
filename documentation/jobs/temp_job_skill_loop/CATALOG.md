@@ -178,7 +178,7 @@ Called by loop stages, never the owner's entry point (D1).
 | Name | Replaces | Description (draft) | Called by | Status |
 |---|---|---|---|---|
 | `spec-load-context` | `prime` | Loads repo structure, rules, git mode and active jobs for a new or unfamiliar session. | `loop-route-next`, `loop-refine-request` | ✅ |
-| `spec-debug-runtime` | `debug`, `hypothesis` | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | refine (reproduce), build, ship | ❓ C7 |
+| `spec-debug-runtime` | `debug`, `hypothesis`, `debugging` rule strategy (D34) | Scientific debugging with pre-registered hypotheses for runtime bugs, failing tests and red CI. | refine (reproduce), build, ship | ✅ |
 | `spec-deepen-modules` | MILA `improve-codebase-architecture` (D22); later `consolidate`, `optimize2` design lens | Finds shallow, badly named or misplaced modules on the change's path and proposes the cleanup. | `loop-plan-change` | ❓ C8 |
 | `spec-reuse-package` | `dont-reinvent-the-wheel` | Checks for a maintained package or known pattern before custom generic code; a new dependency goes to the owner (D7). | plan, build | ✅ |
 | `spec-research-api` | `api-integrate` | Researches an external API or vendor (MCP first, schema then sample) before integration code. | plan | ✅ |
@@ -215,8 +215,6 @@ Harness maintenance, onboarding and overlays — outside the product loop.
 
 | Cluster | Question |
 |---|---|
-| C7 | Does `spec-debug-runtime` also absorb the process half of the `debugging` rule? |
 | C8 | Is the "make better" group one specialist with lenses (`spec-deepen-modules`) or several; does `spec-score-component` survive? |
-| C10 | Which process parts leave the rules (`workflow`, `agent-behavior`, `git-workflow`, `debugging`) and which loop skill takes them? |
 | C11 | Do meta skills keep owner entry points (they sit outside the product loop), and do `align-harness` + `tighten-harness` merge? |
 | C12 | Covered by `loop-route-next` above — confirm. |
