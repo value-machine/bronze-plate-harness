@@ -1,10 +1,5 @@
 [
   {
-    "title": "Run the loop skill evals against the v0.42.0 baseline",
-    "description": "Deferred from the skill-loop rework (skill-loop D59) to save usage. Run the eval cases under .agents/skills/router/evals/ and .agents/skills/loop-*/evals/ (15 cases), once with the new skill and once with the v0.42.0 skills it replaced (baseline = commit a920c0d), using the skill-creator workflow or `claude plugin eval`. Report pass rates per skill, and fix the skills where the new version loses behavior. Context: documentation/DOC_DECISION_LOG.md § skill-loop.",
-    "status": "in-progress"
-  },
-  {
     "title": "Configure Supabase",
     "description": "Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env (see README Quick Start). Enable auth providers in the Supabase dashboard. For Google OAuth, follow documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. Verify auth via ProfileMenu sign-in once configured. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Supabase).",
     "status": "to-do"
