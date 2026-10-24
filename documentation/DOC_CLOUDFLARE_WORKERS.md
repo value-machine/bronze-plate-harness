@@ -112,7 +112,7 @@ Either way:
 2. **Schema parity:** build every environment only from `supabase/migrations/`, never by clicking in a dashboard. Compare each environment's applied-migration list with the files, and apply with the Supabase connector or the Supabase CLI (owner's choice; `supabase/README.md`).
 3. **Order for a PR:** apply its migrations and deploy its Edge Functions to staging while the PR is open, test on the preview URL, merge, then apply the same migrations and functions to production. Keep migrations backwards-compatible (add before you remove): the free plan has no point-in-time recovery.
 4. **Data:** staging holds fake or seed data only. Do not copy production rows into it.
-5. **Auth:** add the preview wildcard to the staging environment's redirect URLs (and use staging Google OAuth origins or a staging client); production keeps only its own origin.
+5. **Auth:** set each environment's Site URL to its own primary origin, add the preview wildcard to the staging environment's redirect URLs (and use staging Google OAuth origins or a staging client); production keeps only its own origin.
 
 **Free-plan caveats:** inactive free projects pause after about a week (restore it before testing a preview). All open PRs share one staging database, so PRs with conflicting migrations collide; serialize them.
 
