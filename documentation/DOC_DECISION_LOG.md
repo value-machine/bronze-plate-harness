@@ -6,6 +6,15 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## loop-evals — claude/peaceful-ride-b7sicx
+
+Runnable eval fixtures (`place-files.sh`), runner (`meta-write-skill/scripts/run-evals.sh`, `eval-scaffold.sh`, `eval-packs.py`), and 15-case comparison (`a920c0d` v0.42.0 baseline vs `559cd60` new loop skills, `composer-2.5`).
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Grading traces vs workspace | closed | Grade from full trace + workspace diff (`eval-packs.py` or subagent transcript + git state), not a truncated judge summary | loop-evals | `claude plugin eval` built-in judge sees a truncated trace; `eval-packs.py` builds full grading packs. |
+| D2 | Baseline vs new-skill pass rates | closed | New loop skills pass 45/45 graders (100% across all 15 cases); v0.42.0 baseline passes 39/45 (86.7%, 12/15 cases fully green) | loop-evals | Baseline misses: `loop-plan/m-plan-includes-foundation-cleanup` (stops for user before `review-dev-plan`), `loop-plan/xs-plan-writes-failing-test-first` (writes `DEVELOPMENT_PLAN.md` instead of `BRIEF.md` § Plan and defers red test), `loop-verdict/handoff-card-lists-decisions-and-rule-changes` (emits If SUCCESS/FAILURE prose without a single Pass/Change/Drop question). Zero regressions in the new skills. |
+
 ## skill-loop — claude/peaceful-ride-b7sicx
 
 Rework of v0.42.0's 37 skills into one product-owner loop of 21 (`router`, `loop-*`, `spec-*`, `meta-*`). Design record (map, catalog, phase plan): `documentation/jobs/temp_job_skill_loop/` at commit `d45f0ff`.
