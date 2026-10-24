@@ -103,7 +103,7 @@ Previews must not share the production Supabase project (free plan has no Supaba
 
 1. **Create** a second Supabase project (e.g. `<app>-staging`). Copy its URL and publishable key.
 2. **Build variables:** in Workers Builds, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to the **production** values for the production branch (`main`) and to the **staging** values for non-production branches. If the dashboard exposes only one set, switch on the branch name in the build command instead.
-3. **Schema parity:** build both projects only from `supabase/migrations/` — never by clicking in the dashboard — so staging cannot drift from production.
+3. **Schema parity:** build both projects only from `supabase/migrations/` — never by clicking in the dashboard — so staging cannot drift from production. Compare each project's applied-migration list with the files, and apply with the Supabase connector or the Supabase CLI (owner's choice; `supabase/README.md`).
 4. **Order of operations for a PR:** apply its migrations and deploy its Edge Functions to **staging** while the PR is open, test on the preview URL, merge, then apply the same migrations / deploy the same functions to **production**. Write migrations backwards-compatible (add before you remove) because the free plan has no point-in-time recovery.
 5. **Data:** staging holds fake or seed data only. Do not copy production rows into it.
 6. **Auth:** add the preview wildcard to the **staging** project's redirect URLs (and use staging Google OAuth origins/client); production keeps only its own origin.

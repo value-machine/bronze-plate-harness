@@ -6,6 +6,22 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## signals-backend — claude/charming-wright-ey9twz
+
+First migration of the repo: `error_logs`, `app_feedback`, `bugs`, `upsert_error_log()` and RLS under `supabase/migrations/`, applied to the new `plate-harness-staging` project and tested there.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Default for forks | closed | Forks get error logging and feedback by default | loop-refine | owner |
+| D2 | Admin model | closed | Role claim in auth `app_metadata` (`admin` / `super-admin`, the app's existing role names); never `user_metadata` | loop-refine | owner; rejected: `app_admins` table |
+| D3 | Table shapes | closed | The columns and statuses the signal adapter already reads and writes | loop-refine | clear-winner |
+| D4 | Rollout path | closed | Repo file first; staging while the PR is open, production after merge | loop-refine | clear-winner (`database.md` § Staging first) |
+| D5 | Who may write error rows | closed | Anyone, including anon, only through the deduping `SECURITY DEFINER` function; size caps, 5000-cluster cap, 90-day retention | loop-refine | owner took the recommended option. Rejected: signed-in only, rate-limited Edge Function, hosted tracker. Supabase advisor warns about public SECURITY DEFINER; accepted. Per-visitor rate limits are impossible in Postgres alone |
+| D6 | Who may write feedback rows | closed | Signed-in users insert their own rows only | loop-refine | clear-winner; rejected: anonymous feedback |
+| D7 | Staging project | closed | Created `plate-harness-staging` (eu-west-1, free plan) through the Supabase connector | loop-refine | owner took the recommended option; uses the second free active-project slot |
+| D8 | `db:push-staging` script | closed | Not added; connector or CLI applies migrations; follow-up task decides | loop-plan | clear-winner: needs the Supabase CLI and project linking, unverifiable here |
+| D9 | Staging history parity | closed | Staging reset once and the corrected migration applied as one history entry; repo file carries the recorded version | loop-build | the first apply exposed two advisor findings (initplan on the `auth.jwt()` call, missing FK index) that a local mock cannot show |
+
 ## onboarding-requirements — claude/charming-wright-ey9twz
 
 Onboarding gates and seeded setup tasks state requirements (end state, why, verification, who acts) instead of vendor click paths; staging Supabase project added as a requirement; signals epic queued as four backlog tasks.
