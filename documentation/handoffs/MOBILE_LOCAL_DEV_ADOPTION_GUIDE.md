@@ -83,7 +83,7 @@ Four linked layers (generic names):
 | **Runbook (SSOT)** | `documentation/DOC_MOBILE_LOCAL_DEV.md` |
 | Setup cross-link | `documentation/SETUP_GUIDE.md` — § *Testing on a physical phone (optional)* |
 | README index | `README.md` — *Mobile development (physical device)* |
-| Agent debug pattern | `.cursor/skills/debug/patterns.md` — *Mobile layout OK in DevTools but broken on a real phone* |
+| Agent debug pattern | `.agents/skills/spec-debug-runtime/references/patterns.md` — *Mobile layout OK in DevTools but broken on a real phone* |
 | Chat layout code (one surface) | `src/features/chat/components/ChatContent/`, `src/shared/hooks/useMobileComposerBottomOffset.ts` |
 | Chat feature pointer | `src/features/chat/README.md` |
 | Job context (one instance) | `documentation/jobs/agent_job_mobile_friendly/` |
@@ -97,7 +97,7 @@ Four linked layers (generic names):
 | Discovery | README lists runbook under documentation |
 | Agent debugging | Debug patterns require physical device + link runbook |
 | Feature work | Chat README links runbook + viewport files |
-| Cross-repo port | This guide + `write-adoption-guide` skill (optional) |
+| Cross-repo port | This guide + `meta-write-adoption-guide` skill (optional) |
 
 **Principle:** adb steps and redirect rules exist **once** in the runbook; every other doc **links** it.
 
@@ -195,7 +195,7 @@ flowchart TD
 | 6 | Add one line to root README documentation list |
 | 7 | Add debug/CONTRIBUTING or agent pattern: physical device required |
 | 8 | For each mobile-critical feature: README line → runbook + layout code paths |
-| 9 | Optional: copy this guide; copy `.agents/skills/write-adoption-guide/` and set `ADOPTION_GUIDE_OUTPUT_FOLDER` |
+| 9 | Optional: copy this guide; copy `.agents/skills/meta-write-adoption-guide/` and set `ADOPTION_GUIDE_OUTPUT_FOLDER` |
 
 ### 7.2 Minimum vs recommended
 
@@ -227,7 +227,7 @@ flowchart TD
 | `DOC_MOBILE_LOCAL_DEV.md` | Your runbook path |
 | `adb reverse tcp:5173 tcp:5173` | Same command, your **N** |
 | Chat composer console probe | Your fixed-bottom control + selector |
-| `.cursor/skills/debug/patterns.md` | `CONTRIBUTING.md`, `docs/debugging.md`, agent skill |
+| `.agents/skills/spec-debug-runtime/references/patterns.md` | `CONTRIBUTING.md`, `docs/debugging.md`, agent skill |
 
 ### 7.5 Adoption anti-patterns
 
@@ -257,4 +257,4 @@ Replicate **one mobile local-dev runbook (SSOT)** plus **thin links** from setup
 
 Full step-by-step procedure, troubleshooting, and the optional console probe live in the **SSOT runbook** linked in the purpose block — not duplicated here.
 
-**To port to another repo:** draft your runbook from §2 and §7 using that SSOT as a reference; optionally copy this guide and the `write-adoption-guide` skill folder (`.agents/skills/write-adoption-guide/`).
+**To port to another repo:** draft your runbook from §2 and §7 using that SSOT as a reference; optionally copy this guide and the `meta-write-adoption-guide` skill folder (`.agents/skills/meta-write-adoption-guide/`).

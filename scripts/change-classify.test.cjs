@@ -15,7 +15,7 @@ describe('change-classify', () => {
       assert.equal(isDocsOnlyFile('.changeset/foo.md'), true);
       assert.equal(isDocsOnlyFile('documentation/DOC.md'), true);
       assert.equal(isDocsOnlyFile('.cursor/skills/x.md'), true);
-      assert.equal(isDocsOnlyFile('.agents/skills/plan/SKILL.md'), true);
+      assert.equal(isDocsOnlyFile('.agents/skills/loop-plan/SKILL.md'), true);
       assert.equal(isDocsOnlyFile('README.md'), true);
       assert.equal(isDocsOnlyFile('src/foo.ts'), false);
     });
@@ -48,7 +48,7 @@ describe('change-classify', () => {
 
     test('should return docs light path for agents skills docs', () => {
       assert.deepEqual(
-        classifyChanges(['.agents/skills/finish/SKILL.md']),
+        classifyChanges(['.agents/skills/loop-ship/SKILL.md']),
         {light: true, kind: 'docs'},
       );
     });

@@ -1,4 +1,3 @@
-
 # Testing Standards
 
 ## Test Authority — a failing test is a claim, not ground truth
@@ -11,7 +10,7 @@ A failing test proves only that code and test disagree. Decide which one is wron
 - **Red-flag loop detector:** swapping implementation approach twice for the same failing test → suspect the test.
 - **Expected values** in tests must derive from the shipped SSOT implementation or data, never from an independent re-derivation.
 
-Cross-link: `.agents/skills/debug/patterns.md` § "Failing test loop".
+Cross-link: `.agents/skills/spec-debug-runtime/references/patterns.md` § "Failing test loop".
 
 ## Local test authority (commit vs merge)
 
@@ -49,13 +48,13 @@ This repo is **not** test-first by default. Default: add meaningful automated te
 
 **Do not default to TDD** when:
 
-- UI flows, UI kit components, or layout (manual/browser validation is default — `.claude/rules/workflow.md`)
+- UI flows, UI kit components, or layout (manual/browser validation is default — the phase gates in `loop-build`)
 - Supabase RLS, auth, or Edge Functions (see § Edge Functions Testing — manual)
-- The spec is still ambiguous — resolve with user verification first (`.agents/skills/feature/SKILL.md`)
+- The spec is still ambiguous — resolve with user verification first (`.agents/skills/loop-refine/SKILL.md`)
 
 Even in TDD, § Test Authority applies: expected values must trace to a cited ground-truth source, not an ad-hoc re-derivation.
 
-Cross-link: `.claude/rules/workflow.md` § During development.
+Cross-link: `.agents/skills/loop-plan/SKILL.md` § Steps 5 (acceptance test first).
 
 ## What to test and how
 
@@ -74,4 +73,4 @@ Before production (§ Mode behavior table → **production**: A/B promote; C mer
 
 ## Related Rules
 
-When modifying this rule, check `code-style`, `architecture`, `workflow`, `debugging`, and `cloud-functions` (Edge Function testing).
+When modifying this rule, check `code-style`, `architecture`, `debugging`, and `cloud-functions` (Edge Function testing).

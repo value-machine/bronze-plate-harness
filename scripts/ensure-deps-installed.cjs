@@ -19,7 +19,7 @@ const INSTALL_TIMEOUT_MS = 280_000;
 
 /**
  * Second copy of the hook-input reader — the other is in scripts/deny-git-write-on-main.cjs.
- * A third hook script should extract both into scripts/hook-input.cjs (name-the-mechanism F2).
+ * A third hook script should extract both into scripts/hook-input.cjs (code-style rule § Naming F2).
  * @param {string} raw
  * @returns {{cwd?: string} | null}
  */

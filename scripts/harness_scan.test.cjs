@@ -7,7 +7,7 @@ const { execFileSync } = require("child_process");
 const ROOT = path.resolve(__dirname, "..");
 const SCANNER = path.join(
   ROOT,
-  ".agents/skills/align-harness/scripts/harness_scan.cjs",
+  ".agents/skills/meta-audit-harness/scripts/harness_scan.cjs",
 );
 
 describe("harness_scan", () => {
@@ -31,11 +31,11 @@ describe("harness_scan", () => {
       encoding: "utf8",
     });
     const report = JSON.parse(out);
-    // router/SKILL.md lists these only after its ``` fence; an unstripped
+    // router/references/loop-map.md lists meta-compress-output only after its ``` fence; an unstripped
     // fence mis-pairs inline backticks and hides them as false orphans.
-    assert.ok(!report.orphanCandidates.includes(".agents/skills/caveman/SKILL.md"));
+    assert.ok(!report.orphanCandidates.includes(".agents/skills/meta-compress-output/SKILL.md"));
     assert.ok(
-      !report.orphanCandidates.includes(".agents/skills/bundle-ship/SKILL.md"),
+      !report.orphanCandidates.includes(".agents/skills/loop-ship/SKILL.md"),
     );
   });
 

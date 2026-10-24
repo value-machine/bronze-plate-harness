@@ -1,4 +1,3 @@
-
 # Architecture Standards
 
 Most of this is enforced: dependency-cruiser (`pnpm arch:check` — layers, cycles, cross-feature internals, stack ports), `pnpm validate:structure` (folder/file whitelist in `projectStructure.config.cjs`), `pnpm validate:feature-size`, `pnpm validate:feature-docs`, and ESLint (`eslint.config.js`). Pre-commit runs the staged variants; CI runs the full ones. This rule covers what the tools can't judge.
@@ -9,11 +8,11 @@ Each check runs **before** the code or plan step it guards, without waiting for 
 
 ### Pattern risk (industry precedent — plans and proposals)
 
-When a design may diverge from common industry practice for the capability, run [`.agents/skills/pattern-review/SKILL.md`](../../.agents/skills/pattern-review/SKILL.md) (rubric: [`references/rubric.md`](../../.agents/skills/pattern-review/references/rubric.md); the agent picks the relevant aspects). Codebase convention alone does not justify divergence. Plans with Complexity M/L or material behavioral design fill **Pattern & precedent** (`.agents/skills/plan/references/implementation-plan-template.md`); `review-dev-plan` has the same lens. Not for internal workaround shapes (§ Layer consistency) or package reuse (§ Don't reinvent the wheel).
+When a design may diverge from common industry practice for the capability — at any size — review it against precedent with [`loop-plan/references/review-precedent.md`](../../.agents/skills/loop-plan/references/review-precedent.md) (rubric: [`precedent-rubric.md`](../../.agents/skills/loop-plan/references/precedent-rubric.md); the agent picks the relevant aspects). This rule is the trigger; `loop-plan` and `loop-check` call it when it fires (skill-loop D56). Codebase convention alone does not justify divergence. Plans with material behavioral design fill **Pattern & precedent** (`.agents/skills/loop-plan/references/plan-template.md`); the size-M plan review has the same lens. Not for internal workaround shapes (§ Layer consistency) or package reuse (§ Don't reinvent the wheel).
 
 ### Don't reinvent the wheel (package / pattern reuse)
 
-Before the first line of custom code for a generic subsystem (auth, webhooks, parsers, queues, rate limits, protocol clients, complex UI widgets, …), or before a plan locks a from-scratch approach, run [`.agents/skills/dont-reinvent-the-wheel/SKILL.md`](../../.agents/skills/dont-reinvent-the-wheel/SKILL.md). Skip for small, bespoke business logic. It recommends only: record the result in the plan (Conflict & compliance); do not install packages from it.
+Before the first line of custom code for a generic subsystem (auth, webhooks, parsers, queues, rate limits, protocol clients, complex UI widgets, …), or before a plan locks a from-scratch approach, run [`.agents/skills/spec-reuse-package/SKILL.md`](../../.agents/skills/spec-reuse-package/SKILL.md). Skip for small, bespoke business logic. It recommends only: record the result in the plan (Conflict & compliance); do not install packages from it.
 
 ### Performance cost risk (heavy DB / UI operations)
 
@@ -21,9 +20,9 @@ When a step matches a heavy-operation trigger — N+1 / per-row queries, unbound
 
 1. Estimate the cost (rows, round-trips, render work).
 2. Design a cheaper option first (narrower query + index, pagination, server-side aggregation, caching via query keys, batching, virtualization, memoization, `startTransition`); prefer the reductive option (`.claude/rules/debugging.md` § Reductive Strategy).
-3. Present the options, recommended first, and let the user pick before implementing (`.claude/rules/agent-behavior.md` § Decision Questioning Protocol). Do not silently ship the expensive path.
+3. Implement the cheaper option and record the trade-off in the plan or PR summary. Do not ship the expensive path silently. Ask only when the choice falls on `.claude/rules/agent-behavior.md` § When to ask (for example, paid usage or a data or irreversible change).
 
-Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/optimize2/SKILL.md`; stack-native fixes → `.agents/skills/react-perf-vite/SKILL.md`; indexes → `.claude/rules/database.md`.
+Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/skills/spec-optimize-performance/SKILL.md`; stack-native fixes → `.agents/skills/spec-optimize-performance/SKILL.md`; indexes → `.claude/rules/database.md`.
 
 ### Layer consistency (workaround guard)
 
@@ -31,7 +30,7 @@ Tools: CWV symptoms → `web-perf` plugin skill; structural fix → `.agents/ski
 
 **Proactively** on any request to change existing behavior ("add a color to the gradient", "just add a field/button/flag"), minimizer/exception language, a first-of-a-kind instance without a category, or behavior-by-analogy. **Reactively** when the diff takes a workaround shape (special-case flag, parallel path, symptom tuning, disconnected patch, instance-encoded naming, growing scope, "for now" comment).
 
-Run [`.agents/skills/layer-consistency-check/SKILL.md`](../../.agents/skills/layer-consistency-check/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../.agents/skills/layer-consistency-check/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `.agents/skills/name-the-mechanism/SKILL.md` — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the user picks workaround vs structural fix. When pattern-review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
+Run [`.agents/skills/spec-check-layer/SKILL.md`](../../.agents/skills/spec-check-layer/SKILL.md) (shapes: [`references/workaround-shapes.md`](../../.agents/skills/spec-check-layer/references/workaround-shapes.md)) before writing the workaround. New or copied identifiers always follow `.claude/rules/code-style.md` § Naming — the one-off skip does not suppress it. For other shapes apply the severity filter; when one clears it, post the **WARNING, WORKAROUND** block and **stop** until the owner picks workaround vs structural fix (stop list: patch on top, `agent-behavior` § When to ask). When the precedent review also applies, run this first (`.agents/skills/router/references/tiebreaks.md`).
 
 ## Code placement
 
@@ -65,7 +64,7 @@ Backend: Supabase Edge Functions in `supabase/functions/<name>/index.ts` (shared
 
 ### Edge-case placement
 
-Name any new symbol per `.agents/skills/name-the-mechanism/SKILL.md`.
+Name any new symbol per `.claude/rules/code-style.md` § Naming.
 
 - Layout state hooks (sidebar, scroll) → `shared/hooks/`; layouts consume, not own, them.
 - A page that needs its own hooks/services → promote it to a feature; pages stay thin.
@@ -109,4 +108,4 @@ Legitimate cross-layer exception (rare): regenerate the dependency-cruiser basel
 
 ## Related Rules
 
-When modifying this rule, check: `code-style`, `testing`, `security`, `workflow`, `cloud-functions`, `database`, and `.agents/skills/optimize2/SKILL.md` (refactors must respect these placements).
+When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/spec-optimize-performance/SKILL.md` (refactors must respect these placements).

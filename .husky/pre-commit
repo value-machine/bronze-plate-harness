@@ -18,6 +18,9 @@ pnpm lint-staged || exit 1
 echo "Running feature documentation validation for staged files..."
 pnpm validate:feature-docs:staged || exit 1
 
+# Skill admission check on every path (SSOT: scripts/validate-skills.cjs)
+pnpm validate:skills || exit 1
+
 # Light path: docs, migrations, or tooling-only — skip tests, type-check, structure, feature-size, arch
 # SSOT: scripts/change-classify.cjs
 LIGHT_KIND=$(node scripts/is-staged-precommit-light.js --echo-kind 2>/dev/null) || true

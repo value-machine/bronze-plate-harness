@@ -6,7 +6,7 @@ Branch strategy, pull requests, and production. Everything that differs by mode 
 
 ## Version Control Standards
 
-Where the version and changelog come from: § Mode behavior table → **version source**. For A/B, `.agents/skills/finish/SKILL.md` is the SSOT for semver, changelog gate, commit format, and `package.json` / `CHANGELOG.md` sync.
+Where the version and changelog come from: § Mode behavior table → **version source**. For A/B, `.agents/skills/loop-ship/SKILL.md` is the SSOT for semver, changelog gate, commit format, and `package.json` / `CHANGELOG.md` sync.
 
 **Note:** Configuration lives in `.env` only. Onboarding checklist: `src/config/app-tasks.json` (see `src/features/tasks/README.md`).
 
@@ -17,11 +17,12 @@ Where the version and changelog come from: § Mode behavior table → **version 
 | **daily branch** | `feature/*` / `fix/*` off `develop` | `develop` | any non-`main` branch (incl. Claude Code worktree branches) |
 | **branch gate** | stop on `main` and `develop` (create a feature branch); proceed on `feature/*` / `fix/*` | stop on `main`; proceed on `develop`; stop on `feature/*` (switch to `develop`) | stop on `main` (branch first); proceed anywhere else |
 | **how work lands** | squash PR → `develop` | direct push → `develop` | squash PR → `main`, opened the Claude Code default way (`gh pr create`, base = default branch) |
-| **commit timing** | only via `finish` | only via `finish` | when the user asks — directly or via `finish` |
-| **version source** | `finish` bumps `package.json` + `CHANGELOG.md` per landing | same as A | release-please release PR built from conventional PR titles; no per-PR bump |
+| **commit timing** | `loop-ship` commits on its own once `loop-check` passes (skill-loop D25) | same as A | same as A |
+| **version source** | `loop-ship` bumps `package.json` + `CHANGELOG.md` per landing | same as A | release-please release PR built from conventional PR titles; no per-PR bump |
 | **CI watcher** | babysit the PR checks | report the commit URL and stop (no `gh run watch`) | Claude Code desktop PR monitor / Auto-fix (no `gh run watch`) |
 | **staging** | `develop` stable preview (+ per-PR previews) | `develop` preview (may deploy before `test` is green) | per-PR preview URL on a separate **staging Supabase project** (previews never touch production data; see `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) |
-| **production** | Promote to production (ff `main` ← `develop`) | same as A | the user merges the PR (manually or with the app's per-PR auto-merge toggle) |
+| **Stop 2 surface** (owner test before production, skill-loop D47) | the `develop` preview after the PR lands on `develop` | the `develop` preview | the PR preview, before merge |
+| **production** | the owner's Pass at Stop 2 → `loop-ship` runs Promote to production (ff `main` ← `develop`) | same as A | the owner's Pass at Stop 2 → `loop-ship` merges the PR (or the owner merges / uses the per-PR auto-merge toggle) |
 | **"land on main / promote / release" means** | run § Promote to production | same as A | merge the PR — **never** dispatch promote |
 | **`main` ruleset** | `deletion` + `non_fast_forward` only | same as A | `pull_request` (squash only) + required `test` and `pr-title` (source: GitHub Actions) + `non_fast_forward` + `deletion`; no bypass actors; no required approvals; branches need not be up to date |
 | **`develop` ruleset** | `pull_request` + required `test` + `non_fast_forward` + `deletion` | no `pull_request`; required `test` + `non_fast_forward` + `deletion` (not a pre-land gate: a bad push can exist and deploy staging before CI finishes) | none (`develop` does not exist) |
@@ -50,7 +51,7 @@ Plans (`documentation/jobs/**/DEVELOPMENT_PLAN.md`) and rules (`.claude/rules/**
 
 ### Model B — direct develop
 
-- `finish` + `push` on `develop`; no daily PR.
+- `loop-ship` commits and pushes on `develop`; no daily PR.
 - **Concurrency:** prefer one active agent per checkout on `develop`; serialize concurrent sessions.
 - **Hotfix:** fix on `develop`, then promote. Rare manual `fix/*` is a human exception.
 - **Single landing path:** integration commits land on `develop` only. Never squash-merge an app PR into `main`. Never land the same change twice on parallel paths (e.g. squash PR on `main` while an equivalent commit is pushed to `develop`) — that creates sibling SHAs and breaks the ancestor invariant (§ Promote to production § Ancestor failure).
@@ -160,7 +161,7 @@ If **Promote to production** fails with "main is not an ancestor of develop", ru
 **Pre-promote check (agent, before `workflow_dispatch`):**
 
 1. `git fetch origin main develop`
-2. `git merge-base --is-ancestor origin/main origin/develop` — must exit **0**. On PowerShell, verify `$LASTEXITCODE` after this command alone (see `.agents/skills/platform/SKILL.md` § Exit Code Handling); in Git Bash, check `$?`; do not trust a chained `echo` on the same line.
+2. `git merge-base --is-ancestor origin/main origin/develop` — must exit **0**. On PowerShell, verify `$LASTEXITCODE` after this command alone (see `.claude/rules/platform.md` § Exit Code Handling); in Git Bash, check `$?`; do not trust a chained `echo` on the same line.
 3. `origin/develop` must be **ahead** of `origin/main` (not equal).
 4. Latest `develop` tip has green CI `test` (same bar as the workflow).
 
@@ -189,7 +190,7 @@ Typical cause: the same logical change landed on **`main`** (squash PR with wron
 
 **Prevention (Model B):** No app PRs to `main`; no duplicate landing on `main` + `develop`. **Model A:** squash PRs target **`develop` only**; promote is the only path to `main`.
 
-**One-time fork setup:** § Mode behavior table → **fork setup** (`start` skill walks it).
+**One-time fork setup:** § Mode behavior table → **fork setup** (walked by `.agents/skills/loop-backlog/references/onboarding.md` § Branch workflow gate).
 
 **First promotion bootstrap (A/B):**
 - GitHub registers `workflow_dispatch` only after the workflow file exists on default branch (`main`).
@@ -203,12 +204,12 @@ git fetch origin && git checkout main && git merge --ff-only origin/develop && g
 
 ## Commit and Push Workflow
 
-**Skills:** `.agents/skills/finish/SKILL.md` (commit) and `.agents/skills/push/SKILL.md` (push). Timing, landing, and CI follow-up per § Mode behavior table → **commit timing**, **how work lands**, **CI watcher**.
+**Skill:** `.agents/skills/loop-ship/SKILL.md` (commit, push, PR, CI) — the owner's verdict is `.agents/skills/loop-verdict/SKILL.md`. Timing, landing, and CI follow-up per § Mode behavior table → **commit timing**, **how work lands**, **CI watcher**, **Stop 2 surface**.
 
-1. After completing changes, summarize what would be committed. Commit only when the user asks.
-2. **`finish`:** cleanup, repo wrap-up duties, version/changelog per **version source**, `git add` + `git commit` — never push.
-3. **`push`:** clean tree, existing commits only; push per **how work lands**; then **CI watcher**.
-4. Commit messages need a detailed body (see `finish`).
+1. One lap = one branch (worktree under Model C). Every commit on it belongs to the lap.
+2. **Commit:** once `loop-check` passes — cleanup, version/changelog per **version source**, a conventional `type: Subject` title with a detailed body (`loop-ship/references/commit-standards.md`).
+3. **Push + land:** clean tree, existing commits only; push per **how work lands**; drive CI to green per **CI watcher**.
+4. **Production** only after the owner's Pass at Stop 2 (**production** row). Agents never write to `main` directly.
 
 ---
 
@@ -216,9 +217,8 @@ git fetch origin && git checkout main && git merge --ff-only origin/develop && g
 
 **When modifying this rule, check these rules for consistency:**
 
-- `.claude/rules/workflow.md` — hub; code review and development process
 - `.claude/rules/agent-behavior.md` — protected files, success reporting (verified vs unverified)
-- `.agents/skills/platform/SKILL.md` — shell rules (PowerShell + Git Bash) for git/gh invocations
+- `.claude/rules/platform.md` — shell rules (PowerShell + Git Bash) for git/gh invocations
 
 **Rules that reference this rule:**
 

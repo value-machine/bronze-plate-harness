@@ -15,31 +15,55 @@
  * - .claude/rules/architecture.md - Architecture rules
  */
 /**
- * One agent skill folder. Shared by the source (.agents/skills/<name>/) and its generated
- * Claude Code mirror (.claude/skills/<name>/, see agent-sync.config.json).
+ * One skill folder layout, shared by .agents/skills (SSOT) and its generated
+ * .claude/skills mirror. Template: .agents/skills/meta-write-skill/references/skill-template.md
  */
-const AGENT_SKILL_FOLDER = {
-  name: "*",
-  children: [
-    { name: "SKILL.md" },
-    { name: "patterns.md" },
-    { name: "AGENTS.md" },
-    { name: "README.md" },
-    { name: "metadata.json" },
-    { name: "references", children: [{ name: "*.md" }] },
-    { name: "rules", children: [{ name: "*.md" }] },
-    {
-      name: "scripts",
-      children: [
-        { name: "*.py" },
-        { name: "*.cjs" },
-        { name: "*.js" },
-        { name: "*.sh" },
-        { name: "*.mjs" },
-      ],
-    },
-  ],
-};
+const SKILL_FOLDERS = [
+  {
+    name: "*",
+    children: [
+      { name: "SKILL.md" },
+      { name: "patterns.md" },
+      { name: "AGENTS.md" },
+      { name: "README.md" },
+      { name: "metadata.json" },
+      {
+        name: "references",
+        children: [{ name: "*.md" }],
+      },
+      {
+        name: "rules",
+        children: [{ name: "*.md" }],
+      },
+      {
+        name: "scripts",
+        children: [
+          { name: "*.py" },
+          { name: "*.cjs" },
+          { name: "*.js" },
+          { name: "*.sh" },
+          { name: "*.mjs" },
+        ],
+      },
+      // Skill evals in the skill-creator / `claude plugin eval` layout
+      {
+        name: "evals",
+        children: [
+          {
+            name: "*",
+            children: [
+              { name: "prompt.md" },
+              { name: "case.yaml" },
+              { name: "place-files.sh" },
+              { name: "graders", children: [{ name: "*.md" }] },
+              { name: "files", children: [{ name: "*" }] },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
 
 /** @type {import('./scripts/project-structure-validator').ProjectStructureConfig} */
 module.exports = {
@@ -702,10 +726,7 @@ module.exports = {
             },
           ],
         },
-        {
-          name: "skills",
-          children: [AGENT_SKILL_FOLDER],
-        },
+        { name: "skills", children: SKILL_FOLDERS },
       ],
     },
     // Claude Code project config: rules (SSOT), generated skills mirror, settings
@@ -716,9 +737,10 @@ module.exports = {
           name: "rules",
           children: [{ name: "*.md" }],
         },
+        // Generated mirror of .agents/skills (scripts/sync-agent-config.mjs, agent-sync.config.json)
         {
           name: "skills",
-          children: [{ name: ".generated.json" }, AGENT_SKILL_FOLDER],
+          children: [...SKILL_FOLDERS, { name: ".generated.json" }],
         },
         { name: "settings.json" },
         { name: "settings.local.json" },
@@ -806,6 +828,7 @@ module.exports = {
     // Root config files - specific files only (no wildcards to prevent temporary/corrupted files)
     // JSON config files
     { name: ".dependency-cruiser-baseline.json" },
+    { name: "agent-sync.config.json" }, // .agents/skills → .claude/skills mirror config
     { name: "cors.json" },
     { name: "database.rules.json" },
     { name: "firebase.json" },
@@ -813,7 +836,6 @@ module.exports = {
     { name: "release-please-config.json" },
     { name: ".release-please-manifest.json" },
     { name: "skills-lock.json" },
-    { name: "agent-sync.config.json" },
     { name: "projectStructure.cache.json" },
     { name: "saml-attribute-mapping.json" },
     { name: "tsconfig.json" },

@@ -1,22 +1,27 @@
 [
   {
     "title": "Configure Supabase",
-    "description": "Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env (see README Quick Start). Enable auth providers in the Supabase dashboard. For Google OAuth, follow documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. Verify auth via ProfileMenu sign-in once configured.",
+    "description": "Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env (see README Quick Start). Enable auth providers in the Supabase dashboard. For Google OAuth, follow documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. Verify auth via ProfileMenu sign-in once configured. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Supabase).",
     "status": "to-do"
   },
   {
     "title": "Put your app online (Cloudflare hosting)",
-    "description": "Get your app live on the internet with Cloudflare (free tier is fine). Your coding agent does the setup — just ask it to \"do the hosting task\". What you need ready: a Cloudflare account, your Supabase keys already in .env, and (optional) a domain name you own. How it works once set up depends on your git workflow mode (see .claude/rules/git-workflow.md § Mode behavior table, rows staging and production) — by default every pull request gets its own preview link and merging the pull request ships to production. One step happens in the Cloudflare website (connecting your repo); the agent gives you exact click-by-click instructions and waits for you. Agent playbook + troubleshooting: documentation/DOC_CLOUDFLARE_WORKERS.md (see \"Agent one-shot brief\").",
+    "description": "Get your app live on the internet with Cloudflare (free tier is fine). Your coding agent does the setup — just ask it to \"do the hosting task\". What you need ready: a Cloudflare account, your Supabase keys already in .env, and (optional) a domain name you own. How it works once set up depends on your git workflow mode (see .claude/rules/git-workflow.md § Mode behavior table, rows staging and production) — by default every pull request gets its own preview link and merging the pull request ships to production. One step happens in the Cloudflare website (connecting your repo); the agent gives you exact click-by-click instructions and waits for you. Agent playbook + troubleshooting: documentation/DOC_CLOUDFLARE_WORKERS.md (see \"Agent one-shot brief\"). Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Hosting).",
     "status": "to-do"
   },
   {
     "title": "Define app vision",
-    "description": "Collaborate with the coding agent to fill documentation/DOC_APP_VISION.md (problem, persona, app role). Replace placeholder bullets with real prose and change Vision status from DRAFT to ACTIVE when complete.",
+    "description": "Collaborate with the coding agent to fill documentation/DOC_APP_VISION.md (problem, persona, app role). Replace placeholder bullets with real prose and change Vision status from DRAFT to ACTIVE when complete. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § App vision & goals gate.",
     "status": "to-do"
   },
   {
     "title": "Configure Theme",
-    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu.",
+    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Theme).",
+    "status": "to-do"
+  },
+  {
+    "title": "Run the loop skill evals against the v0.42.0 baseline",
+    "description": "Deferred from the skill-loop rework (skill-loop D59) to save usage. Run the eval cases under .agents/skills/router/evals/ and .agents/skills/loop-*/evals/ (15 cases), once with the new skill and once with the v0.42.0 skills it replaced (baseline = commit a920c0d), using the skill-creator workflow or `claude plugin eval`. Report pass rates per skill, and fix the skills where the new version loses behavior. Context: documentation/DOC_DECISION_LOG.md § skill-loop.",
     "status": "to-do"
   }
 ]

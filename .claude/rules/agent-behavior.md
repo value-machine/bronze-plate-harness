@@ -1,4 +1,3 @@
-
 # Agent Behavior
 
 Agent-specific behaviors and corrections to compensate for default agent behavior.
@@ -10,14 +9,31 @@ Agent-specific behaviors and corrections to compensate for default agent behavio
 - The agent turns user stories into architecture, logic, and code implementation
 - Always respect user decisions; report outcomes per § Success Validation
 
-## Decision Questioning Protocol
+## When to ask
 
-When asking the user to choose between implementation, product, architecture, or UX options:
-- First inspect the relevant codebase patterns, rules, and existing UX behavior to identify which option is most consistent with the current application.
-- Then ask the multiple-choice question (at most 4 options — the question tool's limit).
-- Put the recommended option first and label it; it is the one most consistent with the current codebase.
-- After the recommended option, order the alternatives from lightest to strongest when presenting implementation approaches.
-- Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the user picks it, research the consequences, explain them, then ask the same decision again.
+A **choice** is a point where two or more options leave different results that outlast the change: what users see, stored data, cost, or code structure. Details the agent can swap freely within the same change (an internal name, a loop shape, how a function is split) are not choices — decide them.
+
+Ask the owner only when the choice can't be derived from the app vision (`documentation/DOC_APP_VISION.md`), the recorded decisions (feature READMEs, the vision, rules), or the code, **and** it is one of:
+
+- **Conflict** with a recorded decision — flag it, propose resolutions, and let the owner pick. Spotting these is the agent's job.
+- **True tie** — two or more real options remain after enumerating them, and none dominates.
+- **New dependency** — a package or an external service the project doesn't use yet.
+- **Patch on top** — a workaround instead of the structural fix (`.claude/rules/architecture.md` § Layer consistency).
+- **Data or irreversible change** — schema or migration shape, deleting or transforming stored data, auth or permission models.
+- **Cost or external service** — paid usage, quotas, third-party calls, privacy.
+
+Everything else: decide, record the choice where it applies, and continue.
+
+**Away switch.** When the owner says "don't ask me", "answer yourself", "I won't check, only test", the agent decides **true ties** itself (tie resolution: `.agents/skills/loop-plan/references/fork-checklist.md`) and logs each pick. Every other item on the list **parks the lap**: it waits as an Open row for the owner, like a lap at Stop 2, while the agent pulls the next task. Nothing is applied provisionally (skill-loop D46). "Ask me" turns the switch off.
+
+**Where the loop asks:** Stop 1 (`loop-backlog`, `loop-refine`) and Stop 2 (`loop-verdict`). Everything between runs on its own and stops only for the list above (`.agents/skills/router/references/loop-map.md`).
+
+### How to ask
+
+- First inspect the relevant codebase patterns, rules, and existing UX so the options are grounded in what the app already does.
+- One question at a time, multiple choice, at most 4 options (the question tool's limit).
+- Put the recommended option first and label it — usually the one most consistent with the current codebase. Order the rest from lightest to strongest when they are implementation approaches.
+- Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the owner picks it, research, explain, then ask the same question again.
 
 ## Success Validation
 
@@ -55,7 +71,7 @@ The agent must STOP and ASK the user before modifying any of the following file 
 
 ### Exception: mechanism-rename references
 
-When `.agents/skills/name-the-mechanism/SKILL.md` requires a rename or extraction, updating references to the old name in `.claude/rules/**`, `.agents/skills/**`, and `AGENTS.md` in that same change does not need a separate approval. Any other edit to those files still stops for approval. This exception does not allow weakening an unrelated rule.
+When `.claude/rules/code-style.md` § Naming requires a rename or extraction, updating references to the old name in `.claude/rules/**`, `.agents/skills/**`, and `AGENTS.md` in that same change does not need a separate approval. Any other edit to those files still stops for approval. This exception does not allow weakening an unrelated rule.
 
 **Required Behavior:**
 
@@ -67,12 +83,14 @@ When `.agents/skills/name-the-mechanism/SKILL.md` requires a rename or extractio
    - Only proceed after user explicitly approves the specific change
    - After receiving explicit user approval, proceed to make the change yourself
 
-2. **Never assume consent:**
+2. **Consent at Stop 2:** a rule or skill change that a lap carries (for example lessons from `meta-learn-lessons`) and that the `loop-verdict` handoff card **lists** is approved by the owner's **Pass**. An unlisted protected-file change is never covered (skill-loop D50).
+
+3. **Never assume consent:**
    - Even if the fix seems obvious, always ask
-   - Even during automated workflows (like finish command), ask before modifying protected files
+   - Even inside the autonomous loop stages, ask before modifying protected files (outside the Stop 2 rule above)
    - "NEVER adjust rules without explicit user request" applies to ALL protected files
 
-3. **Examples of required behavior:**
+4. **Examples of required behavior:**
    - Pre-commit finds `temp-file.json` → Ask: "Should I add this to .gitignore, or update projectStructure.config.cjs?"
    - Linting fails on new pattern → Ask: "Should I update eslint.config.js to allow this?"
    - Architecture check fails → Ask: "Should I update the baseline or fix the violation?"
@@ -86,10 +104,9 @@ When `.agents/skills/name-the-mechanism/SKILL.md` requires a rename or extractio
 **When modifying this rule, check these rules for consistency:**
 
 - `.claude/rules/git-workflow.md` — branch protection and when edits are allowed
-- `.claude/rules/workflow.md` — development process hub
 - `.claude/rules/debugging.md` — reductive strategy for bugs and features
 
 **Rules that reference this rule:**
 
-- `.claude/rules/architecture.md` — decision questioning and performance-cost asks
-- `finish/SKILL.md`, `implement/SKILL.md` — protected-file gates
+- `.claude/rules/architecture.md` — layer-consistency stop and performance-cost asks
+- `loop-build/SKILL.md`, `loop-ship/SKILL.md`, `loop-verdict/SKILL.md` — protected-file gates and Stop 2 consent

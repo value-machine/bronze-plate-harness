@@ -21,7 +21,7 @@ const REASON =
 
 /**
  * Second copy of the hook-input reader — the other is in scripts/ensure-deps-installed.cjs.
- * A third hook script should extract both into scripts/hook-input.cjs (name-the-mechanism F2).
+ * A third hook script should extract both into scripts/hook-input.cjs (code-style rule § Naming F2).
  * @param {string} raw
  * @returns {{cwd?: string, tool_input?: {command?: string}} | null}
  */

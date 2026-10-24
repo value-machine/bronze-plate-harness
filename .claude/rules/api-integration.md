@@ -10,23 +10,19 @@ paths:
 
 ## Purpose
 
-This rule defines the principles agents follow before integrating any external API, vendor, or backend — new or already configured. It does **not** contain the procedure itself; that lives in [`.agents/skills/api-integrate/SKILL.md`](../../.agents/skills/api-integrate/SKILL.md) (full MCP-first, phased discovery→sample steps, worked examples). This rule exists so the principle applies even when the skill isn't explicitly invoked.
+This rule defines the principles agents follow before integrating any external API, vendor, or backend — new or already configured. It does **not** contain the procedure itself; that lives in [`loop-plan/references/research-api.md`](../../.agents/skills/loop-plan/references/research-api.md) (full MCP-first, phased discovery→sample steps, worked examples). This rule exists so the principle applies even when the skill isn't explicitly invoked.
 
 ## Principles
 
 1. **Read official docs before writing integration code.** Cite the doc URL(s) or MCP tool(s) actually used — do not integrate from memory or assumption.
-2. **Check for a matching MCP server before falling back to REST/scripts/browser fetch.** Use `GetMcpTools` (pattern search on the vendor name) first; only fall back when no server matches, or a matched server is unusable (see the skill's fallback decision tree for the specific failure states).
+2. **Check for a matching MCP server before falling back to REST/scripts/browser fetch.** List the registered MCP tools (Cursor `GetMcpTools`, Claude Code `ToolSearch`) for the vendor name first; only fall back when no server matches, or a matched server is unusable (see the skill's fallback decision tree for the specific failure states).
 3. **Don't trust cached or stale docs.** Verify current documentation before implementing — vendor APIs change; a memorized shape from a prior session may be wrong.
-4. **Run a minimal POC before full integration code** when the vendor/API is new or unproven. Cross-link [`.agents/skills/plan/SKILL.md`](../../.agents/skills/plan/SKILL.md) § Optional: Foundation validation — do not duplicate that procedure here.
+4. **Run a minimal POC before full integration code** when the vendor/API is new or unproven. Cross-link [`.agents/skills/loop-plan/SKILL.md`](../../.agents/skills/loop-plan/SKILL.md) § Steps 4 (foundation validation) — do not duplicate that procedure here.
 5. **Never assume request/response shapes from memory.** Confirm via docs, MCP schema tools, or one real sample call before writing normalizers or mapping code.
 
 ## Full procedure (SSOT in skill)
 
-Do not run integration research from this rule alone — the procedure lives entirely in [`.agents/skills/api-integrate/SKILL.md`](../../.agents/skills/api-integrate/SKILL.md) (MCP-first fallback decision tree, Phase 0 locate → Phase 1 schema/contract → Phase 2 sample/wire shape, vendor worked examples).
-
-## Superseded content
-
-This rule absorbs and supersedes the former `.claude/rules/workflow.md` § Documentation Lookup (three lines: visit docs programmatically, don't trust cached docs, verify before implementing) — that content now lives here instead of being duplicated across two rules.
+Do not run integration research from this rule alone — the procedure lives entirely in [`loop-plan/references/research-api.md`](../../.agents/skills/loop-plan/references/research-api.md) (MCP-first fallback decision tree, Phase 0 locate → Phase 1 schema/contract → Phase 2 sample/wire shape, vendor worked examples).
 
 ---
 
@@ -39,10 +35,8 @@ This rule absorbs and supersedes the former `.claude/rules/workflow.md` § Docum
 - `.claude/rules/database.md` — migrations for the configured backend
 - `.claude/rules/cloud-functions.md` — server-only capabilities requiring secrets (third-party API calls)
 - `.claude/rules/project-specific.md` — external API costs and rate limiting
-- `.claude/rules/workflow.md` — superseded § Documentation Lookup (see above)
 
 **Rules that reference this rule:**
 
 - `.claude/rules/security.md` — § Database Verification points here for the general MCP-first principle
 - `.claude/rules/database.md`, `.claude/rules/cloud-functions.md` — point here when researching a new/unfamiliar vendor
-- `.claude/rules/workflow.md` — § Documentation Lookup points here (superseded)

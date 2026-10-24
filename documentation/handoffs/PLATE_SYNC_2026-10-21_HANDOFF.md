@@ -41,7 +41,7 @@ Take the URL from the `cloudflare-workers-and-pages[bot]` comment ("Preview URL:
 
 **Plate commits:** `fd821ac` (architecture, code-style, file-placement), `184d42b` (all always-on rules, −62% always-loaded bytes: 97,979 → 37,444 per `harness_scan`), `1d05337` (router and create-skill).
 
-Do this with bronze's own `.agents/skills/tighten-harness/SKILL.md`, using the plate commits as a worked example. Do not copy plate's rule files: bronze's rules carry shadcn/Tailwind and theming content that must stay.
+Do this with bronze's own `.agents/skills/meta-audit-harness/SKILL.md`, using the plate commits as a worked example. Do not copy plate's rule files: bronze's rules carry shadcn/Tailwind and theming content that must stay.
 
 What plate did, per item:
 - **Rules:** cut generic advice, reduce prose that tooling enforces to the command that checks it, move on-demand material out. The TanStack optimistic playbook moved from the architecture rule to `DOC_TANSTACK_QUERY.md` (rule keeps summary + trigger). The Supabase RLS performance section moved to the migration-scoped `database` rule. Bronze's `architecture/RULE.mdc` is ~36 KB; plate's is ~11 KB.

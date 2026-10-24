@@ -594,11 +594,8 @@ WHERE (qual LIKE '%auth.uid()%' AND qual NOT LIKE '%SELECT auth.uid()%')
 **When modifying this rule, check these rules for consistency:**
 
 - `.claude/rules/security.md` - Database verification (MCP-first) and authorization principles
-- `.claude/rules/workflow.md` - Development processes and testing workflows
 - `.claude/rules/architecture.md` - Service/hook layers, TanStack Query patterns (not SQL)
 - `documentation/DOC_TANSTACK_QUERY.md` - Query keys, invalidation, client cache (not SQL)
 - `.claude/rules/api-integration.md` - Researching a new/unfamiliar backend or API before writing migrations against it
 
 **Rules that reference this rule:**
-- `.claude/rules/workflow.md` - May reference migration testing as part of development workflow
-

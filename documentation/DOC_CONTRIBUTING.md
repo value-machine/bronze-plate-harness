@@ -4,7 +4,7 @@ This guide points you to the canonical process documents. Follow these links for
 
 ## Before You Start
 
-1. **Workflow SSOT** – [`.agents/skills/finish/SKILL.md`](../.agents/skills/finish/SKILL.md)  
+1. **Workflow SSOT** – [`.agents/skills/loop-ship/SKILL.md`](../.agents/skills/loop-ship/SKILL.md)  
    - Commit format, versioning, changelog sync  
    - Run this command before committing
 
@@ -19,7 +19,7 @@ This guide points you to the canonical process documents. Follow these links for
    - Layer rules, code placement, import patterns  
    - See also: [ARCHITECTURE.md](../ARCHITECTURE.md), [projectStructure.config.cjs](../projectStructure.config.cjs), [.dependency-cruiser.cjs](../.dependency-cruiser.cjs)
 
-5. **Release & changelog SSOT** – per § Mode behavior table → **version source**: Model A/B [`.agents/skills/finish/SKILL.md`](../.agents/skills/finish/SKILL.md) (bump rules, changelog format, version sync); Model C release-please ([DOC_CHANGESETS.md](./DOC_CHANGESETS.md))
+5. **Release & changelog SSOT** – per § Mode behavior table → **version source**: Model A/B [`.agents/skills/loop-ship/SKILL.md`](../.agents/skills/loop-ship/SKILL.md) (bump rules, changelog format, version sync); Model C release-please ([DOC_CHANGESETS.md](./DOC_CHANGESETS.md))
 
 ## CI Gate Expectations
 

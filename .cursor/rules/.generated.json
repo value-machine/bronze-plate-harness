@@ -12,9 +12,9 @@
     "debugging.mdc",
     "file-placement.mdc",
     "git-workflow.mdc",
+    "platform.mdc",
     "project-specific.mdc",
     "security.mdc",
-    "testing.mdc",
-    "workflow.mdc"
+    "testing.mdc"
   ]
 }
