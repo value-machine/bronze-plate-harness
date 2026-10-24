@@ -272,14 +272,13 @@ CREATE TRIGGER trigger_name
 
 ---
 
-## Staging first
+## Environments and migrations
 
-Previews run against a separate **staging** Supabase project (`documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend).
+The harness starts with **one Supabase project** shared by local dev, previews and production (`documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend). Every project or branch is built from the same `supabase/migrations/` files; never change the schema in a dashboard.
 
-- Apply a PR's new migrations to **staging** while the PR is open; test on the preview URL.
-- Apply them to **production** only after the PR merges, from the same `supabase/migrations/` files (never edit the schema in the dashboard, so staging and production cannot drift).
-- Make migrations backwards-compatible (add before you remove): old production code keeps running between the migration and the frontend deploy, and the free plan has no point-in-time recovery.
-- Staging holds fake or seed data only; never copy production rows into it.
+- **One project (default):** a migration is live as soon as it is applied. Test it on a scratch Postgres first, apply it when the lap is ready, and keep it backwards-compatible (add before you remove). Destructive or irreversible changes are an owner stop (`.claude/rules/agent-behavior.md` § When to ask).
+- **Isolated staging (once the app has real users):** apply a PR's migrations to staging while the PR is open and test on the preview; apply them to production only after the PR merges, from the same files. Staging holds fake or seed data only; never copy production rows into it.
+- The free plan has no point-in-time recovery, so backwards-compatibility is the rollback.
 
 ## Testing Migrations
 

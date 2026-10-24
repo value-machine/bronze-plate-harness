@@ -341,6 +341,7 @@ These rules are defined in `eslint.config.js` using GTS's flat config format.
 This harness supports connecting to external APIs:
 
 - **Supabase**: For authentication (configure via `.env` — see README and dev task backlog)
+- **Supabase database**: schema, RLS and the signals tables (error logs, feedback, bugs) live in `supabase/migrations/`; access model in `supabase/README.md`
 
 **Researching a new external API before wiring it up?** See `.claude/rules/api-integration.md` (principles) and `.agents/skills/loop-plan/references/research-api.md` (MCP-first, schema→sample procedure) — this bullet describes *what's configured*, not *how to research* a new vendor/API.
 

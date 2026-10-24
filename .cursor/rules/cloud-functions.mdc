@@ -37,13 +37,12 @@ For complete project structure guidelines, refer to `.claude/rules/architecture.
 
 **Branch model (general):** `.claude/rules/git-workflow.md` § Mode behavior table (`src/config/git-workflow.json`). **This section** is Edge Function deploy semantics only.
 
-**Two Supabase projects: production (`main`) and staging (every preview).** Setup: `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend.
+**By default one Supabase project serves production and every preview** (`documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend). Once staging is isolated (a Branching staging branch or a second project), previews use the staging environment.
 
-- Frontend code deploys separately per branch (production vs each preview); previews are built against the staging project
-- Edge Functions deploy manually per project (`supabase functions deploy <name> --project-ref <ref>`): to **staging** while the PR is open, to **production** only after the PR merges
-- A preview therefore tests the PR's own function changes end to end, without touching production
+- Frontend code deploys separately per branch (production vs each preview)
+- Edge Functions deploy manually per project (`supabase functions deploy <name> --project-ref <ref>`). With one project a deploy affects production and every preview at once. With isolated staging, deploy to staging while the PR is open and to production only after the PR merges
 - No automated testing or rollback for functions — keep the previous version's source in git so a redeploy restores it
-- A bad production deploy still affects the whole production app, so deploy to staging and test on the preview first
+- A bad deploy affects the whole app of the environment it targets, so test locally first (`supabase functions serve`), and on the preview when staging is isolated
 
 **Consequence:** Edge Functions are MORE fragile than frontend code in this architecture.
 
@@ -174,7 +173,7 @@ When considering adding an Edge Function, ask:
 
 **Edge Functions Testing Considerations:**
 
-- Deploy to the **staging** project first and test on the PR preview; deploy to production only after the PR merges
+- Test locally first. With isolated staging, deploy to staging and test on the PR preview, and deploy to production only after the PR merges; with one project, deploy once the PR is ready
 - Test locally first with `supabase functions serve`, then deploy via `supabase functions deploy <function-name>`
 - Consider impact before adding new functions
 - Treat production releases (table → **production**) as a separate verification gate when function-adjacent frontend behavior changed
