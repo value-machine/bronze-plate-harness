@@ -35,6 +35,10 @@ Everything else: decide, record the choice where it applies, and continue.
 - Put the recommended option first and label it — usually the one most consistent with the current codebase. Order the rest from lightest to strongest when they are implementation approaches.
 - Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the owner picks it, research, explain, then ask the same question again.
 
+### Handing an action to the owner
+
+When only the owner can do something (enter a variable, change a setting, grant access), give the direct link to that exact page, built from the ids you know (project ref, account id, Worker name), with the value to enter next to it. Never make the owner ask for the link or search a dashboard. If you are unsure a deep link still exists, give the dashboard URL for that project and name the page; never invent a path. Links, not click-by-click steps (`.agents/skills/loop-backlog/references/onboarding.md` § Core behavior).
+
 ## Success Validation
 
 Report outcomes faithfully:
