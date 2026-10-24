@@ -1,12 +1,17 @@
 [
   {
+    "title": "Onboarding states requirements, not methods",
+    "description": "Rewrite the onboarding gates and the seeded Supabase and hosting tasks so they state setup requirements (end state, why, how the agent verifies, who acts) instead of vendor click paths, and add the staging Supabase project requirement. Lap: documentation/jobs/temp_job_onboarding-requirements/BRIEF.md.",
+    "status": "in-progress"
+  },
+  {
     "title": "Configure Supabase",
-    "description": "Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env (see README Quick Start). Enable auth providers in the Supabase dashboard. For Google OAuth, follow documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. Verify auth via ProfileMenu sign-in once configured. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Supabase).",
+    "description": "Set up the backend: a production Supabase project and a separate staging project, each with the auth providers you use enabled and its URL and publishable key available as VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (local .env points at staging or a dev project; the hosting build variables carry production values for main and staging values for previews). Your coding agent lists the exact requirements, checks the result, and tells you what only you can do. For Google sign-in, requirements are in documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Supabase).",
     "status": "to-do"
   },
   {
     "title": "Put your app online (Cloudflare hosting)",
-    "description": "Get your app live on the internet with Cloudflare (free tier is fine). Your coding agent does the setup — just ask it to \"do the hosting task\". What you need ready: a Cloudflare account, your Supabase keys already in .env, and (optional) a domain name you own. How it works once set up depends on your git workflow mode (see .claude/rules/git-workflow.md § Mode behavior table, rows staging and production) — by default every pull request gets its own preview link and merging the pull request ships to production. One step happens in the Cloudflare website (connecting your repo); the agent gives you exact click-by-click instructions and waits for you. Agent playbook + troubleshooting: documentation/DOC_CLOUDFLARE_WORKERS.md (see \"Agent one-shot brief\"). Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Hosting).",
+    "description": "Get your app live on the internet with Cloudflare (free tier is fine). Your coding agent does the setup — just ask it to \"do the hosting task\". What you need ready: a Cloudflare account, your Supabase keys already in .env, and (optional) a domain name you own. How it works once set up depends on your git workflow mode (see .claude/rules/git-workflow.md § Mode behavior table, rows staging and production) — by default every pull request gets its own preview link and merging the pull request ships to production. One step happens in the Cloudflare website (connecting your repo); the agent tells you what must be set there and why, waits for you, and checks the result. Agent playbook + troubleshooting: documentation/DOC_CLOUDFLARE_WORKERS.md (see \"Agent one-shot brief\"). Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Hosting).",
     "status": "to-do"
   },
   {
@@ -17,6 +22,26 @@
   {
     "title": "Configure Theme",
     "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Theme).",
+    "status": "to-do"
+  },
+  {
+    "title": "Signals backend: error logs, feedback and bugs tables",
+    "description": "Add supabase/migrations with error_logs (clustered by hash, upsert_error_log function), app_feedback and bugs tables, RLS, and a db:push-staging script, so the signal adapter in .agents/skills/loop-backlog/references/signal-adapter.md has data to read. Forks get this by default. Admin = a role claim in the user's auth app_metadata (never user_metadata, which users can edit); admins and local dev can read, signed-in users can insert their own rows. Apply to staging first, production after merge. Needs the staging Supabase project from the Supabase onboarding task.",
+    "status": "to-do"
+  },
+  {
+    "title": "Capture app errors to the database",
+    "description": "Global window error and unhandledrejection handler, error boundary reporting, and the existing logError path, all writing through the deduplicating upsert from the signals backend task. Tag each error with the environment (local, staging, production). Depends on: Signals backend task.",
+    "status": "to-do"
+  },
+  {
+    "title": "In-app feedback widget",
+    "description": "A small signed-in feedback form that writes to app_feedback with the page and environment. Depends on: Signals backend task.",
+    "status": "to-do"
+  },
+  {
+    "title": "Admin signals view and switch the signal adapter on",
+    "description": "An admin-only view (role claim) to triage error clusters and feedback, and turn on loop-backlog's signal adapter so open signals become ranked backlog tasks. Depends on: Signals backend, error capture and feedback widget tasks.",
     "status": "to-do"
   }
 ]
