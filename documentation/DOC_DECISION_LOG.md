@@ -6,6 +6,17 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## onboarding-requirements — claude/charming-wright-ey9twz
+
+Onboarding gates and seeded setup tasks state requirements (end state, why, verification, who acts) instead of vendor click paths; staging Supabase project added as a requirement; signals epic queued as four backlog tasks.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Protected-file edits | closed | Owner approved editing `loop-backlog/references/onboarding.md` and `src/config/app-tasks.json` only | loop-refine | asked; owner "ok" |
+| D2 | Setup guidance style | closed | Requirements (end state, why, verification, who acts), never vendor click paths | loop-refine | vendor UIs and CLIs change with app versions; folded into `onboarding.md` § Core behavior |
+| D3 | Signals epic default | closed | Forks get error logging and feedback by default | loop-refine | recorded in the four follow-up backlog tasks |
+| D4 | Admin model for signals | closed | Role claim in auth `app_metadata` (never `user_metadata`); admins and local dev may read | loop-refine | applies to the signals-backend task; rejected: `app_admins` table (agent's recommendation, owner chose the claim) |
+
 ## loop-evals — claude/peaceful-ride-b7sicx
 
 Runnable eval fixtures (`place-files.sh`), runner (`meta-write-skill/scripts/run-evals.sh`, `eval-scaffold.sh`, `eval-packs.py`), and 15-case comparison (`a920c0d` v0.42.0 baseline vs `559cd60` new loop skills, `composer-2.5`).
