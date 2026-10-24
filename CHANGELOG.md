@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.43.0...v0.44.0) (2026-10-24)
+
+
+### Features
+
+* **harness:** replace legacy skills with product-owner skill loop ([#21](https://github.com/value-machine/bronze-plate-harness/issues/21)) ([f30a74c](https://github.com/value-machine/bronze-plate-harness/commit/f30a74c68c71f58c51c4c5c0f87b493dc26b0e55))
+* **supabase:** add signals tables for error logs, feedback and bugs ([#27](https://github.com/value-machine/bronze-plate-harness/issues/27)) ([3dd609d](https://github.com/value-machine/bronze-plate-harness/commit/3dd609d4b73bdf66a0e29b4fed500ce2158f5df4))
+
+
+### Bug Fixes
+
+* **ci:** report pr-title on release PRs so they can merge ([#25](https://github.com/value-machine/bronze-plate-harness/issues/25)) ([4726066](https://github.com/value-machine/bronze-plate-harness/commit/4726066eeee41f8e12d110a8e11634e847ef20e3))
+
 ## [0.43.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.42.0...v0.43.0) (2026-10-23)
 
 
