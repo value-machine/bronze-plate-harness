@@ -12,7 +12,7 @@ def compact(trace):
                 if b['type']=='text': out.append('AGENT: '+b['text'])
                 elif b['type']=='tool_use':
                     i=b['input']; s=json.dumps(i)
-                    if b['name'] in ('Write','Edit'): s=json.dumps({k:(v if k!='content' else v[:1500]) for k,v in i.items()})[:2500]
+                    if b['name'] in ('Write','Edit'): s=json.dumps({k:(v if k!='content' else v[:8000]) for k,v in i.items()})[:9000]
                     else: s=s[:300]
                     out.append(f"TOOL {b['name']}: {s}")
         elif t=='user':
@@ -32,7 +32,7 @@ def changed(ws):
         rel=os.path.relpath(f,ws)
         try: body=open(f,errors='replace').read()
         except Exception: body='(unreadable)'
-        parts.append(f"--- {rel}\n{body[:2500]}")
+        parts.append(f"--- {rel}\n{body[:8000]}")
     return '\n'.join(parts) or '(no files changed)'
 res,plugin,packs=sys.argv[1:4]
 d=json.load(open(res)); os.makedirs(packs,exist_ok=True)

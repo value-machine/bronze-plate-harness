@@ -64,7 +64,7 @@ $1
 MD
 }
 
-csv_plan() { # csv_plan <phase-2 text> <phase-2 status>
+csv_plan() { # csv_plan <phase-2 text> <phase-2 status> [phase-3 status]
   cat > documentation/jobs/temp_job_tasks-csv-export/DEVELOPMENT_PLAN.md <<MD
 # Development plan — tasks-csv-export
 
@@ -76,7 +76,7 @@ Add an Export button to the tasks backlog panel that downloads a CSV of the visi
 |---|---|---|
 | 1 | Export button in TasksBacklogPanel wired to a stub handler | done |
 | 2 | $1 | $2 |
-| 3 | Download the CSV and add the acceptance test | pending |
+| 3 | Download the CSV and add the acceptance test | ${3:-pending} |
 
 ## Phase 1 — Export button
 Done: button renders and calls \`exportTasks()\` stub.
@@ -92,11 +92,36 @@ Gate: acceptance test \`src/features/tasks/services/appTasksExport.test.ts\` pas
 MD
 }
 
-csv_lap() { # csv_lap <phase-2 text> <phase-2 status> [checkout]
+csv_lap() { # csv_lap <phase-2 text> <phase-2 status> [checkout] [phase-3 status]
   git checkout -q -b feat/tasks-csv-export
-  csv_brief S; csv_plan "$1" "$2"
+  csv_brief S; csv_plan "$1" "$2" "${4:-pending}"
   commit_all "feat(tasks): export button stub (phase 1)"
   [ "${3:-}" = checkout ] || git checkout -q main
+}
+
+csv_built() { # the finished CSV export a lap at Stop 2 would carry
+  mkdir -p src/features/tasks/services
+  cat > src/features/tasks/services/appTasksExport.ts <<'SRC'
+import type { AppTask } from "@/features/tasks/types/appTask.types";
+
+const quote = (v: string): string => (/[",\n]/.test(v) ? `"${v.replaceAll('"', '""')}"` : v);
+
+/** Serializes the visible tasks as CSV (title, status). */
+export function toTasksCsv(tasks: AppTask[]): string {
+  return ["title,status", ...tasks.map((t) => `${quote(t.title)},${quote(t.status)}`)].join("\n");
+}
+SRC
+  cat > src/features/tasks/services/appTasksExport.test.ts <<'SRC'
+import { describe, expect, it } from "vitest";
+
+import { toTasksCsv } from "./appTasksExport";
+
+describe("toTasksCsv", () => {
+  it("should quote titles with commas when serializing", () => {
+    expect(toTasksCsv([{ title: "a, b", description: "", status: "to-do" }])).toBe('title,status\n"a, b",to-do');
+  });
+});
+SRC
 }
 
 version_brief() { # version_brief <size>
