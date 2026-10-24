@@ -108,7 +108,7 @@ Isolate staging **before real users or sensitive data arrive**. Pick one:
 
 Either way:
 
-1. **Build variables:** in Workers Builds, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to the production values for the production branch (`main`) and to the staging values for non-production branches. If the dashboard exposes only one set, switch on the branch name in the build command instead.
+1. **Build variables:** in Workers Builds, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to the production values for production builds and to the staging values for preview builds. Cloudflare keeps one set per kind of build ([docs](https://developers.cloudflare.com/workers/ci-cd/builds/api-reference/)), so this is a one-time setting that every future preview branch inherits. If the dashboard exposes only one set, switch on the branch name in the build command instead.
 2. **Schema parity:** build every environment only from `supabase/migrations/`, never by clicking in a dashboard. Compare each environment's applied-migration list with the files, and apply with the Supabase connector or the Supabase CLI (owner's choice; `supabase/README.md`).
 3. **Order for a PR:** apply its migrations and deploy its Edge Functions to staging while the PR is open, test on the preview URL, merge, then apply the same migrations and functions to production. Keep migrations backwards-compatible (add before you remove): the free plan has no point-in-time recovery.
 4. **Data:** staging holds fake or seed data only. Do not copy production rows into it.
