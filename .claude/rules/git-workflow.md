@@ -20,7 +20,7 @@ Where the version and changelog come from: § Mode behavior table → **version 
 | **commit timing** | `loop-ship` commits on its own once `loop-check` passes (skill-loop D25) | same as A | same as A |
 | **version source** | `loop-ship` bumps `package.json` + `CHANGELOG.md` per landing | same as A | release-please release PR built from conventional PR titles; no per-PR bump |
 | **CI watcher** | babysit the PR checks | report the commit URL and stop (no `gh run watch`) | Claude Code desktop PR monitor / Auto-fix (no `gh run watch`) |
-| **staging** | `develop` stable preview (+ per-PR previews) | `develop` preview (may deploy before `test` is green) | per-PR preview URL on a separate **staging Supabase project** (previews never touch production data; see `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) |
+| **staging** | `develop` stable preview (+ per-PR previews) | `develop` preview (may deploy before `test` is green) | per-PR preview URL; Supabase is one shared project until the app has real users, then an isolated staging (see `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) |
 | **Stop 2 surface** (owner test before production, skill-loop D47) | the `develop` preview after the PR lands on `develop` | the `develop` preview | the PR preview, before merge |
 | **production** | the owner's Pass at Stop 2 → `loop-ship` runs Promote to production (ff `main` ← `develop`) | same as A | the owner's Pass at Stop 2 → `loop-ship` merges the PR (or the owner merges / uses the per-PR auto-merge toggle) |
 | **"land on main / promote / release" means** | run § Promote to production | same as A | merge the PR — **never** dispatch promote |

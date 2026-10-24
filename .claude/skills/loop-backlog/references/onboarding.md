@@ -137,14 +137,14 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 
 | Requirement | Why | Verify | Who acts |
 |---|---|---|---|
-| A production Supabase project and a separate staging project | Previews must never touch production data (`documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) | Owner confirms both exist; each project URL answers | Owner |
-| Per project, the project URL and the publishable (anon) key | The app reads them at build time | Names only, never values: `.env` has `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (README names the legacy alias) | Owner supplies values; agent writes `.env` if asked |
-| Local `.env` points at staging (or a dev project), never production | Local work must not write production data | Same check; production keys appear only in the hosting build variables | Owner |
+| A Supabase project (one is enough until the app has real users; then isolate staging with a Branching staging branch or a second project) | Until isolated, local and previews share the live database (`documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) | Owner confirms it exists; the project URL answers | Owner |
+| Per project or branch, the URL and the publishable (anon) key | The app reads them at build time | Names only, never values: `.env` has `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (README names the legacy alias) | Owner supplies values; agent writes `.env` if asked |
+| Local `.env` points at the project; once staging is isolated, at staging, never at production | Once there are real users, local work must not write their data | Same check; production keys appear only in the hosting build variables | Owner |
 | Only publishable values in any `VITE_*` variable | These are compiled into the public bundle (`.claude/rules/security.md` § Secrets) | Scan `.env` and docs for secret-shaped names | Agent |
-| The auth providers the app uses are enabled in each project | Sign-in works | `pnpm dev` (restart after `.env` changes), `/login` renders and a sign-in completes | Owner enables; agent verifies |
-| Each project's allowed redirect/site URLs include that environment's origins: local dev, previews (staging project), production origin (production project) | Auth and OAuth links must return to the right origin | A sign-in round trip works locally and on a preview | Owner |
+| The auth providers the app uses are enabled in each project or branch | Sign-in works | `pnpm dev` (restart after `.env` changes), `/login` renders and a sign-in completes | Owner enables; agent verifies |
+| Each project's (or branch's) allowed redirect/site URLs include the origins that use it: local dev, previews, and the production origin | Auth and OAuth links must return to the right origin | A sign-in round trip works locally and on a preview | Owner |
 | Google sign-in, if used | Provider and origin settings span Supabase and Google Cloud | `documentation/DOC_SUPABASE_GOOGLE_OAUTH.md` is the SSOT for the requirements | Owner |
-| Each project's schema equals `supabase/migrations/` | Staging parity; no dashboard-only changes (`.claude/rules/database.md` § Staging first) | Migration list from the connector or CLI once migrations exist; n/a before the first migration | Agent applies to staging, production after merge |
+| Each project's schema equals `supabase/migrations/` | Parity; no dashboard-only changes (`.claude/rules/database.md` § Environments and migrations) | Migration list from the connector or CLI once migrations exist; n/a before the first migration | Agent applies per that section |
 
 **Hosting (task #2 — Put your app online) — what must be true:**
 
@@ -152,7 +152,7 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 |---|---|---|---|
 | A Cloudflare account, and a Worker whose name equals `name` in `wrangler.jsonc` | Workers Builds fails when the names differ | Compare `wrangler.jsonc` with the Worker list (Cloudflare connector, or the owner reads it off) | Owner creates or connects; agent aligns `wrangler.jsonc` |
 | The repo is connected to Workers Builds; production branch `main`; non-production branch builds on for all branches | Per-PR previews are the Stop 2 surface | A PR gets the Cloudflare bot comment with a preview URL | Owner |
-| Build variables: `VITE_SUPABASE_*` with production values for `main` and staging values for other branches; no `NODE_VERSION` variable | Previews must hit staging; `.node-version` must pick Node | Preview build log shows Node from `.node-version`; the preview signs in against staging | Owner sets; agent verifies |
+| Build variables: `VITE_SUPABASE_*` set for `main` and for non-production branches (the same values until staging is isolated, then production vs staging values); no `NODE_VERSION` variable | Previews must reach the right backend; `.node-version` must pick Node | Preview build log shows Node from `.node-version`; the preview signs in | Owner sets; agent verifies |
 | Optional custom domain, `account_id` | Fork-specific; the template omits them | `routes` / `account_id` in `wrangler.jsonc` when the owner wants them | Owner decides; agent edits |
 
 The agent's playbook (build settings, troubleshooting) is the **Agent one-shot brief** in `documentation/DOC_CLOUDFLARE_WORKERS.md`; the task description in `src/config/app-tasks.json` is the plain-language summary.

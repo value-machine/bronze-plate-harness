@@ -1,6 +1,6 @@
 # Supabase backend
 
-Schema for the project lives in `migrations/` and nowhere else. Never change the schema in a dashboard: staging and production are built from these files so they cannot drift (`.claude/rules/database.md` § Staging first, `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend).
+Schema for the project lives in `migrations/` and nowhere else. Never change the schema in a dashboard: every environment is built from these files so they cannot drift (`.claude/rules/database.md` § Environments and migrations, `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend). The harness starts with one project shared by local dev, previews and production; `error_logs` and `app_feedback` carry an `environment` tag (`local`, `staging`, `production`) so their rows stay distinguishable.
 
 ## Signals: error logs, feedback, bugs
 
@@ -26,4 +26,4 @@ It is `SECURITY DEFINER` and callable by `anon` and `authenticated`, because err
 
 ## Applying migrations
 
-Order for a change: staging while the PR is open, production after the PR merges, from the same file. A file name carries the version the target database recorded, so list the applied migrations of each project and compare them with the files here. Either the Supabase connector or the Supabase CLI can apply them; the project owner chooses.
+Order for a change: with one project, test on a scratch Postgres and apply when the lap is ready; with isolated staging, staging while the PR is open and production after the PR merges, from the same file. A file name carries the version the target database recorded, so list the applied migrations of each project and compare them with the files here. Either the Supabase connector or the Supabase CLI can apply them; the project owner chooses.

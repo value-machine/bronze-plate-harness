@@ -8,19 +8,20 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 
 ## signals-backend — claude/charming-wright-ey9twz
 
-First migration of the repo: `error_logs`, `app_feedback`, `bugs`, `upsert_error_log()` and RLS under `supabase/migrations/`, applied to the new `plate-harness-staging` project and tested there.
+First migration of the repo: `error_logs`, `app_feedback`, `bugs`, `upsert_error_log()` and RLS under `supabase/migrations/`, applied to the Supabase project (created as `plate-harness-staging`, now `bronze-plate-harness`, the only project: D10) and tested there.
 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
 | D1 | Default for forks | closed | Forks get error logging and feedback by default | loop-refine | owner |
 | D2 | Admin model | closed | Role claim in auth `app_metadata` (`admin` / `super-admin`, the app's existing role names); never `user_metadata` | loop-refine | owner; rejected: `app_admins` table |
 | D3 | Table shapes | closed | The columns and statuses the signal adapter already reads and writes | loop-refine | clear-winner |
-| D4 | Rollout path | closed | Repo file first; staging while the PR is open, production after merge | loop-refine | clear-winner (`database.md` § Staging first) |
+| D4 | Rollout path | closed | Repo file first; staging while the PR is open, production after merge | loop-refine | clear-winner (`database.md` § Staging first); superseded in part by D10: with one project the migration is tested on a scratch Postgres and applied when ready |
 | D5 | Who may write error rows | closed | Anyone, including anon, only through the deduping `SECURITY DEFINER` function; size caps, 5000-cluster cap, 90-day retention | loop-refine | owner took the recommended option. Rejected: signed-in only, rate-limited Edge Function, hosted tracker. Supabase advisor warns about public SECURITY DEFINER; accepted. Per-visitor rate limits are impossible in Postgres alone |
 | D6 | Who may write feedback rows | closed | Signed-in users insert their own rows only | loop-refine | clear-winner; rejected: anonymous feedback |
-| D7 | Staging project | closed | Created `plate-harness-staging` (eu-west-1, free plan) through the Supabase connector | loop-refine | owner took the recommended option; uses the second free active-project slot |
+| D7 | Staging project | closed | Created `plate-harness-staging` (eu-west-1, free plan) through the Supabase connector | loop-refine | owner took the recommended option; uses the second free active-project slot; renamed by the owner to `bronze-plate-harness`, now the only project (D10) |
 | D8 | `db:push-staging` script | closed | Not added; connector or CLI applies migrations; follow-up task decides | loop-plan | clear-winner: needs the Supabase CLI and project linking, unverifiable here |
 | D9 | Staging history parity | closed | Staging reset once and the corrected migration applied as one history entry; repo file carries the recorded version | loop-build | the first apply exposed two advisor findings (initplan on the `auth.jwt()` call, missing FK index) that a local mock cannot show |
+| D10 | One project vs two | closed | One Supabase project (`bronze-plate-harness`, ref `oqbzkenmrycpyabiemuo`, the project formerly named `plate-harness-staging`) shared by local dev, previews and production while the app has no real users; isolate staging (Branching staging branch, or a second project) before real users arrive | loop-refine | owner: staging and production should not be separate projects; after reading the Branching docs the owner chose to stay on the Free plan. Supersedes the two-project requirement from #5 (`DOC_CLOUDFLARE_WORKERS.md` § Staging backend, `database.md` § Environments and migrations, `cloud-functions.md`, onboarding tables). Branching: not on the Free plan (Pro and above, usage-priced per branch-hour), a branch is its own instance with its own URL and keys. Rejected: keep two projects (#5), one project forever with the two-project text deleted, Branching now (paid) |
 
 ## onboarding-requirements — claude/charming-wright-ey9twz
 

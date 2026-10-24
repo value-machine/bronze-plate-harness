@@ -10,7 +10,7 @@ Deploy this Vite + React SPA to **Cloudflare Workers** with static assets, using
 |--------|----------------|
 | **GitHub (this repo)** | Source + `wrangler.jsonc`. `ci.yml` runs type-check / lint / tests / build on every PR + push to `main` and `develop`. Rulesets depend on git-workflow mode (`src/config/git-workflow.json`) — see ruleset table below. **No deploy workflow. No `CLOUDFLARE_API_TOKEN` secret.** Production per `.claude/rules/git-workflow.md` § Mode behavior table → **production** (C: merging the PR; A/B: Promote workflow fast-forwards `main` to `develop`). |
 | **Cloudflare Workers Builds** | Builds and deploys on push. `main` → production; every other branch → its own preview (Model C relies on these per-PR previews; A/B also use `develop` as the stable staging preview). Account, build command, and `VITE_*`/`CLOUDFLARE_ACCOUNT_ID` env live in the dashboard connection. |
-| **Supabase** | Two projects: **production** (`main` build) and **staging** (every non-production branch build/preview). Previews never read or write production data; Edge Functions deploy to staging first. Auth URLs for each project include its deployed origin(s). See § Staging backend. |
+| **Supabase** | One project by default: local dev, previews and production share it, so a preview can read and write live data. Rows carry an `environment` tag (`local`, `staging`, `production`). Isolate staging before real users arrive (§ Staging backend). Auth URLs include every deployed origin. |
 
 Push → Cloudflare builds & deploys. GitHub blocks bad merges. There is no GitHub → Cloudflare deploy step.
 
@@ -97,25 +97,31 @@ Then enable **non-production branch builds**: Model C — **all branches** (each
 
 > `VITE_*` variables are embedded at **build time**. Workers Builds does **not** share runtime and build env vars — set every `VITE_*` your app needs in the build variables, or production will load an app with missing config.
 
-### Staging backend (separate Supabase project)
+### Staging backend (optional until the app has real users)
 
-Previews must not share the production Supabase project (free plan has no Supabase Branching, so use a second permanent project; the free tier allows two active projects).
+The harness starts with **one Supabase project** shared by local dev, previews and production (owner decision, signals-backend D10). The free plan allows two active projects across all your apps, and Supabase Branching is a paid feature. What that costs you: a preview can read and write live data, a migration applied for a PR is live at once, and an Edge Function deploy reaches every environment. So migrations stay backwards-compatible and are tested on a scratch Postgres first (`.claude/rules/database.md` § Environments and migrations).
 
-1. **Create** a second Supabase project (e.g. `<app>-staging`). Copy its URL and publishable key.
-2. **Build variables:** in Workers Builds, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to the **production** values for the production branch (`main`) and to the **staging** values for non-production branches. If the dashboard exposes only one set, switch on the branch name in the build command instead.
-3. **Schema parity:** build both projects only from `supabase/migrations/` — never by clicking in the dashboard — so staging cannot drift from production. Compare each project's applied-migration list with the files, and apply with the Supabase connector or the Supabase CLI (owner's choice; `supabase/README.md`).
-4. **Order of operations for a PR:** apply its migrations and deploy its Edge Functions to **staging** while the PR is open, test on the preview URL, merge, then apply the same migrations / deploy the same functions to **production**. Write migrations backwards-compatible (add before you remove) because the free plan has no point-in-time recovery.
-5. **Data:** staging holds fake or seed data only. Do not copy production rows into it.
-6. **Auth:** add the preview wildcard to the **staging** project's redirect URLs (and use staging Google OAuth origins/client); production keeps only its own origin.
+Isolate staging **before real users or sensitive data arrive**. Pick one:
 
-**Free-plan caveats:** inactive free projects pause after about a week (restore staging in the dashboard before testing a preview). All open PRs share the one staging database, so PRs with conflicting migrations collide; serialize them.
+- **Supabase Branching** (paid plan; [docs](https://supabase.com/docs/guides/deployment/branching), [pricing](https://supabase.com/pricing)). A branch is its own Supabase instance with its own URL and keys. A persistent staging branch has a stable URL, so fixed preview build variables fit. Per-PR preview branches get new keys each time, which fixed Cloudflare variables do not follow (verify before relying on it).
+- **A second project** (free while you have an active slot).
+
+Either way:
+
+1. **Build variables:** in Workers Builds, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` to the production values for the production branch (`main`) and to the staging values for non-production branches. If the dashboard exposes only one set, switch on the branch name in the build command instead.
+2. **Schema parity:** build every environment only from `supabase/migrations/`, never by clicking in a dashboard. Compare each environment's applied-migration list with the files, and apply with the Supabase connector or the Supabase CLI (owner's choice; `supabase/README.md`).
+3. **Order for a PR:** apply its migrations and deploy its Edge Functions to staging while the PR is open, test on the preview URL, merge, then apply the same migrations and functions to production. Keep migrations backwards-compatible (add before you remove): the free plan has no point-in-time recovery.
+4. **Data:** staging holds fake or seed data only. Do not copy production rows into it.
+5. **Auth:** add the preview wildcard to the staging environment's redirect URLs (and use staging Google OAuth origins or a staging client); production keeps only its own origin.
+
+**Free-plan caveats:** inactive free projects pause after about a week (restore it before testing a preview). All open PRs share one staging database, so PRs with conflicting migrations collide; serialize them.
 
 ### 3. Supabase auth URLs
 
 Add the deployed origins to Supabase **Authentication → URL configuration** (Site URL + Redirect URLs), e.g.:
 
 - `https://<your-worker>.<subdomain>.workers.dev/**` (production)
-- a wildcard preview pattern for branch builds, e.g. `https://*.<your-subdomain>.workers.dev/**` — add this to the **staging** project only (§ Staging backend); keep production to its own origin(s)
+- a wildcard preview pattern for branch builds, e.g. `https://*.<your-subdomain>.workers.dev/**` — add this to the project the previews use (§ Staging backend); once staging is isolated, to staging only, and keep production to its own origin(s)
 
 For Google OAuth, also add those origins to Google Cloud **Authorized JavaScript origins** and the callback path. Full checklist: [DOC_SUPABASE_GOOGLE_OAUTH.md](./DOC_SUPABASE_GOOGLE_OAUTH.md).
 
