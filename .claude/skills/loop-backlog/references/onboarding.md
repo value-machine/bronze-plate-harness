@@ -147,6 +147,16 @@ Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via t
 | Google sign-in, if used | Switching the provider on in Supabase is not enough: it needs a Google OAuth client (ID and secret) that allows the project's Supabase callback URL | `documentation/DOC_SUPABASE_GOOGLE_OAUTH.md` is the SSOT; the project's public auth settings (`/auth/v1/settings` with the publishable key) list `google` as enabled | Owner creates the client; agent verifies |
 | Each project's schema equals `supabase/migrations/` | Parity; no dashboard-only changes (`.claude/rules/database.md` § Environments and migrations) | Migration list from the connector or CLI once migrations exist; n/a before the first migration | Agent applies per that section |
 
+**Hand over exact values (after hosting is connected, or the Worker name and workers.dev subdomain are known).** The owner should only copy and paste, so the agent derives every Supabase URL setting, never asks the owner to work them out, and gives them in one block with the direct link to the project's URL configuration page (`https://supabase.com/dashboard/project/<ref>/auth/url-configuration`):
+
+- Derive the production origin from `wrangler.jsonc` `name` plus the account's workers.dev subdomain (Cloudflare connector, or `documentation/DOC_CLOUDFLARE_WORKERS.md`); a custom domain replaces it. Verify the host answers before handing it over.
+- **Site URL:** the production origin.
+- **Redirect URLs:** for each of the production origin, the preview pattern `https://*-<worker name>.<subdomain>.workers.dev`, and `http://localhost:5173`, list both the bare origin and its `/**` form.
+- **Google, if used:** the Google client's allowed callback is `https://<ref>.supabase.co/auth/v1/callback`, with the link to the Google credentials page the owner acts in (`documentation/DOC_SUPABASE_GOOGLE_OAUTH.md`).
+- Verify by reading the project's auth settings with the Supabase connector when it is available. When it is not, offer the owner a ready-to-send message for the Supabase dashboard assistant ("show my Site URL and the full redirect allow-list") and compare the answer with the block above.
+
+Gate: a sign-in that starts on a preview returns to that preview, and one on production stays on production.
+
 **Hosting (task #2 — Put your app online) — what must be true:**
 
 | Requirement | Why | Verify | Who acts |
