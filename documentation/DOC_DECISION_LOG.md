@@ -6,6 +6,17 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## google-signin-return — claude/charming-wright-ey9twz
+
+Google sign-in from a preview landed on production with "PKCE code verifier not found in storage". The auth logs showed the sign-in started on the preview origin, Supabase fell back to the Site URL because the bare-origin return address did not match the `/**` allow-list pattern, and production then failed with `bad_code_verifier`.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Root cause | closed | Return address did not match the allow-list, so Supabase redirected to the Site URL, where the stored code verifier does not exist | loop-refine | evidence: Supabase edge logs 2026-10-25 08:52 UTC (authorize with referer preview; token POST 400 with referer production) and `auth.users` (Google user created, `last_sign_in_at` empty) |
+| D2 | Redirect address | closed | Send `<origin>/` so documented `<origin>/**` patterns match on every host | loop-refine | clear-winner. Rejected: asking every fork to list bare origins too (easy to forget; the Supabase docs do not confirm bare-origin matching) |
+| D3 | Double exchange | closed | `handleCodeExchange` first checks for a signed-in session (waits for the library's own exchange) and exchanges itself only when there is none | loop-refine | clear-winner. Rejected: `detectSessionInUrl: false` (would also stop hash-based recovery links being picked up) |
+| D4 | Anonymous sign-ins | closed | Out of this lap; queued as a task | loop-refine | auth permission model is an owner stop. Observed: Supabase refuses the app's anonymous sign-in on every visit (`anonymous_provider_disabled`) |
+
 ## error-capture — claude/charming-wright-ey9twz
 
 Browser errors (uncaught errors, unhandled rejections, route-boundary errors) are sent to `error_logs` through `upsert_error_log()`: new feature `src/features/error-reporting/`.

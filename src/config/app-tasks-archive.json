@@ -1,5 +1,10 @@
 [
   {
+    "title": "Capture app errors to the database",
+    "description": "Global window error and unhandledrejection handler, error boundary reporting, and the existing logError path, all writing through the deduplicating upsert from the signals backend task. Tag each error with the environment (local, staging, production). Depends on: Signals backend task. Result: merged in PR #28 (src/features/error-reporting; live on production).",
+    "status": "done"
+  },
+  {
     "title": "Signals backend: error logs, feedback and bugs tables",
     "description": "Add supabase/migrations with error_logs (clustered by hash, upsert_error_log function), app_feedback and bugs tables, RLS, and a db:push-staging script, so the signal adapter in .agents/skills/loop-backlog/references/signal-adapter.md has data to read. Forks get this by default. Admin = a role claim in the user's auth app_metadata (never user_metadata, which users can edit); admins and local dev can read, signed-in users can insert their own rows. Test it on a scratch Postgres, then apply it to the project; with isolated staging, staging first and production after merge. Result: merged in PR #27 (tables, upsert_error_log, RLS; Google sign-in and production build verified; one shared Supabase project by default, D10).",
     "status": "done"

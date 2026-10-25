@@ -5,7 +5,7 @@ import {
   type SupabaseUser,
 } from "@/shared/services/supabaseService";
 import { queryClient } from "@/shared/utils/queryClient";
-import { getAppOrigin, getAppUrl } from "@/shared/utils/appOrigin";
+import { getAppUrl } from "@/shared/utils/appOrigin";
 import type { User, LoginCredentials, SignUpCredentials } from "@/features/auth/types/auth.types";
 import { mapProviderUserToAppUser } from "@/shared/utils/userUtils";
 import { DUPLICATE_SIGNUP_MESSAGE, mapAuthError } from "./authErrorMessages";
@@ -81,10 +81,31 @@ export const logout = (): Promise<AuthResult> =>
     { requireConfig: false }
   );
 
+/**
+ * The return address ends with "/" so allow-list patterns like `https://host/**` match it
+ * (a bare origin does not match them, and Supabase then sends the user to the Site URL).
+ */
 export const signInWithGoogle = (): Promise<AuthResult> =>
   runAuth((auth) =>
-    auth.signInWithOAuth({ provider: "google", options: { redirectTo: getAppOrigin() } })
+    auth.signInWithOAuth({ provider: "google", options: { redirectTo: getAppUrl("/") } })
   );
+
+/**
+ * True when a signed-in (non-anonymous) session exists. Reading the session waits for the client's
+ * initialization, which includes the library's own exchange of a `?code=` found in the URL, so this
+ * tells the callback whether that exchange already succeeded.
+ */
+export const hasSignedInSession = async (): Promise<boolean> => {
+  if (!isSupabaseConfigured()) {
+    return false;
+  }
+  try {
+    const { data } = await getSupabase().auth.getSession();
+    return Boolean(data.session && !data.session.user.is_anonymous);
+  } catch {
+    return false;
+  }
+};
 
 export const requestPasswordReset = (email: string): Promise<AuthResult> =>
   runAuth((auth) =>
