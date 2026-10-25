@@ -13,8 +13,10 @@ on:
 permissions:
   contents: read
 
+# Description edits (`edited`) get their own group so they never cancel a code run, and
+# code runs still cancel each other on a new push.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ github.event.action == 'edited' && 'edit' || 'code' }}
   cancel-in-progress: true
 
 jobs:
@@ -35,6 +37,9 @@ jobs:
         run: echo "No pull_request event, no title to check (${{ github.event_name }} on ${{ github.ref_name }})."
 
   test:
+    # Editing the PR description (preview link, ticked checkboxes) changes no code, so it must not
+    # re-run the suite: that left `test` pending and blocked the merge. Only the title check needs `edited`.
+    if: github.event.action != 'edited'
     runs-on: ubuntu-latest
 
     steps:
