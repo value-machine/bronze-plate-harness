@@ -6,6 +6,20 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## error-capture — claude/charming-wright-ey9twz
+
+Browser errors (uncaught errors, unhandled rejections, route-boundary errors) are sent to `error_logs` through `upsert_error_log()`: new feature `src/features/error-reporting/`.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Environment tag | closed | `VITE_APP_ENV` override, else dev server = `local`, else the Workers Builds branch (`WORKERS_CI_BRANCH`, defined as `__BUILD_BRANCH__`) not equal to `main` = `staging`, else `production` | loop-refine | clear-winner: needs no owner setting. Rejected: a build variable per environment (extra owner step), hostname matching (needs a configured production host) |
+| D2 | What leaves the browser | closed | Emails, JWT-like tokens, Supabase keys and bearer credentials replaced; URL is origin + path only (OAuth callbacks carry codes in query and fragment) | loop-refine | clear-winner (`security.md`: no secrets or PII in logs) |
+| D3 | Flood control | closed | Each hash once per page load; at most 20 sends per page load; the reporter never reports its own failures | loop-refine | clear-winner: complements the server-side 5000-cluster cap (signals-backend D5) |
+| D4 | Boundary hook | closed | Pass `reportError` to the existing `QueryErrorBoundary` `onError` prop in `App.tsx` | loop-refine | clear-winner: no UI-kit change; `components/common` may not import features |
+| D5 | Home | closed | New feature `error-reporting` (services + types) | loop-refine | clear-winner: its own bounded context |
+| D6 | Local development | closed | Local errors are reported too, tagged `local` | loop-refine | clear-winner: the owner asked that local dev can read the logs |
+| D7 | Vision | closed | `DOC_APP_VISION.md` is `DRAFT`: deferred | loop-refine | infrastructure lap; no product meaning changes |
+
 ## signals-backend — claude/charming-wright-ey9twz
 
 First migration of the repo: `error_logs`, `app_feedback`, `bugs`, `upsert_error_log()` and RLS under `supabase/migrations/`, applied to the Supabase project (created as `plate-harness-staging`, now `bronze-plate-harness`, the only project: D10) and tested there.

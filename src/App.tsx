@@ -9,6 +9,7 @@ import { QueryDevtoolsGate } from "@/components/common/QueryDevtoolsGate";
 import { MainLayout } from "@/layouts/MainLayout/MainLayout";
 import { PageLoadingState } from "@/components/common/PageLoadingState";
 import { QueryErrorBoundary } from "@/components/common/QueryErrorBoundary";
+import { reportError } from "@/features/error-reporting/services/errorReportService";
 
 const HomePage = lazy(() => import("@/pages/HomePage").then((m) => ({ default: m.HomePage })));
 const TasksPage = lazy(() =>
@@ -22,6 +23,8 @@ const AuthCallbackPage = lazy(() =>
   import("@/pages/AuthCallbackPage").then((m) => ({ default: m.AuthCallbackPage }))
 );
 
+const reportRenderError = (error: Error): void => reportError(error, "react");
+
 function AppContent() {
   const location = useLocation();
   const isTasksRoute = location.pathname === "/tasks";
@@ -30,7 +33,7 @@ function AppContent() {
     <>
       {!isTasksRoute && <Topbar />}
       <div className={isTasksRoute ? undefined : "pt-toolbar"}>
-        <QueryErrorBoundary>
+        <QueryErrorBoundary onError={reportRenderError}>
           <Suspense fallback={<PageLoadingState />}>
             <Routes>
               <Route element={<MainLayout />}>
