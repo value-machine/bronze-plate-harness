@@ -54,6 +54,12 @@ Misconfigured redirect URIs are the most common cause of “redirect_uri_mismatc
 1. Copy the **Client ID** and **Client secret** from the same Google **Web application** OAuth client.
 2. Paste them into the Supabase **Google** provider fields and save.
 
+## Redirect URLs in Supabase
+
+Under **Authentication → URL Configuration**, list every origin that can start a sign-in with a `/**` pattern, for example `https://your-production-domain.com/**`, `http://localhost:5173/**`, and for previews a pattern such as `https://*-your-worker.your-subdomain.workers.dev/**`. The app sends `<origin>/` as the return address, which these patterns match. `*` does not cross `.` or `/` (see [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls)).
+
+If an origin is missing, Supabase sends the user to the **Site URL** instead. The sign-in then fails on that site with *"PKCE code verifier not found in storage"*, because the verifier lives in the browser storage of the origin where the click happened. To diagnose, compare the `authorize` request's referer with the page you land on in the project's auth logs.
+
 ## 4. Verify in the app
 
 1. Restart the dev server after any `.env` change (if you touched Supabase keys).

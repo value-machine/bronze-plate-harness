@@ -23,14 +23,23 @@ export const getOAuthErrorMessage = (searchParams: URLSearchParams): string => {
   return OAUTH_CALLBACK_ERROR_MESSAGE;
 };
 
+const navigateToSavedPath = (navigate: NavigateFunction): null => {
+  void navigate(getAndClearRedirectPath() || "/", { replace: true });
+  return null;
+};
+
 export const handleCodeExchange = async (
   code: string,
   navigate: NavigateFunction
 ): Promise<string | null> => {
   if (!shouldExchangeCode(code)) {
-    const redirectPath = getAndClearRedirectPath();
-    void navigate(redirectPath || "/", { replace: true });
-    return null;
+    return navigateToSavedPath(navigate);
+  }
+
+  // supabase-js exchanges a `?code=` found in the URL during client initialization. A second exchange
+  // would fail (the verifier is already used up) and show a false error, so skip it when that worked.
+  if (await authService.hasSignedInSession()) {
+    return navigateToSavedPath(navigate);
   }
 
   try {
@@ -41,9 +50,7 @@ export const handleCodeExchange = async (
       return mapAuthError(exchangeError);
     }
 
-    const redirectPath = getAndClearRedirectPath();
-    void navigate(redirectPath || "/", { replace: true });
-    return null;
+    return navigateToSavedPath(navigate);
   } catch {
     void navigate("/", { replace: true });
     return OAUTH_CALLBACK_ERROR_MESSAGE;

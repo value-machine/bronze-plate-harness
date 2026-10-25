@@ -12,6 +12,7 @@ const mockSupabase = {
     resetPasswordForEmail: vi.fn(),
     updateUser: vi.fn(),
     exchangeCodeForSession: vi.fn(),
+    getSession: vi.fn(),
   },
 };
 
@@ -102,6 +103,54 @@ describe("authService", () => {
       const result = await authService.logout();
 
       expect(result.error).toBeNull();
+    });
+  });
+
+  describe("signInWithGoogle", () => {
+    it("should send a redirect address that ends with a slash so '<origin>/**' allow-list patterns match", async () => {
+      vi.mocked(mockSupabase.auth.signInWithOAuth).mockResolvedValue({
+        data: {},
+        error: null,
+      } as never);
+
+      await authService.signInWithGoogle();
+
+      const [args] = vi.mocked(mockSupabase.auth.signInWithOAuth).mock.calls[0];
+      expect(args.provider).toBe("google");
+      expect(args.options?.redirectTo).toBe(`${window.location.origin}/`);
+    });
+  });
+
+  describe("hasSignedInSession", () => {
+    const withSession = (session: unknown) =>
+      vi
+        .mocked(mockSupabase.auth.getSession)
+        .mockResolvedValue({ data: { session }, error: null } as never);
+
+    it("should return true when a non-anonymous session exists", async () => {
+      withSession({ user: { id: "u1", is_anonymous: false } });
+      await expect(authService.hasSignedInSession()).resolves.toBe(true);
+    });
+
+    it("should return false when the session is anonymous", async () => {
+      withSession({ user: { id: "u1", is_anonymous: true } });
+      await expect(authService.hasSignedInSession()).resolves.toBe(false);
+    });
+
+    it("should return false when there is no session", async () => {
+      withSession(null);
+      await expect(authService.hasSignedInSession()).resolves.toBe(false);
+    });
+
+    it("should return false when reading the session throws", async () => {
+      vi.mocked(mockSupabase.auth.getSession).mockRejectedValue(new Error("boom"));
+      await expect(authService.hasSignedInSession()).resolves.toBe(false);
+    });
+
+    it("should return false without asking Supabase when it is not configured", async () => {
+      vi.mocked(isSupabaseConfigured).mockReturnValue(false);
+      await expect(authService.hasSignedInSession()).resolves.toBe(false);
+      expect(mockSupabase.auth.getSession).not.toHaveBeenCalled();
     });
   });
 

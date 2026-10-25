@@ -45,7 +45,7 @@ Returns:
 
 - `/login` – dedicated sign-in page (redirects to `/` when already authenticated)
 - `/reset-password` – password recovery from email link
-- `/` – inline sign-in when logged out; primary OAuth PKCE callback handler
+- `/` – inline sign-in when logged out; primary OAuth PKCE callback handler. supabase-js exchanges the `?code=` itself while the client initializes, so `handleCodeExchange` first checks `hasSignedInSession()` and only exchanges when there is no signed-in session (a second exchange fails with "PKCE code verifier not found"). The Google return address is `<origin>/` (ends with a slash so `<origin>/**` redirect patterns match)
 - `/auth/callback` – legacy OAuth callback (kept for backward compatibility)
 
 ## Dependencies
