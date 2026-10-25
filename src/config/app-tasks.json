@@ -1,7 +1,7 @@
 [
   {
-    "title": "Signals backend: error logs, feedback and bugs tables",
-    "description": "Add supabase/migrations with error_logs (clustered by hash, upsert_error_log function), app_feedback and bugs tables, RLS, and a db:push-staging script, so the signal adapter in .agents/skills/loop-backlog/references/signal-adapter.md has data to read. Forks get this by default. Admin = a role claim in the user's auth app_metadata (never user_metadata, which users can edit); admins and local dev can read, signed-in users can insert their own rows. Test it on a scratch Postgres, then apply it to the project; with isolated staging, staging first and production after merge.",
+    "title": "Capture app errors to the database",
+    "description": "Global window error and unhandledrejection handler, error boundary reporting, and the existing logError path, all writing through the deduplicating upsert from the signals backend task. Tag each error with the environment (local, staging, production). Depends on: Signals backend task.",
     "status": "in-progress"
   },
   {
@@ -22,11 +22,6 @@
   {
     "title": "Configure Theme",
     "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Theme).",
-    "status": "to-do"
-  },
-  {
-    "title": "Capture app errors to the database",
-    "description": "Global window error and unhandledrejection handler, error boundary reporting, and the existing logError path, all writing through the deduplicating upsert from the signals backend task. Tag each error with the environment (local, staging, production). Depends on: Signals backend task.",
     "status": "to-do"
   },
   {

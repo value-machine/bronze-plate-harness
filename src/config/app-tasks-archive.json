@@ -1,5 +1,10 @@
 [
   {
+    "title": "Signals backend: error logs, feedback and bugs tables",
+    "description": "Add supabase/migrations with error_logs (clustered by hash, upsert_error_log function), app_feedback and bugs tables, RLS, and a db:push-staging script, so the signal adapter in .agents/skills/loop-backlog/references/signal-adapter.md has data to read. Forks get this by default. Admin = a role claim in the user's auth app_metadata (never user_metadata, which users can edit); admins and local dev can read, signed-in users can insert their own rows. Test it on a scratch Postgres, then apply it to the project; with isolated staging, staging first and production after merge. Result: merged in PR #27 (tables, upsert_error_log, RLS; Google sign-in and production build verified; one shared Supabase project by default, D10).",
+    "status": "done"
+  },
+  {
     "title": "Onboarding states requirements, not methods",
     "description": "Rewrite the onboarding gates and the seeded Supabase and hosting tasks so they state setup requirements (end state, why, how the agent verifies, who acts) instead of vendor click paths, and add the staging Supabase project requirement. Lap: documentation/jobs/temp_job_onboarding-requirements/BRIEF.md. Result: merged in PR #26 (onboarding.md states requirements; Supabase and hosting requirement tables; signals epic queued).",
     "status": "done"
