@@ -1,6 +1,7 @@
 import { Alert } from "@/components/common/Alert";
 import { Button } from "@/components/common/Button";
 import { useAuthContext } from "@/shared/context/AuthContext";
+import { HarnessOverviewCard } from "@/features/harness-overview/components/HarnessOverviewCard";
 import { SignInPanel } from "@/features/auth/components/SignInPanel";
 import { useAuthCallbackHandler } from "@/features/auth/hooks/useAuthCallbackHandler";
 import { PageLoadingState } from "@/components/common/PageLoadingState";
@@ -19,6 +20,8 @@ export const HomePage = () => {
 
   return (
     <div className={cn(appScrollContentClassName, "text-center")}>
+      <HarnessOverviewCard />
+
       {error && (
         <Alert
           variant="destructive"

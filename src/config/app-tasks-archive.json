@@ -18,5 +18,10 @@
     "title": "Run the loop skill evals against the v0.42.0 baseline",
     "description": "Deferred from the skill-loop rework (skill-loop D59) to save usage. Run the eval cases under .agents/skills/router/evals/ and .agents/skills/loop-*/evals/ (15 cases), once with the new skill and once with the v0.42.0 skills it replaced (baseline = commit a920c0d), using the skill-creator workflow or `claude plugin eval`. Report pass rates per skill, and fix the skills where the new version loses behavior. Context: documentation/DOC_DECISION_LOG.md § skill-loop. Result: 45/45 graders passed on new skills vs 39/45 on v0.42.0 baseline (composer-2.5); 0 regressions.",
     "status": "done"
+  },
+  {
+    "title": "Show the harness overview on the app's home page and README",
+    "description": "Publish the designed harness flowchart as an app route (/harness) built from kit components and the bronze theme tokens, with a PNG preview (public/harness-overview.png). Show a welcome card on the home page so visitors on the preview URL and on a fresh first run see it, and put the image at the top of README.md so people arriving from GitHub or Google see it. Result: merged in PR #32 (src/features/harness-overview, route /harness, public/harness-overview.png).",
+    "status": "done"
   }
 ]

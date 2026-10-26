@@ -6,6 +6,29 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## harness-overview-page — ccr-9236a832-dfo9sc
+
+A designed, plain-language overview of the agent harness is published as an app route and shown to visitors through a welcome card on the home page, with its preview image at the top of the README.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Format of the public page | superseded by D12 | Static `public/harness.html` | loop-refine | first choice, reversed by the owner at Stop 2 |
+| D2 | README image format | closed | PNG at `public/harness-overview.png` | loop-refine | clear-winner. Rejected: SVG (web fonts do not load as an image on GitHub), Mermaid (loses the design), inline HTML (GitHub strips it) |
+| D3 | Fonts on the static page | closed | Google Fonts with system fallbacks | loop-refine | clear-winner: `index.html` already loads Google Fonts, so no new external service |
+| D4 | PNG regeneration | closed | One-off screenshot, no script and no new dependency | loop-refine | clear-winner. A regen script would add Playwright to `package.json` (stop-list: new dependency), so it is deferred |
+| D5 | Content ownership | closed | Hand-written snapshot labelled with the harness version | loop-refine | clear-winner. Rejected: generating it from the skill catalog (new tooling, protected skill files) |
+| D6 | Recorded-decision conflicts | closed | None found | loop-refine | clear-winner. The app vision is still `DRAFT` |
+| D7 | Where the live app shows the page | closed | Welcome card on the home page for signed-out and signed-in visitors, linking to `/harness.html` | owner | owner message: visitors on the preview URL and after first setup should see it. Rejected: redirecting `/` (Google sign-in returns there), an iframe, a React copy, a footer or profile-menu link |
+| D8 | Home integration shape | closed | New feature `src/features/harness-overview/` (one card component and README, no barrel); `HomePage` renders it | loop-refine | clear-winner: pages stay thin; one bounded concept |
+| D9 | How a fork removes it | closed | Delete the feature folder and its one line in `HomePage`; no config flag | loop-refine | clear-winner. Rejected: a flag (extra code, a third state). Carried by an onboarding task |
+| D10 | README link target | closed | Image links to the PNG, not a live URL | loop-build | the live site answers `/harness.html` with the app's own page until this ships |
+| D11 | Share-preview image | closed | No `og:image` | loop-build | needs an absolute URL; deferred until the production domain is final |
+| D12 | Format of the overview (reopens D1) | closed | App route `/harness` built from kit components and theme tokens; `public/harness.html` removed | owner | Owner feedback at Stop 2: it should be part of the app and styled in the bronze theme, and expanding tokens was allowed. The static file was a parallel path outside the theme, tests and lint; its only gain was crawlers reading HTML without running JavaScript. Rejected: a Vite root page (needs a protected whitelist change), copied token values with a drift test. |
+| D13 | Keeping the content true | closed | `harnessOverviewContent.test.ts` fails when `.agents/skills/` and the content disagree; no hand-written version label | loop-refine | clear-winner: replaces D5's accepted drift risk with a mechanical check |
+| D14 | Tokens | closed | No new tokens; tints use opacity on existing tokens (`bg-primary/10`, `bg-secondary/10`) | loop-build | the existing bronze, verdigris, success and destructive tokens cover every role |
+| D15 | Page head | closed | The page renders its own `<title>` and meta description (React 19 hoists them) | loop-build | no head library; share-preview images stay deferred |
+| D16 | How the overview marks where the owner steps in | closed | Drop the 'Stop 1 / Stop 2' labels; a 'Your turn' badge (kit `Badge`, person icon) on the two highlighted cards, legend reads 'Where you step in' | owner | Owner feedback at Stop 2: the uppercase labels looked off. The card titles already speak to the reader and the highlight carries the meaning, but a text badge keeps the cue from depending on colour alone. No jargon for non-technical readers. |
+
 ## google-signin-return — claude/charming-wright-ey9twz
 
 Google sign-in from a preview landed on production with "PKCE code verifier not found in storage". The auth logs showed the sign-in started on the preview origin, Supabase fell back to the Site URL because the bare-origin return address did not match the `/**` allow-list pattern, and production then failed with `bad_code_verifier`.
