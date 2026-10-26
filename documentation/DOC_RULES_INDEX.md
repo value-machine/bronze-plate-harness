@@ -74,8 +74,8 @@ Quick reference guide to all rules and their relationships.
 ---
 
 ### Platform (`.claude/rules/platform.md`)
-- **PowerShell/Select-Object piping rules** (prevents IDE crashes)
-- Windows command rules, `$LASTEXITCODE` handling
+- Which shell rules apply (read the platform; Windows PowerShell / Git Bash vs plain bash)
+- PowerShell command rules, `$LASTEXITCODE` handling
 - Environment variable catalog (`VITE_*`, Supabase, Edge secrets)
 
 **Related to:** git-workflow, security

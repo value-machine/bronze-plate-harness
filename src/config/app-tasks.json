@@ -21,7 +21,7 @@
   },
   {
     "title": "Configure Theme",
-    "description": "Restyle the app via design tokens in src/index.css (light values in :root, dark in .dark): brand colors, radius, density, fonts. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Theme).",
+    "description": "Restyle the app via the design token files in src/shared/theme/tokens/ (light and dark colors, plus a base file for radius, density, fonts), then run pnpm tokens:build. See documentation/DOC_THEMING.md. Verify both modes with the theme icon in the profile menu. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Configuration tasks gate (Theme).",
     "status": "to-do"
   },
   {

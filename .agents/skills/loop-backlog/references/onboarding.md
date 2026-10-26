@@ -1,25 +1,26 @@
 # Onboarding (first laps on a fresh fork or the template)
 
-Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seeded onboarding tasks (Supabase, Hosting, App vision, Theme), or when the owner asks for first-time setup. Ported from `start` (v0.42.0). The gates below run **in order** before the first product lap: each gate states what must be true, why, how the agent verifies it, and who acts. A prerequisite the agent can check is checked; an action only the owner can take (an account, a vendor settings page) is named as a requirement and the agent waits for confirmation, then verifies the result.
+Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seeded onboarding tasks (Supabase, Hosting, App vision, Theme), or when the owner asks for first-time setup ("set up my app", "get me started", "onboard me"). Ported from `start` (v0.42.0). The gates below run **in order** before the first product lap: each gate states what must be true, why, how the agent verifies it, and who acts. A prerequisite the agent can check is checked; an action only the owner can take (an account, a vendor settings page) is named as a requirement and the agent waits for confirmation, then verifies the result.
 
 ## Core behavior
 
-- Be careful, explicit, and beginner-friendly.
-- Follow the Quick Start flow from `README.md` in order.
+- Be careful, explicit, and beginner-friendly. Assume the owner may be new to GitHub and coding agents: the first time a term appears (fork, pull request, connector, preview), explain it in a few plain words.
 - The **seeded backlog tasks** (`src/config/app-tasks.json`, UI at `/tasks` via DevTasksFab in local dev) are the onboarding checklist; `loop-backlog` ranks them first because everything else depends on them (skill-loop D41).
 - Validate every step before proceeding.
 - Never claim setup is complete without user confirmation and successful verification checks.
 - **Requirements, not methods (owner decision).** For anything in an external app (GitHub, Supabase, Cloudflare, Google Cloud, an OS, an editor) state the end state needed, why, and how the agent will check it. Do not write click paths, menu names, or CLI flags from memory: vendors change them with every release. If the owner asks how, look up the vendor's current documentation (connector or MCP first, per `.claude/rules/api-integration.md`) and point to that page. The owner takes the action; wait for confirmation, then verify. Commands and docs of this repo may be cited as written. Always pair a requirement the owner must act on with the direct link to its settings page (`.claude/rules/agent-behavior.md` § Handing an action to the owner).
+- **The agent finds the link; this file does not store it.** Links to vendor pages are looked up at the moment they are needed (for the surface the owner uses, from the platform's or vendor's current docs), checked to load, and then handed over. Never copy a deep link from memory or from an old chat.
 
 ## Template repo vs fork (read first)
 
 **Working on this plate-harness template** (improving the harness itself — not building an app from a fork):
 
 - **Skip Supabase (task #1)** and **Cloudflare hosting (task #2)**. No project, no Workers Builds link, no `.env` required for most template work. The app runs locally without auth configured.
-- **App vision (task #3):** may stay **`DRAFT`** while exploring or contributing to the template; do not block template PRs on it unless the change is product-facing.
+- **App vision (task #3):** may stay **`DRAFT`** while exploring or contributing to the template; do not block template PRs on it unless the change is product-facing. Never replace the template's placeholder text in `DOC_APP_VISION.md` or the seeded tasks in `app-tasks.json`: forks start from them.
+- **Connect tools:** only what the template work needs (usually GitHub access).
 - **Still do:** prerequisites, branch workflow (SSOT: `src/config/git-workflow.json` + `.claude/rules/git-workflow.md` § Mode-aware branch gate), `pnpm dev`, and the verification checklist (§ Mandatory verification checklist).
 
-**Working on a fork** (someone cloned this to build their own app): full backlog applies — Supabase, hosting, vision **`ACTIVE`**, etc.
+**Working on a fork** (someone cloned this to build their own app): full backlog applies — tools connected, Supabase, hosting, vision **`ACTIVE`**, etc.
 
 When the user says they are on the **template** (or context is clearly harness maintenance), default to the skip list above. Only walk Supabase/Cloudflare gates when they are onboarding a fork or explicitly ask to wire up services.
 
@@ -36,12 +37,14 @@ Fresh clones ship four pre-seeded tasks in priority order:
 
 - At session start: read `src/config/app-tasks.json`; set relevant task `in-progress` when picking up onboarding work.
 - After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note Theme skipped).
-- Checks: Supabase env vars present; hosting configured per README; vision doc `ACTIVE`; optional theme as applicable.
+- Checks: Supabase env vars present; hosting configured per § Configuration tasks gate; vision doc `ACTIVE`; optional theme as applicable.
 - **Conflict:** `/tasks` UI disk-wins — reconcile with user edits; do not fight pending UI state.
 
 Configuration is via `.env`, README, and docs — there is no in-app setup wizard.
 
 ## Flow (README-aligned)
+
+**Opening message.** Before the first gate, tell the owner in three or four short lines what is about to happen: their own copy of the repo, connecting the tools the agent works through, a few questions about their app, then the services. Say that the agent does what it can itself and only hands over what needs their account.
 
 ### 1) Prerequisites gate
 
@@ -67,47 +70,64 @@ If versions are missing/too low:
 
 Only continue when all three checks pass.
 
-### 2) App vision & goals gate (mandatory before fork/clone and setup)
-
-**Template repo:** skip this gate unless the user is preparing a fork or the work changes user-facing product behavior. Record in chat that vision can stay **`DRAFT`** for template-only work.
-
-**Fork / app onboarding:** This fork's **product SSOT** is `documentation/DOC_APP_VISION.md` (problem statement, user persona, app's role).
-
-- Read that file **now**.
-- If the vision line still shows **`DRAFT`** (per the status callout at the top), **stop forward progress** on onboarding until task #3 (Define app vision) is addressed: walk the user through filling each section in their own words. Use the placeholders only as prompts; they must be **replaced** with real prose, then set the status token to **`ACTIVE`** on that same line.
-- **Do not** continue to **Fork + clone** (next gate) until either:
-  - the vision status is **`ACTIVE`**, or
-  - the user **explicitly** instructs you to defer (e.g. exploring the repo only) — in that case, record in chat that feature/plan work should run this vision gate or fill `DOC_APP_VISION.md` before product decisions.
-
-Optional: open `documentation/DOC_APP_VISION.md` in the editor for the user when the environment supports it.
-
-### 3) Line endings gate (mandatory on Windows too)
-
-Requirement: files are written and committed with LF endings (CRLF breaks the validators and creates noisy diffs).
-
-- Git: verify `git config core.autocrlf` prints `false`; if not, ask before changing it.
-- Editor: the owner confirms it writes LF for this project (the agent cannot read editor settings).
-
-### 4) Fork + clone gate
+### 2) Fork + clone gate
 
 Requirement: the owner has their own copy of the repo on GitHub (a fork or a copy from the template; README Option B), cloned locally, with dependencies installed.
 
 - Verify: `git remote -v` shows the owner's repo as `origin`; `pnpm install` completes.
 - Creating the GitHub copy is the owner's action; wait for confirmation, then verify.
+- If `origin` still points at the template, the owner has a clone, not a copy: say what that means in one line (their changes would have nowhere to go), hand over the link to create their own copy of this repo, and once they give its URL, point `origin` at it.
+
+### 3) App vision & goals gate
+
+**Template repo:** skip this gate unless the user is preparing a fork or the work changes user-facing product behavior. Record in chat that vision can stay **`DRAFT`** for template-only work.
+
+**Fork / app onboarding:** This fork's **product SSOT** is `documentation/DOC_APP_VISION.md` (problem statement, user persona, app's role). It comes early because every later choice (which sign-in providers, which data, how the app looks) reads from it.
+
+- Read that file **now**. If the status line shows **`ACTIVE`**, continue to the next gate.
+- If it shows **`DRAFT`**, run a short **vision interview**. Say why first, in one line: agents read this page before every product decision, so a few minutes now saves guessing later.
+  - Ask **one question at a time**, in plain words, and wait for each answer. Short or rough answers are fine.
+  - Cover, in this order: **the problem** (who has it, what they do about it today), **the main user** (who they are, what slows them down, what a good day looks like), **what the app does and does not do** (one sentence each, plus anything it connects to), and optionally **how they will know it works** (one or two goals).
+  - Follow up only where an answer is too vague to write a sentence from; at most one follow-up per question.
+- Then draft the sections from the answers, in the owner's own words, and show the draft. Don't add product ideas the owner did not give; anything they were unsure about goes under **Optional: open questions**. Remove the placeholder lines and unused optional sections.
+- After the owner confirms (or edits) the draft, write it and change the status token to **`ACTIVE`** on that same line.
+- **Do not** continue to the service gates until either:
+  - the vision status is **`ACTIVE`**, or
+  - the user **explicitly** instructs you to defer (e.g. exploring the repo only) — in that case, record in chat that feature/plan work should run this vision gate or fill `DOC_APP_VISION.md` before product decisions.
+
+Optional: open `documentation/DOC_APP_VISION.md` in the editor for the user when the environment supports it.
+
+### 4) Connect tools gate
+
+The agent sets up most of this repo itself, through connections to the services it uses. Without them, the owner has to copy values between dashboards by hand. This gate connects them once, up front.
+
+| Requirement | Lets the agent | Verify | Who acts |
+|---|---|---|---|
+| The agent can reach the owner's GitHub repo (sign-in or app access, whichever the owner's coding surface uses) | push branches, open pull requests, read CI and the branch rules (branch workflow gate) | a dry-run push to `origin` succeeds and a read of the repo's branch rules answers | Owner grants access; agent verifies |
+| A Supabase connector, signed in to the owner's Supabase account (the repo ships one in `.mcp.json`) | create or find the project, read keys and auth settings, check migrations and logs | a call that lists the owner's Supabase projects or organizations answers | Owner signs in; agent sets `project_ref` in `.mcp.json` once the project exists (Supabase task) |
+| A Cloudflare connector, signed in to the owner's Cloudflare account | read the Worker, its builds and the account's workers.dev subdomain (hosting task) | a call that lists the account's Workers answers | Owner signs in; agent verifies |
+
+- **Check first, ask second.** List the tools the agent already has and make one test call per row; skip every row that already works.
+- **For each missing row:** say in one line what it lets the agent do for them, then give the link where the owner connects it, found for their coding surface (Claude Code in a terminal or desktop, claude.ai on the web, Cursor) per § Core behavior. Wait, then run the row's check.
+- `.mcp.json` ships the Supabase connector read-only (`read_only=true`). Reading is all onboarding needs; letting the agent apply migrations through it is a **data change** for the owner to decide (`.claude/rules/agent-behavior.md` § When to ask).
+- The owner may decline a connector. Then the matching task runs its manual path (the owner reads values off the dashboard); record which rows were declined in chat.
 
 ### 5) Branch workflow gate
 
-**Prerequisites:** GitHub CLI `gh` installed and authenticated (`gh auth login`) — the Claude Code desktop PR monitor and auto-merge need it.
+**Prerequisite:** the GitHub row of § Connect tools gate passes. The `gh api` reads below can run through a GitHub connector instead where the owner's surface has no `gh`.
 
 **Template repo (harness maintenance):** **`model-c`**.
 
-**Fork:** ask once:
+**Fork:** ask once, in plain words, with the recommended option first:
 
-> Claude Code defaults — PR to `main`, merge = production (Model C, default), feature branches → `develop` (Model A), or direct `develop` (Model B)?
+> How should finished changes reach your live app?
+> - **Through a pull request, one per change (recommended)** — each change gets its own preview link to try; merging it puts it live. (Model C)
+> - **Through a shared test branch** — changes collect on a `develop` branch you can try as a whole, then you release them together. (Model A)
+> - **Straight to the test branch, no pull requests** — fastest, but nothing checks a change before it lands. (Model B)
 
 Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-a"` | `"model-b"`). Then walk `.claude/rules/git-workflow.md` § Mode behavior table → **fork setup**, **`main` ruleset**, **`develop` ruleset** for the chosen column. Behavior SSOT is that table — do not restate it here.
 
-**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches, and **no `NODE_VERSION` build variable** on either the Production or the Previews tab — it overrides `.node-version` and the `preinstall` guard then fails the build, release-please's branch included (`documentation/DOC_CLOUDFLARE_WORKERS.md` § build variables). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
+**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), and Cloudflare production branch `main` with previews on all branches (hosting task). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
 
 **Model A / B:** create `develop` from `main` once (`git push origin main:develop`).
 
@@ -115,23 +135,17 @@ Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-
 - **Model B:** `git switch develop && git pull origin develop`; do **not** create `feature/*` for daily work. **Ruleset confirmation gate (B — required):** confirm the live `develop` ruleset matches the table (user confirmation or `gh api repos/OWNER/REPO/rules/branches/develop`): `pull_request` **absent**; `required_status_checks` (`test`) present; `non_fast_forward` + `deletion` present. Do not proceed on click-path instructions alone.
 - **First-promotion bootstrap (A/B):** once the promote workflow file exists on `develop`, `main` is fast-forwarded once — **the user runs** the command in `.claude/rules/git-workflow.md` § Promote to production § First promotion bootstrap (agents are blocked from writing to `main`). Use **Promote to production** thereafter.
 
-The settings that table lists (rulesets, squash-only merges, auto-merge, branch deletion) are requirements. The owner applies them in GitHub; the agent verifies with `gh api` where it can and otherwise asks for confirmation.
+The settings that table lists (rulesets, squash-only merges, auto-merge, branch deletion) are requirements. The owner applies them in GitHub; the agent verifies with `gh api` where it can and otherwise asks for confirmation. Hand them over as one list with the link to the repo's settings page, not one at a time.
 
-### 6) Dev server gate
+### 6) App runs gate
 
-Run:
-
-```bash
-pnpm dev
-```
-
-Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via the floating action button to see the onboarding checklist.
+The agent checks this itself; no owner action. Start `pnpm dev` and confirm `/` and `/tasks` answer (and `/login` once Supabase is configured). Tell the owner the local URL and that the floating **Tasks** button opens their onboarding checklist. If a route fails, troubleshoot before continuing.
 
 ### 7) Configuration tasks gate (work through backlog)
 
 **Template repo:** skip tasks #1 (Supabase) and #2 (Cloudflare) unless explicitly testing those paths. Archive or leave them `to-do`; do not treat missing `.env` as a failure.
 
-**Fork onboarding:** walk through backlog tasks in order (skip or archive optional items the user declines):
+**Fork onboarding:** walk through backlog tasks in order (skip or archive optional items the user declines). Where § Connect tools gate connected a service, the agent does the reads and checks below through it and asks the owner only for what needs their account:
 
 **Supabase (task #1) — what must be true:**
 
@@ -168,59 +182,31 @@ Gate: a sign-in that starts on a preview returns to that preview, and one on pro
 
 The agent's playbook (build settings, troubleshooting) is the **Agent one-shot brief** in `documentation/DOC_CLOUDFLARE_WORKERS.md`; the task description in `src/config/app-tasks.json` is the plain-language summary.
 
-**App vision (task #3):** Collaborate on `DOC_APP_VISION.md`; set status to **`ACTIVE`**.
+**App vision (task #3):** done in § App vision & goals gate; archive the task once the status is **`ACTIVE`**.
 
-**Theme (task #4):** Customize the design tokens in `src/index.css` or skip if defaults suffice.
+**Theme (task #4):** Customize the design tokens (`documentation/DOC_THEMING.md`) or skip if defaults suffice. Offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
 
 Update `app-tasks.json` as each step completes.
 
-### 8) Route verification gate
+Mobile layout or mobile OAuth on local dev, when the owner needs it: **`documentation/DOC_MOBILE_LOCAL_DEV.md`** (SSOT).
 
-Verify routes from README:
+## Mandatory verification checklist
 
-- `/`
-- `/tasks` (dev only, via FAB)
-- `/login` (when Supabase configured)
-
-If a route fails, troubleshoot before continuing.
-
-### 9) Physical device testing (optional)
-
-If the user needs mobile layout or mobile OAuth on local dev, link **`documentation/DOC_MOBILE_LOCAL_DEV.md`** (SSOT). Do not duplicate adb or redirect steps here.
-
-## Mandatory verification checklist ("test for everything")
-
-Run and verify all relevant checks:
+Proves the fork installs and builds; pre-commit and CI run the full set on every change after this.
 
 ```bash
-pnpm lint
-pnpm format:check
-pnpm type-check
 pnpm validate:structure
-pnpm test:classify
 pnpm test:run
 pnpm build
 ```
 
-Optional during development: `pnpm test:staged` after `git add` to preview pre-commit test selection.
-
-**How to write tests:** `documentation/DOC_TESTING.md` (runners, colocation, naming, `tests/test-utils`).
-
-If any check fails:
-
-- Stop and fix in smallest safe steps
-- Re-run failed check(s)
-- Re-run full checklist before final confirmation
+If a check fails, fix it in the smallest safe step and re-run it before final confirmation.
 
 ## Communication rules during onboarding
 
 - Use short steps and numbered instructions.
-- After each gate that needs a manual action from the user (dashboard, account, browser), wait for their confirmation; gates the agent can verify itself (commands, files) need no question.
-- For any action only the owner can take (a vendor website, an account, a browser prompt), say:
-  - what must be true afterwards
-  - why it matters
-  - how the agent will check it
-  - then wait for confirmation and run that check
+- Gates the agent can verify itself (commands, files, connector calls) need no question. For an action only the owner can take, hand it over per § Core behavior (end state, why, link, how the agent checks), wait for their confirmation, then run the check.
+- Keep each handover to what the owner needs to act; if they ask where a button is, look it up then rather than writing it in advance.
 - Do not skip gates even if user is experienced, unless user explicitly asks to skip **or** context is **template repo** work (see § Template repo vs fork).
 
 ## Completion criteria
@@ -232,10 +218,11 @@ Only consider onboarding complete when:
 **Fork / app onboarding:**
 
 1. **`documentation/DOC_APP_VISION.md`** is **`ACTIVE`** (or user explicitly deferred with reason recorded)
-2. User confirms configuration tasks they wanted are done (backlog archived or updated)
-3. Route checks pass
-4. Verification checklist passes
-5. User confirms they are ready to proceed
+2. The tools in § Connect tools gate are connected, or the owner declined them (recorded)
+3. User confirms configuration tasks they wanted are done (backlog archived or updated)
+4. App runs gate passes
+5. Verification checklist passes
+6. User confirms they are ready to proceed
 
 ---
 

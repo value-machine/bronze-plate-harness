@@ -1,10 +1,10 @@
 # Platform and Environment
 
-Windows shell rules (PowerShell and Git Bash) and local environment configuration for this repo. The two command sections below are **shell-specific**; § Environment Variables and Configuration applies to every shell.
+Windows shell rules (PowerShell and Git Bash) and local environment configuration for this repo. The command sections below are **shell-specific**; § Environment Variables and Configuration applies to every shell.
 
 ## Platform and Commands
 
-**Environment:** Windows. Cursor terminal = PowerShell; Claude Code Bash tool = Git Bash.
+**Environment:** read it from the session's environment info; don't assume it. The owner's local machine is usually Windows: Cursor terminal = PowerShell; Claude Code Bash tool = Git Bash. Cloud sessions (Claude Code on the web) and macOS/Linux machines run plain bash: none of the Windows sections below apply there.
 
 **Command Rules (when the shell is PowerShell):**
 - No Unix-style `&&` chaining
@@ -15,45 +15,15 @@ Windows shell rules (PowerShell and Git Bash) and local environment configuratio
 
 **Applies when the shell is PowerShell** (Cursor terminal). In Git Bash use § Git Bash below.
 
-**Critical - Select-Object Piping Issue:**
+### Exit Code Handling
 
-Never pipe directly to `Select-Object` without `Out-String` first. This triggers VS Code/Cursor network errors that crash the IDE environment.
-
-**Wrong (Do Not Use - Triggers Network Error):**
-- Piping directly to `Select-Object` without `Out-String` first
-
-**Correct (Always Use One of These):**
-- Option 1: Use `Out-String` before `Select-Object` (recommended)
-- Option 2: Capture to variable first (also safe)
-- Option 3: No output filtering (safest, but shows all output)
-
-**Critical - Exit Code Handling to Prevent Cursor Crashes:**
-
-Always check `$LASTEXITCODE` after external commands to prevent Cursor crashes. PowerShell doesn't always propagate exit codes correctly, and Cursor crashes when it receives error output but thinks the command succeeded (exit code 0).
-
-**Required Pattern:**
+PowerShell does not stop when an external command (git, pnpm, node) fails, and `$?` is unreliable for them. Check `$LASTEXITCODE` after each one:
 
 ```powershell
 command 2>&1; if ($LASTEXITCODE -ne 0) { exit 1 }
 ```
 
-- `command 2>&1` - Runs command, redirects stderr to stdout
-- `;` - Command separator (PowerShell equivalent of `&&`)
-- `$LASTEXITCODE` - PowerShell variable containing last command's exit code
-- `if ($LASTEXITCODE -ne 0)` - Check if command failed
-- `exit 1` - Force explicit failure exit code
-
-**When to Use This Pattern:**
-- Long-running commands (like `pnpm arch:check`, `pnpm lint`)
-- Commands that might fail silently
-- Commands producing large output
-- Any command where Cursor might hang or crash
-- npm/node commands (lint, test, build)
-- Commands with output filtering
-
-**Notes (PowerShell only):**
-- Check `$LASTEXITCODE` (not `$?`) after commands
-- Use `exit $LASTEXITCODE` to preserve original exit code (or `exit 1` for explicit failure)
+Use `exit $LASTEXITCODE` to keep the original exit code.
 
 ## Git Bash
 

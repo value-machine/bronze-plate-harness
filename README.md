@@ -45,33 +45,6 @@ _How work moves through the agent harness, in plain language. The running app se
   - Install: `choco install graphviz` (Windows with Chocolatey) or [download installer](https://graphviz.org/download/)
   - Only needed if you want to run `pnpm arch:graph` to visualize the architecture
 
-### Configure Line Endings
-
-**IMPORTANT:** Before starting, configure VS Code/Cursor to use Linux line endings (`\n`). This ensures consistent line endings across all files and prevents linting errors.
-
-#### Editor Configuration (VS Code / Cursor)
-
-**Note:** Cursor uses VS Code settings. Configure the line ending setting in VS Code/Cursor settings:
-
-1. Press `Ctrl + ,` to open Settings
-2. Search for `files.eol` or `line ending`
-3. Change the setting from `auto` to `\n` (Linux)
-   - The setting is: **"Files: Eol"** → Select `\n` from the dropdown
-
-See [this guide](https://stackoverflow.com/questions/71240918/how-to-set-default-line-endings-in-visual-studio-code) for more details.
-
-#### Git Configuration
-
-Configure Git to preserve LF line endings (the repository already includes `.gitattributes` to enforce this):
-
-```bash
-git config core.autocrlf false
-```
-
-This prevents Git from converting LF to CRLF on Windows systems.
-
-**Why this matters:** The repository uses LF line endings. Without proper configuration, Git on Windows may convert them to CRLF, causing thousands of Prettier/ESLint errors.
-
 ### Linter Setup
 
 This project uses **ESLint** and **Prettier** for code quality and formatting. The linters are already configured and will run automatically.
@@ -103,29 +76,14 @@ pnpm format:check
 - Install the ESLint and Prettier extensions
 
 **If you see many linting errors after cloning:**
-- This is usually due to line ending issues (see [Configure Line Endings](#configure-line-endings) above)
 - Run `pnpm format` to auto-fix formatting issues
 - Run `pnpm lint:fix` to auto-fix linting issues
 
 ### Using Cursor Agent
 
-When using Cursor's AI agent to make commits, you may encounter permission issues. This section explains how to configure Cursor to allow Git commits. To allow the agent to perform Git commits automatically, configure the **Command Allowlist** in Cursor settings.
+**Requirement:** the agent can run `git add`, `git commit` and `git push` in your project; the loop commits for you once its checks pass.
 
-#### Configure Command Allowlist
-
-1. Open Cursor Settings (`Ctrl + ,`)
-2. Search for "Command Allowlist" or "allowlist"
-3. Add the following commands to the allowlist:
-   - `powershell`
-   - `Set-Location`
-   - `git diff`
-   - `git commit`
-   - `cd`
-   - `git add`
-
-**Why this is needed:** By default, Cursor's agent runs in a sandboxed environment. Adding these commands to the allowlist allows Git operations to run outside the sandbox, preventing permission errors (like `env.exe: couldn't create signal pipe, Win32 error 5`) when committing.
-
-**Note:** After adding these commands to the allowlist, the Cursor agent can perform Git commits without requiring elevated permissions (`all`), making the workflow smoother.
+If your editor's agent sandbox blocks git (on Windows this can show up as `env.exe: couldn't create signal pipe, Win32 error 5`), allow git commands for the agent in your editor's settings. Your agent can find the current setting for you.
 
 ## Quick Start Guide
 
@@ -189,25 +147,39 @@ In local dev, use the floating **Tasks** button (bottom-right) to open `/tasks` 
 
 ### Step 5: Complete onboarding tasks
 
-Work through the dev task backlog at `/tasks` (or edit `src/config/app-tasks.json` directly). All sections are optional except what your app needs; configure what you want now and skip or archive the rest.
+Easiest: tell your coding agent **"set up my app"**. It walks you through these one at a time: it connects the tools it works through, asks a few questions about your app, and gives you a link whenever something has to happen on a website.
 
-#### Supabase (optional, needed for auth/database) 🔐
+Or work through the dev task backlog at `/tasks` yourself (or edit `src/config/app-tasks.json` directly). All sections are optional except what your app needs; configure what you want now and skip or archive the rest.
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. Go to **Project Settings -> API**.
-3. Copy your **Project URL** and **Publishable Key**.
-4. Create `.env` in project root:
+#### Supabase: sign-in and database (optional) 🔐
 
-```bash
-VITE_SUPABASE_URL=your-project-url
-VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
-```
+**You need:** a Supabase account and one project (the free plan is fine): [supabase.com/dashboard](https://supabase.com/dashboard)
 
-5. Restart dev server after `.env` changes (`Ctrl+C`, then `pnpm dev`).
+**Done when:**
 
-6. **Sign in with Google (optional):** Enabling the provider in Supabase is not enough until Google Cloud allows Supabase’s callback URL. Follow the single checklist: [documentation/DOC_SUPABASE_GOOGLE_OAUTH.md](./documentation/DOC_SUPABASE_GOOGLE_OAUTH.md) (SSOT for dashboard steps).
+- [ ] `.env` in the project root holds your project's URL and **publishable** key (never the secret key; this one ends up in the browser):
 
-Legacy note: `VITE_SUPABASE_ANON_KEY` is still accepted for backward compatibility.
+  ```bash
+  VITE_SUPABASE_URL=your-project-url
+  VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+  ```
+
+- [ ] The dev server was restarted after the change (`pnpm dev`)
+- [ ] `/login` shows the sign-in panel and a sign-in works
+- [ ] *Google sign-in, if you want it:* a Google OAuth client allows Supabase's callback URL. Requirements: [DOC_SUPABASE_GOOGLE_OAUTH.md](./documentation/DOC_SUPABASE_GOOGLE_OAUTH.md)
+
+With the Supabase connector connected, your agent reads these values from your project itself; without it, the agent tells you which page shows them. (`VITE_SUPABASE_ANON_KEY` still works as the older name for the key.)
+
+#### Put your app online: Cloudflare (optional) 🌐
+
+**You need:** a Cloudflare account (the free plan is fine): [dash.cloudflare.com](https://dash.cloudflare.com)
+
+**Done when:**
+
+- [ ] Your GitHub repo is connected to Cloudflare Workers Builds, with `main` as the production branch and previews on for other branches
+- [ ] A pull request gets a comment with its own preview link
+
+Ask your agent to "do the hosting task"; it sets up the rest and checks it. Details: [DOC_CLOUDFLARE_WORKERS.md](./documentation/DOC_CLOUDFLARE_WORKERS.md)
 
 #### Theme customization (optional) 🎨
 
@@ -235,21 +207,6 @@ Start building per your git-workflow mode (`src/config/git-workflow.json`) — `
 
 For detailed installation instructions, see the [Quick Start Guide](#quick-start-guide) above.
 
-### Optional: Manual Supabase Setup
-
-If you prefer to set up Supabase manually (same as task #1 in the dev backlog):
-
-1. Create a `.env` file in the project root directory
-
-2. Add your Supabase credentials to `.env`:
-```
-VITE_SUPABASE_URL=your-project-url
-VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
-```
-**Note:** The legacy `VITE_SUPABASE_ANON_KEY` also works for backward compatibility.
-
-3. Restart the development server for environment variables to take effect
-
 ### Features
 
 - ✅ **Authentication**: Supabase authentication (when configured)
@@ -258,11 +215,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 
 ### Configuring Supabase Later
 
-If you skipped Supabase setup initially, you can configure it anytime:
-
-1. Open `/tasks` in local dev (floating button) or edit `.env` directly
-2. Add Supabase credentials to `.env` (see [Manual Supabase Setup](#optional-manual-supabase-setup))
-3. **Restart your development server** (`Ctrl+C` then `pnpm dev`)
+The app runs without Supabase. Set it up anytime: ask your agent, or follow [Step 5 § Supabase](#supabase-sign-in-and-database-optional-).
 
 
 ### Troubleshooting
