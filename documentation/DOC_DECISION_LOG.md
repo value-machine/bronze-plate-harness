@@ -6,6 +6,16 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## onboarding-first-lap — claude/zen-volta-ycv0zp
+
+A fork's first session built a whole product lap before hosting existed, so the owner had no preview to test and got Cloudflare click paths written from memory. Onboarding now starts from the repo's state, a direct request runs the open hosting gates first, and the template no longer ships its own lap as in-progress.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | When onboarding starts | closed | From the repo's state (`onboarding.md` § Still open on a fork: seeded Hosting task active, no PR with a Cloudflare preview comment, no matching Worker), routed by `loop-map`; setup phrases such as "initialize" also trigger it | owner | Rejected: trigger phrases only (the fork session said "initialize" and onboarding never ran); naming the template repo to tell fork from template (README and `origin` disagree, and the name changes on copy) |
+| D2 | Direct request on a fork without hosting | closed | The request goes on top, but the open hosting gates run first; building without a preview needs the owner's say-so, recorded in the lap. Only the owner's own words name a task; "next" names none | owner | Amends skill-loop D26. The fork agent turned "volgende stap" into a request it wrote itself, which skipped the ranking that puts onboarding first (skill-loop D41) |
+| D3 | Template lap leaking into forks | closed | The landed Google sign-in task (#29) is archived, so forks no longer inherit it as `in-progress` | owner | |
+
 ## harness-overview-page — ccr-9236a832-dfo9sc
 
 A designed, plain-language overview of the agent harness is published as an app route and shown to visitors through a welcome card on the home page, with its preview image at the top of the README.
