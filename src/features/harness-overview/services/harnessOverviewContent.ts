@@ -26,7 +26,7 @@ export const HARNESS_STAGES: HarnessStage[] = [
     skill: "loop-backlog",
     title: "Choose what is next",
     summary: "Ranks the to-do list and asks you to confirm the top item.",
-    ownerStop: "Stop 1: you confirm",
+    ownerStep: true,
     handoff: "top task",
     helpers: [],
   },
@@ -93,7 +93,7 @@ export const HARNESS_STAGES: HarnessStage[] = [
     skill: "loop-verdict",
     title: "You try the preview and decide",
     summary: "You get the link, test steps and a summary, then answer one question.",
-    ownerStop: "Stop 2: you test",
+    ownerStep: true,
     helpers: [
       skill("meta-learn-lessons", "After a Change or Drop, turns the miss into a better rule."),
     ],

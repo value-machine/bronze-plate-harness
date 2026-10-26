@@ -33,7 +33,7 @@ const HarnessOverviewHeader = () => (
       </span>
       <span className="inline-flex items-center gap-1.5">
         <i className={cn(legendSwatchClassName, "border-primary bg-primary/10")} />
-        You step in
+        Where you step in
       </span>
       <span className="inline-flex items-center gap-1.5">
         <i className={cn(legendSwatchClassName, "border-secondary bg-secondary/10")} />

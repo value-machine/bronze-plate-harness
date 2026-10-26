@@ -32,8 +32,8 @@ describe("harnessOverviewContent", () => {
     expect(unknown).toEqual([]);
   });
 
-  it("should put the owner stops on the backlog and verdict stages when the loop is read", () => {
-    const stops = HARNESS_STAGES.filter((stage) => stage.ownerStop).map((stage) => stage.skill);
+  it("should put the owner steps on the backlog and verdict stages when the loop is read", () => {
+    const stops = HARNESS_STAGES.filter((stage) => stage.ownerStep).map((stage) => stage.skill);
 
     expect(stops).toEqual(["loop-backlog", "loop-verdict"]);
     expect(HARNESS_UPKEEP_SKILLS.length).toBeGreaterThan(0);

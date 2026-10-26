@@ -27,6 +27,7 @@ A designed, plain-language overview of the agent harness is published as an app 
 | D13 | Keeping the content true | closed | `harnessOverviewContent.test.ts` fails when `.agents/skills/` and the content disagree; no hand-written version label | loop-refine | clear-winner: replaces D5's accepted drift risk with a mechanical check |
 | D14 | Tokens | closed | No new tokens; tints use opacity on existing tokens (`bg-primary/10`, `bg-secondary/10`) | loop-build | the existing bronze, verdigris, success and destructive tokens cover every role |
 | D15 | Page head | closed | The page renders its own `<title>` and meta description (React 19 hoists them) | loop-build | no head library; share-preview images stay deferred |
+| D16 | How the overview marks where the owner steps in | closed | Drop the 'Stop 1 / Stop 2' labels; a 'Your turn' badge (kit `Badge`, person icon) on the two highlighted cards, legend reads 'Where you step in' | owner | Owner feedback at Stop 2: the uppercase labels looked off. The card titles already speak to the reader and the highlight carries the meaning, but a text badge keeps the cue from depending on colour alone. No jargon for non-technical readers. |
 
 ## google-signin-return — claude/charming-wright-ey9twz
 

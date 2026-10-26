@@ -21,10 +21,10 @@ describe("HarnessOverviewPage", () => {
     }
   });
 
-  it("should mark the two steps where the owner steps in when rendered", () => {
+  it("should mark the two steps where the owner steps in with a badge when rendered", () => {
     renderWithProviders(<HarnessOverviewPage />);
 
-    expect(screen.getByText(/stop 1/i)).toBeInTheDocument();
-    expect(screen.getByText(/stop 2/i)).toBeInTheDocument();
+    expect(screen.getAllByText("Your turn")).toHaveLength(2);
+    expect(screen.queryByText(/stop 1/i)).not.toBeInTheDocument();
   });
 });

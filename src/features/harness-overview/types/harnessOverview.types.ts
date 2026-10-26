@@ -12,8 +12,8 @@ export interface HarnessStage {
   skill: string;
   title: string;
   summary: string;
-  /** Set where the owner steps in; the text is the stop label. */
-  ownerStop?: string;
+  /** True where the owner steps in (confirms the next task, or tests the preview). */
+  ownerStep?: boolean;
   /** Short label on the arrow leaving this stage. */
   handoff?: string;
   helpers: HarnessHelper[];

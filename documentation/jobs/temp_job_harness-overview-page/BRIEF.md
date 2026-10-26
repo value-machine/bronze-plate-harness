@@ -92,3 +92,7 @@ Feedback: the overview should be part of the app and styled in the bronze theme;
 - **Success check now:** `/harness` renders every skill folder in `.agents/skills/` (guarded by `harnessOverviewContent.test.ts`) in the bronze theme in light and dark; the card links to `/harness`; the pre-existing checks still pass.
 - **Edges added:** `src/App.tsx` (one route), `src/pages/` (one page). Size stays S: presentational components and data, no migration.
 - **Done in this round:** acceptance tests written first (card link, page content, content drift); `pnpm build`; phone and desktop screenshots in light and dark with no console errors.
+
+## Change round 2 (owner verdict at Stop 2: Change)
+
+Feedback: the 'Stop 1: you confirm' and 'Stop 2: you test' labels look off. Decision D16: remove them; the two owner-step cards carry a 'Your turn' badge instead. Edges unchanged (`harness-overview` components, types, content, tests).

@@ -1,3 +1,5 @@
+import { UserRound } from "lucide-react";
+import { Badge } from "@/components/common/Badge";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/common/Card";
 import { cn } from "@/shared/utils/cn";
 import type { HarnessStage } from "../types/harnessOverview.types";
@@ -10,7 +12,7 @@ interface HarnessLoopStageProps {
 
 /** One loop stage with its helper skills beside it (below it on phones) and the arrow to the next. */
 export const HarnessLoopStage = ({ stage }: HarnessLoopStageProps) => {
-  const isOwnerStop = Boolean(stage.ownerStop);
+  const isOwnerStep = Boolean(stage.ownerStep);
 
   return (
     <li className="flex flex-col">
@@ -19,20 +21,21 @@ export const HarnessLoopStage = ({ stage }: HarnessLoopStageProps) => {
           hoverable={false}
           className={cn(
             "max-w-none gap-1 py-3",
-            isOwnerStop && "border-primary bg-primary/10 elevation-md"
+            isOwnerStep && "border-primary bg-primary/10 elevation-md"
           )}
         >
           <CardContent className="flex flex-col gap-1">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
               <span
                 className={cn(skillNameClassName, "rounded-sm bg-muted px-1.5 py-0.5 text-primary")}
               >
                 {stage.skill}
               </span>
-              {stage.ownerStop && (
-                <span className="text-xs font-semibold tracking-wider text-primary uppercase">
-                  {stage.ownerStop}
-                </span>
+              {isOwnerStep && (
+                <Badge variant="primary">
+                  <UserRound />
+                  Your turn
+                </Badge>
               )}
             </div>
             <CardTitle className="font-heading text-base leading-snug">{stage.title}</CardTitle>
