@@ -5,7 +5,6 @@ Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seede
 ## Core behavior
 
 - Be careful, explicit, and beginner-friendly. Assume the owner may be new to GitHub and coding agents: the first time a term appears (fork, pull request, connector, preview), explain it in a few plain words.
-- Follow the Quick Start flow from `README.md` in order.
 - The **seeded backlog tasks** (`src/config/app-tasks.json`, UI at `/tasks` via DevTasksFab in local dev) are the onboarding checklist; `loop-backlog` ranks them first because everything else depends on them (skill-loop D41).
 - Validate every step before proceeding.
 - Never claim setup is complete without user confirmation and successful verification checks.
@@ -38,7 +37,7 @@ Fresh clones ship four pre-seeded tasks in priority order:
 
 - At session start: read `src/config/app-tasks.json`; set relevant task `in-progress` when picking up onboarding work.
 - After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note Theme skipped).
-- Checks: Supabase env vars present; hosting configured per README; vision doc `ACTIVE`; optional theme as applicable.
+- Checks: Supabase env vars present; hosting configured per § Configuration tasks gate; vision doc `ACTIVE`; optional theme as applicable.
 - **Conflict:** `/tasks` UI disk-wins — reconcile with user edits; do not fight pending UI state.
 
 Configuration is via `.env`, README, and docs — there is no in-app setup wizard.
@@ -98,14 +97,7 @@ Requirement: the owner has their own copy of the repo on GitHub (a fork or a cop
 
 Optional: open `documentation/DOC_APP_VISION.md` in the editor for the user when the environment supports it.
 
-### 4) Line endings gate (mandatory on Windows too)
-
-Requirement: files are written and committed with LF endings (CRLF breaks the validators and creates noisy diffs).
-
-- Git: verify `git config core.autocrlf` prints `false`, or prints nothing on macOS/Linux (unset means no conversion there); if it prints `true` or `input`, or nothing on Windows, ask before changing it.
-- Editor: the owner confirms it writes LF for this project (the agent cannot read editor settings).
-
-### 5) Connect tools gate
+### 4) Connect tools gate
 
 The agent sets up most of this repo itself, through connections to the services it uses. Without them, the owner has to copy values between dashboards by hand. This gate connects them once, up front.
 
@@ -120,9 +112,9 @@ The agent sets up most of this repo itself, through connections to the services 
 - `.mcp.json` ships the Supabase connector read-only (`read_only=true`). Reading is all onboarding needs; letting the agent apply migrations through it is a **data change** for the owner to decide (`.claude/rules/agent-behavior.md` § When to ask).
 - The owner may decline a connector. Then the matching task runs its manual path (the owner reads values off the dashboard); record which rows were declined in chat.
 
-### 6) Branch workflow gate
+### 5) Branch workflow gate
 
-**Prerequisites:** GitHub CLI `gh` installed and authenticated (`gh auth login`) — the Claude Code desktop PR monitor and auto-merge need it. Where `gh` is not available (for example, a cloud session with a GitHub connector), the connector from § Connect tools gate does the same reads.
+**Prerequisite:** the GitHub row of § Connect tools gate passes. The `gh api` reads below can run through a GitHub connector instead where the owner's surface has no `gh`.
 
 **Template repo (harness maintenance):** **`model-c`**.
 
@@ -135,7 +127,7 @@ The agent sets up most of this repo itself, through connections to the services 
 
 Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-a"` | `"model-b"`). Then walk `.claude/rules/git-workflow.md` § Mode behavior table → **fork setup**, **`main` ruleset**, **`develop` ruleset** for the chosen column. Behavior SSOT is that table — do not restate it here.
 
-**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), Cloudflare production branch `main` with previews on all branches, and **no `NODE_VERSION` build variable** on either the Production or the Previews tab — it overrides `.node-version` and the `preinstall` guard then fails the build, release-please's branch included (`documentation/DOC_CLOUDFLARE_WORKERS.md` § build variables). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
+**Model C:** no `develop`. Configure the `main` ruleset (table row), repo settings (squash-only with PR title as commit message, auto-delete head branches, **allow auto-merge**), and Cloudflare production branch `main` with previews on all branches (hosting task). The baseline release needs no setup: the `bootstrap` job in `.github/workflows/release-please.yml` creates it on the first push to `main`. **Ruleset confirmation gate (C — required):** confirm the live `main` ruleset via `gh api repos/OWNER/REPO/rules/branches/main` (`pull_request` + required `test` and `pr-title` present) before the first merge.
 
 **Model A / B:** create `develop` from `main` once (`git push origin main:develop`).
 
@@ -145,17 +137,11 @@ Write `src/config/git-workflow.json` accordingly (`"mode": "model-c"` | `"model-
 
 The settings that table lists (rulesets, squash-only merges, auto-merge, branch deletion) are requirements. The owner applies them in GitHub; the agent verifies with `gh api` where it can and otherwise asks for confirmation. Hand them over as one list with the link to the repo's settings page, not one at a time.
 
-### 7) Dev server gate
+### 6) App runs gate
 
-Run:
+The agent checks this itself; no owner action. Start `pnpm dev` and confirm `/` and `/tasks` answer (and `/login` once Supabase is configured). Tell the owner the local URL and that the floating **Tasks** button opens their onboarding checklist. If a route fails, troubleshoot before continuing.
 
-```bash
-pnpm dev
-```
-
-Confirm app is reachable at the shown localhost URL. In dev, open `/tasks` via the floating action button to see the onboarding checklist.
-
-### 8) Configuration tasks gate (work through backlog)
+### 7) Configuration tasks gate (work through backlog)
 
 **Template repo:** skip tasks #1 (Supabase) and #2 (Cloudflare) unless explicitly testing those paths. Archive or leave them `to-do`; do not treat missing `.env` as a failure.
 
@@ -198,58 +184,28 @@ The agent's playbook (build settings, troubleshooting) is the **Agent one-shot b
 
 **App vision (task #3):** done in § App vision & goals gate; archive the task once the status is **`ACTIVE`**.
 
-**Theme (task #4):** Customize the design tokens in `src/index.css` or skip if defaults suffice. Offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
+**Theme (task #4):** Customize the design tokens (`documentation/DOC_THEMING.md`) or skip if defaults suffice. Offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
 
 Update `app-tasks.json` as each step completes.
 
-### 9) Route verification gate
+Mobile layout or mobile OAuth on local dev, when the owner needs it: **`documentation/DOC_MOBILE_LOCAL_DEV.md`** (SSOT).
 
-Verify routes from README:
+## Mandatory verification checklist
 
-- `/`
-- `/tasks` (dev only, via FAB)
-- `/login` (when Supabase configured)
-
-If a route fails, troubleshoot before continuing.
-
-### 10) Physical device testing (optional)
-
-If the user needs mobile layout or mobile OAuth on local dev, link **`documentation/DOC_MOBILE_LOCAL_DEV.md`** (SSOT). Do not duplicate adb or redirect steps here.
-
-## Mandatory verification checklist ("test for everything")
-
-Run and verify all relevant checks:
+Proves the fork installs and builds; pre-commit and CI run the full set on every change after this.
 
 ```bash
-pnpm lint
-pnpm format:check
-pnpm type-check
 pnpm validate:structure
-pnpm test:classify
 pnpm test:run
 pnpm build
 ```
 
-Optional during development: `pnpm test:staged` after `git add` to preview pre-commit test selection.
-
-**How to write tests:** `documentation/DOC_TESTING.md` (runners, colocation, naming, `tests/test-utils`).
-
-If any check fails:
-
-- Stop and fix in smallest safe steps
-- Re-run failed check(s)
-- Re-run full checklist before final confirmation
+If a check fails, fix it in the smallest safe step and re-run it before final confirmation.
 
 ## Communication rules during onboarding
 
 - Use short steps and numbered instructions.
-- After each gate that needs a manual action from the user (dashboard, account, browser), wait for their confirmation; gates the agent can verify itself (commands, files) need no question.
-- For any action only the owner can take (a vendor website, an account, a browser prompt), say:
-  - what must be true afterwards
-  - why it matters
-  - the link to the page where they do it (§ Core behavior)
-  - how the agent will check it
-  - then wait for confirmation and run that check
+- Gates the agent can verify itself (commands, files, connector calls) need no question. For an action only the owner can take, hand it over per § Core behavior (end state, why, link, how the agent checks), wait for their confirmation, then run the check.
 - Keep each handover to what the owner needs to act; if they ask where a button is, look it up then rather than writing it in advance.
 - Do not skip gates even if user is experienced, unless user explicitly asks to skip **or** context is **template repo** work (see § Template repo vs fork).
 
@@ -264,7 +220,7 @@ Only consider onboarding complete when:
 1. **`documentation/DOC_APP_VISION.md`** is **`ACTIVE`** (or user explicitly deferred with reason recorded)
 2. The tools in § Connect tools gate are connected, or the owner declined them (recorded)
 3. User confirms configuration tasks they wanted are done (backlog archived or updated)
-4. Route checks pass
+4. App runs gate passes
 5. Verification checklist passes
 6. User confirms they are ready to proceed
 

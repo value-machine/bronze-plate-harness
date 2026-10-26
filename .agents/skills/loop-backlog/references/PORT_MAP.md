@@ -10,13 +10,13 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `start` | ## Flow (README-aligned) | moved | references/onboarding.md |
 | `start` | ### 1) Prerequisites gate | moved | references/onboarding.md |
 | `start` | ### 2) App vision & goals gate (mandatory before fork/clone and setup) | moved | references/onboarding.md |
-| `start` | ### 3) Line endings gate (mandatory on Windows too) | moved | references/onboarding.md |
+| `start` | ### 3) Line endings gate (mandatory on Windows too) | dropped | the repo forces LF itself (`.gitattributes` `eol=lf`, `.editorconfig`, Prettier `endOfLine`); nothing for the owner to configure |
 | `start` | ### 4) Fork + clone gate | moved | references/onboarding.md |
 | `start` | ### 5) Branch workflow gate | moved | references/onboarding.md |
-| `start` | ### 6) Dev server gate | moved | references/onboarding.md |
+| `start` | ### 6) Dev server gate | moved | references/onboarding.md § App runs gate (merged with the route check) |
 | `start` | ### 7) Configuration tasks gate (work through backlog) | moved | references/onboarding.md |
-| `start` | ### 8) Route verification gate | moved | references/onboarding.md |
-| `start` | ### 9) Physical device testing (optional) | moved | references/onboarding.md |
+| `start` | ### 8) Route verification gate | moved | references/onboarding.md § App runs gate |
+| `start` | ### 9) Physical device testing (optional) | moved | references/onboarding.md § Configuration tasks gate (one pointer line) |
 | `start` | ## Mandatory verification checklist ("test for everything") | moved | references/onboarding.md |
 | `start` | ## Communication rules during start | moved | references/onboarding.md § Communication rules during onboarding |
 | `start` | ## Completion criteria | moved | references/onboarding.md |
