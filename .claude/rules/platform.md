@@ -1,10 +1,10 @@
 # Platform and Environment
 
-Windows shell rules (PowerShell and Git Bash) and local environment configuration for this repo. The two command sections below are **shell-specific**; § Environment Variables and Configuration applies to every shell.
+Windows shell rules (PowerShell and Git Bash) and local environment configuration for this repo. The command sections below are **shell-specific**; § Environment Variables and Configuration applies to every shell.
 
 ## Platform and Commands
 
-**Environment:** Windows. Cursor terminal = PowerShell; Claude Code Bash tool = Git Bash.
+**Environment:** read it from the session's environment info; don't assume it. The owner's local machine is usually Windows: Cursor terminal = PowerShell; Claude Code Bash tool = Git Bash. Cloud sessions (Claude Code on the web) and macOS/Linux machines run plain bash: none of the Windows sections below apply there.
 
 **Command Rules (when the shell is PowerShell):**
 - No Unix-style `&&` chaining
