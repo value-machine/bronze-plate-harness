@@ -34,6 +34,8 @@ First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate 
    - **In doubt:** check the code path.
    - **Still in doubt:** update only the description to reflect the real state.
 
+   A lap folder (`documentation/jobs/temp_job_*/`) on the default branch whose lap has landed (its task archived, its `## <slug>` section in `documentation/DOC_DECISION_LOG.md`) is a leftover: remove it with the catch-up commit (onboarding-first-lap D4).
+
    An open PR whose preview the owner hasn't tested is **waiting on the owner**, not landed.
 4. **Rank** (order = priority, skill-loop D16):
    1. **Blockers and prerequisites**: untested previews (Stop 2 waiting, skill-loop D45), seeded onboarding tasks a fork still needs (skill-loop D41), and anything that blocks another task.

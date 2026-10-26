@@ -32,6 +32,7 @@ description: >-
 3. **Pass:**
    1. Run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge on Model C, promote on A/B). The Pass is consent for the rule and skill changes the card listed (skill-loop D50).
    2. Archive the task: remove it from `src/config/app-tasks.json` and append `{ title, description, status: "done" }` to `src/config/app-tasks-archive.json`, in the same commit as other changes to those files. Under Model C, commit the archive on the lap branch before merging.
+   3. Remove the lap folder (`git rm -r documentation/jobs/temp_job_<slug>/`) in that same commit. Its decisions are already in `documentation/DOC_DECISION_LOG.md` (`loop-ship` step 3), and a folder left on the default branch ships to every fork and reads as an open lap to the [`router`](../router/references/loop-map.md) (onboarding-first-lap D4).
    3. Non-blocking remarks become new backlog tasks after the current top one (skill-loop D17).
 4. **Change:**
    1. Run [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md): a non-Pass verdict is the trouble signal (skill-loop D50). Feed it the verdict plus any red CI, size overrun, or mistake signals in **Notes during development**, and commit its rule or skill edits to this PR, so the next Pass approves them.
