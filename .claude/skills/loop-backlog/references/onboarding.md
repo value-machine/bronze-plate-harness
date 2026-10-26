@@ -102,7 +102,7 @@ Optional: open `documentation/DOC_APP_VISION.md` in the editor for the user when
 
 Requirement: files are written and committed with LF endings (CRLF breaks the validators and creates noisy diffs).
 
-- Git: verify `git config core.autocrlf` prints `false`; if not, ask before changing it.
+- Git: verify `git config core.autocrlf` prints `false`, or prints nothing on macOS/Linux (unset means no conversion there); if it prints `true` or `input`, or nothing on Windows, ask before changing it.
 - Editor: the owner confirms it writes LF for this project (the agent cannot read editor settings).
 
 ### 5) Connect tools gate
