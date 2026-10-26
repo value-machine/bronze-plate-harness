@@ -4,7 +4,7 @@ A production-ready harness (boilerplate + agent harness) for building React appl
 
 [![How work moves through the harness: request, brief, plan, build, check, ship, then your verdict, with helper skills and guardrails](public/harness-overview.png)](public/harness-overview.png)
 
-_How work moves through the agent harness, in plain language. The running app serves the same page at `/harness.html`._
+_How work moves through the agent harness, in plain language. The running app serves the same page at `/harness`._
 
 ## Features
 

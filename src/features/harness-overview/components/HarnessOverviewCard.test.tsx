@@ -1,19 +1,20 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderWithProviders } from "tests/test-utils";
 import { HarnessOverviewCard } from "./HarnessOverviewCard";
 
 describe("HarnessOverviewCard", () => {
-  it("should link to the static harness overview page when rendered", () => {
-    render(<HarnessOverviewCard />);
+  it("should link to the harness overview route when rendered", () => {
+    renderWithProviders(<HarnessOverviewCard />);
 
     expect(screen.getByRole("link", { name: /how the harness works/i })).toHaveAttribute(
       "href",
-      "/harness.html"
+      "/harness"
     );
   });
 
   it("should show the overview preview image with alt text when rendered", () => {
-    render(<HarnessOverviewCard />);
+    renderWithProviders(<HarnessOverviewCard />);
 
     expect(screen.getByRole("img", { name: /harness/i })).toHaveAttribute(
       "src",

@@ -1,13 +1,14 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/common/Button";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/common/Card";
 import { formContentWidthClassName } from "@/shared/theme/appViewLayout";
 import { cn } from "@/shared/utils/cn";
 
-const HARNESS_OVERVIEW_PAGE_PATH = "/harness.html";
+const HARNESS_OVERVIEW_PAGE_PATH = "/harness";
 const HARNESS_OVERVIEW_PREVIEW_PATH = "/harness-overview.png";
 
 /**
- * Welcome card on the home page that points first-time visitors at the static harness overview.
+ * Welcome card on the home page that points first-time visitors at the harness overview route.
  * Shown to every visitor until a fork deletes this feature (see the feature README).
  */
 export const HarnessOverviewCard = () => {
@@ -31,7 +32,7 @@ export const HarnessOverviewCard = () => {
           See how requests move from idea to a preview you can test, and where you step in.
         </CardDescription>
         <Button asChild variant="outline" size="sm" className="w-full sm:w-auto sm:self-start">
-          <a href={HARNESS_OVERVIEW_PAGE_PATH}>See how the harness works</a>
+          <Link to={HARNESS_OVERVIEW_PAGE_PATH}>See how the harness works</Link>
         </Button>
       </CardContent>
     </Card>

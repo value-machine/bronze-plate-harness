@@ -83,3 +83,12 @@ Size S, short plan. Acceptance tests (written first, failing): `src/features/har
 
 - Link the README image to `public/harness-overview.png` rather than to a not-yet-live URL.
 - Leave `og:image` out of the static page (needs an absolute URL; deferred until the production domain is final).
+
+## Change round 1 (owner verdict at Stop 2: Change)
+
+Feedback: the overview should be part of the app and styled in the bronze theme; expanding the theme tokens is allowed. This section replaces the static-page parts of the brief above (D12–D15 in `DECISIONS.md`).
+
+- **Now in scope:** route `/harness` (`src/pages/HarnessOverviewPage.tsx`, lazy-loaded in `src/App.tsx`) rendering `HarnessOverviewView` from the `harness-overview` feature (content as data, `HarnessLoopStage`, theme tokens only); the home card links to `/harness` with a router link; `public/harness-overview.png` is a fresh screenshot of the route; `public/harness.html` is deleted.
+- **Success check now:** `/harness` renders every skill folder in `.agents/skills/` (guarded by `harnessOverviewContent.test.ts`) in the bronze theme in light and dark; the card links to `/harness`; the pre-existing checks still pass.
+- **Edges added:** `src/App.tsx` (one route), `src/pages/` (one page). Size stays S: presentational components and data, no migration.
+- **Done in this round:** acceptance tests written first (card link, page content, content drift); `pnpm build`; phone and desktop screenshots in light and dark with no console errors.

@@ -8,11 +8,11 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 
 ## harness-overview-page — ccr-9236a832-dfo9sc
 
-A designed, plain-language overview of the agent harness is published as a static page and shown to visitors through a welcome card on the home page, with its preview image at the top of the README.
+A designed, plain-language overview of the agent harness is published as an app route and shown to visitors through a welcome card on the home page, with its preview image at the top of the README.
 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
-| D1 | Format of the public page | closed | Static `public/harness.html` | loop-refine | clear-winner. Rejected: a React page or feature (client-rendered, needs feature README and layer rules, ships as product code in every fork) |
+| D1 | Format of the public page | superseded by D12 | Static `public/harness.html` | loop-refine | first choice, reversed by the owner at Stop 2 |
 | D2 | README image format | closed | PNG at `public/harness-overview.png` | loop-refine | clear-winner. Rejected: SVG (web fonts do not load as an image on GitHub), Mermaid (loses the design), inline HTML (GitHub strips it) |
 | D3 | Fonts on the static page | closed | Google Fonts with system fallbacks | loop-refine | clear-winner: `index.html` already loads Google Fonts, so no new external service |
 | D4 | PNG regeneration | closed | One-off screenshot, no script and no new dependency | loop-refine | clear-winner. A regen script would add Playwright to `package.json` (stop-list: new dependency), so it is deferred |
@@ -22,7 +22,11 @@ A designed, plain-language overview of the agent harness is published as a stati
 | D8 | Home integration shape | closed | New feature `src/features/harness-overview/` (one card component and README, no barrel); `HomePage` renders it | loop-refine | clear-winner: pages stay thin; one bounded concept |
 | D9 | How a fork removes it | closed | Delete the feature folder and its one line in `HomePage`; no config flag | loop-refine | clear-winner. Rejected: a flag (extra code, a third state). Carried by an onboarding task |
 | D10 | README link target | closed | Image links to the PNG, not a live URL | loop-build | the live site answers `/harness.html` with the app's own page until this ships |
-| D11 | Share-preview image | closed | `og:image` left out of the static page | loop-build | needs an absolute URL; deferred until the production domain is final |
+| D11 | Share-preview image | closed | No `og:image` | loop-build | needs an absolute URL; deferred until the production domain is final |
+| D12 | Format of the overview (reopens D1) | closed | App route `/harness` built from kit components and theme tokens; `public/harness.html` removed | owner | Owner feedback at Stop 2: it should be part of the app and styled in the bronze theme, and expanding tokens was allowed. The static file was a parallel path outside the theme, tests and lint; its only gain was crawlers reading HTML without running JavaScript. Rejected: a Vite root page (needs a protected whitelist change), copied token values with a drift test. |
+| D13 | Keeping the content true | closed | `harnessOverviewContent.test.ts` fails when `.agents/skills/` and the content disagree; no hand-written version label | loop-refine | clear-winner: replaces D5's accepted drift risk with a mechanical check |
+| D14 | Tokens | closed | No new tokens; tints use opacity on existing tokens (`bg-primary/10`, `bg-secondary/10`) | loop-build | the existing bronze, verdigris, success and destructive tokens cover every role |
+| D15 | Page head | closed | The page renders its own `<title>` and meta description (React 19 hoists them) | loop-build | no head library; share-preview images stay deferred |
 
 ## google-signin-return — claude/charming-wright-ey9twz
 

@@ -1,7 +1,7 @@
 [
   {
     "title": "Show the harness overview on the app's home page and README",
-    "description": "Publish the designed harness flowchart as a public static page (public/harness.html) with a PNG preview (public/harness-overview.png). Show a welcome card on the home page so visitors on the preview URL and on a fresh first run see it, and put the image at the top of README.md so people arriving from GitHub or Google see it. Lap: documentation/jobs/temp_job_harness-overview-page/BRIEF.md.",
+    "description": "Publish the designed harness flowchart as an app route (/harness) built from kit components and the bronze theme tokens, with a PNG preview (public/harness-overview.png). Show a welcome card on the home page so visitors on the preview URL and on a fresh first run see it, and put the image at the top of README.md so people arriving from GitHub or Google see it. Lap: documentation/jobs/temp_job_harness-overview-page/BRIEF.md.",
     "status": "in-progress"
   },
   {
@@ -51,7 +51,7 @@
   },
   {
     "title": "Remove the harness overview card before launching your product",
-    "description": "The home page shows a welcome card pointing at the harness overview (src/features/harness-overview/). Delete that feature folder and its one line in src/pages/HomePage.tsx when the page should show your own product instead; public/harness.html and public/harness-overview.png can go too.",
+    "description": "The home page shows a welcome card pointing at the /harness overview route (src/features/harness-overview/). Delete that feature folder, src/pages/HarnessOverviewPage.tsx and its test, the /harness route in src/App.tsx, the card line in src/pages/HomePage.tsx and public/harness-overview.png when the app should show your own product instead; then drop the image from README.md and the row from documentation/DOC_INDEX.md.",
     "status": "to-do"
   }
 ]
