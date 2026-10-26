@@ -189,7 +189,9 @@ In local dev, use the floating **Tasks** button (bottom-right) to open `/tasks` 
 
 ### Step 5: Complete onboarding tasks
 
-Work through the dev task backlog at `/tasks` (or edit `src/config/app-tasks.json` directly). All sections are optional except what your app needs; configure what you want now and skip or archive the rest.
+Easiest: tell your coding agent **"set up my app"**. It walks you through these one at a time: it connects the tools it works through, asks a few questions about your app, and gives you a link whenever something has to happen on a website.
+
+Or work through the dev task backlog at `/tasks` yourself (or edit `src/config/app-tasks.json` directly). All sections are optional except what your app needs; configure what you want now and skip or archive the rest.
 
 #### Supabase (optional, needed for auth/database) 🔐
 
