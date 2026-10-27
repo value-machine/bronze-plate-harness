@@ -17,6 +17,7 @@ The owner often merges a PR themselves instead of answering Stop 2 in chat. The 
 | D3 | Consent for rule and skill changes | closed | Asked as one yes/no in chat before commit; a Pass or a merge never approves them; a declined change becomes a backlog task | owner | Supersedes skill-loop D50's "Pass approves the changes the card lists": an owner who only tests and merges never sees the card |
 | D4 | What the owner reads | closed | Only the chat: decisions happen in chat or by merging. The handoff is at most six short lines (preview, what to try, what checks couldn't cover, choices they'd notice); the PR body is the agents' record. A lap with an open question stays unmergeable (draft PR under C) until it is answered in chat | owner | Owner: "more text = lower odds the user will read all" |
 | D5 | How owner decisions are asked | closed | Through the question tool (`AskUserQuestion` / `AskQuestion`), stated in the always-on `agent-behavior` rule; prose only where the tool is missing | owner | The tool was only named in `loop-refine/references/asking.md`, which other stages never load, so Stop 2, onboarding and protected-file consent asked in prose |
+| D6 | PR body test plan | closed | Plain "Verified" / "Not verified" lists; no `- [ ]` task lists | owner | GitHub renders task lists as clickable boxes; the owner was ticking them blindly |
 
 ## lap-close-order — claude/zen-volta-ycv0zp
 

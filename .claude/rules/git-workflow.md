@@ -123,11 +123,14 @@ Model A:
 ## Preview
 - <Workers Builds preview URL for this branch>
 
-## Test plan
-- [ ] Confirm PR base is `develop` (not `main`)
-- [ ] CI `test` green
-- [ ] <scoped checks for this change>
+## Verified
+- <checks run and what passed, e.g. CI `test` green, base is `develop`>
+
+## Not verified
+- <what no check covered>
 ```
+
+  No `- [ ]` task lists in a PR body (all modes): GitHub renders them as clickable boxes that read as a to-do for the owner, and nobody has to tick anything (merge-is-pass D6).
 
 - Title: conventional `type: Subject` (all modes — under C, release-please reads it and CI enforces it via `pr-title`).
 - Wait for required `test` check before merge; keep branch up to date with `develop`.
