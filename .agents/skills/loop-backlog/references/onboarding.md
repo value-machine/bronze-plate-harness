@@ -118,7 +118,7 @@ The agent sets up most of this repo itself, through connections to the services 
 - **Check first, ask second.** List the tools the agent already has and make one test call per row; skip every row that already works.
 - **For each missing row:** say in one line what it lets the agent do for them, then give the link where the owner connects it, found for their coding surface (Claude Code in a terminal or desktop, claude.ai on the web, Cursor) per § Core behavior. Wait, then run the row's check.
 - `.mcp.json` ships the Supabase connector read-only (`read_only=true`). Reading is all onboarding needs; letting the agent apply migrations through it is a **data change** for the owner to decide (`.claude/rules/agent-behavior.md` § When to ask).
-- The owner may decline a connector. Then the matching task runs its manual path (the owner reads values off the dashboard); record which rows were declined in chat.
+- The owner may decline a connector. Then the matching task runs its manual path (the owner reads values off the dashboard); record which rows were declined in chat. Declining a connector means they will paste values by hand. It is not "this app does not use that service" — that question is § Shipped integrations.
 
 ### 5) Branch workflow gate
 
@@ -153,7 +153,25 @@ The agent checks this itself; no owner action. Start `pnpm dev` and confirm `/` 
 
 **Template repo:** skip tasks #1 (Supabase) and #2 (Cloudflare) unless explicitly testing those paths. Archive or leave them `to-do`; do not treat missing `.env` as a failure.
 
-**Fork onboarding:** walk through backlog tasks in order (skip or archive optional items the user declines). Where § Connect tools gate connected a service, the agent does the reads and checks below through it and asks the owner only for what needs their account:
+**Fork onboarding:** walk through backlog tasks in order. Where § Connect tools gate connected a service, the agent does the reads and checks below through it and asks the owner only for what needs their account. Before each setup block, run § Shipped integrations.
+
+### Shipped integrations — keep or purge
+
+The template ships integrations a fork may not want. Ask once per row, with the question tool, before configuring it. Silence or "I'll set it up myself" keeps the code and continues the setup. Only an explicit "this app does not use X" opens the purge offer.
+
+Ask Supabase first. An explicit no covers Google sign-in, anonymous sessions, and error reporting, because those run on it. Ask the three separately only when Supabase stays.
+
+| Integration | Ask before | Purge removes |
+|---|---|---|
+| Supabase | task #1 setup | `supabase/`, `@/shared/services/supabaseService`, auth that calls it, error reporting |
+| Google sign-in | the Google row, if Supabase stays | the Google provider path only (`documentation/DOC_SUPABASE_GOOGLE_OAUTH.md`, the Google button and `signInWithOAuth` provider `"google"`) |
+| Anonymous sessions | the auth-provider rows, if Supabase stays | the anonymous session call in `useAuthSession` |
+| Error reporting | the same, if Supabase stays | `src/features/error-reporting/` and its call in `src/App.tsx` |
+| Cloudflare hosting | task #2 setup | `wrangler.jsonc`, the Worker deploy scripts, Workers Builds as the preview |
+
+The same offer applies to any other shipped integration that calls an outside service. The UI kit stays: `src/components/common/` and the theme tokens are not on this list.
+
+On an explicit no, offer one choice: purge that code so the fork starts clean, or leave it. Purge only after they accept. Run the removal through [`loop-plan` → `remove-feature.md`](../../loop-plan/references/remove-feature.md) (references gone, not just the obvious files), archive the matching seeded task with the reason, and skip that setup block. A declined purge is recorded in chat and the code stays; skip the setup block anyway. Purging Cloudflare means Stop 2 has no preview — say that in the offer.
 
 **Supabase (task #1) — what must be true:**
 
@@ -227,7 +245,7 @@ Only consider onboarding complete when:
 
 1. **`documentation/DOC_APP_VISION.md`** is **`ACTIVE`** (or user explicitly deferred with reason recorded)
 2. The tools in § Connect tools gate are connected, or the owner declined them (recorded)
-3. User confirms configuration tasks they wanted are done (backlog archived or updated)
+3. User confirms configuration tasks they wanted are done (backlog archived or updated). Each shipped integration was kept, or explicitly declined and offered a purge (§ Shipped integrations)
 4. App runs gate passes
 5. Verification checklist passes
 6. User confirms they are ready to proceed
