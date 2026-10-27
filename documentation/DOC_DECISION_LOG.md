@@ -6,13 +6,26 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## merge-is-pass — claude/zen-volta-ycv0zp
+
+The owner often merges a PR themselves instead of answering Stop 2 in chat. The skills only handled a Pass in chat, and lap-close-order D1 closed the lap in a commit just before the agent's merge, so an owner's merge left that commit with nowhere to land.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | When the task is archived | closed | In `loop-ship`'s commit, so every PR is ready to merge as it stands; Change feedback tasks are archived by their own round's commit; on a Drop the task stays open on the default branch and is archived as dropped on the next lap's PR. The lap folder stays while the PR is open and the next `loop-backlog` catch-up removes it | owner | Supersedes lap-close-order D1 (archive and folder removal in a pre-merge commit at Pass). The folder can't go at ship time: the router and a Change round still read it |
+| D2 | The owner's merge | closed | A lap PR merged with no verdict in chat (by the owner or auto-merge) is a Pass; the agent says in one line that it read the merge as a Pass | owner | Matches the git-workflow production row for Model C, which already lets the owner merge |
+| D3 | Consent for rule and skill changes | closed | Asked as one yes/no in chat before commit; a Pass or a merge never approves them; a declined change becomes a backlog task | owner | Supersedes skill-loop D50's "Pass approves the changes the card lists": an owner who only tests and merges never sees the card |
+| D4 | What the owner reads | closed | Only the chat: decisions happen in chat or by merging. The handoff is at most six short lines (preview, what to try, what checks couldn't cover, choices they'd notice); the PR body is the agents' record. A lap with an open question stays unmergeable (draft PR under C) until it is answered in chat | owner | Owner: "more text = lower odds the user will read all" |
+| D5 | How owner decisions are asked | closed | Through the question tool (`AskUserQuestion` / `AskQuestion`), stated in the always-on `agent-behavior` rule; prose only where the tool is missing | owner | The tool was only named in `loop-refine/references/asking.md`, which other stages never load, so Stop 2, onboarding and protected-file consent asked in prose |
+| D6 | PR body test plan | closed | Plain "Verified" / "Not verified" lists; no `- [ ]` task lists | owner | GitHub renders task lists as clickable boxes; the owner was ticking them blindly |
+
 ## lap-close-order — claude/zen-volta-ycv0zp
 
 A fork merged its PR first and archived the task afterwards, so the archive had no PR left to land on. Reusing the merged branch then needed a force push (the repo didn't auto-delete merged branches), and the agent's own guard blocked it, which was correct.
 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
-| D1 | When the lap is closed | closed | `loop-verdict` Pass archives the task and removes the lap folder in one commit on the lap branch, CI green, then merges. On a Drop, the archive rides the next lap's PR | owner | The old text listed the merge first and said "commit the archive before merging" afterwards; read top to bottom, it merged first |
+| D1 | When the lap is closed | superseded by merge-is-pass D1 | `loop-verdict` Pass archives the task and removes the lap folder in one commit on the lap branch, CI green, then merges. On a Drop, the archive rides the next lap's PR | owner | The old text listed the merge first and said "commit the archive before merging" afterwards; read top to bottom, it merged first |
 | D2 | After the merge | closed | Nothing is committed to the merged branch. The next lap pushes with a plain push once the merged branch is deleted; never force-push or delete the remote branch as the agent: the owner deletes it, or a new branch name is used | owner | Force-push to restart a merged branch is blocked by the agent's own guard, and is a history rewrite on a shared ref |
 | D3 | Auto-delete of merged branches | closed | The Model C branch workflow gate reads `delete_branch_on_merge`, `allow_squash_merge` and `allow_auto_merge` instead of only naming them | owner | The fork never ran onboarding, so auto-delete was off and its merged branch stayed |
 

@@ -41,7 +41,7 @@ First half of **Stop 1**. When this skill is done, `app-tasks.json` is accurate 
    1. **Blockers and prerequisites**: untested previews (Stop 2 waiting, skill-loop D45), seeded onboarding tasks a fork still needs (skill-loop D41), and anything that blocks another task.
    2. Then **value per size**: vision fit and the owner's past feedback, divided by a rough size (XS / S / M). With the adapter on, add impact × frequency.
    3. Feedback tasks from Stop 2 (skill-loop D17) and follow-up laps (skill-loop D44) rank like any other task.
-5. **Confirm.** Show the full proposed order with a one-line reason for each moved row, then ask once with the proposed top first, one or two contenders, and "keep the current order". Nothing moves before that answer. If a task is already `in-progress`, the default option is to continue it.
+5. **Confirm.** Show the full proposed order with a one-line reason for each moved row, then ask once with the question tool (`agent-behavior` rule § How to ask): the proposed top first, one or two contenders, and "keep the current order". Nothing moves before that answer. If a task is already `in-progress`, the default option is to continue it.
 6. **Start.** Write the JSON (keep `schemaVersion`; disk wins over a pending `/tasks` UI edit). Set the top task `in-progress` and run [`loop-refine`](../loop-refine/SKILL.md). For a seeded onboarding task, run its gate from [`references/onboarding.md`](references/onboarding.md) instead, and archive it when its check passes.
 
 ## Examples
