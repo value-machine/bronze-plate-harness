@@ -12,7 +12,7 @@ description: >-
 
 # loop-verdict
 
-**Stop 2.** The owner judges the real thing, a working preview, before anything reaches production (skill-loop D11, D47). When this skill is done, the lap is merged and archived, turned into a Change request, or dropped, and the loop is back at Stop 1. The handoff has to make testing easy and make every decision in the PR visible, because the owner's Pass also approves the decisions and rule changes it lists (skill-loop D50).
+**Stop 2.** The owner judges the real thing, a working preview, before anything reaches production (skill-loop D11, D47). When this skill is done, the lap is merged and archived, turned into a Change request, or dropped, and the loop is back at Stop 1. The owner decides only in chat or by merging, and reads little: the handoff is a few lines that make testing easy. The full record stays in the PR body for agents (merge-is-pass D4).
 
 ## Edges
 
@@ -27,14 +27,14 @@ description: >-
 
 ## Steps
 
-1. **Collect what the owner must see:** the preview URL; test steps from the success check (where to tap, what should happen); the check summary's *not verified* list; every decision line the PR adds or changes in a decision home; every rule or skill change; any parked stop-list question from this lap.
-2. **Post the handoff card** (§ Output) and ask one question: **Pass / Change / Drop**, with a challenge option when one is grounded (for example "ship it but cut the export button to a later lap"). An untested preview waits here and ranks as a blocker in the backlog (skill-loop D45).
+1. **Collect only what the owner needs to test and decide:** the preview URL; two or three things to try from the success check, each with what they should see; what the checks couldn't cover; any choice they would notice in the app that they didn't ask for. Rule and skill changes were already asked in chat (`agent-behavior` rule § Protected Files), and open questions were answered before the PR became mergeable (`loop-ship` step 5); decisions stay in the PR body.
+2. **Post the handoff** (§ Output) and ask one question: **Pass / Change / Drop**, with a challenge option when one is grounded (for example "ship it but cut the export button to a later lap"). An untested preview waits here and ranks as a blocker in the backlog (skill-loop D45).
 3. **Pass.** The PR already carries the archived task (`loop-ship` step 3), so a Pass needs no commit (merge-is-pass D1).
-   1. **The owner merged it** (or turned on auto-merge) without a verdict in chat: that merge is the Pass and the consent for the rule and skill changes the card listed (merge-is-pass D2). Stop watching the PR and say in one line that the merge was read as a Pass.
-   2. **Otherwise** run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge on Model C, promote on A/B). The Pass is consent for the rule and skill changes the card listed (skill-loop D50).
+   1. **The owner merged it** (or turned on auto-merge) without a verdict in chat: that merge is the Pass (merge-is-pass D2). Stop watching the PR and say in one line that the merge was read as a Pass.
+   2. **Otherwise** run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge on Model C, promote on A/B).
    3. Non-blocking remarks become new backlog tasks after the current top one (skill-loop D17). The lap folder is left for the next [`loop-backlog`](../loop-backlog/SKILL.md) catch-up, which removes it once the lap has landed (onboarding-first-lap D4).
 4. **Change:**
-   1. Run [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md): a non-Pass verdict is the trouble signal (skill-loop D50). Feed it the verdict plus any red CI, size overrun, or mistake signals in **Notes during development**, and commit its rule or skill edits to this PR, so the next Pass approves them.
+   1. Run [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md): a non-Pass verdict is the trouble signal (skill-loop D50). Feed it the verdict plus any red CI, size overrun, or mistake signals in **Notes during development**, and commit each rule or skill edit to this PR only after the owner's yes in chat (merge-is-pass D3).
    2. Write the feedback as the top backlog task, linked to this lap (same branch and PR; a fix round stays on the PR, skill-loop D11).
    3. Hand to [`loop-backlog`](../loop-backlog/SKILL.md), which starts it at once (owner-named task, skill-loop D26) → `loop-refine` sizes the fix depth (skill-loop D50).
 5. **Drop:**
@@ -55,19 +55,14 @@ Output: the lap had no trouble, so no lessons. One top task "CSV export: add due
 
 ## Output
 
-The handoff card, then one question:
+The handoff, at most six short lines; everything else stays in the PR body:
 
 ```markdown
-## Ready for you to test
-- **What changed:** …
-- **Preview:** <url>
-- **Steps:** 1. … 2. … (expected: …)
-- **Not verified by checks:** …
-- **Decisions this PR records:** <README / vision / rule line> · …
-- **Rule / skill changes (your Pass approves them):** <file — one line> · … | none
-- **Waiting on you:** <parked question> | none
-- **CI:** green on <PR link>
-- **Short on time?** Merging the PR yourself counts as Pass.
+**Ready to test:** <preview url>
+Try: 1. <action> → <what you should see> 2. …
+Checks couldn't cover: <one line> | —
+I picked: <a choice you'd notice in the app that you didn't ask for> | —
+Works? Merge <PR link> or say "pass". Not right? Tell me what's off.
 ```
 
 ## Not for

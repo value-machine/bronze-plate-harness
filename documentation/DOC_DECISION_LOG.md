@@ -13,7 +13,9 @@ The owner often merges a PR themselves instead of answering Stop 2 in chat. The 
 | id | topic | status | choice | source | notes |
 |----|-------|--------|--------|--------|-------|
 | D1 | When the task is archived | closed | In `loop-ship`'s commit, so every PR is ready to merge as it stands; Change feedback tasks are archived by their own round's commit; on a Drop the task stays open on the default branch and is archived as dropped on the next lap's PR. The lap folder stays while the PR is open and the next `loop-backlog` catch-up removes it | owner | Supersedes lap-close-order D1 (archive and folder removal in a pre-merge commit at Pass). The folder can't go at ship time: the router and a Change round still read it |
-| D2 | The owner's merge | closed | A lap PR merged with no verdict in chat (by the owner or auto-merge) is a Pass, including consent for the rule and skill changes its card listed; the agent says in one line that it read the merge as a Pass | owner | Matches the git-workflow production row for Model C, which already lets the owner merge |
+| D2 | The owner's merge | closed | A lap PR merged with no verdict in chat (by the owner or auto-merge) is a Pass; the agent says in one line that it read the merge as a Pass | owner | Matches the git-workflow production row for Model C, which already lets the owner merge |
+| D3 | Consent for rule and skill changes | closed | Asked as one yes/no in chat before commit; a Pass or a merge never approves them; a declined change becomes a backlog task | owner | Supersedes skill-loop D50's "Pass approves the changes the card lists": an owner who only tests and merges never sees the card |
+| D4 | What the owner reads | closed | Only the chat: decisions happen in chat or by merging. The handoff is at most six short lines (preview, what to try, what checks couldn't cover, choices they'd notice); the PR body is the agents' record. A lap with an open question stays unmergeable (draft PR under C) until it is answered in chat | owner | Owner: "more text = lower odds the user will read all" |
 
 ## lap-close-order — claude/zen-volta-ycv0zp
 

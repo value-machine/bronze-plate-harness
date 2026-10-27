@@ -35,7 +35,9 @@ When this skill is done, the lap is committed, pushed, open as a PR with a worki
    - **Model A:** PR to `develop` (verify `baseRefName`; never a bare `pull/new/<branch>` URL). Squash-merge it once CI is green: `develop` is staging, and its preview is the Stop 2 surface.
    - **Model B:** no PR. Report the commit URL; the `develop` preview is the Stop 2 surface.
 
-   The PR body holds what changed, the check summary, and the test steps. Take the preview URL from the Cloudflare bot comment (`documentation/DOC_CLOUDFLARE_WORKERS.md`).
+   **Open question?** If the lap's `DECISIONS.md` still has an Open row, ask it in chat now and keep the change unmergeable until the owner answers: under C open the PR as a draft and mark it ready after the answer; under A don't merge to `develop`; under B don't push. The owner decides only in chat or by merging, so a mergeable PR must hold nothing still waiting on them (merge-is-pass D4).
+
+   The PR body is the record for agents (what changed, decisions, rule changes, the check summary, test steps); the owner doesn't read it. Take the preview URL from the Cloudflare bot comment (`documentation/DOC_CLOUDFLARE_WORKERS.md`).
 6. **Drive CI to green.** Watch per the mode table's **CI watcher** row (Claude Code: the app's PR monitor; never `gh run watch`). A red check is this lap's to fix: debug, fix, re-check, push. Re-run once only for a pre-test failure (checkout, install, runner loss).
 7. **Hand off.** With CI green and a preview link, run [`loop-verdict`](../loop-verdict/SKILL.md).
 8. **On Pass (called back from `loop-verdict`):**
