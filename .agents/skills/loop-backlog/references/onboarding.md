@@ -126,7 +126,7 @@ The agent sets up most of this repo itself, through connections to the services 
 
 **Template repo (harness maintenance):** **`model-c`**.
 
-**Fork:** ask once, in plain words, with the recommended option first:
+**Fork:** ask once with the question tool (`.claude/rules/agent-behavior.md` § How to ask), in plain words, with the recommended option first:
 
 > How should finished changes reach your live app?
 > - **Through a pull request, one per change (recommended)** — each change gets its own preview link to try; merging it puts it live. (Model C)

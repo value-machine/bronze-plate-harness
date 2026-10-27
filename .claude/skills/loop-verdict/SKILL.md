@@ -28,7 +28,7 @@ description: >-
 ## Steps
 
 1. **Collect only what the owner needs to test and decide:** the preview URL; two or three things to try from the success check, each with what they should see; what the checks couldn't cover; any choice they would notice in the app that they didn't ask for. Rule and skill changes were already asked in chat (`agent-behavior` rule § Protected Files), and open questions were answered before the PR became mergeable (`loop-ship` step 5); decisions stay in the PR body.
-2. **Post the handoff** (§ Output) and ask one question: **Pass / Change / Drop**, with a challenge option when one is grounded (for example "ship it but cut the export button to a later lap"). An untested preview waits here and ranks as a blocker in the backlog (skill-loop D45).
+2. **Post the handoff** (§ Output) and ask one question with the question tool (`agent-behavior` rule § How to ask): **Pass / Change / Drop**, with a challenge option when one is grounded (for example "ship it but cut the export button to a later lap"). An untested preview waits here and ranks as a blocker in the backlog (skill-loop D45).
 3. **Pass.** The PR already carries the archived task (`loop-ship` step 3), so a Pass needs no commit (merge-is-pass D1).
    1. **The owner merged it** (or turned on auto-merge) without a verdict in chat: that merge is the Pass (merge-is-pass D2). Stop watching the PR and say in one line that the merge was read as a Pass.
    2. **Otherwise** run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge on Model C, promote on A/B).
