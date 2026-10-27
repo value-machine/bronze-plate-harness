@@ -1,6 +1,6 @@
 # Onboarding (first laps on a fresh fork or the template)
 
-Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seeded onboarding tasks (Supabase, Hosting, App vision, Theme), when § Still open on a fork applies, or when the owner asks for first-time setup ("initialize the repo", "set up my app", "get me started", "onboard me"). Ported from `start` (v0.42.0). The gates below run **in order** before the first product lap: each gate states what must be true, why, how the agent verifies it, and who acts. A prerequisite the agent can check is checked; an action only the owner can take (an account, a vendor settings page) is named as a requirement and the agent waits for confirmation, then verifies the result.
+Read by [`loop-backlog`](../SKILL.md) when the top task is one of the four seeded onboarding tasks (Supabase, Hosting, App vision, Interface), when § Still open on a fork applies, or when the owner asks for first-time setup ("initialize the repo", "set up my app", "get me started", "onboard me"). Ported from `start` (v0.42.0). The gates below run **in order** before the first product lap: each gate states what must be true, why, how the agent verifies it, and who acts. A prerequisite the agent can check is checked; an action only the owner can take (an account, a vendor settings page) is named as a requirement and the agent waits for confirmation, then verifies the result.
 
 ## Core behavior
 
@@ -39,13 +39,13 @@ Fresh clones ship four pre-seeded tasks in priority order:
 1. Configure Supabase
 2. Put your app online (Cloudflare hosting)
 3. Define app vision (`documentation/DOC_APP_VISION.md`)
-4. Configure Theme
+4. Make the interface yours (name, home page, top bar, theme)
 
 **Agent task sync (`loop-backlog` + `loop-verdict`):**
 
 - At session start: read `src/config/app-tasks.json`; set relevant task `in-progress` when picking up onboarding work.
-- After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note Theme skipped).
-- Checks: Supabase env vars present; hosting configured per § Configuration tasks gate; vision doc `ACTIVE`; optional theme as applicable.
+- After completing a step: archive completed tasks (move to `app-tasks-archive.json`) or update descriptions (e.g. note theme tokens skipped).
+- Checks: Supabase env vars present; hosting configured per § Configuration tasks gate; vision doc `ACTIVE`; tab title and top bar no longer say Plate Harness; theme as applicable.
 - **Conflict:** `/tasks` UI disk-wins — reconcile with user edits; do not fight pending UI state.
 
 Configuration is via `.env`, README, and docs — there is no in-app setup wizard.
@@ -192,7 +192,7 @@ The agent's playbook (build settings, troubleshooting) is the **Agent one-shot b
 
 **App vision (task #3):** done in § App vision & goals gate; archive the task once the status is **`ACTIVE`**.
 
-**Theme (task #4):** Customize the design tokens (`documentation/DOC_THEMING.md`) or skip if defaults suffice. Offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
+**Interface (task #4):** every visible surface is template placeholder, so a fork never ships it unreviewed. Set the app name from the vision in the tab title and top bar, show the owner the home page and top bar and ask keep or change for each, and remove the harness overview card (paths in the task). Then the design tokens (`documentation/DOC_THEMING.md`), or skip if defaults suffice; offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
 
 Update `app-tasks.json` as each step completes.
 
