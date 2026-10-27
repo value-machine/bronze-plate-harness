@@ -6,6 +6,16 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## lap-close-order — claude/zen-volta-ycv0zp
+
+A fork merged its PR first and archived the task afterwards, so the archive had no PR left to land on. Reusing the merged branch then needed a force push (the repo didn't auto-delete merged branches), and the agent's own guard blocked it, which was correct.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | When the lap is closed | closed | `loop-verdict` Pass archives the task and removes the lap folder in one commit on the lap branch, CI green, then merges. On a Drop, the archive rides the next lap's PR | owner | The old text listed the merge first and said "commit the archive before merging" afterwards; read top to bottom, it merged first |
+| D2 | After the merge | closed | Nothing is committed to the merged branch. The next lap pushes with a plain push once the merged branch is deleted; never force-push or delete the remote branch as the agent: the owner deletes it, or a new branch name is used | owner | Force-push to restart a merged branch is blocked by the agent's own guard, and is a history rewrite on a shared ref |
+| D3 | Auto-delete of merged branches | closed | The Model C branch workflow gate reads `delete_branch_on_merge`, `allow_squash_merge` and `allow_auto_merge` instead of only naming them | owner | The fork never ran onboarding, so auto-delete was off and its merged branch stayed |
+
 ## onboarding-first-lap — claude/zen-volta-ycv0zp
 
 A fork's first session built a whole product lap before hosting existed, so the owner had no preview to test and got Cloudflare click paths written from memory. Onboarding now starts from the repo's state, a direct request runs the open hosting gates first, and the template no longer ships its own lap as in-progress.

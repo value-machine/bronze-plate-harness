@@ -39,7 +39,7 @@ When this skill is done, the lap is committed, pushed, open as a PR with a worki
 6. **Drive CI to green.** Watch per the mode table's **CI watcher** row (Claude Code: the app's PR monitor; never `gh run watch`). A red check is this lap's to fix: debug, fix, re-check, push. Re-run once only for a pre-test failure (checkout, install, runner loss).
 7. **Hand off.** With CI green and a preview link, run [`loop-verdict`](../loop-verdict/SKILL.md).
 8. **On Pass (called back from `loop-verdict`):**
-   - **Model C:** merge the PR (squash, PR title as commit).
+   - **Model C:** first check that the PR head carries the lap-close commit (`loop-verdict` Pass step 1: task archived, lap folder removed) and that CI is green on it; if not, make that commit, push and wait. Then merge the PR (squash, PR title as commit). Nothing is committed to the merged branch afterwards. The next lap starts from `origin/main` and pushes with a plain push: that works once GitHub has deleted the merged branch (auto-delete, onboarding § Branch workflow gate). If the old branch still exists on the remote, never force-push and never delete it yourself: ask the owner to delete it on the merged PR's page (and to turn on auto-delete), or use a new branch name if the surface allows one (lap-close-order D2).
    - **Model A/B:** promote per [`references/push-safety.md`](references/push-safety.md) § Production landing.
 
    Agents never push to `main` directly.
