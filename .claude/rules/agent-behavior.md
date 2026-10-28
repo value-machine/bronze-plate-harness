@@ -37,6 +37,19 @@ Everything else: decide, record the choice where it applies, and continue.
 - Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the owner picks it, research, explain, then ask the same question again.
 - **The owner decides in chat or by merging the PR, nothing else.** Never make a decision depend on them reading a PR body, a doc or a diff: put what they need into the chat message, as short as it can be. More text means less of it gets read (merge-is-pass D4).
 
+### Turn ending
+
+Applies when the next turn can't start without the owner. If it can, end with one line saying so, or with the stage's `Next:` line. Pure answers, mid-lap stage hand-offs, and subagent or wake-up turns with nothing new are out of scope.
+
+Order, when a turn owes the owner something:
+
+1. **Jobs** (only the owner can do them), as prose in chat:
+   - Setup: the direct link and the value to enter (§ Handing an action to the owner).
+   - Test: numbered try-steps, each with what the owner should see; both outcomes (`.claude/rules/debugging.md` § User Testing Instructions).
+2. **Decision**, last: one question-tool call (§ How to ask), each option saying what happens next.
+
+Away switch: when no other work remains and laps are parked, end with the question tool for the first parked item and name the rest in one line.
+
 ### Handing an action to the owner
 
 When only the owner can do something (enter a variable, change a setting, grant access), give the direct link to that exact page, built from the ids you know (project ref, account id, Worker name), with the value to enter next to it. Never make the owner ask for the link or search a dashboard. If you are unsure a deep link still exists, give the dashboard URL for that project and name the page; never invent a path. Links, not click-by-click steps (`.agents/skills/loop-backlog/references/onboarding.md` § Core behavior).

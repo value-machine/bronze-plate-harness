@@ -8,7 +8,7 @@ Every answer, and every clear-winner after enumerating the alternatives, is logg
 
 - **One question per turn.** One question-tool call (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code), one entry in its `questions` array. Never queue a second question, preview upcoming questions, or merge two boundary questions into one form "for efficiency" — even when both are already known.
 - **Stop and think before the next ask.** After the user answers: update the lap's `DECISIONS.md` ([`decisions-template.md`](decisions-template.md)), re-check the answer against the hook map / perimeter / non-goals, and only then decide the next single question. An earlier answer can change which question is next, or make one unnecessary — decide that in this thinking step, not by asking anyway.
-- A turn is grounding prose in the **chat message** (evidence, cost sketch) **plus one** question-tool call — never plus a second question.
+- A turn is grounding prose in the **chat message** (evidence, cost sketch, and any owner jobs per `agent-behavior` § Turn ending) **plus one** question-tool call — never plus a second question.
 - **Plain text inside the tool.** The question tool's `prompt` and option `label`s do not render markdown. Never put a table, heading, or other markdown in those fields. A pipe table there shows as raw `|` text.
 
 Use a question tool call when available; prefer multiple-choice when branches are clear.

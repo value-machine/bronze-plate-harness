@@ -62,8 +62,9 @@ The handoff, at most six short lines; everything else stays in the PR body:
 Try: 1. <action> → <what you should see> 2. …
 Checks couldn't cover: <one line> | —
 I picked: <a choice you'd notice in the app that you didn't ask for> | —
-Works? Merge <PR link> or say "pass". Not right? Tell me what's off.
 ```
+
+The Pass / Change / Drop question tool call follows as the last element (`agent-behavior` rule § Turn ending); no text ask repeats it.
 
 ## Not for
 
