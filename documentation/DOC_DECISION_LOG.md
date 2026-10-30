@@ -6,6 +6,17 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## app-identity-assets — claude/dreamy-brown-55sh7l
+
+Onboarding's interface step renamed the app but left the template icon in place and shipped no share-preview tags. It now also covers the favicon, app icons, theme color and Open Graph tags.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Share-preview image (reopens harness-overview-page D11) | closed | A fork gets `og:image` and the other Open Graph tags when its origin is known, in the interface step after hosting; the template ships none | owner | D11 deferred it for want of an absolute URL; hosting now runs before the interface step, so the origin is known. A custom domain re-runs the tag step |
+| D2 | Where the tags live | closed | Static in `index.html` | loop-refine | clear-winner: scrapers do not run JavaScript (the reason harness-overview-page D12 gave for static HTML). Rejected: React-hoisted tags |
+| D3 | How the images are made | closed | Rendered once by the agent from the owner's logo or an approved monogram; no dependency, no script | loop-refine | clear-winner: precedent harness-overview-page D4 |
+| D4 | Scope | closed | Icons, manifest, theme color, description, Open Graph and Twitter card. No sitemap, structured data or robots rules | owner | owner message: SEO is out of scope |
+
 ## merge-is-pass — claude/zen-volta-ycv0zp
 
 The owner often merges a PR themselves instead of answering Stop 2 in chat. The skills only handled a Pass in chat, and lap-close-order D1 closed the lap in a commit just before the agent's merge, so an owner's merge left that commit with nowhere to land.
