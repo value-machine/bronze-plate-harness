@@ -78,7 +78,7 @@ Optional escape hatches — add one only when it fits under the cap and the answ
 - A challenge option that is generic ("rethink the approach"), or that is just another variant of the regular options.
 - **Bundling** integration approach and content scope in one question when each branch has different Perf/Code/UX — split (usually integration perimeter first, then what is in the bright-pass / handoff).
 
-Mechanism detail (`functionA` vs `functionB`, library vs hand-roll) belongs in [`loop-plan`](../../loop-plan/SKILL.md) **unless** the integration choice changes product scope, perf budget, or what neighbors are touched — then grill it using the template above (evidence + cost sketch + axis labels).
+Mechanism detail (`functionA` vs `functionB`) belongs in [`loop-plan`](../../loop-plan/SKILL.md). Borrow-vs-build (`spec-reuse-package`) runs in `loop-refine` step 4 whenever an edge is `new`, because a library or open-source pattern changes scope, size, and whether a new-dependency question is needed in Stop 1.
 
 Ask at the level the user can answer — behavior, scope, edges:
 

@@ -25,6 +25,7 @@ Task: <app-tasks.json title> · Lap: temp_job_<slug> · Harness: v<package.json 
 |---|---|---|---|
 | <feature or shared area> | <trigger → path → outcome, or Not found> | <where this attaches> | ride / new — <why> |
 
+Borrow / build: <`spec-reuse-package` rec when any row is `new`, or `ride-only` / `custom — <one-line product-rule reason>`>
 Overrun rule (skill-loop D51): a diff that touches a feature area **not** in this table stops the lap.
 
 ## Size

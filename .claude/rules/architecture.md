@@ -12,7 +12,7 @@ When a design may diverge from common industry practice for the capability — a
 
 ### Don't reinvent the wheel (package / pattern reuse)
 
-Before the first line of custom code for a generic subsystem (auth, webhooks, parsers, queues, rate limits, protocol clients, complex UI widgets, …), or before a plan locks a from-scratch approach, run [`.agents/skills/spec-reuse-package/SKILL.md`](../../.agents/skills/spec-reuse-package/SKILL.md). Skip for small, bespoke business logic. It recommends only: record the result in the plan (Conflict & compliance); do not install packages from it.
+Whenever `loop-refine` marks any edge `new` (nothing in this repo covers it yet), or before `loop-plan` / `loop-build` introduces a from-scratch mechanism not already covered in `BRIEF.md`, run [`.agents/skills/spec-reuse-package/SKILL.md`](../../.agents/skills/spec-reuse-package/SKILL.md) **before** locking scope or size. Every brief records the `Borrow / build:` line under `## Edges` — either the `spec-reuse-package` recommendation or a one-line skip reason (`ride-only` or `custom — <why this is product-specific business rules>`). Silence is not allowed. It recommends only; do not install packages from it.
 
 ### Performance cost risk (heavy DB / UI operations)
 

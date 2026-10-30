@@ -13,14 +13,14 @@ Procedure below is the SSOT. Callers **link and run** it — they do not copy St
 
 | Caller | When |
 |--------|------|
-| [`loop-plan`](../../loop-plan/SKILL.md) § Steps 2 (investigate) | After the internal reuse search, before locking a custom/greenfield build |
-| `architecture` rule § Don't reinvent the wheel | The always-on trigger (skill-loop D56) — fires in any stage |
-| [`loop-build`](../../loop-build/SKILL.md) / [`loop-plan`](../../loop-plan/SKILL.md) | Catch: Step 1 still true **and** the plan (or chat quick-plan) has no reuse rec yet |
+| [`loop-refine`](../../loop-refine/SKILL.md) § Steps 4 (draft brief) | Whenever any row in `BRIEF.md` § Edges is `new` — before asking questions or estimating size |
+| `architecture` rule § Don't reinvent the wheel | The always-on trigger (skill-loop D56) — requires the `Borrow / build:` line in `BRIEF.md` |
+| [`loop-plan`](../../loop-plan/SKILL.md) / [`loop-build`](../../loop-build/SKILL.md) | Fallback: a `new` mechanism appears that `BRIEF.md` § Edges did not already cover |
 | Always-on reminder | `.claude/rules/architecture.md` § Don't reinvent the wheel |
 
 **Order when several apply:** this skill (reuse vs custom) → [`loop-plan → research-api`](../../loop-plan/references/research-api.md) if still researching a vendor contract → [`loop-plan → review-precedent`](../../loop-plan/references/review-precedent.md) on the chosen approach (M/L or new contracts).
 
-**Persist:** compact recommendation in `DEVELOPMENT_PLAN.md` § Conflict & compliance (reuse / packages). If license or coupling is a product fork, log it in `DECISIONS.md` via [`loop-plan → fork checklist`](../../loop-plan/references/fork-checklist.md). This skill still **stops at the recommendation** — no install, no adapted code.
+**Persist:** `Borrow / build:` line in `BRIEF.md` § Edges (every size), copied into `DEVELOPMENT_PLAN.md` § Conflict & compliance at size M. If license or coupling is a product fork, log it in `DECISIONS.md` via [`loop-plan → fork checklist`](../../loop-plan/references/fork-checklist.md). This skill still **stops at the recommendation** — no install, no adapted code.
 
 ## Step 0: Check what's already there
 
