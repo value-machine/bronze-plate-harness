@@ -96,9 +96,16 @@ describe("generated token CSS", () => {
   afterAll(() => rmSync(outDir, { recursive: true, force: true }));
 
   it("should match a fresh build (run pnpm tokens:build after editing token files)", () => {
+    // Run the CLI's JS entry through node: .bin/tz is a shell script that Windows can't execute.
     execFileSync(
-      join(repoRoot, "node_modules/.bin/tz"),
-      ["build", "-c", "scripts/terrazzo.config.js", "--quiet"],
+      process.execPath,
+      [
+        join(repoRoot, "node_modules/@terrazzo/cli/bin/cli.js"),
+        "build",
+        "-c",
+        "scripts/terrazzo.config.js",
+        "--quiet",
+      ],
       { cwd: repoRoot, env: { ...process.env, TOKENS_OUT_DIR: `${outDir}/` }, stdio: "pipe" }
     );
     const fresh = readFileSync(join(outDir, "tokens.generated.css"), "utf8");
