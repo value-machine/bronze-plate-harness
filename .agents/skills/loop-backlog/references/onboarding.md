@@ -212,6 +212,15 @@ The agent's playbook (build settings, troubleshooting) is the **Agent one-shot b
 
 **Interface (task #4):** every visible surface is template placeholder, so a fork never ships it unreviewed. Set the app name from the vision in the tab title and top bar, show the owner the home page and top bar and ask keep or change for each, and remove the harness overview card (paths in the task). Then the design tokens (`documentation/DOC_THEMING.md`), or skip if defaults suffice; offer a starting point from the vision (who the users are, the feel they described) rather than asking the owner to pick colors cold.
 
+**App identity assets (part of task #4, after the tokens and after hosting, so the origin is known).** The template ships a placeholder icon and no share-preview tags; a fork must not ship either.
+
+- **Source mark.** Ask the owner once for a logo file (SVG or PNG). With none, offer a simple monogram or glyph drawn from the vision and the `primary` token, and show it before using it.
+- **Generate into `public/`** (the whitelist already allows these types): `favicon.svg` (colors for light and dark via `prefers-color-scheme`), a real `favicon.ico` (the SPA fallback in `wrangler.jsonc` otherwise answers `/favicon.ico` with `index.html` and a 200), `apple-touch-icon.png` (180px), `icon-192.png` and `icon-512.png`, `manifest.json` (name, icons, `theme_color`, `background_color` from the tokens), and `og-image.png` (1200×630: mark and app name on the theme background). Render the images once with the tools at hand: no new dependency and no committed script (`DOC_DECISION_LOG.md` harness-overview-page D4).
+- **Static tags in `index.html`**, not hoisted from React: link-preview scrapers do not run JavaScript. Add the icon, `apple-touch-icon` and `manifest` links, `theme-color` for light and dark, a meta description from the vision, `og:type`, `og:site_name`, `og:title`, `og:description`, `og:url`, `og:image` (+ width, height, alt) and `twitter:card` `summary_large_image`. `og:url` and `og:image` need absolute URLs: derive the origin as in § Supabase "Hand over exact values" (custom domain if the owner has one) and verify it answers.
+- **Verify.** After `pnpm build`, every linked file exists in `dist/` and the tags are in `dist/index.html`; on the preview, each file answers 200 with an image content type. The owner pastes the preview URL into a chat app or a share-preview checker and confirms the card shows the right name and image (scrapers cache, so a change may need a re-scrape).
+- **Custom domain later:** re-run this block's tag step, since the absolute URLs change.
+- Out of scope: SEO beyond the description (sitemap, structured data, robots rules).
+
 Update `app-tasks.json` as each step completes.
 
 Mobile layout or mobile OAuth on local dev, when the owner needs it: **`documentation/DOC_MOBILE_LOCAL_DEV.md`** (SSOT).
