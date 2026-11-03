@@ -43,5 +43,10 @@
     "title": "Replace architecture.md folder tree with pointer and folder meanings",
     "description": "The src/ tree in .claude/rules/architecture.md § Folder structure had drifted (listed routes/ store/ lib/ that do not exist, missed whitelisted api/ and shared/config/) and duplicated ARCHITECTURE.md. Replaced with a pointer to ls src/, projectStructure.config.cjs, pnpm validate:structure and ARCHITECTURE.md, keeping four one-line folder meanings the tools cannot express. From the Claude Code video-lessons review (option B, owner-approved).",
     "status": "done"
+  },
+  {
+    "title": "Feedback hooks: lint after edit, type-check before turn end",
+    "description": "Claude Code hooks replace remember-to-run instructions: a PostToolUse hook runs ESLint --fix on each edited .ts/.tsx file and returns remaining errors to the agent; a Stop hook runs type-check when TypeScript files changed and blocks the turn end once per failing state. Shared hook-input reader in scripts/hook-input.cjs; push-safety.md lint paragraph trimmed. From the Claude Code video-lessons review (owner picked both, Stop hook type-check only).",
+    "status": "done"
   }
 ]

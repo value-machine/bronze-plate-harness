@@ -93,6 +93,8 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 
 **Worktree sessions (Model C):** the Claude Code SessionStart hook (`scripts/ensure-deps-installed.cjs`) installs dependencies in a new worktree so these hooks run there too. Archive a finished session in the desktop app (or turn on auto-archive after PR merge) to remove its worktree.
 
+**Edit-time feedback (Claude Code hooks, `.claude/settings.json`):** before pre-commit, two hooks report errors while the agent works. PostToolUse on `Edit|Write|MultiEdit` runs `eslint --fix` on the edited `.ts`/`.tsx` file (Prettier via `prettier/prettier`) and returns the remaining errors ([`scripts/lint-edited-file.cjs`](../scripts/lint-edited-file.cjs), ~2–4 s per edit). Stop runs the `type-check` script when uncommitted TypeScript changed and keeps the turn going while it fails, once per failing tree ([`scripts/type-check-on-stop.cjs`](../scripts/type-check-on-stop.cjs), ~6 s, skipped when the tree is unchanged since the last pass). Tests stay with pre-commit and CI (a lap's acceptance test is red on purpose until the build ends). Files changed through Bash, merges or other tools are not seen by these hooks — `pnpm lint` before push and CI still cover them. Cursor has no equivalent wired up.
+
 **Agent commands:** `pnpm test:staged` (preview after `git add`); `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (force full preview); `pnpm test:classify && pnpm test:run` (CI parity).
 
 **Rollback:** Revert hook commit and restore pre-push `test:run` if related spawn fails in the wild.
@@ -113,6 +115,7 @@ See `.claude/rules/git-workflow.md` § Mode-aware branch gate (`src/config/git-w
 | `src/config/git-workflow.json` / mode docs | `.claude/rules/git-workflow.md`, `loop-ship`, `loop-verdict`, `loop-backlog/references/onboarding.md`, `DOC_CONTRIBUTING`, `DOC_CLOUDFLARE_WORKERS` |
 | `.husky/pre-commit` | `.claude/rules/git-workflow.md`, `.claude/rules/agent-behavior.md`, `loop-ship`, this doc if hook scope changes |
 | `.husky/pre-push` | `.claude/rules/git-workflow.md`, `loop-ship/references/push-safety.md`, this doc if hook scope changes |
+| `.claude/settings.json` `hooks` or a hook script in `scripts/` | this doc § Local git (edit-time feedback); `loop-ship/references/push-safety.md` step 6 when lint coverage changes |
 | A loop stage (add, rename, reorder) | `router/references/loop-map.md`, `router/references/catalog.md`, the neighbor stages' Edges (Calls ⇄ Called by — `pnpm validate:skills`) |
 | Any skill | `meta-write-skill/references/skill-template.md` structure + catalog row; `pnpm validate:skills` |
 | The stop list / when to ask | `.claude/rules/agent-behavior.md` § When to ask; `loop-refine/references/asking.md` for *how* |
