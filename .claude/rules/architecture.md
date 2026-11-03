@@ -78,7 +78,7 @@ Name any new symbol per `.claude/rules/code-style.md` § Naming.
 
 ## Feature granularity / bounded context
 
-**One feature = one bounded domain concept** (one reason to change, one vocabulary). Layer rules alone don't stop a monolithic feature. If you can name two independent domain concepts in one feature (e.g. game *world*, *combat*, *inventory*), split them; move cross-cutting engine code to `src/shared/`.
+**One feature = one bounded domain concept** (one reason to change, one vocabulary). Layer rules alone don't stop a monolithic feature. If you can name two independent domain concepts in one feature (e.g. game _world_, _combat_, _inventory_), split them; move cross-cutting engine code to `src/shared/`.
 
 - **Agent obligation:** before creating files for new work, enumerate the domain concepts and split in the plan when there is more than one or the projected size exceeds budgets — don't wait to be asked.
 - **Budgets (SSOT `featureBudgets.config.cjs`):** `defaults.maxFilesPerLayer`, `defaults.maxFilesPerFeature`, `overrides.<feature>` (non-empty `reason` required), `baseline.<feature>` (grandfathered; regenerate with `pnpm validate:feature-size:baseline`).
@@ -86,9 +86,7 @@ Name any new symbol per `.claude/rules/code-style.md` § Naming.
 
 ## Plain optimistic + server-canonical response (TanStack Query)
 
-Default for mutations that must feel instant: optimistic patch in `onMutate` (snapshot for rollback), restore on error with one non-blocking message, and on success merge the **mutation result** into the cache with `setQueryData`. Do **not** `invalidateQueries`/`refetch` the same keys on the happy path — that extra render causes flashes. Mutations return the canonical projection (e.g. PostgREST `.select()` after `.update()`).
-
-Full playbook, exceptions, and anti-patterns (SSOT): `documentation/DOC_TANSTACK_QUERY.md` § Plain optimistic + server-canonical response. Pattern (not shipped): `documentation/DOC_TANSTACK_QUERY.md` § Example mutation.
+Default for mutations that must feel instant: optimistic `onMutate` with rollback, then `setQueryData` with the mutation's canonical result — no `invalidateQueries`/`refetch` on the happy path (flashes). Playbook, exceptions, example (SSOT): `documentation/DOC_TANSTACK_QUERY.md` § Plain optimistic + server-canonical response.
 
 ## Changing architecture rules and configs
 
@@ -101,7 +99,3 @@ Legitimate cross-layer exception (rare): regenerate the dependency-cruiser basel
 - `ARCHITECTURE.md` and `CHANGELOG.md` live in the repo root.
 - Update `ARCHITECTURE.md` after structural changes; feature docs live in `src/features/*/README.md` (pre-commit requires staging it with feature changes — `documentation/DOC_FEATURE_LOCAL_README.md`).
 - `src/features/*/docs/*.md` only with explicit user approval; temporary plans go in `documentation/jobs/` or `documentation/temp/`.
-
-## Related Rules
-
-When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/spec-optimize-performance/SKILL.md` (refactors must respect these placements).
