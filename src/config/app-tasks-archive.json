@@ -33,5 +33,10 @@
     "title": "Orchestrator for parallel laps",
     "description": "An optional orchestrator role (skill) the owner talks to: it owns the backlog and task state, watches the app vision, runs several laps at once in separate threads, relays questions between threads and the owner, and verifies and merges their work. Backlog/state work moves out of the per-lap loop into it. With one task, the plain loop runs without it. Keep the instructions lean: name outcomes, not procedure.",
     "status": "done"
+  },
+  {
+    "title": "Deny reading nested secrets files",
+    "description": "Widen .claude/settings.json permissions.deny from root-only ./.env* and ./.dev.vars* to recursive **/ patterns so nested secrets (e.g. supabase/functions/.env) are never read or sent to the model provider; .env.example stays readable via a negated deny rule. From the Claude Code video-lessons review.",
+    "status": "done"
   }
 ]
