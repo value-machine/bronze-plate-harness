@@ -38,3 +38,57 @@ Always-loaded ≈ 17.6k → ≈ 13.9k tokens (−21%). R10 + R11 later: ≈ −2
 ## Kept on purpose (scar tissue / gates)
 
 Protected-files consent, Model B single-landing-path + ancestor invariant, "never relax `main` ruleset under C", emergency-main gate, Naming F1–F6, layer-consistency stop, When-to-ask stop list.
+
+## Applied (owner approved R1–R9 via the orchestrator)
+
+### Savings
+
+| File | Tier | Before (chars) | After (chars) | Δ tokens |
+|------|------|----------------|---------------|----------|
+| `git-workflow.md` | always | 16,447 | 9,152 | −1,820 |
+| `platform.md` | always | 3,267 | 1,762 | −380 |
+| `agent-behavior.md` | always | 8,892 | 7,757 | −280 |
+| `code-style.md` | always | 7,883 | 7,078 | −200 |
+| `testing.md` | always | 4,893 | 3,946 | −240 |
+| `architecture.md` | always | 11,174 | 10,631 | −140 |
+| `debugging.md` | always | 2,481 | 2,335 | −40 |
+| `security.md` | always | 1,986 | 1,809 | −40 |
+| `AGENTS.md` / `CLAUDE.md` | always | 9,128 | 9,180 | +10 |
+| `loop-ship/references/push-safety.md` | on demand | 3,639 | ≈ 10,900 | (on demand) |
+| `cloud-functions.md` | path-scoped | 13,734 | ≈ 14,400 | (on demand) |
+| `documentation/DOC_WINDOWS_SHELL.md` (new) | on demand | — | ≈ 1,500 | (on demand) |
+
+Always-loaded total: 70.5k → 58.0k chars ≈ 17.6k → 14.5k tokens (−18%). The estimate was −21%; the gap comes from keeping the policy lines and adding pointers.
+
+### Ledger
+
+| # | Instruction (short) | From | Action | Now lives at |
+|---|---------------------|------|--------|--------------|
+| L1 | Promote preconditions, pre-promote check, why no PAT, ruleset design, failure modes | `git-workflow` § Promote to production | relocated | `push-safety.md` § Promote to production (A/B procedure) |
+| L2 | Ancestor failure reconcile + prevention | same | relocated | `push-safety.md` § Ancestor failure (refs updated: `spec-debug-runtime/references/patterns.md`) |
+| L3 | First promotion bootstrap command (user runs it) | same | relocated | `push-safety.md` § First promotion bootstrap (refs updated: `onboarding.md`, mode table fork-setup row) |
+| L4 | Promote trigger phrases ("land on main", …) → don't open develop→main PR | same § Agent UX | kept (tightened) | `git-workflow` § Promote to production |
+| L5 | Model A `gh pr create` steps, verify base, PowerShell heredoc note, chat-handoff PR link | `git-workflow` § Pull Requests | relocated | `push-safety.md` § Pull request |
+| L6 | PR body template | same | relocated | `push-safety.md` § Pull request |
+| L7 | Preview-URL lookup + fallback formula + verify | same | relocated | `push-safety.md` § Pull request; policy line kept in rule |
+| L8 | Who reads what; no task lists; conventional title | same | kept (tightened) | `git-workflow` § Pull requests |
+| L9 | Diagnosing "merge blocked" | same | relocated | `push-safety.md` § Pull request |
+| L10 | Divergence prevention; CONFLICTING → merge develop | same | relocated | `push-safety.md` § Branch detail (A/B), § Pull request |
+| L11 | Model A/B branch detail, hotfix, concurrency | `git-workflow` § Branch Strategy | relocated | `push-safety.md` § Branch detail (A/B) |
+| L12 | Ancestor invariant, single landing path, forbidden moves, Model C defaults, rulesets ≠ classic protection | `git-workflow` § Branch Strategy / Forbidden / Branch Protection | merged | `git-workflow` § Branch invariants |
+| L13 | Related Rules footers (8 always-on rules) | each rule | merged | `DOC_RULES_INDEX.md` § Consistency Check Matrix (extra skill refs folded in; § Adding a New Rule updated) |
+| L14 | PowerShell command rules, exit-code handling, Git Bash rules, "owner usually on Windows" | `platform.md` | relocated | `documentation/DOC_WINDOWS_SHELL.md` (trigger in `platform.md`; refs updated: `CLAUDE.md`, `patterns.md`, `DOC_INDEX.md`, `DOC_RULES_INDEX.md`, `AGENTS.md` catalog row) |
+| L15 | "Never commit real .env", "server secrets never as VITE_*" | `platform.md` | merged | `security.md` § Secrets (pointer kept) |
+| L16 | Local test authority table | `testing.md` | shrunk | one-line summary in `testing.md`; table in `DOC_AGENT_WORKFLOW_LAYERS.md` § Local git |
+| L17 | Edge Functions: no staging, manual tests, document test procedure; release validation gate | `testing.md` | relocated | `cloud-functions.md` § Testing Strategy (one-line pointer kept in `testing.md`) |
+| L18 | Pre-commit light path paragraph | `agent-behavior` § Protected Files | cut (stated elsewhere) | `DOC_AGENT_WORKFLOW_LAYERS.md` § Local git; merge gate in `testing.md` |
+| L19 | Protected-file examples | `agent-behavior` | rewritten | same place, one line |
+| L20 | Enforced-tooling detail (Prettier options, lint rule list) | `code-style` | shrunk-enforced | commands + `eslint.config.js` / `.prettierrc.json` SSOT |
+| L21 | Complexity table | `code-style` | rewritten | one line, same thresholds |
+| L22 | TanStack optimistic pattern | `architecture` | shrunk | one-line summary + `DOC_TANSTACK_QUERY.md` SSOT |
+
+MISSING: 0. A script diffed every removed line against the corpus; each of the 61 lines without a verbatim match maps to a row above (reworded or moved).
+
+### Later laps (orchestrator backlog)
+
+R10 (path-scoped `src/**` rule split), R11 (skill-description trim with trigger tests), R12 (`loop-check` → `/code-review`, `loop-build` / `spec-optimize-performance` → `/simplify` as backing calls).

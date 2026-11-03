@@ -90,9 +90,7 @@ Name any new symbol per `.claude/rules/code-style.md` § Naming.
 
 ## Plain optimistic + server-canonical response (TanStack Query)
 
-Default for mutations that must feel instant: optimistic patch in `onMutate` (snapshot for rollback), restore on error with one non-blocking message, and on success merge the **mutation result** into the cache with `setQueryData`. Do **not** `invalidateQueries`/`refetch` the same keys on the happy path — that extra render causes flashes. Mutations return the canonical projection (e.g. PostgREST `.select()` after `.update()`).
-
-Full playbook, exceptions, and anti-patterns (SSOT): `documentation/DOC_TANSTACK_QUERY.md` § Plain optimistic + server-canonical response. Pattern (not shipped): `documentation/DOC_TANSTACK_QUERY.md` § Example mutation.
+Default for mutations that must feel instant: optimistic `onMutate` with rollback, then `setQueryData` with the mutation's canonical result — no `invalidateQueries`/`refetch` on the happy path (flashes). Playbook, exceptions, example (SSOT): `documentation/DOC_TANSTACK_QUERY.md` § Plain optimistic + server-canonical response.
 
 ## Changing architecture rules and configs
 
@@ -105,7 +103,3 @@ Legitimate cross-layer exception (rare): regenerate the dependency-cruiser basel
 - `ARCHITECTURE.md` and `CHANGELOG.md` live in the repo root.
 - Update `ARCHITECTURE.md` after structural changes; feature docs live in `src/features/*/README.md` (pre-commit requires staging it with feature changes — `documentation/DOC_FEATURE_LOCAL_README.md`).
 - `src/features/*/docs/*.md` only with explicit user approval; temporary plans go in `documentation/jobs/` or `documentation/temp/`.
-
-## Related Rules
-
-When modifying this rule, check: `code-style`, `testing`, `security`, `cloud-functions`, `database`, and `.agents/skills/spec-optimize-performance/SKILL.md` (refactors must respect these placements).
