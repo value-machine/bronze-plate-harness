@@ -28,7 +28,12 @@ export const HARNESS_STAGES: HarnessStage[] = [
     summary: "Ranks the to-do list and asks you to confirm the top item.",
     ownerStep: true,
     handoff: "top task",
-    helpers: [],
+    helpers: [
+      skill(
+        "loop-orchestrate",
+        "Optional: runs several tasks at once, each in its own session, and brings you every preview."
+      ),
+    ],
   },
   {
     skill: "loop-refine",

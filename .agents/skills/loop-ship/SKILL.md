@@ -20,7 +20,7 @@ When this skill is done, the lap is committed, pushed, open as a PR with a worki
 | In | Lap branch working tree, check summary, `src/config/git-workflow.json` mode, `git-workflow` rule § Mode behavior table |
 | Out | Commits, pushed branch, PR (title + body with the check summary), preview link, green CI; merge or promote on Pass |
 | Calls | always → [`references/commit-standards.md`](references/commit-standards.md), then [`references/push-safety.md`](references/push-safety.md) · if the tree shows another thread's work → [`references/concurrency.md`](references/concurrency.md) · if CI fails → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) · when CI is green → [`loop-verdict`](../loop-verdict/SKILL.md) |
-| Called by | [`router`](../router/SKILL.md), [`loop-check`](../loop-check/SKILL.md), [`loop-verdict`](../loop-verdict/SKILL.md) |
+| Called by | [`router`](../router/SKILL.md), [`loop-check`](../loop-check/SKILL.md), [`loop-verdict`](../loop-verdict/SKILL.md), [`loop-orchestrate`](../loop-orchestrate/SKILL.md) |
 | Next | [`loop-verdict`](../loop-verdict/SKILL.md) |
 | Owner stops | None, except concurrency smoke ([`references/concurrency.md`](references/concurrency.md)), protected-file fixes for a failing hook, and an unplanned MAJOR bump |
 

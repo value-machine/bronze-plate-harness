@@ -21,7 +21,7 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 | In | Top task in `src/config/app-tasks.json`; `documentation/DOC_APP_VISION.md`; feature READMEs and code of the touched areas; rules; owner feedback (Change verdict) |
 | Out | `documentation/jobs/temp_job_<slug>/BRIEF.md` ([`references/brief-template.md`](references/brief-template.md)); lap `DECISIONS.md` ([`references/decisions-template.md`](references/decisions-template.md)); follow-up backlog tasks when the work is cut into laps |
 | Calls | if repo context is missing → [`spec-load-context`](../spec-load-context/SKILL.md) · if the task is a bug → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) (reproduce only) · if the request changes existing behavior → [`spec-check-layer`](../spec-check-layer/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
-| Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md) |
+| Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md), [`loop-orchestrate`](../loop-orchestrate/SKILL.md) |
 | Next | [`loop-plan`](../loop-plan/SKILL.md) |
 | Owner stops | Stop list only ([`agent-behavior` rule § When to ask](../../../.claude/rules/agent-behavior.md)), asked per [`references/asking.md`](references/asking.md) |
 
