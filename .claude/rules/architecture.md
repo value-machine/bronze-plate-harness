@@ -78,7 +78,7 @@ Name any new symbol per `.claude/rules/code-style.md` § Naming.
 
 ## Feature granularity / bounded context
 
-**One feature = one bounded domain concept** (one reason to change, one vocabulary). Layer rules alone don't stop a monolithic feature. If you can name two independent domain concepts in one feature (e.g. game *world*, *combat*, *inventory*), split them; move cross-cutting engine code to `src/shared/`.
+**One feature = one bounded domain concept** (one reason to change, one vocabulary). Layer rules alone don't stop a monolithic feature. If you can name two independent domain concepts in one feature (e.g. game _world_, _combat_, _inventory_), split them; move cross-cutting engine code to `src/shared/`.
 
 - **Agent obligation:** before creating files for new work, enumerate the domain concepts and split in the plan when there is more than one or the projected size exceeds budgets — don't wait to be asked.
 - **Budgets (SSOT `featureBudgets.config.cjs`):** `defaults.maxFilesPerLayer`, `defaults.maxFilesPerFeature`, `overrides.<feature>` (non-empty `reason` required), `baseline.<feature>` (grandfathered; regenerate with `pnpm validate:feature-size:baseline`).
