@@ -38,5 +38,10 @@
     "title": "Deny reading nested secrets files",
     "description": "Widen .claude/settings.json permissions.deny from root-only ./.env* and ./.dev.vars* to recursive **/ patterns so nested secrets (e.g. supabase/functions/.env) are never read or sent to the model provider; .env.example stays readable via a negated deny rule. From the Claude Code video-lessons review.",
     "status": "done"
+  },
+  {
+    "title": "Replace architecture.md folder tree with pointer and folder meanings",
+    "description": "The src/ tree in .claude/rules/architecture.md § Folder structure had drifted (listed routes/ store/ lib/ that do not exist, missed whitelisted api/ and shared/config/) and duplicated ARCHITECTURE.md. Replaced with a pointer to ls src/, projectStructure.config.cjs, pnpm validate:structure and ARCHITECTURE.md, keeping four one-line folder meanings the tools cannot express. From the Claude Code video-lessons review (option B, owner-approved).",
+    "status": "done"
   }
 ]
