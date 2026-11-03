@@ -6,6 +6,14 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## owner-test — claude/happy-johnson-4r7w16
+
+The first orchestrated run (four harness laps: secrets deny list, folder-tree pointer, feedback hooks, context-cost audit) asked the owner Pass / Change / Drop four times on previews that looked exactly like `main`. The owner clicked Pass blind: the real decision had already been made at the consent question, and a process change can only be judged by using the process. A question that can only be clicked blind trains the owner to stop reading it.
+
+| id | topic | status | choice | source | notes |
+|---|---|---|---|---|---|
+| D1 | Stop 2 for laps with nothing to test in the app | closed | `BRIEF.md` gains § Owner test (`app` / `none`). With `none` (rules, skills, settings, tooling, docs), `loop-verdict` asks no Pass / Change / Drop: the Stop 1 answer or protected-file consent is the Pass, the PR merges on green CI (Model C; A/B rides the next promote), and the owner gets one `Watch for:` line. A problem found later is a Change request (fix or revert task) | owner | Rejected: keep asking with "nothing to test" noted (still a blind click); a batched end-of-run question (same blindness, one click). Mixed laps (app + harness) count as `app` |
+
 ## orchestrator-parallel-laps — claude/friendly-hypatia-d631ig
 
 An optional orchestrator skill (`loop-orchestrate`) runs several laps at once in separate sessions, owns the backlog, and merges each thread's PR after the owner's Pass. Without it the single-lap loop is unchanged.
