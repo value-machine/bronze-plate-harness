@@ -25,6 +25,7 @@ The route is `src/pages/HarnessOverviewPage.tsx` (set in `src/App.tsx`); it rend
 
 - The overview is an app route built from kit components and theme tokens, not a standalone file (owner, v0.43.0).
 - The card shows to every visitor, with no config flag (owner, v0.43.0).
+- The optional orchestrator (`loop-orchestrate`) shows as a helper of the backlog stage, since a parallel run starts at the backlog confirm (orchestrator-parallel-laps D2).
 
 ## Removing it from a fork
 
