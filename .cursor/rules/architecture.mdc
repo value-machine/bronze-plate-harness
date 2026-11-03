@@ -50,16 +50,12 @@ If code doesn't meet a layer's criteria, move it down a layer.
 
 ## Folder structure
 
-`src/` layout (whitelist: `projectStructure.config.cjs`):
+Find the real layout with `ls src/`. Allowed paths: `projectStructure.config.cjs`; check a new one with `pnpm validate:structure`. Annotated tree for humans: `ARCHITECTURE.md` § Folder Structure. Neither tool says what a folder means:
 
-```
-src/
-├── assets/  components/common/   # presentation-only UI, zero business logic
-├── features/<name>/              # README.md (required), components/ hooks/ services/ types/ context/ store/ docs/
-├── shared/                       # hooks/ services/ utils/ types/ context/ theme/ — reused by 2+ features
-├── layouts/                       # app shell (MainLayout, Topbar, ProfileMenu) — may compose features
-├── pages/  routes/  store/  config/  lib/
-```
+- `components/common/` — presentation-only UI kit, no business logic, no feature imports.
+- `features/<name>/` — one bounded domain concept (§ Feature granularity), `README.md` required.
+- `shared/` — reused by 2+ features.
+- `layouts/` — app shell; may compose features.
 
 Backend: Supabase Edge Functions in `supabase/functions/<name>/index.ts` (shared code in `_shared/`); other runtimes in `cloud-functions/<service>/` (see `.claude/rules/cloud-functions.md`).
 
