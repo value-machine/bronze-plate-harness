@@ -38,5 +38,25 @@
     "title": "Decide whether the app uses anonymous sign-ins",
     "description": "The app asks Supabase for an anonymous session on every visit and Supabase refuses (anonymous_provider_disabled, HTTP 422), twice per page load. Either enable anonymous sign-ins in the project (anonymous users get the authenticated role, so the feedback policy would admit them; review RLS first) or remove the call. Auth permission model: needs an owner decision.",
     "status": "to-do"
+  },
+  {
+    "title": "Path-scope src-only guidance into its own rule",
+    "description": "Context-cost audit follow-up (R10): move src-only guidance (architecture code placement and edge-case placement, code-style TypeScript and styling, debugging API troubleshooting) out of always-on rules into a rule with paths: [\"src/**\"], saving about 1.7k tokens on non-src tasks. Keep the folder meanings in architecture.md § Folder structure. Protected files: owner consent per edit.",
+    "status": "to-do"
+  },
+  {
+    "title": "Trim skill descriptions with trigger tests",
+    "description": "Context-cost audit follow-up (R11): shorten the .agents/skills/*/SKILL.md descriptions that are listed in every session (about 3.5k tokens; target about -0.8k) and verify with meta-write-skill trigger tests that the right skill still triggers. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "Let loop skills call Claude Code built-in review skills",
+    "description": "Context-cost audit follow-up (R12): have loop-check call the built-in /code-review and loop-build or spec-optimize-performance call /simplify instead of duplicating their checks; /loop and /batch do not overlap loop-orchestrate. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "Port feedback hooks to Cursor",
+    "description": "Feedback-hooks follow-up: check the current Cursor hooks docs (afterFileEdit, stop) and port the Claude Code PostToolUse lint/format hook and Stop type-check hook where Cursor supports equivalent behavior; document gaps.",
+    "status": "to-do"
   }
 ]
