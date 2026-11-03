@@ -6,6 +6,22 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 
+## orchestrator-parallel-laps — claude/friendly-hypatia-d631ig
+
+An optional orchestrator skill (`loop-orchestrate`) runs several laps at once in separate sessions, owns the backlog, and merges each thread's PR after the owner's Pass. Without it the single-lap loop is unchanged.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | D45 conflict (one lap in build at a time) | closed | Amend: one lap per thread; the orchestrator sets how many run at once. Without the orchestrator, D45 stands | loop-refine | owner-directed: the request is "complete many tasks at once". Rejected: keep D45 and only parallelize planning |
+| D2 | When the orchestrator runs | closed | Router offers it at Stop 1 when two or more independent tasks are ready; one task, or a task the owner names alone, runs the plain loop | loop-refine | owner (asked after clear-winner). Rejected: only when asked; automatic; always the front door |
+| D3 | Who writes task state | closed | The orchestrator, when it runs; threads never edit `app-tasks.json` | loop-refine | clear-winner: parallel PRs editing the same JSON conflict; one writer avoids it |
+| D4 | Owner contact | closed | The owner talks only to the orchestrator; threads route stop-list questions through it, it batches them one at a time | loop-refine | clear-winner: matches "the orchestrator I interact with" |
+| D6 | Stop 2 granularity | closed | One PR + preview per thread; the orchestrator verifies, sends one handoff listing every preview, merges each one the owner passes, resolving conflicts in order | owner | Keeps D44 (bounded cost per slice) and per-task Drop. Rejected: one combined PR per batch; no parallel build |
+| D7 | Which stages lift to the orchestrator | closed | Backlog (catch-up, ranking, task status), the Stop 2 handoff and merging. Threads run refine → plan → build → check → PR | owner | Rejected: also lift refine; backlog only; no split (thin dispatcher) |
+| D8 | Orchestrator duties (beyond the obvious) | closed | Yes: propose tasks from vision gaps (owner confirms new tasks); reorder the backlog without asking, reporting the change (amends skill-loop D14 while it runs); turn owner remarks into tasks; answer thread questions it can settle; pass info between threads; pause or re-scope drifting or overlapping threads; resolve merge conflicts itself; learn across threads (proposes rule/skill fixes, consent still asked); keep starting ready tasks while the owner is away. No: split vague tasks before dispatch (threads refine, D7); pick the thread count itself; a second diff review on top of the thread's loop-check | owner | multi-select. Supersedes the 'verify the PR against its brief' part of D6 |
+| D9 | Thread cap | closed | No cap: every independent ready task starts at once; overlapping tasks still queue (edge rule) | owner | Rejected: default 3, owner sets per run, cap by waiting previews |
+| D5 | Thread mechanism | closed | Separate sessions: each thread is its own session the owner can open and watch, pushing its own branch and PR (survives the orchestrator chat restarting). Name the role, not one product's tool | owner | Reopened from clear-winner 'mechanism-agnostic'. Rejected: subagents in worktrees, leave it to the surface, mix by size |
+
 ## app-identity-assets — claude/dreamy-brown-55sh7l
 
 Onboarding's interface step renamed the app but left the template icon in place and shipped no share-preview tags. It now also covers the favicon, app icons, theme color and Open Graph tags.

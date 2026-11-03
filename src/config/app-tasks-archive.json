@@ -28,5 +28,10 @@
     "title": "Fix Google sign-in returning to the wrong site with a PKCE error",
     "description": "Seen on the production site after signing in with Google from a preview: 'PKCE code verifier not found in storage'. Supabase auth logs show the sign-in started on the preview origin, Supabase redirected to the Site URL (production) because the app's bare-origin redirect address did not match the '/**' allow-list pattern, and production then failed with bad_code_verifier. The app also exchanges the code twice (supabase-js does it during client init, then the callback hook again), which would show a false error even when sign-in works. Decisions: documentation/DOC_DECISION_LOG.md § google-signin-return. Result: merged in PR #29 (0817eac, fix(auth): return Google sign-in to the app root and skip a redundant code exchange).",
     "status": "done"
+  },
+  {
+    "title": "Orchestrator for parallel laps",
+    "description": "An optional orchestrator role (skill) the owner talks to: it owns the backlog and task state, watches the app vision, runs several laps at once in separate threads, relays questions between threads and the owner, and verifies and merges their work. Backlog/state work moves out of the per-lap loop into it. With one task, the plain loop runs without it. Keep the instructions lean: name outcomes, not procedure.",
+    "status": "done"
   }
 ]
