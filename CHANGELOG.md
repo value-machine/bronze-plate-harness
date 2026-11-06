@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.45.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.44.0...v0.45.0) (2026-11-06)
+
+
+### Features
+
+* add loop-orchestrate skill for parallel laps ([#46](https://github.com/value-machine/bronze-plate-harness/issues/46)) ([0c43288](https://github.com/value-machine/bronze-plate-harness/commit/0c43288f11477e48c96b85f1877d6d88ff44a6f1))
+* feedback hooks for lint after edit and type-check before turn end ([#49](https://github.com/value-machine/bronze-plate-harness/issues/49)) ([52e7fea](https://github.com/value-machine/bronze-plate-harness/commit/52e7fea27d987d62bd1a28d93ca74d6fb88de46e))
+* **onboarding:** add app icons, theme color and share-preview setup to the interface step ([#42](https://github.com/value-machine/bronze-plate-harness/issues/42)) ([5805c29](https://github.com/value-machine/bronze-plate-harness/commit/5805c29c66028c2db0cd119b1d90dbca2dc2cd60))
+
+
+### Bug Fixes
+
+* deny reads of nested secrets files ([#47](https://github.com/value-machine/bronze-plate-harness/issues/47)) ([1e18c0c](https://github.com/value-machine/bronze-plate-harness/commit/1e18c0c6462ad00f560a4e88822e16c555cc2c28))
+* **harness:** the owner decides by merging or in chat, asked with the question tool ([#37](https://github.com/value-machine/bronze-plate-harness/issues/37)) ([3c398d9](https://github.com/value-machine/bronze-plate-harness/commit/3c398d96aadafedcc7cfe5427935dc7be8fdcda5))
+* lint-skip Edge Functions and isolate hook tests from the repo ([#45](https://github.com/value-machine/bronze-plate-harness/issues/45)) ([46909bc](https://github.com/value-machine/bronze-plate-harness/commit/46909bcade3c13d8b9508aa5c40e87f4c46cf33c))
+* run Terrazzo CLI through node in token test so it works on Windows ([#43](https://github.com/value-machine/bronze-plate-harness/issues/43)) ([2599392](https://github.com/value-machine/bronze-plate-harness/commit/259939203aa7ad9955794de2628b8568c188e590))
+* **skills:** close the lap before the merge and never force-push a merged branch ([#36](https://github.com/value-machine/bronze-plate-harness/issues/36)) ([c76357c](https://github.com/value-machine/bronze-plate-harness/commit/c76357cbcf98910ec435ffb1bc3a1226f4e78502))
+* **skills:** onboard forks before the first lap and clean up landed lap folders ([#34](https://github.com/value-machine/bronze-plate-harness/issues/34)) ([7d8ec84](https://github.com/value-machine/bronze-plate-harness/commit/7d8ec849da3d7c220450de094c47d561c15c304d))
+
 ## [0.44.0](https://github.com/value-machine/bronze-plate-harness/compare/v0.43.0...v0.44.0) (2026-10-26)
 
 
