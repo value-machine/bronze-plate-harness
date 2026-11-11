@@ -53,5 +53,10 @@
     "title": "Context-cost audit: slim always-on rules",
     "description": "meta-audit-harness context-cost lens (R1-R9): moved Model A/B promote and PR procedures from git-workflow.md into loop-ship references, cut Related Rules footers (DOC_RULES_INDEX is SSOT), moved Windows-only shell text to documentation/DOC_WINDOWS_SHELL.md, and trimmed testing, agent-behavior, code-style and architecture to pointers. Always-on context about 17.6k to 14.5k tokens (-18%), no information lost (ledger in the lap folder). Follow-ups R10-R12 are separate backlog tasks. From the Claude Code video-lessons review.",
     "status": "done"
+  },
+  {
+    "title": "No Pass question for laps the owner cannot test in the app",
+    "description": "Lesson from the first orchestrated run: Stop 2 asked Pass/Change/Drop on rule, skill and settings PRs whose preview looked like main, so the owner clicked blind. BRIEF.md now records an owner test (app or none); with none, loop-verdict merges on green CI without a question and posts one Watch for line; the earlier consent is the Pass (owner-test D1).",
+    "status": "done"
   }
 ]
