@@ -27,13 +27,17 @@ When this skill is done, every ready task has been built in its own session, and
 
 ## Steps
 
-1. **Orient.** List active sessions. Thread sessions tagged with a run and a lap slug, with an orchestrator as parent, mean a run is in flight: rebuild status from them and from open lap PRs.
-2. **Dispatch** every ready task whose feature areas, guessed from the task text, don't overlap a running one; overlapping tasks queue. There's no cap, so token spend grows with the backlog. Start each as a separate session the owner can watch, tagged with the run and lap slug. Its brief: the task, the lap slug, run the lap from `loop-refine` to a green PR, report questions and results back, and leave `app-tasks.json` alone.
+1. **Orient.** List active sessions. Thread sessions tagged with a run and a lap slug, with an orchestrator as parent, mean a run is in flight: rebuild status from them and from open lap PRs, then run the title sweep (step 3) once.
+2. **Dispatch** every ready task whose feature areas, guessed from the task text, don't overlap a running one; overlapping tasks queue. There's no cap, so token spend grows with the backlog. Start each as a separate session the owner can watch, titled with the task's backlog title and tagged with the run and lap slug. Its brief: the task, the lap slug, run the lap from `loop-refine` to a green PR, report questions and results back (including when it needs another thread's result, and when its PR is merged or closed), leave `app-tasks.json` alone, and never rename its session.
 3. **Run** on every event (thread report, owner message, merge):
+   - **Titles** — the owner reads a thread's state from its title, and only the orchestrator renames:
+     - *Set:* a working thread's title is its task's backlog title, with no status. When a thread must wait on another (it reports needing another thread's result, or you hold it after the overlap re-check), in one action tell it to pause, tag it `waits-on:<lap-slug>` per blocker, and rename it `⏸ <goal> · waits on <blocker goal>` (several blockers joined with ` + `). Waiting on the owner gets no prefix; the app already marks it.
+     - *Clear:* once every `waits-on` blocker is done, in one action remove the tags, restore the plain title, and message the thread: after a merge, update from `main` and continue; after a Drop, re-check its brief: continue if it doesn't need the dropped change, otherwise re-scope it, and ask the owner only if neither works.
+     - *Sweep:* runs on the actions that can finish a blocker (your own merge or Drop, a thread reporting its PR merged or closed, a failed-thread notice) and once in step 1. It clears waits whose blockers are done, archives threads whose PR is merged or closed, resets any title that differs from the expected one, and names a failed blocker in the status line. No timed check-ins and no PR watch; each thread watches its own PR.
    - **Questions:** answer what the vision, recorded decisions or another thread settle; ask the owner the rest, one at a time ([`asking.md`](../loop-refine/references/asking.md)). A waiting thread parks; the others go on.
    - **Briefs:** when a thread reports its edges, re-check overlap; hold or re-scope a thread that overlaps or drifts. Tell a thread when another one's change affects it.
    - **Backlog:** reorder without asking and report it; turn the owner's remarks into tasks; propose tasks for gaps between the vision and the app. Start what became ready.
-4. **Stop 2.** For each green PR, commit its task's archive and any pending backlog edits onto its branch, so a merge on GitHub is still a complete Pass. Then post one handoff listing each PR in the `loop-verdict` format, with a verdict per PR. On Pass, merge it; bring the other branches up to date and resolve conflicts yourself (the decision log and the backlog JSON conflict on every merge; that isn't overlap). A Change goes back to its thread; a Drop closes the PR.
+4. **Stop 2.** For each green PR, commit its task's archive and any pending backlog edits onto its branch, so a merge on GitHub is still a complete Pass. Then post one handoff listing each PR in the `loop-verdict` format, with a verdict per PR. On Pass, merge it and archive its session; bring the other branches up to date and resolve conflicts yourself (the decision log and the backlog JSON conflict on every merge; that isn't overlap). A Change goes back to its thread; a Drop closes the PR and archives the session.
 5. **Finish** when nothing is ready or in flight: post the status line and hand back to the router.
 
 Threads report back through whatever the surface supports: messages, or their branch, PR and transcript, which the orchestrator reads.
@@ -49,7 +53,7 @@ Output: two sessions start, and the rename task queues behind CSV export. The av
 One status line per turn:
 
 ```text
-Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <PR | question> · Queued: <task> (<reason>)
+Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <PR | question> · Held: <task> (waits on <task>) · Queued: <task> (<reason>)
 ```
 
 ## Not for
