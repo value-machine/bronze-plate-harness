@@ -27,10 +27,13 @@ When this skill is done, every ready task has been built in its own session, and
 
 ## Steps
 
-1. **Orient.** List active sessions. Thread sessions tagged with a run and a lap slug, with an orchestrator as parent, mean a run is in flight: rebuild status from them and from open lap PRs.
-2. **Dispatch** every ready task whose feature areas, guessed from the task text, don't overlap a running one; overlapping tasks queue. There's no cap, so token spend grows with the backlog. Start each as a separate session the owner can watch, titled per step 3 **Titles** and tagged with the run and lap slug. Its brief: the task, the lap slug, run the lap from `loop-refine` to a green PR, report questions and results back, and leave `app-tasks.json` alone.
+1. **Orient.** List active sessions. Thread sessions tagged with a run and a lap slug, with an orchestrator as parent, mean a run is in flight: rebuild status from them and from open lap PRs, then run the title check-in (step 3) once.
+2. **Dispatch** every ready task whose feature areas, guessed from the task text, don't overlap a running one; overlapping tasks queue. There's no cap, so token spend grows with the backlog. Start each as a separate session the owner can watch, titled with the task's backlog title and tagged with the run and lap slug, started so that reporting back needs no owner approval. Its brief: the task, the lap slug, run the lap from `loop-refine` to a green PR, report questions and results back (including when it needs another thread's result), leave `app-tasks.json` alone, and never rename its session.
 3. **Run** on every event (thread report, owner message, merge):
-   - **Titles:** a thread's title is its goal in the owner's words ("Export tasks as CSV"), with no status while it works normally. Only when it waits on another thread does the title carry the state, in front so it survives truncation: `⏸ Waiting on <other thread's goal>: <goal>`; unblocking is one step, never two: the moment what it waits on is done (merged, dropped, or the answer it needed exists), restore the plain goal and message the thread to continue. Sweep every `⏸` title on each event and in step 1, since a merge on GitHub may not reach the orchestrator; while any thread waits, keep a wake-up scheduled (a PR watch or a timed check-in) so the sweep runs without the owner. Waiting on the owner gets no prefix (the app already marks it). The orchestrator is the only one who renames, so titles never race.
+   - **Titles** — the owner reads a thread's state from its title, and only the orchestrator renames:
+     - *Set:* a working thread's title is its task's backlog title, with no status. When a thread must wait on another (it reports needing another thread's result, or you hold it after the overlap re-check), in one action tell it to pause, tag it `waits-on:<lap-slug>` per blocker, and rename it `⏸ <goal> · waits on <blocker goal>` (several blockers joined with ` + `). Waiting on the owner gets no prefix; the app already marks it.
+     - *Clear:* once every `waits-on` blocker is done, in one action remove the tags, restore the plain title, and message the thread: after a merge, update from `main` and continue; after a Drop, re-check its brief first (re-scope or continue).
+     - *Check-in:* on every event, and on a timed check-in (about 30 minutes) kept scheduled only while a `waits-on` tag exists: clear waits whose blockers are done, archive threads whose PR is merged or closed, reset any title that differs from the expected one, and name in the status line a blocker that failed or hasn't moved for three check-ins. Read PR state directly; threads watch their own PRs, and a PR has one watcher.
    - **Questions:** answer what the vision, recorded decisions or another thread settle; ask the owner the rest, one at a time ([`asking.md`](../loop-refine/references/asking.md)). A waiting thread parks; the others go on.
    - **Briefs:** when a thread reports its edges, re-check overlap; hold or re-scope a thread that overlaps or drifts. Tell a thread when another one's change affects it.
    - **Backlog:** reorder without asking and report it; turn the owner's remarks into tasks; propose tasks for gaps between the vision and the app. Start what became ready.
@@ -50,7 +53,7 @@ Output: two sessions start, and the rename task queues behind CSV export. The av
 One status line per turn:
 
 ```text
-Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <PR | question> · Queued: <task> (<reason>)
+Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <PR | question> · Held: <task> (waits on <task>) · Queued: <task> (<reason>)
 ```
 
 ## Not for
