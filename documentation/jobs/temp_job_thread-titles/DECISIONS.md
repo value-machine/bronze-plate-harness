@@ -20,12 +20,12 @@ Updated: 2026-11-12
 | D11 | What updates titles | closed | Actions only, no timed check-in: the orchestrator's own merge or Drop; the blocker thread messaging `merged` / `closed` when its PR event arrives (owner merged on GitHub); the platform's failed-child notice; one sweep in step 1 on restart | owner | Rejected: 30 or 10 min check-ins; asking the owner at once on stall |
 | D14 | Merged on GitHub without the orchestrator | closed | The thread's `merged` message makes the orchestrator archive it and clear its waiters | loop-refine | clear-winner: owner's first ask (merged threads are just archived) plus D11's wiring |
 | D12 | Blocker dropped | closed | The orchestrator re-checks the waiting thread's brief: continue if it doesn't need the dropped change, else re-scope; asks the owner only if neither works | owner | Rejected: ask every time; just continue; drop waiters together |
+| D13 | Thread permission to message back | closed | Out of scope: which actions need approval is a Claude setting, never written into a skill | owner | Removed the permission lines from the skill and D17 |
 
 ## Open
 
 | id | topic | status | options briefly | blocked phase |
 |----|-------|--------|-----------------|---------------|
-| D13 | Thread permission to message back | open | pre-approve only send_message / inherit orchestrator mode | refine |
 
 ## Log
 
@@ -35,3 +35,4 @@ Updated: 2026-11-12
 - 2026-11-12 — D10 closed via loop-refine (asked)
 - 2026-11-12 — D11 closed via loop-refine (owner); D3 superseded; D14 closed (clear-winner)
 - 2026-11-12 — D12 closed via loop-refine (asked)
+- 2026-11-12 — D13 closed via owner (settings stay out of skills); all decisions applied to loop-orchestrate
