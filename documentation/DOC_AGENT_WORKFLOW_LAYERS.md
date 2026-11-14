@@ -83,7 +83,7 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 | Mode | When | Runner |
 |------|------|--------|
 | skip (light) | docs / migrations / no app surface | none |
-| related | 1–25 `src/**` source files, no triggers | `vitest run related <paths>` |
+| related | 1–25 `src/**` source files, no triggers | `vitest related --run <paths>` |
 | full | triggers, `src/shared/**`, test-infra, edge functions, >25 files, `PRECOMMIT_TEST_FULL=1` | `pnpm test:classify && pnpm test:run` |
 | node-scripts-only | `scripts/**` only | `pnpm test:classify` |
 | dry-run | `pnpm test:staged` | log only |
@@ -99,9 +99,11 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 
 **Rollback:** Revert hook commit and restore pre-push `test:run` if related spawn fails in the wild.
 
-PR / push CI runs full `pnpm test:classify`, `pnpm test:run`, and cold `pnpm type-check` in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).
-
 See `.claude/rules/git-workflow.md` § Mode-aware branch gate (`src/config/git-workflow.json`) and `.claude/rules/agent-behavior.md` for protected files.
+
+### CI test scope
+
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (owner decision ci-cost D6): PR and `develop` push runs always run `pnpm test:classify`, cold `pnpm type-check`, lint and build, but Vitest runs through the same classifier as pre-commit, on the files the branch changed (`node scripts/test-staged.cjs --base <ref>`). The table above applies, except that changed files with no related tests pass instead of falling back to the full suite. The full suite (`pnpm test:run`) runs weekly on the default branch, on a manual **Run workflow**, and whenever the classifier says full. A failed weekly run opens an issue. Release PRs run only the version check.
 
 ## Release and versioning
 
