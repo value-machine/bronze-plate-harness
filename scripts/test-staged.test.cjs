@@ -3,24 +3,63 @@ const assert = require('node:assert/strict');
 const {getFullSuiteSrcThreshold} = require('./change-classify.cjs');
 const {
   buildVitestArgv,
+  buildChildEnv,
+  createRunners,
   resolveRunPlan,
   executePlan,
   runStagedTests,
   runFullSuite,
   NO_TEST_FILES_RE,
+  readBaseArg,
 } = require('./test-staged.cjs');
 
 describe('test-staged executor', () => {
   describe('buildVitestArgv', () => {
-    test('should include related mode and staged paths', () => {
+    test('should use the related command with --run when given staged paths', () => {
       assert.deepEqual(buildVitestArgv(['src/a.ts', 'src/b.ts']), [
         'exec',
         'vitest',
-        'run',
         'related',
+        '--run',
         'src/a.ts',
         'src/b.ts',
       ]);
+    });
+  });
+
+  describe('buildChildEnv', () => {
+    test('should drop repository-location git variables when called from a git hook', () => {
+      const env = buildChildEnv({
+        PATH: '/usr/bin',
+        GIT_DIR: '/repo/.git/worktrees/wt',
+        GIT_INDEX_FILE: '/repo/.git/worktrees/wt/index',
+        GIT_WORK_TREE: '/wt',
+        GIT_COMMON_DIR: '/repo/.git',
+        GIT_PREFIX: 'src/',
+        GIT_AUTHOR_NAME: 'Someone',
+      });
+      assert.deepEqual(env, {PATH: '/usr/bin', GIT_AUTHOR_NAME: 'Someone'});
+    });
+
+    test('should pass the cleaned environment to spawned test runs when running pnpm', () => {
+      const seen = [];
+      const runners = createRunners({
+        spawnSync: (_cmd, _args, opts) => {
+          seen.push(opts.env);
+          return {status: 0, stdout: '', stderr: ''};
+        },
+      });
+      const previous = process.env.GIT_DIR;
+      process.env.GIT_DIR = '/repo/.git/worktrees/wt';
+      try {
+        runners.runPnpm(['test:classify']);
+        runners.runVitestRelated(['src/a.ts']);
+      } finally {
+        if (previous === undefined) delete process.env.GIT_DIR;
+        else process.env.GIT_DIR = previous;
+      }
+      assert.equal(seen.length, 2);
+      for (const env of seen) assert.equal(env.GIT_DIR, undefined);
     });
   });
 
@@ -52,7 +91,52 @@ describe('test-staged executor', () => {
     });
   });
 
+  describe('readBaseArg', () => {
+    test('should return the ref when --base is given', () => {
+      assert.equal(readBaseArg(['node', 'x', '--base', 'origin/main']), 'origin/main');
+    });
+
+    test('should return undefined when --base is absent', () => {
+      assert.equal(readBaseArg(['node', 'x', '--dry-run']), undefined);
+    });
+  });
+
   describe('executePlan', () => {
+    test('should pass without the full suite when no related tests exist and onNoRelatedTests is pass', () => {
+      const code = executePlan(
+        {mode: 'related', reason: 'staged src files', relatedPaths: ['src/a.ts']},
+        {
+          dryRun: false,
+          onNoRelatedTests: 'pass',
+          runners: {
+            runVitestRelated: () => ({status: 1, output: 'No test files found, exiting with code 1'}),
+            runFullSuite: () => {
+              throw new Error('should not run the full suite');
+            },
+          },
+        },
+      );
+      assert.equal(code, 0);
+    });
+
+    test('should fall back to the full suite when no related tests exist by default', () => {
+      let fullRuns = 0;
+      executePlan(
+        {mode: 'related', reason: 'staged src files', relatedPaths: ['src/a.ts']},
+        {
+          dryRun: false,
+          runners: {
+            runVitestRelated: () => ({status: 1, output: 'No test files found'}),
+            runFullSuite: () => {
+              fullRuns += 1;
+              return 0;
+            },
+          },
+        },
+      );
+      assert.equal(fullRuns, 1);
+    });
+
     test('should not run tests in dry-run mode', () => {
       let pnpmCalls = 0;
       const code = executePlan(
@@ -209,6 +293,15 @@ describe('test-staged executor', () => {
       const code = runStagedTests({
         dryRun: true,
         staged: ['CHANGELOG.md'],
+      });
+      assert.equal(code, 0);
+    });
+
+    test('should classify a branch diff in dry-run when base is given', () => {
+      const code = runStagedTests({
+        dryRun: true,
+        base: 'origin/main',
+        staged: ['src/features/auth/services/authService.ts'],
       });
       assert.equal(code, 0);
     });

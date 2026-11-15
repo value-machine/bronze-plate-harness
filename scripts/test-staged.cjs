@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Staged-path pre-commit test executor.
+ * Change-based test executor: staged files before a commit, or with `--base <ref>` the files a
+ * branch changed since `<ref>` (CI on PRs and pushes; the weekly CI run is the full suite).
  * SSOT: scripts/change-classify.cjs; documentation/DOC_AGENT_WORKFLOW_LAYERS.md
  */
 
 const {spawnSync} = require('child_process');
 const fs = require('fs');
 const {
+  getChangedFilesSince,
   getStagedFiles,
   classifyChanges,
   classifyTestRun,
@@ -44,11 +46,13 @@ function resolveRunPlan(plan) {
 }
 
 /**
+ * `vitest related --run <paths>`: in `vitest run related <paths>`, Vitest 4 reads `related` as a
+ * file-name filter, finds no tests and the caller falls back to the full suite every time.
  * @param {string[]} vitestPaths
  * @returns {string[]}
  */
 function buildVitestArgv(vitestPaths) {
-  return ['exec', 'vitest', 'run', 'related', ...vitestPaths];
+  return ['exec', 'vitest', 'related', '--run', ...vitestPaths];
 }
 
 /**
@@ -56,6 +60,44 @@ function buildVitestArgv(vitestPaths) {
  */
 function logMode(line) {
   process.stdout.write(`${line}\n`);
+}
+
+/**
+ * Variables git sets for a hook that pin every git call to this repository
+ * (`git rev-parse --local-env-vars`). Inside a linked worktree GIT_DIR is absolute, so a test
+ * that runs git in its own temp folder would commit to, check out and configure the real repo.
+ */
+const REPO_LOCATION_GIT_VARS = [
+  'GIT_ALTERNATE_OBJECT_DIRECTORIES',
+  'GIT_CONFIG',
+  'GIT_CONFIG_PARAMETERS',
+  'GIT_CONFIG_COUNT',
+  'GIT_OBJECT_DIRECTORY',
+  'GIT_DIR',
+  'GIT_WORK_TREE',
+  'GIT_IMPLICIT_WORK_TREE',
+  'GIT_GRAFT_FILE',
+  'GIT_INDEX_FILE',
+  'GIT_NO_REPLACE_OBJECTS',
+  'GIT_REPLACE_REF_BASE',
+  'GIT_PREFIX',
+  'GIT_INTERNAL_SUPER_PREFIX',
+  'GIT_SHALLOW_FILE',
+  'GIT_COMMON_DIR',
+];
+
+/**
+ * Environment for spawned test runs: the caller's environment without the hook's
+ * repository-location git variables, so tests always run against their own fixtures.
+ * @param {NodeJS.ProcessEnv} env
+ * @returns {NodeJS.ProcessEnv}
+ */
+function buildChildEnv(env) {
+  const childEnv = {...env};
+  for (const name of REPO_LOCATION_GIT_VARS) {
+    delete childEnv[name];
+  }
+  return childEnv;
 }
 
 /**
@@ -81,7 +123,7 @@ function createRunners(overrides = {}) {
         cwd,
         shell: isWin,
         stdio: 'inherit',
-        env: process.env,
+        env: buildChildEnv(process.env),
       });
       if (result.error) {
         throw result.error;
@@ -95,7 +137,7 @@ function createRunners(overrides = {}) {
       const result = spawn('pnpm', buildVitestArgv(vitestPaths), {
         shell: isWin,
         encoding: 'utf-8',
-        env: process.env,
+        env: buildChildEnv(process.env),
       });
       const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
       if (result.stdout) {
@@ -134,8 +176,11 @@ function runFullSuite(overrides = {}) {
 }
 
 /**
+ * `onNoRelatedTests`: what to do when changed files have no tests that import them. Pre-commit
+ * falls back to the full suite (`full`, default); CI passes (`pass`), because the weekly full
+ * run covers it and a full run per untested file is what CI budgets can't absorb.
  * @param {{ mode: string, reason: string, relatedPaths?: string[] }} plan
- * @param {{ dryRun: boolean, runners?: TestRunners }} options
+ * @param {{ dryRun: boolean, runners?: TestRunners, onNoRelatedTests?: 'full' | 'pass' }} options
  * @returns {number}
  */
 function executePlan(plan, options) {
@@ -161,6 +206,10 @@ function executePlan(plan, options) {
     const related = runners.runVitestRelated(plan.relatedPaths);
     // Vitest 4 exits 1 when no related tests exist, so check this before the status.
     if (NO_TEST_FILES_RE.test(related.output)) {
+      if (options.onNoRelatedTests === 'pass') {
+        logMode('test mode: no related tests found — nothing to run');
+        return 0;
+      }
       logMode('pre-commit: no related tests found — falling back to full suite');
       return runners.runFullSuite();
     }
@@ -170,12 +219,23 @@ function executePlan(plan, options) {
 }
 
 /**
- * @param {{ dryRun?: boolean, staged?: string[] }} [options]
+ * @param {string[]} argv
+ * @returns {string | undefined}
+ */
+function readBaseArg(argv) {
+  const index = argv.indexOf('--base');
+  return index === -1 ? undefined : argv[index + 1];
+}
+
+/**
+ * @param {{ dryRun?: boolean, staged?: string[], base?: string }} [options]
  * @returns {number}
  */
 function runStagedTests(options = {}) {
   const dryRun = options.dryRun ?? process.argv.includes('--dry-run');
-  const staged = options.staged ?? getStagedFiles();
+  const base = options.base ?? readBaseArg(process.argv);
+  const staged =
+    options.staged ?? (base ? getChangedFilesSince(base) : getStagedFiles());
   const light = classifyChanges(staged);
   if (light.light && light.kind) {
     logMode(
@@ -186,7 +246,7 @@ function runStagedTests(options = {}) {
 
   const initial = classifyTestRun(staged);
   const plan = resolveRunPlan(initial);
-  return executePlan(plan, {dryRun});
+  return executePlan(plan, {dryRun, onNoRelatedTests: base ? 'pass' : 'full'});
 }
 
 if (require.main === module) {
@@ -196,9 +256,11 @@ if (require.main === module) {
 
 module.exports = {
   NO_TEST_FILES_RE,
+  readBaseArg,
   filterExistingPaths,
   resolveRunPlan,
   buildVitestArgv,
+  buildChildEnv,
   createRunners,
   executePlan,
   runStagedTests,

@@ -14,6 +14,41 @@ The first orchestrated run (four harness laps: secrets deny list, folder-tree po
 |---|---|---|---|---|---|
 | D1 | Stop 2 for laps with nothing to test in the app | closed | `BRIEF.md` gains § Owner test (`app` / `none`). With `none` (rules, skills, settings, tooling, docs), `loop-verdict` asks no Pass / Change / Drop: the Stop 1 answer or protected-file consent is the Pass, the PR merges on green CI (Model C; A/B rides the next promote), and the owner gets one `Watch for:` line. A problem found later is a Change request (fix or revert task) | owner | Rejected: keep asking with "nothing to test" noted (still a blind click); a batched end-of-run question (same blindness, one click). Mixed laps (app + harness) count as `app` |
 
+## ci-cost — claude/epic-babbage-2wjwwf
+
+CI cost cuts: related tests per PR with a weekly full run, no duplicate CI after merge, one release job, job timeouts, and fewer orchestrator branch updates.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Job timeouts | closed | `pr-title` 5 min, `test` 30 min (90 on the weekly or manual full run), release 10, promote 10 | owner | A hung job otherwise bills up to GitHub's 6-hour cap |
+| D2 | `pr-title` on description edits | closed | Keep running it on every `edited` event | loop-build | constraint: a skipped required check counts as passed, so skipping it when only the description changed would let a bad title pass after a body edit. Rejected: skip unless the title changed (owner had approved; dropped for this reason) |
+| D3 | CI on push to `main` | closed | Removed; push CI runs on `develop` only | owner | Model C reaches `main` through a PR that already passed; A/B through promote's fast-forward of a tested `develop`. Neither `main` ruleset requires a push run |
+| D4 | Release Please cost | closed | One job instead of four; release PRs run only `validate-version-sync` | owner | Release PRs change only the version, CHANGELOG and manifest. Trade-off: the mode-reading step now runs with the release job's write permissions |
+| D5 | Orchestrator branch updates | closed | Update a branch from `main` only when it is next to merge, its thread needs the merged change, or GitHub reports a conflict | owner | Each push re-runs that PR's CI; `main` does not require up-to-date branches. Rejected: update every open branch after each merge |
+| D6 | CI test scope | closed | PRs and `develop` pushes run Vitest through the pre-commit classifier on the branch diff (`test-staged.cjs --base`); changed files with no related tests pass; the full suite runs weekly (Mon 03:17 UTC), on a manual run, and when the classifier says full; a failed weekly run opens an issue | owner | Reuses the existing classifier instead of a second rule set. Known risk: a break outside the import graph (fixtures, env, dynamic imports) is found up to a week late, and under Model C every merge already deploys production. Rejected: full suite on every PR (cost grows with the app) |
+| D7 | Related-tests command | closed | `vitest related --run <paths>` replaces `vitest run related <paths>` | loop-check | Verdict: code wrong, test followed it. Vitest 4 printed `filter: related, …` and found no tests, so pre-commit "related" always fell back to the full suite; the fixed form ran the 2 matching test files |
+
+## thread-titles — claude/brave-carson-hypgtm
+
+`loop-orchestrate` titles each thread with its goal and shows state only while it waits on another thread; titles update on actions, not timers (summary row: orchestrator-parallel-laps D16).
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Who renames | closed | The orchestrator only; threads are briefed never to rename | loop-refine | clear-winner: one writer avoids races. Rejected: threads rename themselves |
+| D2 | Machine record of the blocker | closed | A `waits-on:<lap-slug>` tag per blocker on the waiting session; the title is for the owner | loop-refine | clear-winner: survives restarts and multiple blockers, matches orchestrator-parallel-laps D12 (sessions are the record). Rejected: blocker only in title text |
+| D3 | Wake-up channel | closed | Superseded by D11: no timed check-in. Never a PR watch by the orchestrator | loop-refine | constraint: a PR has one watcher, and the thread already watches its own |
+| D4 | D10 premise | closed | Child sessions can message the orchestrator; D10's choice stands, its note is corrected | live test | Verified: child → parent `send_message` delivered |
+| D5 | Set and clear are atomic | closed | Pause/continue message, tag and title change together in one action | loop-refine | clear-winner: the owner's stale-title bug came from a restore with no trigger |
+| D6 | Status line | closed | Add a `Held: <task> (waits on <task>)` slot | loop-refine | clear-winner: the Briefs step can hold a thread and the line had no slot for it |
+| D7 | Restart | closed | Step 1 (Orient) runs the check-in once | loop-refine | clear-winner: rebuilds titles after an orchestrator restart |
+| D8 | Title format | closed | Goal first: `⏸ <goal> · waits on <blocker goal>` | owner | Rejected: blocker first (truncation hides which thread waits); `Thread:` prefix (costs width); blocker only in the status line |
+| D9 | Goal text source | closed | The task's backlog title, as-is | owner | Rejected: orchestrator-written short outcome; thread's Building line after refine; a backlog rule for short titles |
+| D10 | How a waiting state starts | closed | The thread reports needing another thread's result, or the orchestrator holds it after the overlap re-check | owner | Rejected: thread-report only; orchestrator only; never pause (split the remainder into a queued task) |
+| D11 | What updates titles | closed | Actions only, no timed check-in: the orchestrator's own merge or Drop; the blocker thread messaging `merged` / `closed` when its PR event arrives (owner merged on GitHub); the platform's failed-child notice; one sweep in step 1 on restart | owner | Rejected: 30 or 10 min check-ins; asking the owner at once on stall |
+| D14 | Merged on GitHub without the orchestrator | closed | The thread's `merged` message makes the orchestrator archive it and clear its waiters | loop-refine | clear-winner: owner's first ask (merged threads are just archived) plus D11's wiring |
+| D12 | Blocker dropped | closed | The orchestrator re-checks the waiting thread's brief: continue if it doesn't need the dropped change, else re-scope; asks the owner only if neither works | owner | Rejected: ask every time; just continue; drop waiters together |
+| D13 | Thread permission to message back | closed | Out of scope: which actions need approval is a Claude setting, never written into a skill | owner | Removed the permission lines from the skill and D17 |
+
 ## orchestrator-parallel-laps — claude/friendly-hypatia-d631ig
 
 An optional orchestrator skill (`loop-orchestrate`) runs several laps at once in separate sessions, owns the backlog, and merges each thread's PR after the owner's Pass. Without it the single-lap loop is unchanged.
@@ -35,6 +70,8 @@ An optional orchestrator skill (`loop-orchestrate`) runs several laps at once in
 | D13 | Overlap check timing | closed | Guess overlap from the task text at dispatch; re-check when each thread reports its brief edges, and hold or re-scope then | critical review | clear-winner: edges exist only after refine |
 | D14 | Expected conflicts | closed | Append-only files every lap touches (`DOC_DECISION_LOG.md`, backlog JSON) conflict by design; the orchestrator resolves them at merge and does not treat them as overlap | critical review | clear-winner |
 | D15 | Stop 1 restatement under the orchestrator | closed | Each thread's 'Building: X. Not: Y. Size: S.' line appears in the orchestrator's status until the owner has seen it | critical review | clear-winner: keeps skill-loop D43's cheap misunderstanding catch |
+| D16 | Thread titles | closed | Title = the task's backlog title, no status while working. Waiting on another thread (the thread reports it, or the orchestrator holds it after the overlap re-check): `⏸ <goal> · waits on <blocker goal>` plus a `waits-on:<lap-slug>` tag per blocker, set with the pause message in one action; cleared the same way when every blocker is done. A dropped blocker makes the orchestrator re-check the waiter's brief. Titles update on actions only (orchestrator merge or Drop, a thread reporting its PR merged or closed, a failed-thread notice, one sweep on restart); merged or closed threads are archived. Only the orchestrator renames | owner + critical review | Detail: § thread-titles. Claude's blocked marker only covers waiting on the owner. Owner test: a title stayed stale because nothing triggered the restore. Verified live: renames hold across turns; a waiting thread showed as review-ready in the app. Rejected: blocker-first format; timed check-ins; a PR watch by the orchestrator (one watcher per PR); threads renaming themselves; blocker only in the title |
+| D17 | D10 premise corrected | closed | Cloud child sessions can message the orchestrator (`send_message` to the parent); threads use it to report questions, results and needing another thread. | live test | Verified: a child session sent a message to its parent unprompted (whether it needs approval is a Claude setting, not a skill rule). D10's choice (surface-dependent channel) stands; only its note that children can't message back was wrong |
 
 ## app-identity-assets — claude/dreamy-brown-55sh7l
 
