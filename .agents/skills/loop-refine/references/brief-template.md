@@ -13,6 +13,9 @@ Task: <app-tasks.json title> · Lap: temp_job_<slug> · Harness: v<package.json 
 ## Success check
 <one falsifiable sentence; loop-plan turns it into the first failing test>
 
+## Owner test
+<app | none> — <app: what the owner tries in the preview | none: why nothing shows in the app (rules, skills, settings, tooling, docs)>
+
 ## In scope
 - <smallest set of capabilities that counts as done>
 
