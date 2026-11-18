@@ -46,6 +46,7 @@
     "loop-check/evals/third-copy-is-blocker/prompt.md",
     "loop-check/references/PORT_MAP.md",
     "loop-check/references/component-lens.md",
+    "loop-check/references/greenfield-sweep.md",
     "loop-check/references/rule-audit.md",
     "loop-orchestrate/SKILL.md",
     "loop-orchestrate/evals/single-task-skips-orchestrator/case.yaml",
