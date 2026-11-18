@@ -83,7 +83,7 @@ The pre-commit hook rebuilds both mirrors from staged sources (`agent-sync.confi
 | Frontend hosting (Cloudflare Workers) | `documentation/DOC_CLOUDFLARE_WORKERS.md` + `wrangler.jsonc` |
 | Edge / cloud functions deploys | `.claude/rules/cloud-functions.md` |
 
-Deploy functions yourself when a change requires it, and verify the deploy succeeded (`.claude/rules/cloud-functions.md`). Hand-off checklist before shipping: `.agents/skills/loop-check/SKILL.md` § Steps 5.
+Deploy functions yourself when a change requires it, and verify the deploy succeeded (`.claude/rules/cloud-functions.md`). Hand-off checklist before shipping: `.agents/skills/loop-check/SKILL.md` § Steps 6.
 
 ## Defaults
 
