@@ -25,7 +25,7 @@ STOP 1  loop-backlog → loop-refine          (owner: pick / confirm the top tas
 STOP 2  loop-verdict on the preview          (owner: Pass / Change / Drop)
 ```
 
-Between the stops the agent asks only per `.claude/rules/agent-behavior.md` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a patch on top instead of the fix, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
+Between the stops the agent asks only per `.claude/rules/agent-behavior.md` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a structural fix too big for the lap, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
 
 ## Proactive guards (rule-triggered)
 
