@@ -11,7 +11,7 @@ The whole lap branch against its base (`git diff <base>...HEAD`), not only the l
 - **Abandoned approaches:** code, flags, params, branches or files from a design a Change round replaced.
 - **Bridges:** a compatibility alias, wrapper, re-export or adapter that only kept an earlier version of this lap working.
 - **One-caller switches:** a flag, option or branch that now has a single value or caller.
-- **Stale names:** an identifier, file or test title that names an earlier design or the first consumer (`code-style` rule § Naming F3).
+- **Stale names:** an identifier, file or test title that names an earlier design or the first consumer (`code-style` rule § Naming F3). Also any name the lap touched that no longer matches the vision, a feature README or the UI wording (debt signal I1, [`loop-plan/references/debt-signals.md`](../../loop-plan/references/debt-signals.md)); renames outside the lap become `Foundation:` tasks.
 - **Orphans:** exports, helpers, constants, fixtures, mocks or tests that nothing reaches any more, including tests for behavior that no longer exists.
 - **Leftovers:** commented-out code, `TODO` / "for now" notes the lap resolved, debug logs and instrumentation. Debugging logs the owner asked to keep stay before Stop 2; a Pass is the owner's confirmation, so the post-Pass sweep removes them (`debugging` rule § Logs).
 - **Docs:** README, decision or comment lines that describe an earlier round instead of the final behavior.

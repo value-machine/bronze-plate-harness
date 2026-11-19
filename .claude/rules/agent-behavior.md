@@ -18,7 +18,7 @@ Ask the owner only when the choice can't be derived from the app vision (`docume
 - **Conflict** with a recorded decision — flag it, propose resolutions, and let the owner pick. Spotting these is the agent's job.
 - **True tie** — two or more real options remain after enumerating them, and none dominates.
 - **New dependency** — a package or an external service the project doesn't use yet.
-- **Patch on top** — a workaround instead of the structural fix (`.claude/rules/architecture.md` § Layer consistency).
+- **Patch on top** — only when the structural fix won't fit the lap (it would push it above size M), so the choice is a workaround now or a bigger lap (`.claude/rules/architecture.md` § Layer consistency). A structural fix that fits is the agent's to take without asking (debt-triggers D4).
 - **Data or irreversible change** — schema or migration shape, deleting or transforming stored data, auth or permission models.
 - **Cost or external service** — paid usage, quotas, third-party calls, privacy.
 

@@ -30,6 +30,10 @@ Task: <app-tasks.json title> · Lap: temp_job_<slug> · Harness: v<package.json 
 
 Overrun rule (skill-loop D51): a diff that touches a feature area **not** in this table stops the lap.
 
+## Foundation signals
+- <debt-signals.md id> · <where> · <what> → <in this lap | Foundation task at ship>
+- Absorbed: <open `Foundation:` task titles pulled into this lap, or none>
+
 ## Size
 <XS | S | M> — <edges touched + cleanup a clean implementation needs>.
 Cut into laps: <none | follow-up task titles added to the backlog>
