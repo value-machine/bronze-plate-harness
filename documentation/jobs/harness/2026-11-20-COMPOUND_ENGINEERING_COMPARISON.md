@@ -1,5 +1,7 @@
 # Harness comparison — Bronze Plate vs Compound Engineering
 
+Correction (same lap): the first version said Bronze Plate has no behavioral skill tests. It does: 9 loop skills carry `evals/` cases. Self-verification and the totals below are corrected.
+
 Compared: **plate-harness v0.44.0** (commit `27a5809`) vs **Every's Compound Engineering plugin v3.38.2** (`EveryInc/compound-engineering-plugin`, commit `033f82d`). Scores come from reading both repos' files; neither harness was run for this comparison.
 
 Feeds lap `temp_job_compound-engineering-adoption`.
@@ -36,7 +38,7 @@ Strengths:
 
 Weaknesses:
 - **Locked to one stack** and to Claude Code / Cursor (plus Codex via `AGENTS.md`).
-- **No behavioral tests of skills:** `validate-skills` checks structure only.
+- **Thinner skill testing than CE:** behavioral eval cases (scripted fixture, model-judged graders) exist for 9 of 22 skills (`.agents/skills/*/evals/`, run by hand with `meta-write-skill/scripts/run-evals.sh`); `validate-skills` checks structure on every commit. No eval runs in CI.
 - **Heavy always-on context:** about 13.7k words of rules plus `AGENTS.md`, mostly loaded every session.
 - **Early stage:** one owner, v0.x; no ideation or strategy stage; reviewers are rule-based, without personas or cross-model passes.
 
@@ -65,15 +67,15 @@ Weaknesses:
 | 3 Mechanical enforcement (12) | 2 | **5** |
 | 4 Owner UX (10) | 3 | **5** |
 | 5 Portability (10) | **5** | 2 |
-| 6 Self-verification (10) | **5** | 2 |
+| 6 Self-verification (10) | **5** | 3 |
 | 7 Context efficiency (8) | **4** | 3 |
 | 8 Review depth (8) | **5** | 4 |
 | 9 Time to value (8) | **4** | 3 |
 | 10 Governance (5) | 4 | **5** |
 | 11 Maturity (5) | **5** | 2 |
-| **Weighted total / 100** | **84.6** | **72.2** |
+| **Weighted total / 100** | **84.6** | **74.2** |
 
-**Bias check.** The general rubric favors a portable, mature product, which is what CE is. Re-weighted for this repo's purpose (a non-technical owner shipping Supabase apps: enforcement 20, owner UX 20, workflow 10, learning 10, self-verification 10, review 8, context 7, onboarding 5, governance 5, portability 3, maturity 2), the result flips: **Bronze Plate 80.6, CE 76.6**.
+**Bias check.** The general rubric favors a portable, mature product, which is what CE is. Re-weighted for this repo's purpose (a non-technical owner shipping Supabase apps: enforcement 20, owner UX 20, workflow 10, learning 10, self-verification 10, review 8, context 7, onboarding 5, governance 5, portability 3, maturity 2), the result flips: **Bronze Plate 82.6, CE 76.6**.
 
 ## Which is better at what
 
@@ -84,7 +86,7 @@ Weaknesses:
 | Holding architecture over time | Bronze Plate | dep-cruiser, whitelist, budgets, hooks |
 | Code review | CE | 15 personas + cross-model passes |
 | Capturing lessons | CE (narrowly) | Both turn mechanical lessons into checks (`meta-learn-lessons` step 5: "validators, not prose"); CE adds an explicit form ladder (test → lint → standard → learning) and a refresh job for stale learnings |
-| Testing the harness itself | CE | real-host skill evals vs structural checks |
+| Testing the harness itself | CE | both have behavioral skill evals; CE's cover more skills, grade surviving artifacts, test reproducibility and run contract tests in CI |
 | Non-technical owner control | Bronze Plate | two stops, preview link, Pass / Change / Drop |
 | Hands-off end to end | CE | `lfg` (Bronze Plate: away switch + `loop-orchestrate`) |
 | Parallel work | Tie | `loop-orchestrate` vs CE's wave contract and worktrees |
@@ -96,9 +98,26 @@ Weaknesses:
 
 ## Candidates to borrow into Bronze Plate
 
-1. **Behavioral skill evals** (CE `tests/skill-eval-cell/`): graded scenarios that run a skill and score the artifacts it leaves.
+1. **Stronger skill evals** (CE `tests/skill-eval-cell/`): extend the existing `evals/` cases with CE's artifact grading, reproducibility checks and wider coverage.
 2. **Cheapest durable form for lessons** (CE `ce-compound` form choice + durability counterfactual) in `meta-learn-lessons`.
 3. **Reviewer personas / cross-model pass** (CE `ce-code-review/references/personas/`) in `loop-check`'s size-M lens review.
 4. **Phase-loaded skill kernels** (CE `CONCEPTS.md` § Phase-loaded kernel) to shrink always-on rules and skill bodies; overlaps backlog tasks R10 / R11.
 5. **Brainstorm-style refine** (CE `ce-brainstorm`): scope tiers, coherent-work gate, product pressure test, approach generation, fresh-context claim verifier, Ready-for-Planning check.
 6. **Sizing test** (CE `CONCEPTS.md` § Sizing test): build an unrequested safeguard only when a contract requires it, harm lands before anyone catches it, or adding it later is expensive.
+
+## ce-brainstorm pieces for loop-refine — why, what, consequences
+
+Owner asked to understand the why, what and consequences of each change before anything is adopted. Compared: `loop-refine` at plate-harness v0.44.0 vs `ce-brainstorm` at Compound Engineering v3.38.2.
+
+| # | CE piece | loop-refine today | Evidence in this repo | Consequence if adopted | Verdict |
+|---|---|---|---|---|---|
+| 1 | One-piece-of-work check (coherent-work gate) | Cuts work by size only (> M → several laps) | This lap: the request held four independent outcomes; the check turned that into one owner choice (D1) | One extra Stop 1 question, only when a request bundles separate outcomes | Improves; no conflict |
+| 2 | Pressure test (evidence, who exactly, today's workaround, smallest version) | Drafts silently; asks only stop-list items | None found | Asked out loud: more owner questions per lap, conflicts with `agent-behavior` § When to ask. Run silently: no owner effect | Improves only as a silent self-check |
+| 3 | Show alternatives before recommending | Agent picks clear winners alone and logs rejected options in `DECISIONS.md`, which the owner doesn't read | `harness-overview-page` D1: refine picked a static HTML page as a clear winner; the owner reversed it at Stop 2 (D12), costing a build round | More Stop 1 questions; changes a recorded decision (always-on asking rule). Middle option: only for choices the owner would see in the app | Probably improves; owner decision (conflict) |
+| 4 | Fresh-eyes claim check (separate subagent verifies claims about the code) | "Verify before you state" (`grounding.md`), self-checked by the same agent | This session: the comparison overstated a gap in `meta-learn-lessons`; caught only on reread | One extra subagent per refine (tokens, about a minute); no owner effect; could skip at XS | Improves; no conflict |
+| 5 | Ready-for-planning check (complete, consistent, focused, usable by planning) | Brief template only, no explicit gate | None found | Agent-only check before hand-off; near-free | Small improvement; no conflict |
+| 6 | Visible progress list during refine | None | This lap used one (5 steps) | The owner sees where Stop 1 stands; no cost | Improves if the owner finds it useful |
+| 7 | Tiny work ends in chat, no file | XS still writes `BRIEF.md` | — | Breaks how `router` finds laps (by `BRIEF.md`, skill-loop D45) | Don't adopt |
+| 8 | Product Contract format, model tiers, visual probes, Slack researcher, HTML output | `BRIEF.md` + D-numbered ledger | — | Second vocabulary for the same job | Don't adopt |
+
+Adoption order: one piece per lap (compound-engineering-adoption D3). Piece 4 (claim check) landed first; the others are backlog tasks.

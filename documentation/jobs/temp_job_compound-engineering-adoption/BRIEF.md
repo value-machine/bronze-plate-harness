@@ -42,4 +42,27 @@ S — one skill, one new reference, two small reference edits. Edits go through 
 Cut into laps: none for this piece. The remaining pieces are later laps (D3).
 
 ## Decisions
-`DECISIONS.md` D1–D7; no conflict with a recorded decision (the step adds no owner question).
+`DECISIONS.md` D1–D8; no conflict with a recorded decision (the step adds no owner question).
+Claim check: 10 confirmed · 0 refuted · 0 unverifiable
+
+## Plan
+
+Acceptance check (manual script; fails before the build):
+
+```bash
+test -f .agents/skills/loop-refine/references/claim-check.md \
+  && grep -q "references/claim-check.md" .agents/skills/loop-refine/SKILL.md \
+  && grep -q "claim-check.md" .agents/skills/loop-refine/references/grounding.md \
+  && grep -q "Assumption" .agents/skills/loop-refine/references/brief-template.md \
+  && echo PASS || echo FAIL
+```
+
+Conflict & compliance: protected skill files, owner consent given in chat (D8). Edits follow `meta-write-skill` (template sections unchanged; no port-map rows: nothing moves from a v0.42.0 source; catalog row unchanged since triggers don't change). Placement: `.agents/skills/loop-refine/references/*.md` is allowed by the skill whitelist. Inserting the step after step 6 renumbers steps 7–8 to 8–9; `loop-refine/references/PORT_MAP.md` cites "§ Steps 8" and moves to 9 (found during build; the planning grep missed the "§ Steps N" form). No app code, no tests beyond the script.
+
+Phase 1 — Build (gate: acceptance check PASS)
+1. New `references/claim-check.md`: what counts as a checkable claim, the self-contained read-only verifier brief, verdict format (D7), how refuted / unverifiable claims change the brief, skip rule (D5).
+2. `SKILL.md`: new step 7 "Check the claims" between Ask and Size (D6); `Calls` row names it; renumber.
+3. `grounding.md` § Verify before you state: one pointer line to the fresh-eyes check.
+4. `brief-template.md`: unverifiable claims are written as `Assumption — unverified: …`.
+
+Phase 2 — Integrate (gate: `node scripts/sync-agent-config.mjs`, `pnpm validate:skills`, `pnpm validate:docs`, `pnpm validate:structure` all pass)
