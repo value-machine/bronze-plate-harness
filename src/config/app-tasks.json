@@ -1,5 +1,10 @@
 [
   {
+    "title": "Order lesson homes so the harness compounds",
+    "description": "From the compound-engineering comparison: meta-learn-lessons picks a lesson home by a cheapest-first ladder (check, path-scoped rule, always-on rule or skill edit, note in a home with a fixed reader), proves a new check fails on the defect, and tags each lesson repo-local or harness-general so harness lessons reach other forks through meta-write-adoption-guide. Protected files: owner consent given in chat.",
+    "status": "in-progress"
+  },
+  {
     "title": "Configure Supabase",
     "description": "Set up the backend: one Supabase project with the auth providers you use enabled, its Site URL set to the app's primary origin, and its URL and publishable key available as VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (local .env, plus the hosting build variables for main and for previews). Before the app has real users, isolate staging from production with a Supabase Branching staging branch or a second project (documentation/DOC_CLOUDFLARE_WORKERS.md § Staging backend). Your coding agent lists the exact requirements, checks the result, and tells you what only you can do. For Google sign-in, requirements are in documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. If you explicitly say this app does not use Supabase, Google sign-in, anonymous sessions, or error reporting, the agent offers to delete that code. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Shipped integrations and § Configuration tasks gate (Supabase).",
     "status": "to-do"
