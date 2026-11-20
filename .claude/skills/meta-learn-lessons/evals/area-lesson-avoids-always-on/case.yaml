@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: area-lesson-avoids-always-on
+expected_outcome: |
+  The agent treats the lesson as a contract of one feature (the tasks board keeps its active / archive view in the hook's local state, not in the request), saves it as one line in src/features/tasks/README.md (or an existing path-scoped rule) after the owner's yes, leaves the always-on rules untouched, and reports the lesson's scope.
+context:
+  scaffold_script: place-files.sh

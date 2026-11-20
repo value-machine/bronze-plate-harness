@@ -62,20 +62,36 @@ Red against HEAD by inspection (no ladder, no proof, no scope). Not runnable her
 
 Conflict & compliance: protected `.agents/skills/**` — owner consent in chat (D4). SKILL edits follow `meta-write-skill` conventions (template sections, keep SKILL.md ≤ ~6 KB, ladder detail in the reference). `evals/<case>/` whitelisted. No `src/`, no `.claude/rules/**`.
 
-### Phase 1 — eval cases
+### Phase 1 — eval cases — Done
 - Write both cases; verify the mechanical fixture's defect passes current lint/arch and is caught by the intended one-entry tighten (scratch copy).
 - Gate: `pnpm validate:structure`; `pnpm validate:skills`.
 
-### Phase 2 — ladder in `meta-learn-lessons`
+### Phase 2 — ladder in `meta-learn-lessons` — Done
 - `lesson-procedure.md`: § 3 lead-in → ladder + fallback (above), topic table kept below as the per-tier lookup; § 2b → "gates prose tiers 3–5 only"; § 1b/intro "Mechanical lessons → validators" → point at tier 2; § 4 → proof before ask; § 5 Report → `Scope:` (`scope —` when nothing persisted); Anti-patterns → "an always-on line where tiers 2–4 hold".
 - `SKILL.md`: Edges Out row (checks, area homes); step 4 (blank-model gates prose); step 5 → "home by the ladder, § 3"; step 7 + Output line → `scope <repo|harness|—>`; rewrite Example 2 (lint-catchable textbook mistake → tighten the check, no prose).
 - Gate: `pnpm validate:skills`; `wc -c` SKILL.md.
 
-### Phase 3 — scope reaches forks
+### Phase 3 — scope reaches forks — Done
 - `lesson-procedure.md` § 4/5: `Lessons:` line in the lap's decision-log section; outside a lap the own lesson commit; on Drop scope in the task text.
 - `meta-write-adoption-guide/references/procedure.md`: optional-input step (above); keep "no dependency on meta-learn-lessons" true by wording it as "if the repo tags lessons".
 - Gate: `pnpm validate:skills`; `pnpm validate:docs`.
 
-### Phase 4 — sync + gates
+### Phase 4 — sync + gates — Done
 - Decision rows are folded by `loop-ship` step 3 (not here).
 - `node scripts/sync-agent-config.mjs`; gates `node scripts/sync-agent-config.mjs --check`, `pnpm validate:structure`, `pnpm validate:skills`, `pnpm validate:docs`.
+
+### Notes during development
+- Mechanical fixture (verified in a scratch copy of the tracked tree, outside the repo): a feature component importing `@/shared/services/supabaseService` passes `pnpm lint` (0 errors) and `pnpm arch:check` (0 errors, 0 warnings); adding `'@/shared/services'` to the feature-components `no-restricted-imports` group in `eslint.config.js` makes `pnpm lint` fail on it (`no-restricted-imports`, exit 1) and still pass on the clean tree (exit 0). `eslint.config.js` itself is untouched by this lap.
+- Debt signal (outside the lap): that hole is real. `eslint.config.js` restricts `@/features/*/services` only, and the dependency-cruiser rules `no-direct-service-in-components` / `no-direct-service-in-feature-components` use `^src/(shared|features)/.*/services`, which can't match `src/shared/services/…` (and are `warn` anyway).
+- Both `place-files.sh` scripts were dry-run against a filled copy of `eval-scaffold.sh` in scratch workspaces (exit 0, lap branch checked out, Notes line appended). The cases themselves were not run (no bubblewrap) — unverified.
+- Mistake signal: the first premise run wired the defect component into `TasksBacklogPanel` with a `sed` that half-applied, so lint failed on an unused import, not on the premise. Re-run with the standalone component file; the numbers above are from the clean re-run.
+- Mistake signal: the first fixture dry-run put `lib/` beside the skill folder; `place-files.sh` resolves `../../lib` to `<skill>/lib`. Layout corrected, re-run green.
+- Gap: `loop-ship` writes the lap's decision-log section in the ship commit, so a lesson persisted before it (manual `/learn` mid-lap) has no section yet. `loop-ship` is out of scope here.
+
+### Decisions made
+- Lesson before the ship commit: the lesson starts the `## <lap-slug> — <branch>` heading and `loop-ship` appends its rows under it (wording in `lesson-procedure.md` § 4; no `loop-ship` edit).
+- The `Lessons:` line records both scopes (`<repo|harness>`); guides gather only `harness`.
+- `lesson-procedure.md` § 2 bullet "Scope: one domain" renamed to "Domain" (and SKILL step 4), so "scope" means only the `repo | harness` tag.
+- `documentation/DOC_DECISION_LOG.md` header gains one bullet describing the `Lessons:` line (the edge's hook point), so the log explains the line it now carries.
+- Phase 3's `lesson-procedure.md` part was written together with phase 2 (same file); gates run once per phase list at the end.
+- Extra anti-pattern line beyond the plan: "a check whose failure on the defect was claimed, not run".

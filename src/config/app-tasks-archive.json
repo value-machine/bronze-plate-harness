@@ -58,5 +58,10 @@
     "title": "No Pass question for laps the owner cannot test in the app",
     "description": "Lesson from the first orchestrated run: Stop 2 asked Pass/Change/Drop on rule, skill and settings PRs whose preview looked like main, so the owner clicked blind. BRIEF.md now records an owner test (app or none); with none, loop-verdict merges on green CI without a question and posts one Watch for line; the earlier consent is the Pass (owner-test D1).",
     "status": "done"
+  },
+  {
+    "title": "Order lesson homes so the harness compounds",
+    "description": "From the compound-engineering comparison: meta-learn-lessons picks a lesson home by a cheapest-first ladder (check, path-scoped rule, always-on rule or skill edit, note in a home with a fixed reader), proves a new check fails on the defect, and tags each lesson repo-local or harness-general so harness lessons reach other forks through meta-write-adoption-guide. Protected files: owner consent given in chat.",
+    "status": "done"
   }
 ]
