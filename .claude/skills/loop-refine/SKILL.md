@@ -20,7 +20,7 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 |---|---|
 | In | Top task in `src/config/app-tasks.json`; `documentation/DOC_APP_VISION.md`; feature READMEs and code of the touched areas; rules; owner feedback (Change verdict) |
 | Out | `documentation/jobs/temp_job_<slug>/BRIEF.md` ([`references/brief-template.md`](references/brief-template.md)); lap `DECISIONS.md` ([`references/decisions-template.md`](references/decisions-template.md)); follow-up backlog tasks when the work is cut into laps |
-| Calls | if repo context is missing → [`spec-load-context`](../spec-load-context/SKILL.md) · if the task is a bug → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) (reproduce only) · if the request changes existing behavior → [`spec-check-layer`](../spec-check-layer/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
+| Calls | if repo context is missing → [`spec-load-context`](../spec-load-context/SKILL.md) · if the task is a bug → [`spec-debug-runtime`](../spec-debug-runtime/SKILL.md) (reproduce only) · if the request changes existing behavior → [`spec-check-layer`](../spec-check-layer/SKILL.md) (fired by `architecture` rule § Layer consistency) · if the user flow itself is in question → [`spec-simplify-flow`](../spec-simplify-flow/SKILL.md) · if the brief makes checkable claims about the repo → [`references/claim-check.md`](references/claim-check.md) (read-only subagent) · when done → [`loop-plan`](../loop-plan/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md), [`loop-orchestrate`](../loop-orchestrate/SKILL.md) |
 | Next | [`loop-plan`](../loop-plan/SKILL.md) |
 | Owner stops | Stop list only ([`agent-behavior` rule § When to ask](../../../.claude/rules/agent-behavior.md)), asked per [`references/asking.md`](references/asking.md) |
@@ -33,14 +33,15 @@ Second half of **Stop 1**. When this skill is done, `BRIEF.md` describes exactly
 4. **Draft `BRIEF.md` silently:** problem, success check, owner test (`app` when the owner can try the change in the preview; `none` for rules, skills, settings, tooling or docs with nothing to see in the app), in scope, out of scope (will NOT do / will NOT touch), the edges table, generality (clear winner unless a second consumer is named), and requirements when size ≥ M spans roles or journeys ([`references/requirements.md`](references/requirements.md)).
 5. **Find the open questions.** For each choice in the draft, check it against the stop list. Conflicts with a recorded decision are the most important ones to catch: flag them with proposed resolutions (skill-loop D3). Log clear winners in `DECISIONS.md` after naming the alternatives.
 6. **Ask, one at a time,** only what remains (gaps, true ties, data / irreversible, cost / external service, new dependency, patch-on-top), per [`references/asking.md`](references/asking.md). Update the brief and the ledger after each answer.
-7. **Size it.** Estimate XS / S / M from the edges touched plus the refactor a clean implementation needs (skill-loop D12, [`loop-plan/references/complexity-rubric.md`](../loop-plan/references/complexity-rubric.md)). Anything larger than M is cut into laps of M or smaller: this lap takes the first slice, and the rest become backlog tasks right after the current top task (skill-loop D44).
-8. **Restate and hand off.** Post the restatement line (no wait). If the owner corrects it, update the brief and restate. Then run [`loop-plan`](../loop-plan/SKILL.md).
+7. **Check the claims.** Send every checkable claim the brief makes about the repo (§ Edges `Loop today`, absence claims, named paths, Foundation signals) to a read-only subagent that never saw the conversation; correct refuted claims and label unverifiable ones as assumptions ([`references/claim-check.md`](references/claim-check.md)). The drafting agent's own check is anchored on its reading; a fresh one is not (compound-engineering-adoption D4–D6). Skip only when the brief makes no checkable claim.
+8. **Size it.** Estimate XS / S / M from the edges touched plus the refactor a clean implementation needs (skill-loop D12, [`loop-plan/references/complexity-rubric.md`](../loop-plan/references/complexity-rubric.md)). Anything larger than M is cut into laps of M or smaller: this lap takes the first slice, and the rest become backlog tasks right after the current top task (skill-loop D44).
+9. **Restate and hand off.** Post the restatement line (no wait). If the owner corrects it, update the brief and restate. Then run [`loop-plan`](../loop-plan/SKILL.md).
 
 ## Examples
 
 **Example 1 — sharp request, no questions**
 Input: top task "Show the user's avatar in the top bar". The profile feature README already defines the avatar source, and the top bar is in `layouts/`.
-Output: brief with edges `profile` (ride) and `layouts` (ride), size XS, no questions. Chat: `Building: avatar in the top bar from the existing profile image. Not: avatar upload. Size: XS.`
+Output: brief with edges `profile` (ride) and `layouts` (ride), claim check `2 confirmed`, size XS, no questions. Chat: `Building: avatar in the top bar from the existing profile image. Not: avatar upload. Size: XS.`
 
 **Example 2 — conflict with a recorded decision**
 Input: "Let guests save drafts". The `drafts` README records "drafts require an account (owner, v0.40.0)".
@@ -48,7 +49,7 @@ Output: one question: keep the account requirement and prompt sign-up, store gue
 
 ## Output
 
-`BRIEF.md` per [`references/brief-template.md`](references/brief-template.md), the lap `DECISIONS.md`, and one chat line:
+`BRIEF.md` per [`references/brief-template.md`](references/brief-template.md) (including its `Claim check:` line), the lap `DECISIONS.md`, and one chat line:
 
 ```text
 Building: <in scope>. Not: <top non-goal>. Size: <XS|S|M>.

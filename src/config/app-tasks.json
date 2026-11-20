@@ -1,5 +1,40 @@
 [
   {
+    "title": "loop-refine: one-piece-of-work check (from Compound Engineering)",
+    "description": "Before scoping, check whether a request bundles separately valuable outcomes; if so, propose the split and ask which one this lap owns (CE ce-brainstorm coherent-work gate). Adds a Stop 1 question only when a request bundles outcomes. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "loop-refine: ready-for-planning check (from Compound Engineering)",
+    "description": "Before the restatement, check the brief is complete (no placeholders), consistent (no section contradicts another), focused (one work unit) and usable by loop-plan without inventing behavior (CE ce-brainstorm Ready for Planning Check). Agent-only. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "loop-refine: visible progress list (from Compound Engineering)",
+    "description": "Show the owner the refine steps as a task list while Stop 1 runs (CE ce-brainstorm workflow spine). Agent-only cost; useful only if the owner finds it helpful. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "loop-refine: silent pressure test (from Compound Engineering)",
+    "description": "Agent applies CE's product pressure test (evidence, who exactly, today's workaround, smallest version) to the draft brief itself and raises a question only when it changes scope. Asking these out loud would conflict with agent-behavior § When to ask: owner decision. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "loop-refine: show alternatives for visible choices (from Compound Engineering)",
+    "description": "Show the owner the plausible directions for choices they would see in the app before a clear winner is picked (CE ce-brainstorm approaches). Evidence: harness-overview-page D1 was reversed at Stop 2. Changes the always-on asking rule: owner decision. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "Stronger skill evals (from Compound Engineering)",
+    "description": "Nine loop skills already have behavioral eval cases (.agents/skills/*/evals/, run by hand with meta-write-skill/scripts/run-evals.sh). Extend them with CE tests/skill-eval-cell/ lessons: grade the artifacts a run leaves, check reproducibility, cover the other 13 skills, and decide whether any eval runs in CI. Each run uses paid model calls: cost decision for the owner. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "Lesson form order and sizing test (from Compound Engineering)",
+    "description": "Add CE ce-compound's cheapest-durable-form order (test, lint rule, coding standard, prose) and a refresh pass for stale lessons to meta-learn-lessons, and CE's sizing test (build an unrequested safeguard only when a contract needs it, harm lands unnoticed, or adding it later is expensive) to loop-plan. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
     "title": "Configure Supabase",
     "description": "Set up the backend: one Supabase project with the auth providers you use enabled, its Site URL set to the app's primary origin, and its URL and publishable key available as VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (local .env, plus the hosting build variables for main and for previews). Before the app has real users, isolate staging from production with a Supabase Branching staging branch or a second project (documentation/DOC_CLOUDFLARE_WORKERS.md § Staging backend). Your coding agent lists the exact requirements, checks the result, and tells you what only you can do. For Google sign-in, requirements are in documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. If you explicitly say this app does not use Supabase, Google sign-in, anonymous sessions, or error reporting, the agent offers to delete that code. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Shipped integrations and § Configuration tasks gate (Supabase).",
     "status": "to-do"

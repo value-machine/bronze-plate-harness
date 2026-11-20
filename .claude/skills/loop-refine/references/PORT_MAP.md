@@ -17,7 +17,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `grill-me` | ### Boundary-question template (required) | moved | references/asking.md |
 | `grill-me` | ### Anti-patterns (do not ship questions like these) | moved | references/asking.md |
 | `grill-me` | ## Recommendation timing | dropped | No closing recommendation to the owner: the brief goes straight to loop-plan (skill-loop D19); the restatement line replaces the summary |
-| `grill-me` | ## Ending the grill | kept | SKILL.md § Steps 8 + § Output (restatement line); brief-template |
+| `grill-me` | ## Ending the grill | kept | SKILL.md § Steps 9 + § Output (restatement line); brief-template |
 | `grill-me` | ## Handoffs | kept | SKILL.md § Edges + § Not for |
 | `feature` | ## Phase 1: Pre-Development Analysis | moved | references/requirements.md |
 | `feature` | ### 1.0 App vision (product SSOT) | kept | SKILL.md § Steps 2 (`vision-deferred` instead of a stop) |
