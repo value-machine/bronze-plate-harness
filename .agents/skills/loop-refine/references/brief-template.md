@@ -26,7 +26,7 @@ Task: <app-tasks.json title> · Lap: temp_job_<slug> · Harness: v<package.json 
 ## Edges
 | Feature area | Loop today | Hook point | Ride / new |
 |---|---|---|---|
-| <feature or shared area> | <trigger → path → outcome, or Not found> | <where this attaches> | ride / new — <why> |
+| <feature or shared area> | <trigger → path → outcome, or Not found, or Assumption — unverified: …> | <where this attaches> | ride / new — <why> |
 
 Overrun rule (skill-loop D51): a diff that touches a feature area **not** in this table stops the lap.
 
@@ -43,7 +43,10 @@ Cut into laps: <none | follow-up task titles added to the backlog>
 
 ## Decisions
 <pointer: DECISIONS.md rows D1…Dn; recorded-decision conflicts resolved>
+Claim check: <n confirmed · n refuted · n unverifiable [· inline (subagent failed)] | none to check>
 ```
+
+**Unverified claims** ([`claim-check.md`](claim-check.md)): a claim the fresh-eyes check could not verify stays where it is, prefixed `Assumption — unverified:`. It is not a fact to build on until `loop-plan` has read that code itself.
 
 **Restatement line** (posted in chat at the end of Stop 1, no wait):
 

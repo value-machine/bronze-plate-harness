@@ -60,6 +60,11 @@
     "status": "done"
   },
   {
+    "title": "Adopt Compound Engineering learnings: fresh-eyes claim check in loop-refine",
+    "description": "Bring the strongest ideas from Every's Compound Engineering plugin (v3.38.2) into this harness. Comparison and candidate list: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. This lap is scoped with CE's ce-brainstorm method instead of loop-refine (owner request). Protected files (.agents/skills/**, .claude/rules/**): owner consent per change. Result: lap 1 (claim check in loop-refine) in PR #58; remaining pieces are separate backlog tasks.",
+    "status": "done"
+  },
+  {
     "title": "Order lesson homes so the harness compounds",
     "description": "From the compound-engineering comparison: meta-learn-lessons picks a lesson home by a cheapest-first ladder (check, path-scoped rule, always-on rule or skill edit, note in a home with a fixed reader), proves a new check fails on the defect, and tags each lesson repo-local or harness-general so harness lessons reach other forks through meta-write-adoption-guide. Protected files: owner consent given in chat.",
     "status": "done"

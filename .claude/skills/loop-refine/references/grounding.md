@@ -12,7 +12,7 @@ Ground the brief and any edge question in repo context so ride-vs-new and bounda
 | **Step 4** (neighbor map) | For each neighbor from the agreed perimeter, search narrowly (its feature area + direct dependencies, ~3–5 files) and trace its flow end-to-end (UI → hook/service → API/edge → DB/storage) in one plain-language sentence. |
 | **Per edge answer / when stuck** | Re-check the answer still fits the traced loop; step back (problem, route, evidence, alternative) if unclear, then resume. |
 
-**Verify before you state.** Name loops and behaviors only after reading enough to be confident; when unsure, say `Uncertain — only read X so far` or `Not found in repo` and explore more or ask the user to confirm.
+**Verify before you state.** Name loops and behaviors only after reading enough to be confident; when unsure, say `Uncertain — only read X so far` or `Not found in repo` and explore more or ask the user to confirm. This is a self-check; before sizing, a fresh read-only subagent re-checks the brief's claims ([`claim-check.md`](claim-check.md)).
 
 For each neighbor, surface a **hook map** in plain language (user-visible names — save file/symbol detail for `loop-plan`) before the boundary question:
 
