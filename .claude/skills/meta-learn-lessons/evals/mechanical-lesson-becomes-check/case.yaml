@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: mechanical-lesson-becomes-check
+expected_outcome: |
+  The agent sees that lint and the architecture check let the mistake through, proposes tightening the existing check by one entry (the feature-components import restriction in eslint.config.js gains the shared services path), shows that the tightened check passes on the current tree and fails on the defect in a scratch copy outside the repo, asks the owner one yes/no before touching the protected config, adds no prose lesson, and reports the lesson's scope.
+context:
+  scaffold_script: place-files.sh

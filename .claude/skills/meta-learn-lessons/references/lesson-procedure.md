@@ -5,7 +5,7 @@ Read by [`meta-learn-lessons`](../SKILL.md) § Steps. Ported from `learn` (v0.42
 
 Extract lessons from **what just happened** (diffs, errors, retries) and persist them where the assistant will see them **before** the same mistake repeats — or **remove/narrow** guidance that caused context bloat or wrong behavior. Prefer **one primary home** per lesson; cross-link instead of duplicating. **Never persist** what a capable model, Cursor’s product knowledge, or common training data already contains — that is context bloat, not a lesson. Restating it in rules/skills can also **degrade** how the model applies that same knowledge: the prompt snippet is a lossy stand-in, and the model then follows the snippet instead of its richer prior.
 
-**Bias:** Removal-first when existing harness text contributed to the mistake or adds always-on noise without enforcement value. Mechanical lessons → validators (`validate:structure`, `harness_scan`, etc.), not prose.
+**Bias:** Removal-first when existing harness text contributed to the mistake or adds always-on noise without enforcement value. Mechanical lessons → tighten an existing check (§ 3, tier 2), not prose.
 
 **Related:** Rule grading: `.agents/skills/meta-grade-rule/SKILL.md`. Structural harness conflicts → `.agents/skills/meta-audit-harness/SKILL.md`. Loop hook: `.agents/skills/loop-verdict/SKILL.md` (any non-Pass verdict runs this skill; lessons ride the lap's PR). Skill authoring (domain knowledge the agent would not already know): `.agents/skills/meta-write-skill/SKILL.md`.
 
@@ -76,7 +76,7 @@ Using the root cause from Step 1, check whether existing guidance **steered the 
 
 - **Trigger:** When should the assistant remember this?
 - **Constraint:** What must it do or avoid?
-- **Scope:** One domain (e.g. migrations, React, Edge, structure validation).
+- **Domain:** One domain (e.g. migrations, React, Edge, structure validation).
 
 Merge near-duplicates; drop one-off noise.
 
@@ -84,7 +84,9 @@ Merge near-duplicates; drop one-off noise.
 
 Ask: **Would a capable model with no project rules or skills already choose this correctly?**
 
-- **Yes → do not persist.** List it under Report → Omissions. A model forgetting a well-known fact is not fixed by writing it into a rule. The line costs context on every later turn **and can make textbook application worse**: attention follows the written snippet; a partial GPU-vs-CPU bullet can produce worse hardware reasoning than a blank model.
+The test gates **prose only** (§ 3, tiers 3–5). A lesson it drops may still take tier 1 or 2: a textbook mistake that an existing check can catch → tighten the check, write nothing.
+
+- **Yes → do not persist as prose.** List it under Report → Omissions. A model forgetting a well-known fact is not fixed by writing it into a rule. The line costs context on every later turn **and can make textbook application worse**: attention follows the written snippet; a partial GPU-vs-CPU bullet can produce worse hardware reasoning than a blank model.
 - **No → persist** only when the lesson is **this-repo / this-product / this-user**: conventions, local exceptions to general practice, tooling defaults that differ from industry, product preferences.
 
 | Persist | Do not persist |
@@ -99,6 +101,20 @@ If the struggle was “the model ignored general knowledge,” omit the lesson. 
 ### 3. Choose where it lives
 
 Pick **one primary** location. Cross-link elsewhere in one line if needed — never paste the same paragraph in three files.
+
+**Home ladder — cheapest first; the first tier that holds the lesson wins.** The cost is what later sessions pay: a check costs no context, an area home loads only for its area, a skill only when its stage runs, an always-on rule in every session. The ladder orders what is **added**; narrowing or deleting guidance that caused the mistake stays Step 1b.
+
+1. **One way.** The mistake was possible because two ways to do the same thing exist → a `Foundation:` backlog task (`src/config/app-tasks.json`) to consolidate them. This skill changes no product code.
+2. **Check.** Tighten an existing check **only**: one config entry, pattern or test in a validator, lint rule, structure or architecture config, or test suite the repo already runs. Never loosen a check or touch a baseline (`.claude/rules/architecture.md` § Changing architecture rules and configs). **Proof first:** in a scratch copy outside the repo (a plain copy — not `git worktree`, never the working tree) the tightened check passes on the current tree and fails on the defect shape. A new validator script (plus its test) is its own lap → backlog task.
+3. **Area-scoped home.** A fact or contract of one feature → that feature's `README.md`. A constraint on one kind of file across features → an existing path-scoped rule (`paths:`); a new one only together with its `AGENTS.md` catalog row, `documentation/DOC_RULES_INDEX.md` and its `.agents/skills/loop-plan/references/rules-registry.md` row. Symptom → fix → `.agents/skills/spec-debug-runtime/references/patterns.md`. Each is read at a fixed step or loads by path; never start a new notes store.
+4. **Skill or reference edit.** The lesson is about how a loop stage works → the skill that owns the stage, or its reference.
+5. **Always-on rule.** Last. The ask states why tiers 2–4 can't hold the lesson.
+
+**Fallback.** When tier 1, or a tier-2 check that is too big or unproven, ends in a backlog task, continue down the ladder so the lesson holds meanwhile. The persisted line names the task, and the task's description says to remove that line when it lands.
+
+**Scope tag.** Tag every persisted lesson `repo` (true only for this app or repo) or `harness` (would help any fork of this harness). Where it is recorded: Step 4.
+
+The table is the file lookup inside a tier.
 
 | Lesson type | Primary location (this repo) |
 |-------------|-------------------------------|
@@ -137,12 +153,18 @@ Confirm ownership via `documentation/DOC_RULES_INDEX.md` and `documentation/DOC_
 - **Imperatives:** Direct verbs (“Always…”, “Never…”).
 - **Examples:** Short `// BAD` / `// GOOD` only where this repo already uses code in that file (e.g. `debug.md` patterns). For rule edits, prefer concise bullets; follow `.agents/skills/meta-grade-rule/SKILL.md` when tightening prose.
 - **Minimal diff:** Small subsection or bullet group; merging duplicates in the same section is fine. Large rewrites need **explicit user confirmation**.
+- **Checks (tier 2):** run the proof (§ 3) **before** the owner's yes/no, so the ask carries it: the entry, the command, and both results. Check configs are protected files; apply only after the yes.
+- **Record the scope tag** (§ 3) next to the lesson, one line per lesson:
+  - **In a lap:** in the lap's section of `documentation/DOC_DECISION_LOG.md` (`## <lap-slug> — <branch>`, the section `loop-ship` writes; start the heading when the lesson comes first) — `Lessons: Lesson-scope: <repo|harness> — <file § section>`.
+  - **Outside a lap:** the lesson gets a commit of its own, `docs(harness): lesson — <tl;dr>`, with the `Lesson-scope:` line in the body.
+  - **Lesson became a backlog task** (tier 1, a check too big for this run, a declined lesson, a Drop): the scope goes into the task text.
 - **Deletions & narrowing (from Step 1b):** When the Reverse Audit flagged misleading, outdated, or **base-knowledge** guidance, present each proposed removal or rewrite to the user **before** applying. Never delete or substantially rewrite rule content without explicit user approval.
 
 ### 5. Report
 
 - **TL;DR:** What was learned (1–2 sentences).
-- **Location:** The exact file path and section heading where it was saved.
+- **Location:** The exact file path and section heading where it was saved (for a check: the config file and the entry).
+- **Scope:** `repo` or `harness` (§ 3); `scope —` when nothing was persisted.
 - **Removals:** List any rules proposed for deletion or narrowing, with the user's decision (applied / deferred / rejected). If none, omit this line.
 - **Omissions:** Briefly list anything explicitly *not* saved and why. Always include blank-model drops (training-data / Cursor-base / general CS).
 - **Stop.** Wait for next instructions. Do not print the whole file or long code blocks.
@@ -153,6 +175,8 @@ Confirm ownership via `documentation/DOC_RULES_INDEX.md` and `documentation/DOC_
 
 - Pasting long SQL or stack traces into rules — summarize; reference migration filenames if useful.
 - Duplicating the same lesson across many files.
+- An always-on line where tiers 2–4 hold the lesson (§ 3): every later session pays for it.
+- Proposing a check whose failure on the defect was claimed, not run.
 - Logging textbook or training-data knowledge as a lesson (blank-model test fails). Not merely noise: restating it can degrade application of that knowledge.
 - Putting secrets or new credentials in rules or skills.
 - Rewriting large rule sections without approval.

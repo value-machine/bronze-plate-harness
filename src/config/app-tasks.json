@@ -30,8 +30,8 @@
     "status": "to-do"
   },
   {
-    "title": "Lesson form order and sizing test (from Compound Engineering)",
-    "description": "Add CE ce-compound's cheapest-durable-form order (test, lint rule, coding standard, prose) and a refresh pass for stale lessons to meta-learn-lessons, and CE's sizing test (build an unrequested safeguard only when a contract needs it, harm lands unnoticed, or adding it later is expensive) to loop-plan. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
+    "title": "Lesson refresh pass and sizing test (from Compound Engineering)",
+    "description": "The cheapest-form order landed in lap lesson-home-ladder (meta-learn-lessons home ladder). Remaining: a refresh pass that audits saved lessons (feature README lines, path-scoped rules, debug patterns) against the current code (CE ce-compound refresh), and CE's sizing test (build an unrequested safeguard only when a contract needs it, harm lands unnoticed, or adding it later is expensive) in loop-plan. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
     "status": "to-do"
   },
   {
@@ -92,6 +92,11 @@
   {
     "title": "Port feedback hooks to Cursor",
     "description": "Feedback-hooks follow-up: check the current Cursor hooks docs (afterFileEdit, stop) and port the Claude Code PostToolUse lint/format hook and Stop type-check hook where Cursor supports equivalent behavior; document gaps.",
+    "status": "to-do"
+  },
+  {
+    "title": "Foundation: block feature components from importing shared services",
+    "description": "Found in lap lesson-home-ladder: a feature component importing @/shared/services/* passes pnpm lint and pnpm arch:check. eslint.config.js restricts only @/features/*/services for feature components, and the dependency-cruiser rules no-direct-service-in-components / no-direct-service-in-feature-components use ^src/(shared|features)/.*/services, which cannot match src/shared/services/..., at warn severity. Fix: add @/shared/services to the feature-components no-restricted-imports group (verified in a scratch copy: fails on the defect, passes on the clean tree) and correct the dependency-cruiser path. Protected configs: owner consent before editing. Lesson-scope: harness.",
     "status": "to-do"
   }
 ]

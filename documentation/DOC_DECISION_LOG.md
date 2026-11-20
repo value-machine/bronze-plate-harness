@@ -5,6 +5,19 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **One heading per job:** `## <job-key> — <branch>`, newest first. The job key is the lap slug (`documentation/jobs/temp_job_<slug>/`). Find the PR from the branch (`gh pr list --head <branch> --state all`) and the first release from the merge commit (`git tag --contains <commit>`).
 - **Cite with the job key:** `(skill-loop D53)`. Ids restart at D1 in every job, so a bare `D53` is ambiguous.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
+- **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
+
+## lesson-home-ladder — claude/great-noether-xszef4
+
+`meta-learn-lessons` picks a lesson's home by a cheapest-first ladder, proves a tightened check fails on the defect before asking, and tags each lesson `repo` or `harness` so harness lessons reach other forks. Comes from comparing with EveryInc's compound-engineering plugin (`ce-compound`).
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Retrievable notes store | closed | No new store; area notes go only to homes with a fixed reader (feature README at `loop-refine` step 2, debug patterns at `spec-debug-runtime` intake) | loop-refine | Rejected: a CE-style `docs/solutions/` store with `applies_when` plus a lookup step — needs a structure change and a new read step that both existing homes already have. |
+| D2 | Where a harness-general lesson travels | closed | `Lessons: Lesson-scope: <repo\|harness> — <file § section>` line in the lap's section here; outside a lap its own lesson commit; on Drop in the task text. `meta-write-adoption-guide` gathers the `harness` lines | loop-plan (review) | Rejected: a commit trailer — squash merges keep it only as body text and only under `COMMIT_MESSAGES`, and a manual `/learn` rides `loop-ship`'s commit. |
+| D3 | Proof a new check works | closed | Tighten an existing check only; it must fail on the defect shape in a scratch copy outside the repo before the owner ask; too big or unproven → backlog task, and continue down the ladder with a line naming the task (removed when it lands) | loop-plan (review) | From CE `ce-compound` form.md. Rejected: stopping with no interim prose — the mistake could repeat until the task lands. |
+| D4 | Owner consent for the lap's protected skill edits | closed | Given in chat for `meta-learn-lessons/**` and `meta-write-adoption-guide/references/procedure.md` | owner | No `.claude/rules/**` edits. |
+| D5 | Ladder order | closed | One way → check → area-scoped home (README / path-scoped rule / patterns) → skill or reference edit → always-on rule | loop-plan (review) | Ordered by what later sessions pay. The blank-model test gates prose tiers 3–5 only. |
 
 ## compound-engineering-adoption — claude/modest-wozniak-izp499
 

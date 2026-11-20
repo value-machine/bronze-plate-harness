@@ -69,6 +69,7 @@ Gather from user and repo (read files; do not invent paths):
 - **What was wired** — rules, skills, plan sections, indexes (use [`references/layer-mapping.md`](layer-mapping.md))
 - **One teaching example** in source repo (optional but recommended)
 - **Target audience** — TMI apps with Cursor, human-only teams, or both
+- **Harness lessons since the last guide** (optional — harness-change guides, and only if the repo tags lessons) — lines `Lesson-scope: harness — <file § section>` in the repo's decision log (here `documentation/DOC_DECISION_LOG.md`) and in lesson commit bodies, added since the last commit that touched the guide file (`git log -1 --format=%H -- <guide>`, then `git log <that commit>..HEAD`; all history for a new guide). They are **sources**: open the files they name and port the substance; never paste the lines into the guide
 
 If SSOT does not exist yet, **stop** — tell the user to add the skill/rule/procedure first, then run this skill again.
 
