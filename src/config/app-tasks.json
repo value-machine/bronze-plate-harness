@@ -1,5 +1,20 @@
 [
   {
+    "title": "Adopt Compound Engineering learnings into the harness",
+    "description": "Bring the strongest ideas from Every's Compound Engineering plugin (v3.38.2) into this harness. Comparison and candidate list: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. This lap is scoped with CE's ce-brainstorm method instead of loop-refine (owner request). Protected files (.agents/skills/**, .claude/rules/**): owner consent per change.",
+    "status": "in-progress"
+  },
+  {
+    "title": "Behavioral skill evals (from Compound Engineering)",
+    "description": "Graded scenarios that run a skill on a real agent host and score the artifacts it leaves, after CE tests/skill-eval-cell/. Each run uses paid model calls: cost decision for the owner. Likely larger than M: cut into laps. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
+    "title": "Lesson form order and sizing test (from Compound Engineering)",
+    "description": "Add CE ce-compound's cheapest-durable-form order (test, lint rule, coding standard, prose) and a refresh pass for stale lessons to meta-learn-lessons, and CE's sizing test (build an unrequested safeguard only when a contract needs it, harm lands unnoticed, or adding it later is expensive) to loop-plan. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
     "title": "Configure Supabase",
     "description": "Set up the backend: one Supabase project with the auth providers you use enabled, its Site URL set to the app's primary origin, and its URL and publishable key available as VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (local .env, plus the hosting build variables for main and for previews). Before the app has real users, isolate staging from production with a Supabase Branching staging branch or a second project (documentation/DOC_CLOUDFLARE_WORKERS.md § Staging backend). Your coding agent lists the exact requirements, checks the result, and tells you what only you can do. For Google sign-in, requirements are in documentation/DOC_SUPABASE_GOOGLE_OAUTH.md. If you explicitly say this app does not use Supabase, Google sign-in, anonymous sessions, or error reporting, the agent offers to delete that code. Agent gate: .agents/skills/loop-backlog/references/onboarding.md § Shipped integrations and § Configuration tasks gate (Supabase).",
     "status": "to-do"
