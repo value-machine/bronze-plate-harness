@@ -17,7 +17,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `grill-me` | ### Boundary-question template (required) | moved | references/asking.md |
 | `grill-me` | ### Anti-patterns (do not ship questions like these) | moved | references/asking.md |
 | `grill-me` | ## Recommendation timing | dropped | No closing recommendation to the owner: the brief goes straight to loop-plan (skill-loop D19); the restatement line replaces the summary |
-| `grill-me` | ## Ending the grill | kept | SKILL.md § Steps 9 + § Output (restatement line); brief-template |
+| `grill-me` | ## Ending the grill | kept | SKILL.md § Steps 10 + § Output (restatement line); brief-template |
 | `grill-me` | ## Handoffs | kept | SKILL.md § Edges + § Not for |
 | `feature` | ## Phase 1: Pre-Development Analysis | moved | references/requirements.md |
 | `feature` | ### 1.0 App vision (product SSOT) | kept | SKILL.md § Steps 2 (`vision-deferred` instead of a stop) |
@@ -25,7 +25,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `feature` | ### 1.2 Rule Decision Tree | moved | loop-plan/references/rules-registry.md + plan conflict & compliance |
 | `feature` | ### 1.3 Risk & Impact Assessment | moved | references/requirements.md § Risk and impact |
 | `feature` | ## Phase 2: Requirements & Design | moved | references/requirements.md |
-| `feature` | ### 2.0 Ambiguity Elimination Gate | kept | SKILL.md § Steps 5–6; mandatory stops replaced by the agent-behavior stop list (skill-loop D6) |
+| `feature` | ### 2.0 Ambiguity Elimination Gate | kept | SKILL.md § Steps 6–7; mandatory stops replaced by the agent-behavior stop list (skill-loop D6) |
 | `feature` | ### 2.1 User Stories | moved | references/requirements.md § User stories |
 | `feature` | ### 2.1.1 User Journey & State Transition Mapping (MANDATORY) | moved | references/requirements.md § User journey (mandatory at size M when roles/journeys span, skill-loop D18) |
 | `feature` | ### 2.2 Existing Functionality Search | moved | references/requirements.md § Existing functionality first |

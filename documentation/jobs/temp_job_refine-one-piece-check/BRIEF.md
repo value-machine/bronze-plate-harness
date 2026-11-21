@@ -44,3 +44,28 @@ Cut into laps: none.
 ## Decisions
 `DECISIONS.md` D1–D4; no conflict with a recorded decision (skill-loop D44 cuts by size and stays; this check splits by outcome before it).
 Claim check: 11 confirmed · 0 refuted · 0 unverifiable
+
+## Plan
+
+Acceptance check (manual script; fails before the build):
+
+```bash
+d=.agents/skills/loop-refine
+test -f $d/references/one-piece-check.md \
+  && grep -q '^3\. \*\*One piece of work?\*\*' $d/SKILL.md \
+  && grep -q '^10\. \*\*Restate and hand off' $d/SKILL.md \
+  && grep -q 'step 8 verifies' $d/references/claim-check.md \
+  && grep -q 'Steps 6–7' .agents/skills/router/references/PORT_MAP.md \
+  && test -f $d/evals/bundled-request-asks-which/case.yaml \
+  && echo PASS || echo FAIL
+```
+
+Conflict & compliance: protected skill files, consent D5. `meta-write-skill` conventions (sections unchanged; catalog row and triggers unchanged; no port-map rows added, only step numbers). Placement: `references/*.md` and `evals/<case>/` follow the existing loop-refine layout. `grounding.md`'s "Steps 1–3 / Step 4" are its own grill stages, not SKILL steps: unchanged.
+
+Phase 1 — Build (gate: acceptance check PASS)
+1. New `references/one-piece-check.md` (split test, keep-together test, question, other outcomes, thread case D3, away switch D4).
+2. `SKILL.md`: new step 3 (D2), renumber 3–9 → 4–10, `Calls` row.
+3. Renumber citations: `claim-check.md` (7→8, 8→9, 4–6→5–7), `loop-refine/references/PORT_MAP.md` (5–6→6–7, 9→10), `router/references/PORT_MAP.md` (5–6→6–7).
+4. Eval case `evals/bundled-request-asks-which/` modelled on `conflict-asks-once`.
+
+Phase 2 — Integrate (gate: `node scripts/sync-agent-config.mjs`, `pnpm validate:skills`, `pnpm validate:docs`, `pnpm validate:structure`)
