@@ -16,13 +16,13 @@ Keep the request together when the outcomes are only useful or testable together
 
 1. **Name the pieces** in chat, in plain language, one line each, with only the relationships the repo shows now: which one depends on or enables another, and which are independent. Mark a guessed relationship as a guess.
 2. **Ask once** which piece this lap owns, per [`asking.md`](asking.md) (a choice question, challenge option included). Skip the question when the owner's own words already named the piece; carry that choice forward.
-3. **Scope only that piece.** It alone feeds the brief's problem, success check and in-scope list; the others appear only under § Out of scope as `deferred`.
-4. **Keep the others:** add each as a backlog task right after the current top task in `src/config/app-tasks.json`, titled by its outcome, with one line naming the lap it was split from and any dependency. Independent ones are what [`loop-backlog`](../../loop-backlog/SKILL.md) step 5 may later offer as a parallel run.
+3. **Scope only that piece.** Retitle the top task in `src/config/app-tasks.json` to the chosen piece (description too), so the archive entry at Pass names what landed; the lap slug and branch from step 1 stay. The piece alone feeds the brief's problem, success check and in-scope list; the others appear only under § Out of scope as `deferred`.
+4. **Keep the others:** add each as a backlog task right after the current top task in `src/config/app-tasks.json` (size slices that step 9 adds later go in front of them), titled by its outcome, with one line naming the lap it was split from and any dependency. Independent ones are what [`loop-backlog`](../../loop-backlog/SKILL.md) step 5 may later offer as a parallel run.
 5. **Log** the split and the owner's pick in the lap's `DECISIONS.md`.
 
-**Orchestrated thread:** don't write tasks or ask the owner. Report the proposed pieces to the orchestrator, which owns task state and the owner's questions, and wait for its answer (orchestrator-parallel-laps D3, D4).
+**Orchestrated thread:** don't write tasks or ask the owner. Report the proposed pieces to the orchestrator, which owns task state and the owner's questions, and wait for its answer (orchestrator-parallel-laps D3, D4). The report must list every piece so the orchestrator can queue the ones not picked.
 
-**Away switch on:** the pick is a true tie, so choose the piece with the highest value per size (as [`loop-backlog`](../../loop-backlog/SKILL.md) ranks), log it as `agent-pick`, and continue (`agent-behavior` rule § When to ask).
+**Away switch on:** the pick is a true tie, so choose the piece with the highest value per size (as [`loop-backlog`](../../loop-backlog/SKILL.md) step 4 ranks; for this pick that replaces `fork-checklist.md` § Tie resolution), log it as `agent-pick`, and continue (`agent-behavior` rule § When to ask).
 
 ## When it doesn't split
 
