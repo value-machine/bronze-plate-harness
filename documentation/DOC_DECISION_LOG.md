@@ -64,6 +64,17 @@ The first orchestrated run (four harness laps: secrets deny list, folder-tree po
 |---|---|---|---|---|---|
 | D1 | Stop 2 for laps with nothing to test in the app | closed | `BRIEF.md` gains § Owner test (`app` / `none`). With `none` (rules, skills, settings, tooling, docs), `loop-verdict` asks no Pass / Change / Drop: the Stop 1 answer or protected-file consent is the Pass, the PR merges on green CI (Model C; A/B rides the next promote), and the owner gets one `Watch for:` line. A problem found later is a Change request (fix or revert task) | owner | Rejected: keep asking with "nothing to test" noted (still a blind click); a batched end-of-run question (same blindness, one click). Mixed laps (app + harness) count as `app` |
 
+## feedback-hooks — recovered from `52e7fea` (#49)
+
+Claude Code hooks: lint/format after each edit, type-check before turn end. Closed rows recovered from the lap's `DECISIONS.md` during a backlog catch-up; the ship commit had not copied them.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Which hooks | closed | both; Stop = type-check only (tests stay with pre-commit/CI) | loop-refine | owner via orchestrator question tool; also consented: push-safety.md step 6 trim, DOC row |
+| D2 | Tool invocation on Windows | closed | Node API / `node node_modules/...` (no pnpm spawn) | loop-refine | clear winner: avoids `.cmd` shim spawn and ~1 s pnpm overhead; alt: `pnpm exec` |
+| D4 | Formatting tool | closed | `eslint --fix` only (Prettier runs as an ESLint rule) | loop-build | reductive: one tool, one pass |
+| D3 | Stop loop guard | closed | skip when tree fingerprint unchanged since last pass; on `stop_hook_active` with the same failure fingerprint, allow stop | loop-refine | clear winner over relying on the 8-cap alone |
+
 ## ci-cost — claude/epic-babbage-2wjwwf
 
 CI cost cuts: related tests per PR with a weekly full run, no duplicate CI after merge, one release job, job timeouts, and fewer orchestrator branch updates.
