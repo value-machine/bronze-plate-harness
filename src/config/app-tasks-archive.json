@@ -68,5 +68,10 @@
     "title": "Order lesson homes so the harness compounds",
     "description": "From the compound-engineering comparison: meta-learn-lessons picks a lesson home by a cheapest-first ladder (check, path-scoped rule, always-on rule or skill edit, note in a home with a fixed reader), proves a new check fails on the defect, and tags each lesson repo-local or harness-general so harness lessons reach other forks through meta-write-adoption-guide. Protected files: owner consent given in chat.",
     "status": "done"
+  },
+  {
+    "title": "loop-refine: one-piece-of-work check (from Compound Engineering)",
+    "description": "Before scoping, check whether a request bundles separately valuable outcomes; if so, propose the split and ask which one this lap owns (CE ce-brainstorm coherent-work gate). Adds a Stop 1 question only when a request bundles outcomes. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent. Result: loop-refine step 3 (one-piece-check.md) in PR #60.",
+    "status": "done"
   }
 ]

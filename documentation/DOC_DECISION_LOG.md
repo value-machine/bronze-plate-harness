@@ -7,6 +7,18 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 - **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
 
+## refine-one-piece-check — claude/modest-wozniak-izp499
+
+Second Compound Engineering piece (compound-engineering-adoption D3): `loop-refine` step 3 asks which outcome a lap owns when a request bundles several (`references/one-piece-check.md`). Brief claim check: 11 confirmed.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Where bundled requests are caught and who picks the first outcome | closed | `loop-refine` proposes the split and asks the owner which outcome this lap owns; the rest become backlog tasks right after the top task | owner | Rejected: `loop-backlog` splits on insert and its order question picks (changes skill-loop D26's no-confirm rule for direct requests); silent split by the agent (owner corrects via the restatement line); no new check |
+| D2 | Where in loop-refine | closed | New step 3, right after reading (step 2) and before drafting | loop-refine | clear-winner: the split needs the repo read (to judge "separately useful") and must come before the brief is drafted around one outcome. CE runs it before deep exploration for the same reason. Rejected: folding it into step 2 (asks mid-read), into the size step (the brief is already written around all outcomes) |
+| D3 | Orchestrated threads | closed | In a thread, report the proposed split to the orchestrator instead of writing tasks or asking the owner | loop-refine | clear-winner: the orchestrator owns task state and the owner talks only to it (orchestrator-parallel-laps D3, D4) |
+| D4 | Away switch | closed | Picking the first outcome is a true tie: with the away switch on, the agent picks by value per size and logs it as `agent-pick` | loop-refine | clear-winner: matches agent-behavior § When to ask (away switch decides ties) and loop-backlog's value-per-size ranking |
+| D5 | Protected-file consent | closed | Owner approved editing loop-refine SKILL.md, a new one-piece-check.md, step numbers in claim-check.md and both PORT_MAP files, and a new eval case | owner | asked in chat before any edit |
+
 ## lesson-home-ladder — claude/great-noether-xszef4
 
 `meta-learn-lessons` picks a lesson's home by a cheapest-first ladder, proves a tightened check fails on the defect before asking, and tags each lesson `repo` or `harness` so harness lessons reach other forks. Comes from comparing with EveryInc's compound-engineering plugin (`ce-compound`).
@@ -63,6 +75,17 @@ The first orchestrated run (four harness laps: secrets deny list, folder-tree po
 | id | topic | status | choice | source | notes |
 |---|---|---|---|---|---|
 | D1 | Stop 2 for laps with nothing to test in the app | closed | `BRIEF.md` gains § Owner test (`app` / `none`). With `none` (rules, skills, settings, tooling, docs), `loop-verdict` asks no Pass / Change / Drop: the Stop 1 answer or protected-file consent is the Pass, the PR merges on green CI (Model C; A/B rides the next promote), and the owner gets one `Watch for:` line. A problem found later is a Change request (fix or revert task) | owner | Rejected: keep asking with "nothing to test" noted (still a blind click); a batched end-of-run question (same blindness, one click). Mixed laps (app + harness) count as `app` |
+
+## feedback-hooks — recovered from `52e7fea` (#49)
+
+Claude Code hooks: lint/format after each edit, type-check before turn end. Closed rows recovered from the lap's `DECISIONS.md` during a backlog catch-up; the ship commit had not copied them.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Which hooks | closed | both; Stop = type-check only (tests stay with pre-commit/CI) | loop-refine | owner via orchestrator question tool; also consented: push-safety.md step 6 trim, DOC row |
+| D2 | Tool invocation on Windows | closed | Node API / `node node_modules/...` (no pnpm spawn) | loop-refine | clear winner: avoids `.cmd` shim spawn and ~1 s pnpm overhead; alt: `pnpm exec` |
+| D4 | Formatting tool | closed | `eslint --fix` only (Prettier runs as an ESLint rule) | loop-build | reductive: one tool, one pass |
+| D3 | Stop loop guard | closed | skip when tree fingerprint unchanged since last pass; on `stop_hook_active` with the same failure fingerprint, allow stop | loop-refine | clear winner over relying on the 8-cap alone |
 
 ## ci-cost — claude/epic-babbage-2wjwwf
 

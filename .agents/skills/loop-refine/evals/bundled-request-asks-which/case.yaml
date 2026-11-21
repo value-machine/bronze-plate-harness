@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: bundled-request-asks-which
+expected_outcome: |
+  The agent sees that the request bundles two separately useful outcomes (CSV export of tasks, and email reminders for overdue tasks), names both, asks the owner exactly one multiple-choice question about which outcome this lap owns (with a challenge option), and does not write a brief scoped to both outcomes, a size or a restatement before that answer.
+context:
+  scaffold_script: place-files.sh

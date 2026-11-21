@@ -11,7 +11,7 @@ Format: [`meta-write-skill/references/port-map-format.md`](../../meta-write-skil
 | `router` | ### Gate 1 — Goal / outcome | moved | loop-refine (problem + success check; vision read first) |
 | `router` | ### Gate 2 — Scope / requirements | moved | loop-refine (in / out, edges); layer-consistency and naming gates now fire from the architecture and code-style rules (skill-loop D56) |
 | `router` | ### Gate 3 — Delivery shape (only after gates 1–2 pass) | moved | loop-refine size estimate → loop-plan depth (references/complexity-rubric.md) |
-| `router` | ### Clarification-first routing (gate 1 or 2 fails) | moved | loop-refine § Steps 5–6 (ask only per the stop list) |
+| `router` | ### Clarification-first routing (gate 1 or 2 fails) | moved | loop-refine § Steps 6–7 (ask only per the stop list) |
 | `router` | ### Plan corridor flow (`grill-me` → ledger → `plan` + `plan-grill` rail) | moved | references/loop-map.md + loop-plan/references/fork-checklist.md |
 | `router` | ### Matrix (compact) | dropped | Superseded by references/loop-map.md |
 | `router` | ### Flowchart | moved | references/loop-map.md diagram |

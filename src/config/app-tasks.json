@@ -1,7 +1,7 @@
 [
   {
-    "title": "loop-refine: one-piece-of-work check (from Compound Engineering)",
-    "description": "Before scoping, check whether a request bundles separately valuable outcomes; if so, propose the split and ask which one this lap owns (CE ce-brainstorm coherent-work gate). Adds a Stop 1 question only when a request bundles outcomes. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
+    "title": "loop-orchestrate: queue pieces a thread splits off",
+    "description": "When a thread's loop-refine step 3 (one-piece-check.md) reports a bundled request, loop-orchestrate § Steps 3 should ask the owner which piece the thread owns and add the other pieces as backlog tasks; today its Backlog bullet covers only owner remarks and vision gaps. Follow-up of refine-one-piece-check (review finding). Protected files: owner consent.",
     "status": "to-do"
   },
   {
