@@ -19,8 +19,8 @@ When this skill is done, every ready task has been built in its own session, and
 | Field | Value |
 |---|---|
 | In | `src/config/app-tasks.json`, `documentation/DOC_APP_VISION.md`, owner messages, active sessions, open lap PRs |
-| Out | Thread sessions; backlog edits landed on thread PRs; one status line per turn; merged PRs |
-| Calls | to rank → [`loop-backlog`](../loop-backlog/SKILL.md) steps 2–4 · threads start at → [`loop-refine`](../loop-refine/SKILL.md) · handoff format → [`loop-verdict`](../loop-verdict/SKILL.md) · on Pass → [`loop-ship`](../loop-ship/SKILL.md) · a mistake repeated across threads → [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) · when done → [`router`](../router/SKILL.md) |
+| Out | Thread sessions; backlog edits landed on thread PRs; the run's test board artifact; one status line per turn; merged PRs |
+| Calls | to rank → [`loop-backlog`](../loop-backlog/SKILL.md) steps 2–4 · threads start at → [`loop-refine`](../loop-refine/SKILL.md) · handoff format → [`loop-verdict`](../loop-verdict/SKILL.md) · Stop 2 on surfaces with artifacts → [`references/test-board.md`](references/test-board.md) · on Pass → [`loop-ship`](../loop-ship/SKILL.md) · a mistake repeated across threads → [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) · when done → [`router`](../router/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Next | [`router`](../router/SKILL.md) |
 | Owner stops | Yes to the run · new tasks it proposes · Stop 2 per PR · stop-list items ([`agent-behavior` rule § When to ask](../../../.claude/rules/agent-behavior.md)) it can't settle |
@@ -37,7 +37,7 @@ When this skill is done, every ready task has been built in its own session, and
    - **Questions:** answer what the vision, recorded decisions or another thread settle; ask the owner the rest, one at a time ([`asking.md`](../loop-refine/references/asking.md)). A waiting thread parks; the others go on.
    - **Briefs:** when a thread reports its edges, re-check overlap; hold or re-scope a thread that overlaps or drifts. Tell a thread when another one's change affects it.
    - **Backlog:** reorder without asking and report it; turn the owner's remarks into tasks; propose tasks for gaps between the vision and the app. Start what became ready.
-4. **Stop 2.** For each green PR, commit its task's archive and any pending backlog edits onto its branch, so a merge on GitHub is still a complete Pass. A PR whose brief has no owner test merges on green without a question; list it in the status line with its `Watch for:` (`loop-verdict` step 0). Then post one handoff listing each remaining PR in the `loop-verdict` format, with a verdict per PR. On Pass, the thread runs the post-Pass [greenfield sweep](../loop-check/references/greenfield-sweep.md) on its PR (`loop-verdict` step 3); once CI is green, merge it and archive its session. Update another branch from `main` only when it is next to merge, its thread needs the merged change, or GitHub reports a conflict, and resolve conflicts yourself (the decision log and the backlog JSON conflict on every merge; that isn't overlap). Each push re-runs that PR's CI, and `main` doesn't require up-to-date branches (ci-cost D5). A Change goes back to its thread; a Drop closes the PR and archives the session.
+4. **Stop 2.** For each green PR, commit its task's archive and any pending backlog edits onto its branch, so a merge on GitHub is still a complete Pass. A PR whose brief has no owner test merges on green without a question; list it in the status line with its `Watch for:` (`loop-verdict` step 0). Then put each remaining PR on the run's [test board](references/test-board.md): one private artifact that holds every test step, the owner's progress, their verdict per PR and their messages to you. Chat gets only the board link and one line per change, never restated steps (test-board D3). Read the board on every event; a verdict there counts like one in chat. Where the surface can't publish artifacts, post one handoff in chat listing each remaining PR in the `loop-verdict` format instead, with a verdict per PR. On Pass, the thread runs the post-Pass [greenfield sweep](../loop-check/references/greenfield-sweep.md) on its PR (`loop-verdict` step 3); once CI is green, merge it and archive its session. Update another branch from `main` only when it is next to merge, its thread needs the merged change, or GitHub reports a conflict, and resolve conflicts yourself (the decision log and the backlog JSON conflict on every merge; that isn't overlap). Each push re-runs that PR's CI, and `main` doesn't require up-to-date branches (ci-cost D5). A Change goes back to its thread; a Drop closes the PR and archives the session.
 5. **Finish** when nothing is ready or in flight: post the status line and hand back to the router.
 
 Threads report back through whatever the surface supports: messages, or their branch, PR and transcript, which the orchestrator reads.
@@ -46,14 +46,18 @@ Threads report back through whatever the surface supports: messages, or their br
 
 **Example 1**
 Input: "CSV export" (tasks), "Avatar in top bar" (layouts) and "Rename tasks column" (tasks); the owner says yes.
-Output: two sessions start, and the rename task queues behind CSV export. The avatar thread asks which image size to use; the profile README records it, so the orchestrator answers. Later one handoff lists both previews.
+Output: two sessions start, and the rename task queues behind CSV export. The avatar thread asks which image size to use; the profile README records it, so the orchestrator answers. Later both PRs land as cards on one test board, and chat gets `Test board: <url> · To test: CSV export, Avatar in top bar`.
+
+**Example 2**
+Input: on the test board the owner marks step 2 of "CSV export" ✗ ("no due dates") and taps Change, while the avatar thread is still reporting.
+Output: the board's comment to Claude wakes the orchestrator. It sends the ✗ step and the note to the CSV thread, sets that card to *Change in progress* with a one-line reply on the card, and posts no steps in chat. When the new preview arrives, the card resets to *Ready to test*.
 
 ## Output
 
 One status line per turn:
 
 ```text
-Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <PR | question> · Held: <task> (waits on <task>) · Queued: <task> (<reason>)
+Running: <task> — <Building: … line until the owner saw it> · Waiting on you: <Test board: url (n to test) | question> · Held: <task> (waits on <task>) · Queued: <task> (<reason>)
 ```
 
 ## Not for
