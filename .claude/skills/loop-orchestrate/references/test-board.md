@@ -64,7 +64,7 @@ A multi-file artifact with one writer per file, so saves from the two sides neve
 - `state`: `ready` to test · `changing` while a Change is with its thread · `merging` after a Pass.
 - `round` starts at 1 and goes up with every new preview of that PR. An entry for an older round is stale.
 - `kind`: `verdict` (`verdict`: `pass` · `change` · `drop`; `results` are the step ticks for that round) or `message` (`text` only).
-- The page keeps ticks and notes on the device while the owner tests and sends them only with a verdict. A tick on its own never saves, so it never wakes the orchestrator (test-board D8).
+- The page keeps ticks and notes on the device while the owner tests and sends them only with a verdict. A tick on its own neither saves nor rings the doorbell, so it costs the orchestrator no turn (test-board D8).
 - Each sent entry shows *waiting for the orchestrator* on the card until its `id` appears in `handled`.
 - **Doorbell.** A save by the page does not wake the orchestrator (seen in the live smoke test), but a comment sent to Claude does. So with every verdict or message the page also sends one comment to Claude on that card (`comments.sendToClaude`). The comment carries the verdict, the round, the entry `id` and the note, so it is enough on its own if `owner.json` lags (test-board D10).
 

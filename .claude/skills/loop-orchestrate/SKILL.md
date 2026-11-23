@@ -50,7 +50,7 @@ Output: two sessions start, and the rename task queues behind CSV export. The av
 
 **Example 2**
 Input: on the test board the owner marks step 2 of "CSV export" ✗ ("no due dates") and taps Change, while the avatar thread is still reporting.
-Output: the board save wakes the orchestrator. It sends the ✗ step and the note to the CSV thread, sets that card to *Change in progress* with a one-line reply on the card, and posts no steps in chat. When the new preview arrives, the card resets to *Ready to test*.
+Output: the board's comment to Claude wakes the orchestrator. It sends the ✗ step and the note to the CSV thread, sets that card to *Change in progress* with a one-line reply on the card, and posts no steps in chat. When the new preview arrives, the card resets to *Ready to test*.
 
 ## Output
 
