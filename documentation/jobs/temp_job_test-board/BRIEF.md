@@ -9,7 +9,7 @@ Under `loop-orchestrate`, Stop 2 handoffs go to chat. Thread reports keep arrivi
 On a surface that publishes artifacts, `loop-orchestrate` step 4 puts each PR waiting at Stop 2 on one private test board artifact (steps, the owner's ✓ / ✗ and notes, Pass / Change / Drop, messages). It reads verdicts and messages from the board on every event. Chat carries only the board link and one line per change. Surfaces without artifacts keep the chat handoff.
 
 ## Owner test
-Next orchestrator run: the first Stop 2 publishes the board. Mark a step and tap Change on the board → the orchestrator should react without you writing in chat, and chat should not repeat the steps. Unverified until then: whether a save from the page wakes the watching session (the fallback is reading the board on every other event).
+Next orchestrator run: the first Stop 2 publishes the board. Mark a step and tap Change on the board → the orchestrator should react without you writing in chat, and chat should not repeat the steps. Verified in a live smoke test on the owner's phone (Claude app): saving works, and the doorbell comment wakes the orchestrator with no chat message (D10).
 
 ## In scope
 - New `loop-orchestrate/references/test-board.md`: what the board holds, the `board.json` contract, orchestrator steps, and the page template.
