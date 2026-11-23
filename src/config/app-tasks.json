@@ -1,10 +1,5 @@
 [
   {
-    "title": "loop-refine: one-piece-of-work check (from Compound Engineering)",
-    "description": "Before scoping, check whether a request bundles separately valuable outcomes; if so, propose the split and ask which one this lap owns (CE ce-brainstorm coherent-work gate). Adds a Stop 1 question only when a request bundles outcomes. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
-    "status": "to-do"
-  },
-  {
     "title": "loop-refine: ready-for-planning check (from Compound Engineering)",
     "description": "Before the restatement, check the brief is complete (no placeholders), consistent (no section contradicts another), focused (one work unit) and usable by loop-plan without inventing behavior (CE ce-brainstorm Ready for Planning Check). Agent-only. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
     "status": "to-do"

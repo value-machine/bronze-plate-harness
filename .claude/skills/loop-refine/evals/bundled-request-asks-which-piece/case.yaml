@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: bundled-request-asks-which-piece
+expected_outcome: |
+  The agent sees that the task bundles three outcomes the owner could judge separately (CSV export, dark mode, app version), asks exactly one multiple-choice question about which piece this lap owns (a recommended piece, other pieces, and a keep-together option) before drafting a brief for all of them, and writes no final size or restatement until that is answered.
+context:
+  scaffold_script: place-files.sh
