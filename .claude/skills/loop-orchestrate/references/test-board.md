@@ -1,6 +1,6 @@
 # Test board
 
-How [`loop-orchestrate`](../SKILL.md) step 4 keeps the owner's Stop 2 work in one private artifact instead of the chat (test-board D1–D9). In a long run, test steps posted in chat get buried under thread traffic. The orchestrator then restates them, which buries the owner in text and burns tokens. On the board, each test lives in one place that stays visible, and the owner reports back there.
+How [`loop-orchestrate`](../SKILL.md) step 4 keeps the owner's Stop 2 work in one private artifact instead of the chat (test-board D1–D10). In a long run, test steps posted in chat get buried under thread traffic. The orchestrator then restates them, which buries the owner in text and burns tokens. On the board, each test lives in one place that stays visible, and the owner reports back there.
 
 **Surface.** Only where the host publishes artifacts with the `artifact` capability (Claude app, claude.ai/code). Elsewhere (Cursor, a terminal without the Artifact tool) Stop 2 stays in chat in the [`loop-verdict`](../../loop-verdict/SKILL.md) format. If a run moves to such a surface, post every open card as that chat handoff once. A verdict typed in chat ("pass CSV export") is always accepted, board or not.
 
@@ -66,16 +66,17 @@ A multi-file artifact with one writer per file, so saves from the two sides neve
 - `kind`: `verdict` (`verdict`: `pass` · `change` · `drop`; `results` are the step ticks for that round) or `message` (`text` only).
 - The page keeps ticks and notes on the device while the owner tests and sends them only with a verdict. A tick on its own never saves, so it never wakes the orchestrator (test-board D8).
 - Each sent entry shows *waiting for the orchestrator* on the card until its `id` appears in `handled`.
+- **Doorbell.** A save by the page does not wake the orchestrator (seen in the live smoke test), but a comment sent to Claude does. So with every verdict or message the page also sends one comment to Claude on that card (`comments.sendToClaude`). The comment carries the verdict, the round, the entry `id` and the note, so it is enough on its own if `owner.json` lags (test-board D10).
 
 ## Orchestrator steps
 
-1. **Create** the board at the first Stop 2 of a run, unless step 6 finds one. Copy § Page template to `<scratchpad>/test-board/index.html` and change its `<title>` to `Test board · <run>` (the tag names the artifact; the publish `title` parameter doesn't override it). Write `board.json` and `owner.json` (`{"entries": []}`) next to it, and publish once: `file_path` is the page, `files` holds both JSON files, `capabilities: {artifact: {}}`, icon `checklist`. Load the artifact skills the host requires before that first publish; the template already meets the page contract. The publish result says whether this session now watches the board. The watch is what turns the owner's saves into turns here.
-2. **Write** only `board.json` after that: republish that one file to the board's `url`. Never write `owner.json`. Add a card when a PR reaches Stop 2. When a Change round brings a new preview, raise the card's `round`, replace its steps and set `state` to `ready`.
-3. **Read** `owner.json` (`Artifact` read with `path: "owner.json"`) on every board wake-up, and also on every other event (a thread report, an owner message). If the watch misses a save, the next event still finds it. Act on each entry whose `id` isn't in `handled`:
+1. **Create** the board at the first Stop 2 of a run, unless step 6 finds one. Copy § Page template to `<scratchpad>/test-board/index.html` and change its `<title>` to `Test board · <run>` (the tag names the artifact; the publish `title` parameter doesn't override it). Write `board.json` and `owner.json` (`{"entries": []}`) next to it, and publish once: `file_path` is the page, `files` holds both JSON files, `capabilities: {artifact: {}, comments: {}}`, icon `checklist`. Load the artifact skills the host requires before that first publish; the template already meets the page contract. Then confirm the watch: `ArtifactComments` with `action: "watch"` and no `url` lists it. The watch is what turns doorbell comments into turns here.
+2. **Write** only `board.json` after that: republish that one file to the board's `url`. Never write `owner.json`. Read `owner.json` right before each write: every page save is a new version of the artifact, and the `Artifact` tool refuses a publish not built on the latest version, even when it touches a different file. A refusal hands you the live version, so merge your change onto it and publish again. Add a card when a PR reaches Stop 2. When a Change round brings a new preview, raise the card's `round`, replace its steps and set `state` to `ready`.
+3. **Read** `owner.json` (`Artifact` read with `path: "owner.json"`) on every doorbell comment, and also on every other event (a thread report, an owner message), so a missed doorbell is still found. If a doorbell names an entry that `owner.json` doesn't hold yet, read it once more, then act on the comment's own text. Act on each entry whose `id` isn't in `handled`:
    - **Verdict for the card's current round:** act as in [`loop-orchestrate`](../SKILL.md) step 4. Pass: sweep, then merge. Change: send the ✗ steps, their notes and `text` to the thread. Drop: close. A verdict on the board counts exactly like one in chat (test-board D2). Then set `state`, add a one-line reply, and add the `id` to `handled`.
    - **Verdict for an older round:** don't act. Reply that it was for an earlier preview, and mark it handled.
    - **Message:** answer it with a reply on the card, relaying to the thread when only the thread can answer, and mark it handled.
-   Write all of it back to `board.json` in one publish per event.
+   Write all of it back to `board.json` in one publish per event. Then reply to each doorbell thread in one line and resolve it (`ArtifactComments` `reply`, then `resolve`).
 4. **Chat** carries only the board link and one line per change: `Test board: <url> · To test: <titles> · Merged: <titles>`. Never repeat steps or verdict questions in chat (test-board D3). With the away switch on, cards still land on the board, and the chat line names them.
 5. **Close** the run by leaving every card under *Done*. The next run creates a new board.
 6. **Resume** after an orchestrator restart (`loop-orchestrate` step 1): find the run's board with `Artifact` list (title `Test board · <run>`), read `board.json` and `owner.json`, and watch it again (`ArtifactComments` with `action: "watch"` and its `url`). Never create a second board for a run that has one. Rebuild the local page file from § Page template if the scratchpad is gone; only `board.json` is published from now on.
@@ -119,7 +120,7 @@ details{margin-top:24px}
 </main>
 <script>
 (() => {
-  let board = null, owner = { entries: [] }, ownerSha = null, api, saving = false;
+  let board = null, owner = { entries: [] }, ownerSha = null, api, saving = false, comments = null;
   const armed = {};
   const $ = (id) => document.getElementById(id);
   const el = (tag, props = {}, kids = []) => { const n = Object.assign(document.createElement(tag), props); kids.forEach((k) => n.append(k)); return n; };
@@ -153,7 +154,14 @@ details{margin-top:24px}
     saving = false; render();
   }
 
-  function queue(entry) { const p = store.get(PENDING, []); p.push(Object.assign({ id: "e-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6), at: new Date().toISOString() }, entry)); store.set(PENDING, p); sendPending(); }
+  function ring(entry, sec) {
+    if (!comments) return;
+    const what = entry.kind === "verdict" ? entry.verdict.toUpperCase() + " on " : "Message about ";
+    const card = (board.cards || []).find((c) => c.lap === entry.lap) || {};
+    const text = "Test board · " + what + (card.title || entry.lap) + " (round " + entry.round + ", id " + entry.id + ")" + (entry.text ? ": " + entry.text : "");
+    comments.anchorFor(sec).then((anchor) => comments.sendToClaude({ anchor, text })).catch(() => {});
+  }
+  function queue(entry, sec) { const e = Object.assign({ id: "e-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6), at: new Date().toISOString() }, entry); const p = store.get(PENDING, []); p.push(e); store.set(PENDING, p); ring(e, sec); sendPending(); }
 
   function stepItem(card, i, ticks) {
     const t = ticks[i] || (ticks[i] = { result: null, note: "" });
@@ -163,9 +171,9 @@ details{margin-top:24px}
     return el("li", {}, [el("div", { textContent: s.try }), el("div", { className: "see", textContent: "You should see: " + s.see }), el("div", { className: "row" }, [mark("ok", "✓ Works", "ok"), mark("fail", "✗ Not right", "fail")]), el("input", { placeholder: "Note (optional)", value: t.note, oninput: (e) => { t.note = e.target.value; persist(); } })]);
   }
 
-  function verdictRow(card, ticks, noteBox) {
+  function verdictRow(card, ticks, noteBox, sec) {
     const k = card.lap + "#" + card.round;
-    const send = (v) => { const text = noteBox.value.trim(); if (v !== "pass" && !text && !ticks.some((t) => t && t.result === "fail")) { banner("Say what should change: mark a step ✗ or write a note."); noteBox.focus(); return; } armed[k] = null; queue({ lap: card.lap, round: card.round, kind: "verdict", verdict: v, text, results: ticks }); };
+    const send = (v) => { const text = noteBox.value.trim(); if (v !== "pass" && !text && !ticks.some((t) => t && t.result === "fail")) { banner("Say what should change: mark a step ✗ or write a note."); noteBox.focus(); return; } armed[k] = null; queue({ lap: card.lap, round: card.round, kind: "verdict", verdict: v, text, results: ticks }, sec); };
     const btn = (v, label, cls) => el("button", { className: cls, disabled: saving, textContent: armed[k] === v ? "Tap again to " + { pass: "merge", change: "send", drop: "close the PR" }[v] : label, onclick: () => { if (armed[k] === v) send(v); else { armed[k] = v; render(); } } });
     return el("div", { className: "row" }, [btn("pass", "Pass", "primary"), btn("change", "Change", ""), btn("drop", "Drop", "")]);
   }
@@ -175,6 +183,7 @@ details{margin-top:24px}
     const mine = owner.entries.concat(store.get(PENDING, [])).filter((e) => e.lap === card.lap);
     const waiting = mine.some((e) => !handled.has(e.id) && (e.kind === "message" || e.round === card.round));
     const label = waiting ? "Waiting for the orchestrator" : { ready: "Ready to test", changing: "Change in progress", merging: "Merging" }[card.state] || card.state;
+    const sec = el("section", { className: "card" });
     const kids = [el("div", { className: "row" }, [el("h2", { textContent: card.title }), el("span", { className: "chip", textContent: label })]), el("div", { className: "row" }, [el("a", { href: card.preview, target: "_blank", rel: "noopener", textContent: "Open preview" }), el("a", { href: card.pr, target: "_blank", rel: "noopener", textContent: "PR" })])];
     if (card.state === "ready" && !waiting) {
       const ticks = store.get(tickKey(card), []);
@@ -182,13 +191,14 @@ details{margin-top:24px}
       if (card.uncovered) kids.push(el("p", { className: "muted", textContent: "Checks couldn't cover: " + card.uncovered }));
       if (card.picked) kids.push(el("p", { className: "muted", textContent: "I picked: " + card.picked }));
       const noteBox = el("textarea", { rows: 2, placeholder: "What should change? (needed for Change or Drop)" });
-      kids.push(noteBox, verdictRow(card, ticks, noteBox));
+      kids.push(noteBox, verdictRow(card, ticks, noteBox, sec));
     }
     const thread = mine.map((e) => ({ at: e.at, who: "You", text: e.kind === "verdict" ? e.verdict.toUpperCase() + (e.text ? ": " + e.text : "") : e.text })).concat((card.replies || []).map((r) => ({ at: r.at, who: "Orchestrator", text: r.text }))).sort((a, b) => String(a.at).localeCompare(String(b.at)));
     kids.push(el("div", { className: "msgs" }, thread.map((m) => el("p", {}, [el("b", { textContent: m.who + ": " }), m.text]))));
     const ask = el("input", { placeholder: "Message the orchestrator about this PR" });
-    kids.push(el("div", { className: "row" }, [ask, el("button", { textContent: "Send", disabled: saving, onclick: () => { const t = ask.value.trim(); if (t) queue({ lap: card.lap, round: card.round, kind: "message", text: t }); } })]));
-    return el("section", { className: "card" }, kids);
+    kids.push(el("div", { className: "row" }, [ask, el("button", { textContent: "Send", disabled: saving, onclick: () => { const t = ask.value.trim(); if (t) queue({ lap: card.lap, round: card.round, kind: "message", text: t }, sec); } })]));
+    sec.append(...kids);
+    return sec;
   }
 
   function render() {
@@ -204,6 +214,7 @@ details{margin-top:24px}
     catch { $("sub").textContent = "Couldn't load the board. Ask the orchestrator in chat."; return; }
     render();
     try { api = (window.claude && (await window.claude.use("artifact"))) || null; } catch { api = null; }
+    try { const c = window.claude && (await window.claude.use("comments")); if (c && (await c.canSendToClaude()) === "available") comments = c; } catch { comments = null; }
     sendPending();
   }
   boot();
