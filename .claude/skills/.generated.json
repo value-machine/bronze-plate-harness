@@ -60,6 +60,7 @@
     "loop-orchestrate/evals/two-independent-tasks-run-in-parallel/graders/03-no-dispatch-before-yes.md",
     "loop-orchestrate/evals/two-independent-tasks-run-in-parallel/place-files.sh",
     "loop-orchestrate/evals/two-independent-tasks-run-in-parallel/prompt.md",
+    "loop-orchestrate/references/test-board.md",
     "loop-plan/SKILL.md",
     "loop-plan/evals/m-plan-includes-foundation-cleanup/case.yaml",
     "loop-plan/evals/m-plan-includes-foundation-cleanup/graders/01-developmentplanmd-exists-with-summary-ph.md",

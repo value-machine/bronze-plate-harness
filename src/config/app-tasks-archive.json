@@ -68,5 +68,10 @@
     "title": "Order lesson homes so the harness compounds",
     "description": "From the compound-engineering comparison: meta-learn-lessons picks a lesson home by a cheapest-first ladder (check, path-scoped rule, always-on rule or skill edit, note in a home with a fixed reader), proves a new check fails on the defect, and tags each lesson repo-local or harness-general so harness lessons reach other forks through meta-write-adoption-guide. Protected files: owner consent given in chat.",
     "status": "done"
+  },
+  {
+    "title": "Orchestrator test board for Stop 2",
+    "description": "loop-orchestrate keeps every PR waiting at Stop 2 on one private test board artifact (steps, owner ticks and notes, Pass / Change / Drop, messages) instead of restating test steps in chat. Owner picked verdicts on the board and gave consent for the loop-orchestrate, loop-verdict and agent-behavior edits in chat.",
+    "status": "done"
   }
 ]

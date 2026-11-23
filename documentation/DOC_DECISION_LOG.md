@@ -7,6 +7,22 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 - **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
 
+## test-board — claude/eloquent-lovelace-eq19ew
+
+Under `loop-orchestrate`, Stop 2 moves from chat to one private test board artifact per run (`loop-orchestrate/references/test-board.md`). It holds every test step, the owner's ticks and notes, their Pass / Change / Drop and their messages to the orchestrator, so the orchestrator no longer restates steps between thread reports.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Scope | closed | Orchestrator runs only; the plain loop keeps the chat handoff | owner | Rejected: a board for every lap |
+| D2 | Where verdicts live (conflict with merge-is-pass D4) | closed | On the board: a verdict there counts like one in chat; `agent-behavior` § How to ask names the board as a third place the owner decides | owner | Rejected: board for steps only, verdicts in chat. The answer was also consent for the loop-orchestrate, loop-verdict and agent-behavior edits |
+| D3 | Chat while a board exists | closed | Board link plus one line per change; steps and verdict questions never restated | loop-refine | clear-winner: restating is the reported problem |
+| D4 | Board storage | closed | Multi-file artifact: fixed page plus `board.json`, saved with the files form of `artifact.publish` | loop-refine | Rejected: `db` capability (doesn't wake the session), regenerating the HTML on every save |
+| D5 | How the orchestrator hears the owner | closed | The board's publish watch, plus a read of the board on every other event | loop-refine | Wake-up from a page save is unverified until the first real run |
+| D6 | Surfaces without artifacts | closed | Keep the `loop-verdict` chat handoff | loop-refine | clear-winner: Cursor and terminals have no Artifact tool |
+| D7 | Who writes which file (from the Fable 5.2 review) | closed | One writer per file: the orchestrator writes `board.json`, the page appends to `owner.json` with `ifMatch`; handled entries are tracked in `board.json`, so owner fields are never cleared | review | Fixes the routine conflict where an orchestrator write dropped the owner's save. Rejected: one shared `board.json` |
+| D8 | When the page saves | closed | Only on a verdict or a message; ticks and notes stay on the device (localStorage, per lap and round) until then, and unsent entries are resent on load | review | A tick-only save would cost a wake-up and an empty turn. Rejected: a Save progress button |
+| D9 | Guarding verdicts | closed | Two taps per verdict; Change and Drop need a ✗ step or a note; verdicts carry the card's `round`, and a stale round is answered but not acted on; a verdict typed in chat always counts; on restart the orchestrator finds the run's board and watches it again | review | Pass merges to production, so one stray tap must not trigger it |
+
 ## lesson-home-ladder — claude/great-noether-xszef4
 
 `meta-learn-lessons` picks a lesson's home by a cheapest-first ladder, proves a tightened check fails on the defect before asking, and tags each lesson `repo` or `harness` so harness lessons reach other forks. Comes from comparing with EveryInc's compound-engineering plugin (`ce-compound`).

@@ -35,7 +35,7 @@ Everything else: decide, record the choice where it applies, and continue.
 - One question at a time, multiple choice, at most 4 options (the question tool's limit).
 - Put the recommended option first and label it — usually the one most consistent with the current codebase. Order the rest from lightest to strongest when they are implementation approaches.
 - Optional: offer a UX-impact research option when the user-facing consequences are unclear. If the owner picks it, research, explain, then ask the same question again.
-- **The owner decides in chat or by merging the PR, nothing else.** Never make a decision depend on them reading a PR body, a doc or a diff: put what they need into the chat message, as short as it can be. More text means less of it gets read (merge-is-pass D4).
+- **The owner decides in chat, by merging the PR, or on an orchestrator run's test board, nothing else** (`.agents/skills/loop-orchestrate/references/test-board.md`). Never make a decision depend on them reading a PR body, a doc or a diff: put what they need into the chat message or the board card, as short as it can be. More text means less of it gets read (merge-is-pass D4, test-board D2).
 
 ### Turn ending
 
