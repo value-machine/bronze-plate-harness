@@ -34,7 +34,7 @@ Used by [`loop-ship`](../SKILL.md). Ported from `push` (v0.42.0). Mode behavior:
 ## Merge gate (tests)
 
 - **Pre-push does not run Vitest or type-check** — see `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § Local git.
-- **Authoritative merge gate:** green CI `test` job where work lands — `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** (full `pnpm test:classify`, `pnpm test:run`, `pnpm type-check`).
+- **Authoritative merge gate:** green CI `test` job where work lands — `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** (what it runs: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § CI test scope).
 - Local pre-commit may run **related** tests only — related green is **not** sufficient to skip waiting for CI.
 
 ## Commit vs push

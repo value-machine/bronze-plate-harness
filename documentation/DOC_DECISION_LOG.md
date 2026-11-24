@@ -7,6 +7,16 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 - **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
 
+## harness-audit-recent-laps — claude/eloquent-lovelace-eq19ew
+
+Coherence audit (`meta-audit-harness`, coherence lens) of the laps since `8cb008e` (#54–#62): 6 contradictions and 13 stale wordings left when a decision changed one file but not its restatements. Also closes the "Stronger skill evals" task.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Stronger skill evals (from Compound Engineering) | closed | Dropped: covered by existing skills | owner | Contract tests would freeze intentional skill changes that already need owner consent. Testing a skill change is `meta-write-skill` step 5; stale copies are found by this coherence lens. Rejected: contract tests in CI, artifact grading, more eval cases, model evals in CI |
+| D2 | Which audit rows to apply | closed | The 6 blocking rows plus the one-line advisory rows | owner | Also consent for the edits to `agent-behavior`, `git-workflow`, `testing`, `loop-ship`, `loop-verdict`, `router/loop-map` and the references named. Not applied: merging the triple debug-cleanup text, trimming the restated lesson ladder, a sweep field in the check summary, one home for absorbed Foundation tasks (backlog task) |
+| D3 | The one-piece question and the stop list | closed | "Bundled outcomes" joins `agent-behavior` § When to ask; the away switch decides it like a true tie | audit | The question was asked outside the stop list (one-piece-check D3) |
+
 ## one-piece-check — claude/eloquent-lovelace-eq19ew
 
 Second Compound Engineering piece for `loop-refine`: before drafting, step 2 checks the request is one piece of work and, when it bundles outcomes the owner could judge apart, asks which one this lap owns (`loop-refine/references/one-piece.md`). From CE `ce-brainstorm`'s coherent-work gate.

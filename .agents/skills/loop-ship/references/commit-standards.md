@@ -77,7 +77,7 @@ Closes #123
 After `git add`, expect hook behavior per **`documentation/DOC_AGENT_WORKFLOW_LAYERS.md`** § Local git (classifier SSOT: `scripts/change-classify.cjs`). Do not duplicate the matrix here.
 
 - **Preview hook test selection:** `pnpm test:staged` (dry-run — does not run tests). **Run hook tests without committing:** `pnpm test:staged:live`. Classifier reads staged files only — `git add` before preview.
-- **CI / merge parity:** `pnpm test:classify && pnpm test:run`. Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** / **CI watcher**).
+- **Full local run:** `pnpm test:classify && pnpm test:run` (more than CI runs on a PR: `documentation/DOC_AGENT_WORKFLOW_LAYERS.md` § CI test scope). Local related or full pre-commit green is **not** merge-safe — wait for CI `test` where work lands (per `.claude/rules/git-workflow.md` § Mode behavior table → **how work lands** / **CI watcher**).
 - **Model B concurrency:** Prefer one active agent per checkout on `develop` (`src/config/git-workflow.json`). Shared-branch contention is higher than feature branches — treat smoke signals ([`concurrency.md`](concurrency.md)) seriously.
 - **Force full locally:** `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (PowerShell: `$env:PRECOMMIT_TEST_FULL=1; pnpm test:staged`).
 - Do **not** use `--no-verify` to avoid slow hooks on app-code commits; fix tests or split commits (docs/migrations separate from `src/`).

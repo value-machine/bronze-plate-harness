@@ -22,7 +22,7 @@ How **skills**, **rules**, **documentation**, and **scripts/hooks** fit together
 ```text
 STOP 1  loop-backlog → loop-refine          (owner: pick / confirm the top task; answer scope gaps)
         loop-plan → loop-build → loop-check → loop-ship   (autonomous)
-STOP 2  loop-verdict on the preview          (owner: Pass / Change / Drop)
+STOP 2  loop-verdict on the preview          (owner: Pass / Change / Drop; none with no owner test)
 ```
 
 Between the stops the agent asks only per `.claude/rules/agent-behavior.md` § When to ask: a conflict with a recorded decision, a true tie, a new dependency, a structural fix too big for the lap, a data or irreversible change, or cost / an external service. Full map, sizes and how a lap is located: [`loop-map.md`](../.agents/skills/router/references/loop-map.md).
@@ -95,7 +95,7 @@ Copy `meta-write-adoption-guide/` to other projects and adjust the skill **Confi
 
 **Edit-time feedback (Claude Code hooks, `.claude/settings.json`):** before pre-commit, two hooks report errors while the agent works. PostToolUse on `Edit|Write|MultiEdit` runs `eslint --fix` on the edited `.ts`/`.tsx` file (Prettier via `prettier/prettier`) and returns the remaining errors ([`scripts/lint-edited-file.cjs`](../scripts/lint-edited-file.cjs), ~2–4 s per edit). Stop runs the `type-check` script when uncommitted TypeScript changed and keeps the turn going while it fails, once per failing tree ([`scripts/type-check-on-stop.cjs`](../scripts/type-check-on-stop.cjs), ~6 s, skipped when the tree is unchanged since the last pass). Tests stay with pre-commit and CI (a lap's acceptance test is red on purpose until the build ends). Files changed through Bash, merges or other tools are not seen by these hooks — `pnpm lint` before push and CI still cover them. Cursor has no equivalent wired up.
 
-**Agent commands:** `pnpm test:staged` (preview after `git add`); `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (force full preview); `pnpm test:classify && pnpm test:run` (CI parity).
+**Agent commands:** `pnpm test:staged` (preview after `git add`); `PRECOMMIT_TEST_FULL=1 pnpm test:staged` (force full preview); `pnpm test:classify && pnpm test:run` (full local run, more than CI runs on a PR).
 
 **Rollback:** Revert hook commit and restore pre-push `test:run` if related spawn fails in the wild.
 

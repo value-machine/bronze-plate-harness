@@ -11,7 +11,7 @@ AUTONOMOUS                     ▼
                     └───────────────┘                            ▼
 STOP 2 ──────────────────────────────────────────────── loop-verdict
      no owner test (brief: none) → merge on green, one "Watch for:" line, no question
-     Pass   → loop-ship merges (C) / promotes (A/B) → task archived → loop-backlog
+     Pass   → greenfield sweep → loop-ship merges (C) / promotes (A/B) → task archived → loop-backlog
      Change → lessons on the same PR → feedback = top task → loop-backlog → loop-refine
      Drop   → PR closed → lessons as a backlog task → loop-backlog
 ```
