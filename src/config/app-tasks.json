@@ -20,11 +20,6 @@
     "status": "to-do"
   },
   {
-    "title": "Stronger skill evals (from Compound Engineering)",
-    "description": "Nine loop skills already have behavioral eval cases (.agents/skills/*/evals/, run by hand with meta-write-skill/scripts/run-evals.sh). Extend them with CE tests/skill-eval-cell/ lessons: grade the artifacts a run leaves, check reproducibility, cover the other 13 skills, and decide whether any eval runs in CI. Each run uses paid model calls: cost decision for the owner. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
-    "status": "to-do"
-  },
-  {
     "title": "Lesson refresh pass and sizing test (from Compound Engineering)",
     "description": "The cheapest-form order landed in lap lesson-home-ladder (meta-learn-lessons home ladder). Remaining: a refresh pass that audits saved lessons (feature README lines, path-scoped rules, debug patterns) against the current code (CE ce-compound refresh), and CE's sizing test (build an unrequested safeguard only when a contract needs it, harm lands unnoticed, or adding it later is expensive) in loop-plan. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
     "status": "to-do"
