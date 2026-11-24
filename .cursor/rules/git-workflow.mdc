@@ -25,7 +25,7 @@ Where the version and changelog come from: § Mode behavior table → **version 
 | **CI watcher** | babysit the PR checks | report the commit URL and stop (no `gh run watch`) | Claude Code desktop PR monitor / Auto-fix (no `gh run watch`) |
 | **staging** | `develop` stable preview (+ per-PR previews) | `develop` preview (may deploy before `test` is green) | per-PR preview URL; Supabase is one shared project until the app has real users, then an isolated staging (see `documentation/DOC_CLOUDFLARE_WORKERS.md` § Staging backend) |
 | **Stop 2 surface** (owner test before production, skill-loop D47) | the `develop` preview after the PR lands on `develop` | the `develop` preview | the PR preview, before merge |
-| **production** | the owner's Pass at Stop 2 → `loop-ship` runs Promote to production (ff `main` ← `develop`) | same as A | the owner's Pass at Stop 2 → `loop-ship` merges the PR (or the owner merges / uses the per-PR auto-merge toggle) |
+| **production** | the owner's Pass at Stop 2 → `loop-ship` runs Promote to production (ff `main` ← `develop`) | same as A | the owner's Pass at Stop 2 → `loop-ship` merges the PR (or the owner merges / uses the per-PR auto-merge toggle); a lap with no owner test merges on green CI (`loop-verdict` step 0) |
 | **"land on main / promote / release" means** | run § Promote to production | same as A | merge the PR — **never** dispatch promote |
 | **`main` ruleset** | `deletion` + `non_fast_forward` only | same as A | `pull_request` (squash only) + required `test` and `pr-title` (source: GitHub Actions) + `non_fast_forward` + `deletion`; no bypass actors; no required approvals; branches need not be up to date |
 | **`develop` ruleset** | `pull_request` + required `test` + `non_fast_forward` + `deletion` | no `pull_request`; required `test` + `non_fast_forward` + `deletion` (not a pre-land gate: a bad push can exist and deploy staging before CI finishes) | none (`develop` does not exist) |
@@ -78,7 +78,7 @@ Where PRs go: § Mode behavior table → **how work lands** (A: `develop`, alway
 
 - **Title:** conventional `type: Subject` (all modes — under C, release-please reads it and CI enforces it via `pr-title`).
 - **Preview link (every PR):** the PR body carries a `## Preview` section with the live preview URL of the PR's branch, and the chat handoff gives it next to the PR link.
-- **Who reads what:** the PR body is the record for agents and reviewers. The owner reads only the short chat handoff (`.agents/skills/loop-verdict/SKILL.md` § Output) and tests the preview; never require them to read the PR body to decide.
+- **Who reads what:** the PR body is the record for agents and reviewers. The owner reads only the short chat handoff (`.agents/skills/loop-verdict/SKILL.md` § Output), or the test board card during a `loop-orchestrate` run, and tests the preview; never require them to read the PR body to decide.
 - **No `- [ ]` task lists in a PR body:** GitHub renders them as clickable boxes that read as a to-do for the owner, and nobody has to tick anything (merge-is-pass D6).
 
 ## Promote to production
@@ -94,4 +94,4 @@ Under A/B, when the user says "promote to production", colloquial **"land on mai
 1. One lap = one branch (worktree under Model C). Every commit on it belongs to the lap.
 2. **Commit:** once `loop-check` passes — cleanup, version/changelog per **version source**, a conventional `type: Subject` title with a detailed body (`loop-ship/references/commit-standards.md`).
 3. **Push + land:** clean tree, existing commits only; push per **how work lands**; drive CI to green per **CI watcher**.
-4. **Production** only after the owner's Pass at Stop 2 (**production** row). Agents never write to `main` directly.
+4. **Production** only after the owner's Pass at Stop 2, or on green CI for a lap with no owner test (**production** row). Agents never write to `main` directly.

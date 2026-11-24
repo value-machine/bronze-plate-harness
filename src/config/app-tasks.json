@@ -5,6 +5,11 @@
     "status": "to-do"
   },
   {
+    "title": "Harness audit leftovers: one home for debug cleanup, lesson ladder and absorbed tasks",
+    "description": "Advisory rows the 2026-11-24 coherence audit left for later (DOC_DECISION_LOG.md § harness-audit-recent-laps D2): debug-leftover cleanup is stated in loop-ship step 1, loop-check step 6 and greenfield-sweep.md (keep it in greenfield-sweep.md, link from the others); meta-learn-lessons SKILL.md restates the whole lesson home ladder (keep a link to lesson-procedure.md § 3); loop-check's check summary has no field for sweep results (greenfield-sweep.md rule 4); debt-signals.md lists absorbed Foundation tasks under In scope while brief-template.md has an Absorbed: line (pick one). Protected files: owner consent.",
+    "status": "to-do"
+  },
+  {
     "title": "loop-refine: visible progress list (from Compound Engineering)",
     "description": "Show the owner the refine steps as a task list while Stop 1 runs (CE ce-brainstorm workflow spine). Agent-only cost; useful only if the owner finds it helpful. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
     "status": "to-do"
@@ -17,11 +22,6 @@
   {
     "title": "loop-refine: show alternatives for visible choices (from Compound Engineering)",
     "description": "Show the owner the plausible directions for choices they would see in the app before a clear winner is picked (CE ce-brainstorm approaches). Evidence: harness-overview-page D1 was reversed at Stop 2. Changes the always-on asking rule: owner decision. One ce-brainstorm piece per lap (compound-engineering-adoption D3); why, what and consequences: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § ce-brainstorm pieces for loop-refine. Protected files: owner consent.",
-    "status": "to-do"
-  },
-  {
-    "title": "Stronger skill evals (from Compound Engineering)",
-    "description": "Nine loop skills already have behavioral eval cases (.agents/skills/*/evals/, run by hand with meta-write-skill/scripts/run-evals.sh). Extend them with CE tests/skill-eval-cell/ lessons: grade the artifacts a run leaves, check reproducibility, cover the other 13 skills, and decide whether any eval runs in CI. Each run uses paid model calls: cost decision for the owner. Source: documentation/jobs/harness/2026-11-20-COMPOUND_ENGINEERING_COMPARISON.md § Candidates to borrow. Follow-up lap of compound-engineering-adoption (D1). Protected files: owner consent.",
     "status": "to-do"
   },
   {

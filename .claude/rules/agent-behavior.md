@@ -21,6 +21,7 @@ Ask the owner only when the choice can't be derived from the app vision (`docume
 - **Patch on top** — only when the structural fix won't fit the lap (it would push it above size M), so the choice is a workaround now or a bigger lap (`.claude/rules/architecture.md` § Layer consistency). A structural fix that fits is the agent's to take without asking (debt-triggers D4).
 - **Data or irreversible change** — schema or migration shape, deleting or transforming stored data, auth or permission models.
 - **Cost or external service** — paid usage, quotas, third-party calls, privacy.
+- **Bundled outcomes** — a request holds outcomes the owner could judge apart; ask which one the lap owns (`.agents/skills/loop-refine/references/one-piece.md`). The away switch decides it like a true tie.
 
 Everything else: decide, record the choice where it applies, and continue.
 
@@ -45,7 +46,7 @@ Order, when a turn owes the owner something:
 
 1. **Jobs** (only the owner can do them), as prose in chat:
    - Setup: the direct link and the value to enter (§ Handing an action to the owner).
-   - Test: numbered try-steps, each with what the owner should see; both outcomes (`.claude/rules/debugging.md` § User Testing Instructions).
+   - Test: numbered try-steps, each with what the owner should see; both outcomes (`.claude/rules/debugging.md` § User Testing Instructions). During a `loop-orchestrate` run with a test board, the steps live on the board card and chat carries only its link.
 2. **Decision**, last: one question-tool call (§ How to ask), each option saying what happens next.
 
 Away switch: when no other work remains and laps are parked, end with the question tool for the first parked item and name the rest in one line.

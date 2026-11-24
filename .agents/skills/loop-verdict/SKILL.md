@@ -3,7 +3,7 @@ name: loop-verdict
 description: >-
   Stop 2 of the product-owner loop. Hands the owner the preview link, test steps, the check
   summary, the recorded-decision lines and rule changes the PR carries, then asks one question:
-  Pass, Change or Drop. Pass merges or promotes (the owner merging the PR counts as a Pass); Change runs lessons on the
+  Pass, Change or Drop (none for a lap with no owner test; on the test board during an orchestrator run). Pass merges or promotes (the owner merging the PR counts as a Pass); Change runs lessons on the
   same PR and turns the feedback into the next top request; Drop closes the PR. Use when a lap's
   PR is green with a preview, when the owner reports test results ("looks good", "ship it",
   "this is wrong", "drop it"), or asks what is waiting for them. Not for shipping steps
@@ -23,11 +23,11 @@ description: >-
 | Calls | if the verdict is Pass → [greenfield sweep](../loop-check/references/greenfield-sweep.md), then [`loop-ship`](../loop-ship/SKILL.md) (merge / promote) · if the verdict is Change or Drop (any non-Pass counts as trouble, skill-loop D50) → [`meta-learn-lessons`](../meta-learn-lessons/SKILL.md) · after any verdict → [`loop-backlog`](../loop-backlog/SKILL.md) |
 | Called by | [`router`](../router/SKILL.md), [`loop-ship`](../loop-ship/SKILL.md), [`loop-orchestrate`](../loop-orchestrate/SKILL.md) |
 | Next | [`loop-backlog`](../loop-backlog/SKILL.md) |
-| Owner stops | Stop 2 itself — one question, Pass / Change / Drop ([`loop-refine/references/asking.md`](../loop-refine/references/asking.md)) |
+| Owner stops | Stop 2 itself — one question, Pass / Change / Drop ([`loop-refine/references/asking.md`](../loop-refine/references/asking.md)); none when the brief has no owner test (step 0); on the test board under `loop-orchestrate` (step 2) |
 
 ## Steps
 
-0. **No owner test** (`BRIEF.md` § Owner test is `none`): don't ask Pass / Change / Drop. A preview that looks like `main` gives the owner nothing to judge, and a question they can only click blind trains them to stop reading it. The owner's answer at Stop 1 or the protected-file consent is the Pass. With CI green: under Model C run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge); under A/B the lap is already on `develop` and reaches production with the next promote the owner asks for. Then post one line: `Merged <PR> · Watch for: <how the owner would notice it's wrong the next time they use it>`. A problem found later is a Change request: a fix or revert task at the top of the backlog. Then go to [`loop-backlog`](../loop-backlog/SKILL.md) (owner-test D1).
+0. **No owner test** (`BRIEF.md` § Owner test is `none`): don't ask Pass / Change / Drop. A preview that looks like `main` gives the owner nothing to judge, and a question they can only click blind trains them to stop reading it. The owner's answer at Stop 1 or the protected-file consent is the Pass. With CI green: under Model C run [`loop-ship`](../loop-ship/SKILL.md) step 8 (merge); under A/B the lap is already on `develop` and reaches production with the next promote the owner asks for. The post-Pass greenfield sweep is skipped: `loop-check` already swept before this point, and no owner test kept debugging logs. Then post one line: `Merged <PR> · Watch for: <how the owner would notice it's wrong the next time they use it>`. A problem found later is a Change request: a fix or revert task at the top of the backlog. Then go to [`loop-backlog`](../loop-backlog/SKILL.md) (owner-test D1).
 1. **Collect only what the owner needs to test and decide:** the preview URL; two or three things to try from the success check, each with what they should see; what the checks couldn't cover; any choice they would notice in the app that they didn't ask for. Rule and skill changes were already asked in chat (`agent-behavior` rule § Protected Files), and open questions were answered before the PR became mergeable (`loop-ship` step 5); decisions stay in the PR body.
 2. **Post the handoff** (§ Output). Under [`loop-orchestrate`](../loop-orchestrate/SKILL.md) on a surface with artifacts, the handoff is a card on the run's test board and the verdict comes back from the board (test-board D2). Otherwise ask one question with the question tool (`agent-behavior` rule § How to ask): **Pass / Change / Drop**, with a challenge option when one is grounded (for example "ship it but cut the export button to a later lap"). An untested preview waits here and ranks as a blocker in the backlog (skill-loop D45).
 3. **Pass.** The PR already carries the archived task (`loop-ship` step 3), so a Pass needs no bookkeeping commit (merge-is-pass D1). It does start cleanup mode (greenfield-cleanup D1).
@@ -65,7 +65,7 @@ Checks couldn't cover: <one line> | —
 I picked: <a choice you'd notice in the app that you didn't ask for> | —
 ```
 
-The Pass / Change / Drop question tool call follows as the last element (`agent-behavior` rule § Turn ending); no text ask repeats it.
+In chat, the Pass / Change / Drop question tool call follows as the last element (`agent-behavior` rule § Turn ending); no text ask repeats it.
 
 ## Not for
 
