@@ -7,6 +7,16 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 - **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
 
+## orchestrator-start-approved — claude/eloquent-lovelace-eq19ew
+
+In the Claude app, `start_session` is refused on a turn another session's message began. `loop-orchestrate` queued approved tasks that overlapped a running thread and started them on a later event (often a thread's "merged" report), so the start failed and the orchestrator asked the owner to start work they had already approved.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | When approved tasks start | closed | All of them in the owner's own turn; an overlapping task starts held (`waits-on` tag, ⏸ title) and the existing *Clear* step releases it with a message when its blocker lands. Supersedes the "overlapping tasks queue" part of orchestrator-parallel-laps D9 | owner | Messaging a thread works on a peer-triggered turn; only starting a session doesn't. Rejected: keep queueing and ask the owner each time |
+| D2 | What a held task does before its blocker lands | closed | Refine and plan only; build after the blocker lands and the branch is updated from `main` | owner | Rejected: build now and push only after the blocker lands (faster, but overlap means the same feature area, so more merge conflicts) |
+| D3 | Tasks approved during a thread's turn | closed | Listed as "Not started" in the status line and started on the owner's next message, without asking again | owner | |
+
 ## harness-audit-recent-laps — claude/eloquent-lovelace-eq19ew
 
 Coherence audit (`meta-audit-harness`, coherence lens) of the laps since `8cb008e` (#54–#62): 6 contradictions and 13 stale wordings left when a decision changed one file but not its restatements. Also closes the "Stronger skill evals" task.
