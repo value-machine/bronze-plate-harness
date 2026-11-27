@@ -11,6 +11,7 @@ The owner doesn't read the code, so nobody else will notice when it stops fittin
 | I3 | **Wrong grouping:** the request treats as one thing what the code spreads over several modules, or as two things what one module holds | Merge or split to match the product |
 | I4 | **Stale explanation:** a README line, comment or test title you had to discount because it describes older behavior | Rewrite it to the current behavior |
 | I5 | **Surprise:** the layer check corrected the request's assumption, or your own first reading of the code was wrong | The code doesn't say what it does: rename or restructure until it does |
+| I6 | **Third patch of a kind:** the feature already carries two guards, limits or exceptions of the kind you are about to add (its git history, README or the code shows them) | The foundation is the wrong tool: before adding the third, compare its mechanism with the standard technique for the requirement; the fix is a replacement, not another guard (foundations D4) |
 
 ## Friction signals — debt that taxes every change
 

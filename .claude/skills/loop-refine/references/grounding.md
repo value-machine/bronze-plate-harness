@@ -41,7 +41,9 @@ Resolve in this order; a branch may open another. Treat integration hooks as **e
 
 For each neighbor, trace the existing loop (or confirm absence), then ask whether this feature **rides** it (same flow/data path, extended) or forks a **parallel/new** one.
 
-**Burden of proof is on greenfield** — state a repo-grounded reason the existing path can't absorb the work (divergent concept, incompatible constraints, unacceptable coupling) before proposing a fork. When no loop exists, greenfield is justified — log it and capture what the new path must not duplicate later.
+**Standard technique first** (foundations D1). Before riding a precedent (existing code, a twin of another feature, a mock or experiment, an earlier lap or brief), name the standard technique for the new requirement and compare the precedent's mechanism against that, not the precedent against itself. A mock or existing feature is evidence of a look or a need, not a choice of mechanism. A precedent whose mechanism is the wrong tool for the requirement is a reason to fork; when the precedent itself should change, say so and add a `Foundation:` task ([`loop-plan/references/debt-signals.md`](../../loop-plan/references/debt-signals.md)).
+
+Once that check passes, the **burden of proof is on greenfield** — state a repo-grounded reason the existing path can't absorb the work (divergent concept, incompatible constraints, unacceptable coupling) before proposing a fork. When no loop exists, greenfield is justified — log it and capture what the new path must not duplicate later.
 
 This is a **scope/boundary** question for the user (riding vs forking changes consistency, divergence risk, coupling). Keep file/mechanism choices with the agent; look at the repo first so the question is concrete. Ask only when it is a true tie (`agent-behavior` § When to ask); otherwise log the clear winner.
 
