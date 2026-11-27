@@ -7,6 +7,17 @@ History of the decisions jobs made: what was chosen, what was rejected, and why.
 - **Who writes it:** `loop-ship` appends the lap's closed rows from its scratch `DECISIONS.md` in the ship commit ([`loop-ship`](../.agents/skills/loop-ship/SKILL.md)). Earlier job logs were deleted in #16; only the ones still cited are restored below from `a920c0d^`.
 - **`Lessons:` lines:** a lesson persisted during a job adds `Lessons: Lesson-scope: <repo|harness> — <file § section>` to that job's section ([`meta-learn-lessons`](../.agents/skills/meta-learn-lessons/references/lesson-procedure.md) § 4). `harness` marks a lesson any fork of the harness could use; adoption guides gather those lines.
 
+## foundations — claude/epic-babbage-2wjwwf
+
+Challenge foundations, don't inherit them: compare precedents against the standard technique, treat a wrong foundation as a lesson's cause, label stand-ins, and check the foundation before a third patch of a kind.
+
+| id | topic | status | choice | source | notes |
+|----|-------|--------|--------|--------|-------|
+| D1 | Riding a precedent | closed | Name the standard technique for the requirement and compare the precedent's mechanism against it before riding; a wrong-tool precedent is a reason to fork, and a precedent that should change gets a `Foundation:` task | owner | Ride vs new's "burden of proof is on greenfield" now applies only after this check; it alone steered agents toward inheriting a base |
+| D2 | Lessons from repeated failure | closed | When the foundation is the cause, the lesson is a `Foundation:` task to move to the standard technique plus one per other place on the same foundation; never a guard | owner | Lives in the home ladder's first rung next to "one way" |
+| D3 | Stand-ins in mocks and POCs | closed | Label a stand-in mechanism "stand-in for the look only"; later laps pick the mechanism through D1 | owner | — |
+| D4 | Third patch of a kind | closed | Debt signal I6: before a third guard, limit or exception of the same kind, compare the mechanism with the standard technique; the fix is a replacement | owner | Complements I2 (bending), which fires per patch and splits modules |
+
 ## orchestrator-start-approved — claude/eloquent-lovelace-eq19ew
 
 In the Claude app, `start_session` is refused on a turn another session's message began. `loop-orchestrate` queued approved tasks that overlapped a running thread and started them on a later event (often a thread's "merged" report), so the start failed and the orchestrator asked the owner to start work they had already approved.
